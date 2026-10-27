@@ -1,0 +1,1806 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 培訓和發展</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .main-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .main-tabs button {
+      border: 0;
+      background: none;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tabs button:hover { color: var(--ink); }
+    .main-tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Main Container & Views */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 28px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Section Header Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 25px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 680px; }
+
+    /* Sub-navigation Switcher */
+    .sub-nav {
+      display: inline-flex;
+      background: #efecf8;
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sub-nav button {
+      border: 0;
+      background: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--mute);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-nav button:hover { color: var(--ink); }
+    .sub-nav button.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.25);
+    }
+    .sub-view { display: none; }
+    .sub-view.active { display: block; animation: fadeIn 0.2s ease; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .sidebar-layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    /* Interactive Selector Lists */
+    .nav-list { display: flex; flex-direction: column; gap: 10px; }
+    .nav-item {
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .nav-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary) 0%, #9333ea 100%);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 16px rgba(109, 40, 217, 0.24);
+    }
+    .nav-item.active span.sub-txt { color: #ede9fe; }
+    .sub-txt { font-size: 13px; color: var(--mute); font-weight: 500; flex-shrink: 0; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      padding: 11px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    .note-box {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+    .case-box {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 14px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+
+    /* Flow Chain */
+    .flow-chain {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+      padding: 16px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .flow-node {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .flow-arrow { font-size: 18px; font-weight: 900; color: var(--amber); }
+
+    /* Comparison Table & Plan Lines */
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15.5px; }
+    table.comp-table th, table.comp-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+    table.comp-table tr.highlight-row { background: var(--primary-light); }
+
+    .ad-line {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 15.5px;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+    }
+    .ad-line:hover { border-color: var(--primary); background: var(--primary-light); }
+
+    /* Builder Specific */
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 18px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.correct, .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.wrong, .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #ffffff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    details.guide-Collapsible {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    details.guide-Collapsible summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .sidebar-layout { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+      .main-tabs { width: 100%; justify-content: center; margin-top: 8px; }
+      .sec-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 12px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速切換課室／測驗...</option>
+    <option value="人力資源管理_目錄.html">單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質工作團隊.html">第 5 課：發展優質工作團隊</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+  <div class="brand">
+    <span>人力資源管理</span>
+    <span class="brand-tag">第 4 課：培訓和發展</span>
+  </div>
+  <nav class="main-tabs" id="mainTabs">
+    <button class="on" data-tab="sec-purpose">1. 培訓 vs 發展與六大目的</button>
+    <button data-tab="sec-otj">2. 在職培訓：學徒・指導・工作輪調</button>
+    <button data-tab="sec-offtj">3. 職外培訓：五種常見方法</button>
+    <button data-tab="sec-compare">4. 在職 vs 職外培訓比較與配對顧問</button>
+    <button data-tab="sec-builder">5. 論點建構工作坊</button>
+  </nav>
+</header>
+
+<!-- ==================== 1. 培訓 vs 發展與六大目的 ==================== -->
+<section class="view on" id="sec-purpose">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元一：何謂培訓和發展 ＆ 培訓和發展的六大目的</span>
+      <h1>培訓（改善現職短期表現）vs 發展（為日後更高職位作準備）與六大目的</h1>
+      <p>培訓旨在幫助僱員掌握目前工作所需的技能、能力和知識，以及建立良好的工作態度，從而改善他們在現職上的工作表現（有助短期內改善表現）；發展則旨在幫助僱員成長，為他們日後出任更高職位作準備（可視為長期的培訓，着重長遠事業發展）。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('purp', 0, this)">培訓 vs 發展與六大目的詳解</button>
+      <button onclick="switchSub('purp', 1, this)">航空公司計劃分類與目的挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 1A：培訓 vs 發展與六大目的詳解 -->
+  <div class="sub-view active" id="purp-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="tdPurpNavList"></div>
+      <div class="card" id="tdPurpDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 1B：航空公司計劃分類器與六大目的挑戰 -->
+  <div class="sub-view" id="purp-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">培訓 vs 發展分類器</span>
+        <h3 style="font-size:20px;margin:8px 0 6px">點擊航空公司的 5 項訓練計劃，辨別它與「培訓」還是「發展」較為相關</h3>
+        <p style="font-size:14.5px;color:var(--ink-sec);margin:0 0 10px">
+          • <b>培訓 (Training)</b>：教授與目前工作相關的具體知識和技能，改善現職表現。<br>
+          • <b>發展 (Development)</b>：教授領導技巧、決策技巧等概念知識或擴闊視野，為日後出任更高職位作準備。
+        </p>
+        <div id="airlinePlanList"></div>
+        <div id="airlinePlanFb" class="note-box" style="margin-top:12px;font-size:15.5px">請點擊上方任一訓練計劃查看分類解析。</div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">培訓和發展概念與目的挑戰</span>
+        <h3 style="font-size:20px;margin:8px 0 10px">辨識企業提供培訓和發展的目的（共 6 題）</h3>
+        <p id="tdPurpQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="tdPurpQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="tdPurpQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="tdPurpQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. 在職培訓：學徒・指導・工作輪調 ==================== -->
+<section class="view" id="sec-otj">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元二：在職培訓 (On-the-job Training) 的三種常見方法</span>
+      <h1>學徒訓練・指導（顧問指導）・工作輪調的運作模式與優缺點</h1>
+      <p>在職培訓（又稱在職訓練）是指讓僱員在工作中進行培訓。對很多小型企業來說，這是唯一的培訓模式。常見的三種在職培訓方法包括：(1) 學徒訓練（結合實地實習和一些課堂培訓）、(2) 指導（委派經驗豐富僱員擔任導師）及 (3) 工作輪調（按預定時間調至不同工作崗位）。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('otj', 0, this)">三種在職培訓方法與優缺點</button>
+      <button onclick="switchSub('otj', 1, this)">在職培訓方法辨識挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 2A：三種在職培訓方法詳解 -->
+  <div class="sub-view active" id="otj-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="otjNavList"></div>
+      <div class="card" id="otjDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 2B：在職培訓方法辨識挑戰 -->
+  <div class="sub-view" id="otj-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">在職培訓三種方法（學徒訓練・指導・工作輪調）實戰挑戰</span>
+        <span id="otjQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="otjQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="otjQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="otjQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 職外培訓：五種常見方法 ==================== -->
+<section class="view" id="sec-offtj">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元三：職外培訓 (Off-the-job Training) 的五種常見方法</span>
+      <h1>講課・程式學習・模擬訓練・角色扮演・個案研究的運作與優缺點</h1>
+      <p>職外培訓（又稱職外訓練）是指讓僱員在實際工作場所以外的地方進行培訓。常見的五種職外培訓方法包括：(1) 講課（課堂培訓）、(2) 程式學習（循序漸進自學方法）、(3) 模擬訓練（設備模擬與電腦模擬）、(4) 角色扮演 及 (5) 個案研究。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('off', 0, this)">五種職外培訓方法與答題錦囊</button>
+      <button onclick="switchSub('off', 1, this)">職外培訓方法辨識挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 3A：五種職外培訓方法與答題錦囊 -->
+  <div class="sub-view active" id="off-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="offNavList"></div>
+      <div class="card" id="offDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 3B：職外培訓方法辨識挑戰 -->
+  <div class="sub-view" id="off-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">職外培訓五種方法辨識與優缺點挑戰</span>
+        <span id="offQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="offQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="offQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="offQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 在職 vs 職外培訓比較與配對顧問 ==================== -->
+<section class="view" id="sec-compare">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元四：在職培訓和職外培訓的比較 ＆ 跨行業培訓配對顧問室</span>
+      <h1>在職培訓（4優3缺）vs 職外培訓（4優3缺）全方位對照與個案診斷</h1>
+      <p>在職培訓具備成本較低、即時回饋、技能較實用切合工作需要及切合受訓僱員需要和能力的優點，但系統性較低、取決於培訓人員投入程度且成效不一；職外培訓則系統性較高、對實際工作環境干擾減至最低、學習壓力較小及可學習最新知識技術，但成本較高、所學未必適用於實際工作且存在學習差異。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('cmp', 0, this)">在職 vs 職外比較與三大個案診斷</button>
+      <button onclick="switchSub('cmp', 1, this)">比較與個案實戰挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 4A：在職 vs 職外比較與三大個案診斷 -->
+  <div class="sub-view active" id="cmp-sub-0">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">第 4.3C 節：在職培訓和職外培訓的比較</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點擊切換比較視角，掌握在職培訓與職外培訓的優缺點</h3>
+        <div class="chips" id="modeCompChips">
+          <button class="chip active" onclick="renderModeComp(0)">1. 在職培訓（4 項優點 vs 3 項缺點）</button>
+          <button class="chip" onclick="renderModeComp(1)">2. 職外培訓（4 項優點 vs 3 項缺點）</button>
+          <button class="chip" onclick="renderModeComp(2)">3. 兩者核心維度直接對照</button>
+        </div>
+        <div id="modeCompBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">三大高階企業培訓決策診斷室</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點選不同企業的培訓難題，查看深入分析與方法配對</h3>
+        <div class="chips" id="tdCaseChips">
+          <button class="chip active" onclick="renderTdCase(0)">個案 A：小型貿易公司為何偏向採用「在職培訓」？</button>
+          <button class="chip" onclick="renderTdCase(1)">個案 B：汽車零件廠「鐳射切割器」在職培訓風險與生產力問題</button>
+          <button class="chip" onclick="renderTdCase(2)">個案 C：飛馬航空不同崗位（維修員・機師・空服員）的培訓配對</button>
+        </div>
+        <div id="tdCaseBox" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 4B：在職 vs 職外比較與個案挑戰 -->
+  <div class="sub-view" id="cmp-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">在職培訓 vs 職外培訓特徵與個案挑戰</span>
+        <span id="cmpQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="cmpQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="cmpQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="cmpQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. 論點建構問答工作坊 (12題) ==================== -->
+<section class="view" id="sec-builder">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-amber">實戰寫作與教學示範訓練</span>
+      <h1>「一段一個獨立重點」論點建構工作坊</h1>
+      <p>收錄 4 道短答題（2 步建構 · 2 分）及 8 道進階論述題（3 步建構 · 3 分）。每個步驟除了提供「滿分建構選項（綠燈）」及「概念錯誤選項（紅燈）」外，特別保留一個能力較弱學生常犯的<b>「解說不足／用詞含糊／同義反覆選項（琥珀黃燈）」</b>，方便課堂進行正反對比教學示範。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchBuilderCat('short', this)">短答題訓練 (4題)</button>
+      <button onclick="switchBuilderCat('essay', this)">進階論述題訓練 (8題)</button>
+    </div>
+  </div>
+
+  <details class="guide-Collapsible">
+    <summary>查看「一段一個重點」建構結構與三種選項教學示範指南（點擊展開 / 收起）</summary>
+    <div class="grid2" style="margin-top:14px;font-size:16px">
+      <div style="background:var(--primary-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--primary)">短答題／個案題模式（每段滿分 2 分 — 2 步建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 準確指出單一培訓或發展作用、培訓方法名稱或其優缺點標題<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 結合題目企業情況說明如何執行或為何產生該優缺點
+      </div>
+      <div style="background:var(--teal-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--teal)">進階論述題模式（每段滿分 3 分 — 3 步深度建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 指出單一培訓目的、培訓方法或模式優缺點名稱並界定其核心含義<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 針對題目企業（如美容院、酒店前台、小型貿易公司、航空公司）設定具體例子<br>
+        <span class="hl-s3">第 3 步 (1分)</span> 深化推論該培訓目的或方法如何影響員工技能、服務質素、學習效能或企業長遠增長
+      </div>
+    </div>
+  </details>
+
+  <div class="card" style="padding:18px 22px;margin-bottom:18px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px" id="builderCatLabel">選擇短答題（每題滿分 2 分）：</div>
+    <div class="chips" id="questionChips" style="margin:0"></div>
+  </div>
+
+  <div id="builderWorkspace"></div>
+</section>
+
+<script>
+  // Main Tab Switching
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // Sub-view Switching
+  function switchSub(prefix, idx, btn) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`[id^="${prefix}-sub-"]`).forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ====== 1. 培訓 vs 發展與六大目的 ======
+  const tdPurpCatalog = [
+    {
+      title: "核心區分：培訓 vs 發展",
+      badge: "第 4.2A 節",
+      def: "企業須為僱員提供適當的培訓和發展，才能確保僱員具備所需的能力和技能以改善工作表現：",
+      detail: `
+        <table class="comp-table" style="font-size:15px;margin-top:6px">
+          <thead><tr><th style="width:18%">比較維度</th><th style="width:41%">培訓 (Training)</th><th style="width:41%">發展 (Development)</th></tr></thead>
+          <tbody>
+            <tr><td><b>定義與目的</b></td><td>旨在幫助僱員掌握<b>目前工作</b>所需的技能、能力和知識，以及建立良好的工作態度，從而<b>改善他們在現職上的工作表現</b>。</td><td>旨在幫助僱員成長，<b>為他們日後出任更高職位作準備</b>（發展可視為長期的培訓）。</td></tr>
+            <tr><td><b>時間焦點</b></td><td>着重提升執行目前工作的能力，有助僱員在<b>短期內</b>改善工作表現。</td><td>着重僱員<b>長遠的事業發展</b>。</td></tr>
+            <tr><td><b>傳授知識與例子（以售貨員為例）</b></td><td>傳授<b>與工作相關的具體知識</b>：例如教授<b>產品知識、銷售流程</b>，以改善售貨員目前的工作表現。</td><td>傳授<b>概念知識</b>：例如培養<b>領導技巧、決策技巧</b>，為售貨員日後出任<b>銷售經理</b>一職作準備。</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    {
+      title: "目的 1：保障僱員的健康和安全",
+      badge: "培訓和發展的目的",
+      def: "適當的培訓有助僱員掌握合適的技能，並建立正確的工作態度，以避免發生意外。因此，企業可以藉着培訓確保僱員的健康和安全。",
+      detail: `
+        <p style="margin:0">• <b>適用情況與商業例子</b>：培訓對工作性質較為危險的僱員（例如<b>工廠工人、建築工人、廚房員工、電單車速遞員</b>）來說尤其重要。例如速遞公司為速遞員提供安全培訓，加強他們的安全意識，避免在送貨時發生交通意外。</p>
+      `
+    },
+    {
+      title: "目的 2：提高企業的產品或服務質素",
+      badge: "培訓和發展的目的",
+      def: "無論是製造業還是服務業企業，均可透過培訓提升產品或服務質素：",
+      detail: `
+        <p style="margin:0 0 8px">• <b>製造業企業</b>：透過為僱員提供培訓，提升生產工人的技能，有助工人在生產過程中<b>減少出錯，從而改善產品的質量</b>。</p>
+        <p style="margin:0">• <b>服務業企業</b>：透過培訓<b>改善僱員的服務態度和技巧</b>（如時裝店售貨員、咖啡店店員、速遞員的顧客服務培訓），讓他們能為顧客提供更好的服務，提升企業的服務質素。</p>
+      `
+    },
+    {
+      title: "目的 3：提高效率和生產力",
+      badge: "培訓和發展的目的",
+      def: "培訓和發展讓僱員能掌握執行職務所需的能力和技能，這有助提高他們的工作效率，從而提升企業整體的生產力。",
+      detail: `
+        <p style="margin:0">• <b>商業例子</b>：速遞公司為速遞員提供路面培訓，改善他們的駕駛技巧並讓他們更熟悉駕駛路線，從而加快派件速度；玩具生產商為生產工人提供培訓以提高生產速度。</p>
+      `
+    },
+    {
+      title: "目的 4：激勵僱員，提升僱員士氣",
+      badge: "培訓和發展的目的",
+      def: "「培訓」和「發展」能分別從兩方面激勵僱員並提升他們的士氣：",
+      detail: `
+        <p style="margin:0 0 8px">• <b>(1) 培訓方面</b>：培訓有助改善僱員的工作表現（如提升銷售技巧促成更多交易），從而<b>增加他們的工作滿足感</b>。</p>
+        <p style="margin:0">• <b>(2) 發展方面</b>：僱員發展（如上司提名有潛質的下屬參加「領袖訓練營」）可以<b>向僱員傳遞公司提供晉升前景的訊息</b>，僱員覺得自己有晉升機會，或會<b>更努力工作來爭取晉升機會</b>，士氣通常較高。</p>
+      `
+    },
+    {
+      title: "目的 5：增加僱員歸屬感，促進僱員關係",
+      badge: "培訓和發展的目的",
+      def: "培訓和發展機會是企業採用的其中一種非金錢報酬。僱員可透過企業提供的培訓和發展獲取新的技能和知識，並為未來的事業發展作準備。",
+      detail: `
+        <p style="margin:0">• 僱員或會因而<b>感受到企業對他們個人成長和事業發展的重視，對企業心存感激</b>。<br>
+        • 因此，僱員對企業的<b>歸屬感會有所增加，對企業的不滿則會減少，這有助降低員工流失率</b>，讓管理層和僱員之間的工作關係更和諧。</p>
+      `
+    },
+    {
+      title: "目的 6：滿足企業目前和未來的需要",
+      badge: "培訓和發展的目的",
+      def: "企業可以透過培訓和發展，確保僱員具備所需的技能和知識來支持企業的發展，以及應對市場未來的轉變和危機，這有助維持和促進企業的增長。",
+      detail: `
+        <p style="margin:0 0 8px">• <b>例子 (i)</b>：如某跨國連鎖時裝店打算在來年進入新市場（或實體書店打算開設網上商店），它可以為僱員提供培訓，加深他們對新市場的了解（或教授處理網上訂單的技能）。</p>
+        <p style="margin:0">• <b>例子 (ii)</b>：假設一家連鎖快餐店計劃開設新分店以避免競爭對手搶佔市場佔有率，它可以安排那些將要晉升為分店經理的僱員參加僱員發展計劃，讓他們日後能妥善地管理新分店。</p>
+      `
+    }
+  ];
+
+  function renderTdPurp(idx) {
+    document.getElementById('tdPurpNavList').innerHTML = tdPurpCatalog.map((p, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderTdPurp(${i})">
+        <span>${p.title}</span>
+      </button>
+    `).join('');
+    const p = tdPurpCatalog[idx];
+    document.getElementById('tdPurpDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${p.title}</h3>
+        <span class="badge ${idx===0?'b-blue':'b-teal'}">${p.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${p.def}</p>
+      <div class="case-box">${p.detail}</div>
+    `;
+  }
+  renderTdPurp(0);
+
+  const airlinePlans = [
+    { txt: "(a) 教授地勤人員如何改善顧客服務技巧", type: "培訓 (Training)", exp: "教授與地勤人員目前工作直接相關的具體顧客服務技巧，旨在短期內改善現職工作表現，屬於<b>「培訓」</b>。" },
+    { txt: "(b) 為一批經篩選的空中服務員舉辦有系統的訓練活動，以發展他們的領導技巧", type: "發展 (Development)", exp: "培養領導技巧等概念知識，旨在為這批空中服務員日後晉升出任更高職位（如機艙事務長／座艙長）作準備，屬於<b>「發展」</b>。" },
+    { txt: "(c) 利用模擬駕駛艙改善機師的飛行技巧", type: "培訓 (Training)", exp: "提升機師執行目前飛行職務所需的專門操作技能，屬於<b>「培訓」</b>。" },
+    { txt: "(d) 資助飛機工程師學習新的工程技術", type: "培訓 (Training)", exp: "幫助飛機工程師掌握目前維修工作所需的最新工程技術知識，改善現職表現，屬於<b>「培訓」</b>。" },
+    { txt: "(e) 安排見習管理人員 (Management Trainee) 在不同部門輪調，以擴闊他們的視野", type: "發展 (Development)", exp: "透過跨部門輪調擴闊視野及了解整體運作，旨在為見習管理人員日後出任高級管理職位作長遠準備，屬於<b>「發展」</b>。" }
+  ];
+  function checkAirlinePlan(idx) {
+    const it = airlinePlans[idx];
+    const isTr = it.type.includes('培訓');
+    document.getElementById('airlinePlanFb').innerHTML = `<b style="color:${isTr?'var(--primary)':'var(--teal)'};font-size:16.5px">${it.txt} ➔ 屬於：【${it.type}】</b><br>${it.exp}`;
+  }
+  document.getElementById('airlinePlanList').innerHTML = airlinePlans.map((it, i) => `
+    <div class="ad-line" onclick="checkAirlinePlan(${i})">
+      <span>${it.txt}</span>
+      <span class="badge ${it.type.includes('培訓')?'b-blue':'b-teal'}" style="margin:0;flex-shrink:0">點擊檢視</span>
+    </div>
+  `).join('');
+
+  // 對稱深度設計的 6 道培訓與發展概念及目的挑戰題
+  const tdPurpQuizItems = [
+    {
+      q: "1. 指出以下三個商業情況分別展示企業提供培訓和發展的哪項目的：<br>(a) 某銀行為僱員提供培訓和發展機會，以表達公司對僱員個人成長的重視 ｜ (b) 一家餐廳為廚房員工提供培訓，以減低發生意外的機會 ｜ (c) 一家書店打算開設網上商店，因此為僱員提供處理網上訂單的培訓",
+      opts: [
+        "A. (a) 提高效率和生產力 ｜ (b) 滿足企業目前和未來的需要 ｜ (c) 保障僱員的健康和安全",
+        "B. (a) 增加僱員歸屬感，促進僱員關係 ｜ (b) 保障僱員的健康和安全 ｜ (c) 滿足企業目前和未來的需要",
+        "C. (a) 保障僱員的健康和安全 ｜ (b) 提高企業的產品或服務質素 ｜ (c) 增加僱員歸屬感，促進僱員關係"
+      ],
+      ans: 1,
+      exp: "正確。(a) 表達對個人成長重視以減少不滿及降低流失率，屬「增加僱員歸屬感，促進僱員關係」；(b) 減低廚房意外機會屬「保障僱員的健康和安全」；(c) 配合開設網店教授處理網上訂單，屬「滿足企業目前和未來的需要」。"
+    },
+    {
+      q: "2. 關於「培訓 (Training)」與「發展 (Development)」的區別，下列哪項描述最為準確？",
+      opts: [
+        "A. 培訓旨在幫助僱員掌握目前工作所需的技能和知識，在短期內改善現職表現；發展則旨在幫助僱員成長，傳授領導與決策等概念知識，為日後出任更高職位作長遠準備",
+        "B. 培訓只適用於跨國企業的行政總裁及高級管理人員，旨在培養宏觀領導視野；發展則只適用於工廠生產線的兼職初級工人，旨在教授日常機器的基本操作步驟",
+        "C. 培訓與發展兩者的目的完全相同，都只着重於在短期內削減企業的員工福利開支，完全不會涉及任何與未來更高職位相關的領導或決策技巧訓練"
+      ],
+      ans: 0,
+      exp: "正確。課文第 4.2A 節指出，培訓着重提升僱員執行目前工作的能力（有助短期內改善工作表現）；發展則可視為長期的培訓，着重僱員長遠的事業發展，為日後出任更高職位作準備。"
+    },
+    {
+      q: "3. 一家時裝店計劃透過提供「培訓」和「發展」來提升售貨員的士氣。下列哪項最能準確解釋培訓和發展如何從兩方面激勵售貨員及提升其士氣？",
+      opts: [
+        "A. 培訓可讓售貨員完全免除日常銷售指標的考績評核；而發展則可讓售貨員即時獲得公司撥出全年利潤百分之二十的現金分紅",
+        "B. 培訓有助改善售貨員現職的銷售表現，從而增加他們的工作滿足感；而發展（如提名參加領袖或管理訓練）則向售貨員傳遞公司提供晉升前景的訊息，推動他們更努力工作爭取晉升",
+        "C. 培訓會迫使售貨員在無薪情況下每晚超時工作四小時；而發展則會將所有售貨員調派至競爭對手的分店工作，藉此激發他們的危機感"
+      ],
+      ans: 1,
+      exp: "正確。課文第 4.2B 節指出：(1) 培訓有助改善僱員的工作表現，從而增加他們的工作滿足感；(2) 僱員發展則可向僱員傳遞公司提供晉升前景的訊息，僱員或會更努力工作來爭取晉升機會，因此兩者均有助激勵僱員及提升士氣。"
+    },
+    {
+      q: "4. 某玩具生產商為生產線工人提供操作培訓，同時某連鎖酒店為前台接待員提供待客培訓。這兩家企業提供培訓如何達成「提高企業的產品或服務質素」及「提高效率和生產力」的目的？",
+      opts: [
+        "A. 製造業培訓可提升工人技能以減少生產出錯（改善產品質量）並提高生產速度；服務業培訓則可改善僱員的服務態度和技巧，為顧客提供更好服務（提升服務質素）並加快處理手續效率",
+        "B. 玩具生產商的培訓只能用來改善工人的待客禮貌而無法減少次貨；連鎖酒店的培訓則只能用來增加客房建築面積而無法改善接待員的服務態度",
+        "C. 兩家企業提供培訓都只為了向政府申請豁免繳交利得稅，對生產過程的出錯率、產品次貨率或前台接待顧客的服務效率並無任何實際影響"
+      ],
+      ans: 0,
+      exp: "正確。製造業可透過培訓減少工人生產出錯（改善產品質量）及提高生產速度（提升效率與生產力）；服務業則可透過培訓改善服務態度和技巧（提升服務質素）。"
+    },
+    {
+      q: "5. 為何企業向僱員提供培訓和發展機會，能夠「增加僱員歸屬感、促進僱員關係並降低員工流失率」？",
+      opts: [
+        "A. 因為僱員一旦接受了企業提供的培訓，在法律上便必須與企業簽訂終身僱傭合約，永遠不得提出辭職或轉投其他公司",
+        "B. 因為僱員可透過培訓和發展獲取新技能並為未來事業發展作準備，從而感受到企業對他們個人成長和事業發展的重視，對企業心存感激，令歸屬感增加、不滿減少，使勞資關係更和諧",
+        "C. 因為提供培訓和發展會令企業停止進行任何員工考績，僱員無須再達到任何表現標準即可自動獲發最高額的績效薪酬"
+      ],
+      ans: 1,
+      exp: "正確。僱員透過培訓和發展感受到企業對他們個人成長和事業發展的重視，會對企業心存感激，令歸屬感增加、對企業的不滿減少，從而降低員工流失率並促進和諧的僱員關係。"
+    },
+    {
+      q: "6. 銀河百貨兩家分店的銷售經理將會在今年退休，總經理打算以內部晉升填補空缺，人力資源部已為幾名有潛質的資深售貨員提供「領導和決策能力的訓練」。這項安排主要展示了哪項概念與目的？",
+      opts: [
+        "A. 展示了『僱員發展』的概念，旨在為資深售貨員日後出任更高職位（銷售經理）作準備，以滿足企業未來的人力需要並確保重要職位平穩交接",
+        "B. 展示了『基本入職職前輔導』的概念，旨在教授剛入職第一天的兼職收銀員如何操作收銀機掃描貨品條碼",
+        "C. 展示了『外部招聘』的概念，旨在透過商業獵頭公司從競爭對手挖角現職的分店銷售經理"
+      ],
+      ans: 0,
+      exp: "正確。為有潛質的資深售貨員提供領導和決策能力訓練，為他們日後擔任更高職位（銷售經理）作準備，屬於「僱員發展 (Development)」，能滿足企業未來的人力需要。"
+    }
+  ];
+  let curTDPQ = 0;
+  function renderTdPurpQuiz() {
+    const it = tdPurpQuizItems[curTDPQ];
+    document.getElementById('tdPurpQuizProg').textContent = `題目 ${curTDPQ + 1} / ${tdPurpQuizItems.length}`;
+    document.getElementById('tdPurpQuizQ').innerHTML = it.q;
+    document.getElementById('tdPurpQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkTdPurpQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('tdPurpQuizFb').innerHTML = '';
+  }
+  function checkTdPurpQuiz(idx) {
+    const it = tdPurpQuizItems[curTDPQ];
+    const fb = document.getElementById('tdPurpQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curTDPQ=(curTDPQ+1)%tdPurpQuizItems.length;renderTdPurpQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderTdPurpQuiz();
+
+  // ====== 2. 在職培訓：學徒・指導・工作輪調 ======
+  const otjCatalog = [
+    {
+      title: "1. 學徒訓練 (Apprenticeship Training)",
+      badge: "在職培訓方法",
+      def: "學徒訓練是指結合「實地實習」和一些「課堂培訓」來培訓僱員的結構性過程。受訓僱員（即學徒）一般會在工作場所協助已獲認可資格的資深僱員工作，並在教育機構接受課堂培訓。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>適用行業與重點提示</b>：常用於<b>需要技能認證的行業</b>（例如<b>建造業、汽車維修業、電機業、飛機維修員</b>，以及<b>廚師、美容師、髮型師</b>等職業）。<br>
+        <span style="color:var(--red)"><b>注意 1：</b>雖然學徒訓練包含一些課堂培訓，但這種培訓方法仍歸類為<b>在職培訓</b>！<br>
+        <b>注意 2：</b>學徒訓練<b>不適合那些不需要技術技能的工作</b>，例如售貨員。</span></p>
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：結合理論和實踐</b><br>由於學徒訓練結合了實習和課堂培訓，受訓僱員可同時學習理論和實踐。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：行政費用高昂</b><br>企業須向受訓僱員同時提供實習和課堂培訓，所以學徒訓練涉及的行政費用高於其他在職培訓方法。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "2. 指導 (Coaching，又稱顧問指導)",
+      badge: "在職培訓方法",
+      def: "指導是指委派經驗豐富的僱員擔任導師 (Coach)，向受訓僱員提供指示、回饋和示範，幫助受訓僱員發展技能和改善工作表現。有些企業亦會在事業發展計劃中加入指導元素，以培訓僱員成為管理人員。",
+      detail: `
+        <p style="margin:0 0 10px"><b>指導可能涉及的六項活動（受訓僱員亦可跟隨導師出席會議或面見客戶，從旁觀察學習）：</b><br>
+        (i) 向受訓僱員提供指導或指示；(ii) 鼓勵受訓僱員；(iii) 糾正受訓僱員的不良表現；(iv) 表揚受訓僱員的優秀表現；(v) 聆聽受訓僱員的憂慮和意見；及 (vi) 找出影響受訓僱員工作表現的障礙。</p>
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 受訓僱員可迅速發展所需技能</b>：導師可根據受訓僱員的需要和能力設計培訓內容，也可親身示範讓其從中學習。<br>
+            • <b>(ii) 受訓僱員可獲得支持和回饋</b>：有助建立正面的工作態度和改善工作表現。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 對導師而言非常費時</b>：導師須花時間為受訓僱員提供回饋，<b>或會影響導師自身的生產力</b>。<br>
+            • <b>(ii) 取決於導師的能力和投入程度</b>：若導師工作能力較弱、沒有致力訓練，或有不良工作習慣成為壞榜樣，培訓質素和成效便會較低。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "3. 工作輪調 (Job Rotation)",
+      badge: "在職培訓方法",
+      def: "工作輪調是指僱員按預定的時間，從負責某項工作調至負責另一項工作。由於僱員有機會體驗不同的工作，所以能發展與工作相關的各種技能。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>商業應用例子</b>：(1) 百貨公司安排售貨員輪調至不同部門，學習銷售各類產品的技巧；(2) 餐廳安排僱員輪調至不同崗位（如點餐、收銀、沖調飲品）；(3) 大型企業採用工作輪調培訓有潛質成為未來管理人員的僱員（<b>見習管理人員計劃 Management Trainee</b>），安排他們於不同商業功能進行輪調以了解各部門運作模式。</p>
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 增加受訓僱員的工作滿足感</b>：體驗不同工作、掌握各種技能及在企業內建立人脈。<br>
+            • <b>(ii) 委派工作的靈活性較大</b>：受訓僱員具備各種技能，企業在委派工作時有更大靈活性。<br>
+            • <b>(iii) 發掘受訓僱員的強項</b>：找出受訓僱員在哪些範疇有最佳表現，安排到合適崗位發揮所長。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 受訓僱員不能深入發展技能</b>：在每個工作崗位的時間有限，未必能深入發展各項技能。<br>
+            • <b>(ii) 受訓僱員可能較短視</b>：由於會在一段時間後調離崗位，處理問題時可能較短視。<br>
+            • <b>(iii) 增加其他僱員的工作量</b>：調離崗位後，部門內其他僱員要接手他的工作，工作量變相增加，或會削弱生產力。
+          </div>
+        </div>
+      `
+    }
+  ];
+
+  function renderOtj(idx) {
+    document.getElementById('otjNavList').innerHTML = otjCatalog.map((o, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderOtj(${i})">
+        <span>${o.title}</span>
+      </button>
+    `).join('');
+    const o = otjCatalog[idx];
+    document.getElementById('otjDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${o.title}</h3>
+        <span class="badge b-blue">${o.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${o.def}</p>
+      <div class="case-box">${o.detail}</div>
+    `;
+  }
+  renderOtj(0);
+
+  // 對稱深度設計的 6 道在職培訓挑戰題
+  const otjQuizItems = [
+    {
+      q: "1. 指出下列五項描述分別和「學徒訓練」、「指導」還是「工作輪調」有關：<br>(a) 受訓僱員可跟隨導師出席會議或面見客戶，從而熟習工作內容 ｜ (b) 常用於需要技能認證的行業 ｜ (c) 受訓僱員按預定的時間，從負責某項工作調至負責另一項工作 ｜ (d) 讓企業能發掘受訓僱員的強項 ｜ (e) 受訓僱員同時接受實地實習和課堂培訓",
+      opts: [
+        "A. (a) 指導 ｜ (b) 學徒訓練 ｜ (c) 工作輪調 ｜ (d) 工作輪調 ｜ (e) 學徒訓練",
+        "B. (a) 學徒訓練 ｜ (b) 指導 ｜ (c) 工作輪調 ｜ (d) 指導 ｜ (e) 工作輪調",
+        "C. (a) 指導 ｜ (b) 工作輪調 ｜ (c) 學徒訓練 ｜ (d) 學徒訓練 ｜ (e) 指導"
+      ],
+      ans: 0,
+      exp: "正確。(a) 跟隨導師見客屬「指導」；(b) 常用於需技能認證行業及 (e) 結合實習與課堂培訓屬「學徒訓練」；(c) 定期調崗及 (d) 發掘強項屬「工作輪調」。"
+    },
+    {
+      q: "2. 關於「學徒訓練 (Apprenticeship Training)」的特點與適用範圍，下列哪項描述最為準確？",
+      opts: [
+        "A. 由於學徒訓練包含在教育機構接受課堂培訓的元素，因此在分類上屬於『職外培訓』，而且最常用於培訓百貨公司的普通售貨員",
+        "B. 雖然學徒訓練結合了實地實習和一些課堂培訓（優點是結合理論和實踐），但它仍歸類為『在職培訓』，常用於建造業、汽車業、電機業等需要技能認證的行業，而不適合不需要技術技能的售貨員",
+        "C. 學徒訓練在三種在職培訓方法中的行政費用最低，因為企業完全無須安排資深僱員在工作場所帶教，亦無須安排任何課堂學習"
+      ],
+      ans: 1,
+      exp: "正確。課本特別提示：(1) 雖然學徒訓練包含一些課堂培訓，但仍歸類為在職培訓；(2) 學徒訓練不適合不需要技術技能的工作（如售貨員）；(3) 因須同時提供實習和課堂培訓，其行政費用高於其他在職培訓方法。"
+    },
+    {
+      q: "3. 銀河百貨的人力資源經理提議推出「工作輪調計劃」來培訓年輕的售貨員，安排他們輪調到不同部門銷售各類產品。除了能增加年輕售貨員的工作滿足感外，這種培訓方法還有哪兩個優點？",
+      opts: [
+        "A. (1) 委派工作的靈活性較大，因為受訓售貨員掌握了銷售不同部門產品的各種技能；(2) 可發掘受訓售貨員的強項，找出他們在哪個部門表現最佳，從而安排到合適崗位發揮所長",
+        "B. (1) 可確保年輕售貨員在單一部門停留十年以上以深入發展單一技能；(2) 售貨員調離原部門後可大幅減輕原部門其他同事的工作量",
+        "C. (1) 可讓售貨員在完全離開實際工作場所的模擬駕駛艙內學習；(2) 可在同一時間由一名講師向五百名售貨員單向講授理論知識"
+      ],
+      ans: 0,
+      exp: "正確。工作輪調的三大優點為：(i) 增加受訓僱員的工作滿足感；(ii) 委派工作的靈活性較大；以及 (iii) 發掘受訓僱員的強項（注意 B 是把工作輪調的缺點寫成了優點）。"
+    },
+    {
+      q: "4. 不少大型企業都會採用「工作輪調」的方式來培訓有潛質成為未來管理人員的僱員（見習管理人員計劃）。然而，採用工作輪調有甚麼缺點？",
+      opts: [
+        "A. 受訓僱員在每個工作崗位的時間有限，未必能深入發展各項技能；且因知道會在一段時間後調離崗位，處理問題時可能較為短視；同時調離後其他僱員要接手其工作，變相增加其他僱員的工作量",
+        "B. 受訓僱員永遠只能在同一個基層崗位重複做同一項工序，完全無法體驗其他部門的運作模式或建立跨部門人脈",
+        "C. 企業必須花費巨額資金購買虛擬實境電腦模擬設備，才能讓見習管理人員在公司內部的不同部門之間進行工作輪調"
+      ],
+      ans: 0,
+      exp: "正確。工作輪調的三大缺點為：(i) 受訓僱員不能深入發展技能；(ii) 受訓僱員可能較短視；以及 (iii) 增加其他僱員的工作量（或會削弱他們的生產力）。"
+    },
+    {
+      q: "5. 菁華汽車零件廠新聘請了 300 名生產工人，行政總裁建議指派廠內僅有的數名懂得操作新鐳射切割器的資深工人擔任導師，以「指導 (Coaching)」方式教導和支援每名新工人。營運經理為何擔心這個安排會降低廠房的生產力？",
+      opts: [
+        "A. 因為指導屬於職外培訓，300 名新工人與資深工人都必須離開廠房前往海外大學上課三年，導致廠房完全沒有工人留守",
+        "B. 因為指導對導師而言非常費時，廠內僅有的數名資深工人須花費大量時間教導及向大批新工人提供回饋，會嚴重影響這批資深工人自身的生產力；且若部分導師能力不足或有不良工作習慣，更會影響培訓成效",
+        "C. 因為在指導過程中，導師絕對不能根據受訓工人的需要設計培訓內容，亦不能親身示範操作鐳射切割器，導致新工人永遠無法學會操作"
+      ],
+      ans: 1,
+      exp: "正確。指導的兩大缺點是：(i) 對導師而言非常費時（導師須花時間為受訓僱員提供指導和回饋，或會影響自身的生產力，尤其當資深工人極少而新工人眾多時）；(ii) 取決於導師的能力和投入程度。"
+    },
+    {
+      q: "6. 一家連鎖茶餐廳計劃為新入職的樓面侍應及水吧飲品沖調員提供「在職培訓」。下列哪兩種做法屬於合適的在職培訓方法？",
+      opts: [
+        "A. (1) 指導：委派經驗豐富的資深侍應或水吧師傅擔任導師，在茶餐廳現場向新員工親身示範沖調奶茶步驟並即時提供回饋；(2) 工作輪調：按預定時間安排新員工在點餐、收銀及水吧沖調等不同崗位輪調，以掌握茶餐廳各項技能",
+        "B. (1) 程式學習：要求侍應在家中透過電腦軟件自學衝上雲霄的飛機駕駛理論；(2) 個案研究：要求水吧員工分組研究跨國銀行的外匯衍生工具投資失敗個案",
+        "C. (1) 內部招聘：在公司內聯網張貼侍應職位空缺；(2) 件薪制度：按侍應每清潔一張餐桌支付五元現金報酬"
+      ],
+      ans: 0,
+      exp: "正確。在茶餐廳現場由資深員工親身示範並提供指示回饋屬於「指導」；安排員工按預定時間在點餐、收銀與沖調飲品等不同崗位輪調屬於「工作輪調」，兩者均為切合茶餐廳運作的在職培訓方法。"
+    }
+  ];
+  let curOTJQ = 0;
+  function renderOtjQuiz() {
+    const it = otjQuizItems[curOTJQ];
+    document.getElementById('otjQuizProg').textContent = `題目 ${curOTJQ + 1} / ${otjQuizItems.length}`;
+    document.getElementById('otjQuizQ').innerHTML = it.q;
+    document.getElementById('otjQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkOtjQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('otjQuizFb').innerHTML = '';
+  }
+  function checkOtjQuiz(idx) {
+    const it = otjQuizItems[curOTJQ];
+    const fb = document.getElementById('otjQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curOTJQ=(curOTJQ+1)%otjQuizItems.length;renderOtjQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderOtjQuiz();
+
+  // ====== 3. 職外培訓：五種常見方法 ======
+  const offCatalog = [
+    {
+      title: "1. 講課 (Lectures，又稱課堂培訓／課室訓練)",
+      badge: "職外培訓方法",
+      def: "講課是指以課堂授課的方式來培訓僱員（可安排資深僱員或聘請專業培訓人員授課，或安排出席教育機構課程）。適合用來教授事實、概念、原則和理論，常用於增進或提升僱員的：(1) 產品知識、(2) 行業知識（如業界守則和行業趨勢）及 (3) 語言技巧。",
+      detail: `
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：符合成本效益</b><br>
+            讓企業可在同一時間向一大群受訓僱員傳授知識，每名僱員的培訓成本相對較低。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 受訓僱員可能難以應用所學</b>：課堂環境與實際工作環境不同，或難以將所學應用到工作上。<br>
+            • <b>(ii) 缺乏互動</b>：若受訓僱員眾多，培訓人員和學員間或缺乏互動交流，可能對培訓失去興趣。<br>
+            • <b>(iii) 並非適用於所有技能</b>：不適用於有關工作態度的培訓，也不適用於訓練人際關係和溝通技巧等技能。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "2. 程式學習 (Programmed Learning)",
+      badge: "職外培訓方法",
+      def: "程式學習是一種循序漸進的自學方法，可透過書本、電腦、網上平台或影片進行。常用於只需較少人際互動的情況，例如教授工作流程或產品知識。",
+      detail: `
+        <div class="flow-chain" style="margin:6px 0 12px;padding:12px">
+          <div class="flow-node">第1步：透過教材(書本或電腦程式)學習事實和概念</div><span class="flow-arrow">➔</span>
+          <div class="flow-node">第2步：回答後續提問或解答問題</div><span class="flow-arrow">➔</span>
+          <div class="flow-node">第3步：答案正確 ➔ 引導學習下一課題<br><small style="color:var(--red)">(若答案錯誤 ➔ 返回第1步重新學習)</small></div>
+        </div>
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 適用於培訓分散各地的僱員</b>：屬自學方法，無須為僱員在不同時段和地點開設培訓課程。<br>
+            • <b>(ii) 即時回饋</b>：提交答案後可即時獲回饋，確保充分理解後才繼續學習較進階內容。<br>
+            • <b>(iii) 方便</b>：可隨時隨地按自己的進度學習。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 電腦程式通常成本高昂</b>：如開發一套全面電腦化的互動教材，牽涉成本可能非常高昂。<br>
+            • <b>(ii) 未必值得投放資源</b>：教材一般須就特定培訓需要度身訂造，應否花費資源開發有待商榷。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "3. 模擬訓練 (Simulation Training)",
+      badge: "職外培訓方法",
+      def: "模擬訓練（又稱模擬培訓）是指僱員在與實際工作環境相似的模擬工作環境中學習（亦可採用虛擬實境 VR 技術）。傳統上分為兩種：(i) 設備模擬（使用複製真實設備主要特點的模擬設備，如運用模擬病人訓練醫生、運用模擬駕駛艙訓練機師）；(ii) 電腦模擬（在電腦模擬遊戲中作出投資或管理決策，常用來培訓管理人員）。",
+      detail: `
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 風險比在職培訓低</b>：如採用在職培訓的風險太高（例如進行手術、駕駛飛機或作出重大的投資決策），模擬訓練有助企業避免損失。<br>
+            • <b>(ii) 熟能生巧</b>：可在模擬工作環境中反覆練習，並從所犯錯誤中汲取經驗，迅速學會專門技巧。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 模擬環境或與實際環境不同</b>：若模擬環境與實際環境存在很大差異，所學技能知識未必能應用於實際工作上。<br>
+            • <b>(ii) 成本高昂</b>：涉及開發和保養成本，與其他培訓方法相比成本高昂。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "4. 角色扮演 (Role Playing)",
+      badge: "職外培訓方法",
+      def: "角色扮演是指僱員在培訓人員的指導下，演練特定情景的一種主動學習方法（通常需要兩個或以上的受訓僱員參與，獲分配特定角色資料，在虛構或假定情景中展示實際行為）。非常適合在工作時需要人際互動的職位，如客戶服務員、酒店前台員工、售貨員和營業代表（如演練處理顧客投訴或推銷產品）。",
+      detail: `
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 適用於發展人際關係和溝通技巧</b>：進行角色扮演時須與他人互動，可從中有效學習人際關係和溝通技巧。<br>
+            • <b>(ii) 為應對實際情況作準備</b>：就工作中或會遇到的情況作準備，實際工作遇到類似情況時便能有效處理。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 部分受訓僱員或會抗拒這種培訓方法</b>：較習慣傳統課堂培訓模式的僱員或會抗拒。<br>
+            • <b>(ii) 受訓僱員或會感到不自在</b>：內向或被動的僱員可能對在他人面前演練感到尷尬，或在表現遭嚴厲批評時感到難堪。
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "5. 個案研究 (Case Study) ＆ 答題錦囊",
+      badge: "職外培訓方法",
+      def: "個案研究是指要求僱員根據所提供的真實企業情景描述，共同合作分析個案，然後作出決策以解決難題，最後與培訓人員討論個案細節和相應決策。常用來教授如何應對工作中可能遇到的各種情況和問題（如訓練銀行見習管理人員、酒店前台員工學習處理住客各項要求）。",
+      detail: `
+        <div class="grid2" style="gap:12px;margin-bottom:12px">
+          <div style="background:var(--green-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green);font-size:15px">
+            <b style="color:var(--green)">優點：</b><br>
+            • <b>(i) 適用於發展分析和決策能力</b>：透過分析和討論不同個案，改善分析和決策的能力。<br>
+            • <b>(ii) 建立團隊精神</b>：通常須共同合作分析個案和作出決策，有助建立良好的團隊精神。
+          </div>
+          <div style="background:var(--red-light);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red);font-size:15px">
+            <b style="color:var(--red)">缺點：</b><br>
+            • <b>(i) 費時</b>：受訓僱員須花時間分析個案，培訓人員也須花時間討論，比較費時。<br>
+            • <b>(ii) 個案未必能全面反映實際情況</b>：無法列出所有細節，受訓僱員只能根據個案提供的資料進行分析。
+          </div>
+        </div>
+        <div style="background:var(--surface);padding:12px 16px;border-radius:10px;border-left:4px solid var(--primary);font-size:15px">
+          <b style="color:var(--primary)">答題錦囊：回答建議培訓方法的三步策略</b><br>
+          (i) 審題分辨考問的是<b>在職培訓</b>還是<b>職外培訓</b>方法；(ii) 準確列出方法名稱；(iii) 解釋企業<b>如何進行該培訓</b>，以及該職位僱員<b>可從中學習到哪些具體技能或知識</b>（例如為保險營業代表建議職外培訓：① <b>講課</b>：提供課堂培訓傳授不同保險計劃特點等產品知識；② <b>角色扮演</b>：演練如何向客戶推銷保險產品，改善溝通和銷售技巧）。
+        </div>
+      `
+    }
+  ];
+
+  function renderOff(idx) {
+    document.getElementById('offNavList').innerHTML = offCatalog.map((o, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderOff(${i})">
+        <span>${o.title}</span>
+      </button>
+    `).join('');
+    const o = offCatalog[idx];
+    document.getElementById('offDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${o.title}</h3>
+        <span class="badge b-teal">${o.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${o.def}</p>
+      <div class="case-box">${o.detail}</div>
+    `;
+  }
+  renderOff(0);
+
+  // 對稱深度設計的 7 道職外培訓挑戰題
+  const offQuizItems = [
+    {
+      q: "1. 指出下列五項陳述分別描述哪種「職外培訓方法」：<br>(a) 受訓僱員使用複製真實設備主要特點的設備來訓練 ｜ (b) 受訓僱員須演練特定情景，從中學習所需人際溝通技能 ｜ (c) 受訓僱員須共同合作分析個案，然後作出決策以解決難題 ｜ (d) 可透過書本、電腦、網上平台或影片進行的循序漸進自學方法 ｜ (e) 以課堂授課方式向一大群受訓僱員傳授知識，符合成本效益",
+      opts: [
+        "A. (a) 模擬訓練 ｜ (b) 角色扮演 ｜ (c) 個案研究 ｜ (d) 程式學習 ｜ (e) 講課",
+        "B. (a) 程式學習 ｜ (b) 個案研究 ｜ (c) 角色扮演 ｜ (d) 模擬訓練 ｜ (e) 講課",
+        "C. (a) 模擬訓練 ｜ (b) 講課 ｜ (c) 個案研究 ｜ (d) 角色扮演 ｜ (e) 程式學習"
+      ],
+      ans: 0,
+      exp: "正確。(a) 使用複製真實設備特點的模擬設備屬「模擬訓練」；(b) 演練特定情景屬「角色扮演」；(c) 合作分析個案作決策屬「個案研究」；(d) 循序漸進自學屬「程式學習」；(e) 課堂授課向大群員工傳授知識屬「講課」。"
+    },
+    {
+      q: "2. 雖然「講課（課堂培訓）」讓企業可在同一時間向一大群受訓僱員傳授知識而符合成本效益，但為何有些企業並不採用這種培訓方法？",
+      opts: [
+        "A. 因為講課規定必須為每位學員購置昂貴的模擬駕駛艙設備，而且絕對不能用來傳授任何產品知識、行業守則或語言技巧",
+        "B. 因為課堂環境與實際工作環境不同，受訓僱員可能難以將所學應用到工作上；且人數眾多時培訓人員與學員間缺乏互動交流（易失去興趣）；同時講課不適用於工作態度、人際關係和溝通技巧等培訓",
+        "C. 因為講課屬於在職培訓，要求學員在繁忙的實際生產線上邊操作危險機器邊聽講，會對實際工作環境造成最嚴重的干擾"
+      ],
+      ans: 1,
+      exp: "正確。講課的三大缺點為：(i) 受訓僱員可能難以應用所學；(ii) 缺乏互動（可能失去興趣）；以及 (iii) 並非適用於所有技能（不適用於工作態度、人際關係和溝通技巧等技能）。"
+    },
+    {
+      q: "3. 某跨國公司最近更新了公司政策和標準工作流程，希望向分散於全球不同國家分公司的全體員工講解修改內容。除了舉辦視像講課外，該跨國公司還可採用哪種職外培訓方法？為甚麼？",
+      opts: [
+        "A. 可採用『程式學習』，因為這是一種可透過電腦、網上平台或影片進行的循序漸進自學方法，適用於培訓分散各地的僱員（無須在不同時段和地點開班），且方便員工隨時隨地按自己進度學習並即時獲得回饋",
+        "B. 可採用『學徒訓練』，強制全球所有分公司的文職人員飛往總部工場擔任三年全職技工學徒，協助資深技工維修機器",
+        "C. 可採用『設備模擬訓練』，在每個國家的辦公室建造一座高仿真度的模擬手術室，讓行政人員練習外科手術操作"
+      ],
+      ans: 0,
+      exp: "正確。程式學習是透過書本、電腦、網上平台或影片進行的自學方法，非常適合教授工作流程或產品知識等只需較少人際互動的內容，其三大優點正是：(i) 適用於培訓分散各地的僱員；(ii) 即時回饋；(iii) 方便按自己進度學習。"
+    },
+    {
+      q: "4. 某銀行採用「個案研究 (Case Study)」來訓練見習管理人員 (Management Trainees)。採用這種職外培訓方法有哪兩個優點？",
+      opts: [
+        "A. (1) 所花費的討論時間在所有培訓方法中最短，完全不會佔用培訓人員任何時間；(2) 書面個案能夠百分百列出真實商業世界的所有微小細節而毫無遺漏",
+        "B. (1) 適用於發展分析和決策能力，見習管理人員可透過分析和討論不同商業個案改善分析與決策能力；(2) 有助建立團隊精神，因為他們通常須共同合作分析個案和作出決策以解決難題",
+        "C. (1) 見習管理人員完全無須與其他學員合作或討論，只需獨自背誦課文；(2) 可讓見習管理人員練習操作真實的工廠重型車床設備"
+      ],
+      ans: 1,
+      exp: "正確。個案研究的兩大優點是：(i) 適用於發展分析和決策能力；及 (ii) 建立團隊精神（共同合作分析個案和作出決策）。注意 A 把個案研究的兩個缺點（費時、個案未必能全面反映實際情況）說反了。"
+    },
+    {
+      q: "5. 銀河百貨及某香港酒店計劃提供職外培訓，以改善年輕售貨員及酒店前台員工的「人際關係、溝通技巧及處理顧客投訴的能力」。下列哪種職外培訓方法最為合適？其缺點是甚麼？",
+      opts: [
+        "A. 應採用『角色扮演』，讓員工分別扮演售貨員／前台員工與投訴顧客以演練特定情景（優點是適用於發展人際溝通技巧及為應對實際情況作準備）；惟缺點是部分習慣傳統課堂的員工或會抗拒，且內向員工在他人面前演練或遭批評時會感到尷尬不自在",
+        "B. 應採用『程式學習』，讓員工獨自對着電腦屏幕點擊是非題，因為完全不需要與他人互動的自學程式最能訓練面對面安撫盛怒顧客的人際溝通技巧",
+        "C. 應採用『學徒訓練』，因為售貨員屬於必須考取政府重型機械操作牌照的工程技術職位，最適合使用學徒訓練"
+      ],
+      ans: 0,
+      exp: "正確。角色扮演讓受訓僱員在假定情景中與他人互動演練，非常適合客戶服務員、售貨員及前台員工發展人際關係和溝通技巧；其缺點是部分僱員或會抗拒，以及內向僱員在眾人面前演練或遭嚴厲批評時會感到不自在。"
+    },
+    {
+      q: "6. 私家醫院訓練外科醫生進行複雜微創手術，以及航空公司訓練機師應對惡劣天氣飛行，為何都會採用「模擬訓練（設備模擬）」而非直接在真實手術室或真實客機上進行在職培訓？",
+      opts: [
+        "A. 因為模擬訓練的開發和設備保養成本在所有培訓方法中最低廉，幾乎不費分文，而且模擬環境與實際環境存在極大差異",
+        "B. 因為在真實手術或真實載客飛行中採用在職培訓的風險太高，『模擬訓練的風險比在職培訓低』，有助避免嚴重人命與財務損失；而且受訓醫生和機師可在模擬環境中反覆練習、從錯誤中汲取經驗，『熟能生巧』迅速學會專門技巧",
+        "C. 因為模擬訓練屬於完全不需要任何設備的純文字閱讀自學方法，醫生和機師只需在家閱讀說明書便可完成訓練"
+      ],
+      ans: 1,
+      exp: "正確。模擬訓練的兩大優點正是：(i) 風險比在職培訓低（若在職培訓風險太高如進行手術、駕駛飛機或重大投資決策，模擬訓練有助避免損失）；及 (ii) 熟能生巧（可反覆練習並從錯誤中汲取經驗，迅速學會專門技巧）。"
+    },
+    {
+      q: "7. 除了「設備模擬」外，傳統上的模擬訓練還包括「電腦模擬 (Computer Simulation)」。電腦模擬通常如何運作及適用於培訓哪類人員？",
+      opts: [
+        "A. 受訓僱員須在電腦模擬遊戲中作出決策（例如投資決策和管理決策），然後電腦會判斷這些決策可能產生的結果；這種方法通常用來培訓管理人員",
+        "B. 受訓僱員只需在電腦上觀看預先錄製的公司歷史宣傳片，無須作出任何決策；這種方法只用來培訓兼職清潔工人",
+        "C. 受訓僱員使用電腦連接工場的真實重型吊臂車進行高空搬運；這種方法只用來培訓建築工地的學徒"
+      ],
+      ans: 0,
+      exp: "正確。課文第 4.3B 節指出，電腦模擬要求受訓僱員在電腦模擬遊戲中作出投資決策和管理決策，由電腦判斷可能產生的結果，通常用來培訓管理人員。"
+    }
+  ];
+  let curOFFQ = 0;
+  function renderOffQuiz() {
+    const it = offQuizItems[curOFFQ];
+    document.getElementById('offQuizProg').textContent = `題目 ${curOFFQ + 1} / ${offQuizItems.length}`;
+    document.getElementById('offQuizQ').innerHTML = it.q;
+    document.getElementById('offQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkOffQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('offQuizFb').innerHTML = '';
+  }
+  function checkOffQuiz(idx) {
+    const it = offQuizItems[curOFFQ];
+    const fb = document.getElementById('offQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curOFFQ=(curOFFQ+1)%offQuizItems.length;renderOffQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderOffQuiz();
+
+  // ====== 4. 在職 vs 職外培訓比較與配對顧問 ======
+  const modeCompData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:17px">1. 在職培訓 (On-the-job Training) 與職外培訓相比的優點和缺點：</b>
+      <table class="comp-table" style="font-size:15px;margin-top:8px">
+        <thead><tr><th style="width:50%">在職培訓的 4 項優點</th><th style="width:50%">在職培訓的 3 項缺點</th></tr></thead>
+        <tbody>
+          <tr><td><b>(i) 成本較低</b>：無須使用昂貴的培訓設施和設備（如電腦程式和模擬設備），又不用聘請專業的培訓人員，一般較為便宜。</td><td><b>(i) 系統性較低</b>：較欠缺系統性，培訓人員或不會仔細計劃和組織培訓內容；且通常專注指導如何完成工作，可能不會仔細解釋進行每項工序背後的原因。</td></tr>
+          <tr><td><b>(ii) 即時回饋</b>：受訓僱員可就實際表現即時獲得培訓人員的回饋，有助及早改善工作表現。</td><td><b>(ii) 取決於培訓人員的投入程度</b>：若獲指派為培訓人員的僱員沒有致力訓練受訓僱員，培訓的質素和成效便會較低。</td></tr>
+          <tr><td><b>(iii) 所學的技能和知識較實用，也較切合工作需要</b>：受訓僱員可把學到的技能和知識直接應用到工作上。</td><td><b>(iii) 培訓成效不一</b>：由於不同培訓人員的技能和知識水平都不同，所以同一家企業甚至同一個部門內，每個受訓僱員的培訓成效都可能不盡相同。</td></tr>
+          <tr><td><b>(iv) 切合受訓僱員的需要和能力</b>：培訓人員可根據受訓僱員的需要和能力設計培訓內容。</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--teal);font-size:17px">2. 職外培訓 (Off-the-job Training) 與在職培訓相比的優點和缺點：</b>
+      <table class="comp-table" style="font-size:15px;margin-top:8px">
+        <thead><tr><th style="width:50%">職外培訓的 4 項優點</th><th style="width:50%">職外培訓的 3 項缺點</th></tr></thead>
+        <tbody>
+          <tr><td><b>(i) 系統性較高</b>：通常設計較嚴謹，也較為正規，企業可以有系統地向受訓僱員教授各種概念、原則和理論。</td><td><b>(i) 成本較高</b>：企業可能須聘請專業的培訓人員，或使用昂貴的培訓設施和設備，成本可能較高。</td></tr>
+          <tr><td><b>(ii) 將干擾減至最低</b>：在實際工作場所以外的地方進行，可將對實際工作環境的干擾減至最低。</td><td><b>(ii) 所學的技能和知識未必適用於實際工作環境，也未必切合工作需要</b>：培訓環境與實際工作環境難免有差異，未必能直接應用到工作上。</td></tr>
+          <tr><td><b>(iii) 壓力較小</b>：與實際工作環境相比，受訓僱員在職外培訓環境下學習的壓力會較小，有助提升學習效能。</td><td><b>(iii) 學習差異</b>：由於受訓僱員有不同的學習能力及過往知識，要他們在同一環境（如課室）中採用相同的教材一起學習，可能會影響學習效能。</td></tr>
+          <tr><td><b>(iv) 學習最新的知識和技術</b>：受訓僱員有機會透過這種培訓模式學習與工作相關的最新知識和技術。</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">3. 在職培訓 vs 職外培訓 一體兩面記憶法：</b><br>
+      • <b>(1) 成本開支</b>：在職培訓無須昂貴設施與外聘導師，<b>成本較低</b> <b>vs</b> 職外培訓須聘專業培訓員或用昂貴設施，<b>成本較高</b>。<br>
+      • <b>(2) 系統性與最新知識</b>：在職培訓較欠組織、只教做不教背後原因，<b>系統性較低</b> <b>vs</b> 職外培訓設計嚴謹正規、有系統教概念原則及<b>最新知識技術，系統性較高</b>。<br>
+      • <b>(3) 實用性與應用</b>：在職培訓<b>較實用及切合工作需要</b>，可直接應用並獲<b>即時回饋</b> <b>vs</b> 職外培訓環境與實際工作有差異，<b>所學未必適用於實際工作環境</b>。<br>
+      • <b>(4) 個別差異 vs 學習差異</b>：在職培訓可按學員能力度身設計，但<b>取決於導師投入度且成效不一</b> <b>vs</b> 職外培訓用相同教材一起學習，受訓僱員的<b>學習差異或會影響學習效能</b>。<br>
+      • <b>(5) 工作干擾與學習壓力</b>：在職培訓在實際工作場所進行（或干擾日常工作及有壓力） <b>vs</b> 職外培訓在工作場所外進行，<b>將對實際工作環境的干擾減至最低，且學習壓力較小</b>。
+    </div>`
+  ];
+  function renderModeComp(idx) {
+    document.querySelectorAll('#modeCompChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('modeCompBox').innerHTML = modeCompData[idx];
+  }
+  renderModeComp(0);
+
+  const tdCases = [
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 A：為何「在職培訓」比「職外培訓」更適合一家「小型貿易公司」用來訓練新員工？（結合在職培訓優點與中小企特徵）</b><br>
+      • <b>(1) 資金與資源有限（配對：成本較低）</b>：小型貿易公司資本有限、財政預算緊絀，難以負擔聘請外部專業培訓人員或使用昂貴職外培訓設施的高昂費用；在職培訓由現職資深員工在辦公室內進行，<b>成本較低</b>，切合小企業財力。<br>
+      • <b>(2) 員工數目少、需靈活度身指導（配對：切合受訓僱員的需要和能力）</b>：小企業每次新聘的員工只有一兩名（不划算開辦正規職外課堂），在職培訓可由主管根據該名新員工的能力和需要度身設計培訓內容，並提供<b>即時回饋</b>。<br>
+      • <b>(3) 工序直接且人手緊張，需即時投入工作（配對：所學較實用且切合工作需要）</b>：小企業人手緊絀，不能讓員工長時間離開崗位上課；在職培訓讓新員工邊做邊學，所學的貿易跟單與文件處理技能<b>較實用並可直接應用到工作上</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 B：菁華汽車零件廠新聘 300 名工人學習操作「最新鐳射切割器」，營運經理為何認為「以在職培訓模式訓練新工人的風險太高」，並建議改用哪三種職外培訓方法？</b><br>
+      • <b>(1) 為何在職培訓風險太高？</b>因為新工人缺乏經驗，若直接在實際生產線上操作高危及昂貴的「最新鐳射切割器」，一旦操作失誤極易<b>引致嚴重工業意外（危及工人健康和安全）、損壞昂貴的鐳射切割設備、造成大量原材料浪費及次貨，並嚴重干擾或中斷廠房的正常生產運作</b>！<br>
+      • <b>(2) 可採用的三種職外培訓方法：</b><br>
+      &nbsp;&nbsp;① <b>模擬訓練（設備模擬）</b>：讓新工人在複製真實鐳射切割器特點的模擬設備上反覆練習操作，風險低且熟能生巧。<br>
+      &nbsp;&nbsp;② <b>講課（課堂培訓）</b>：由專業技師同時向大批新工人講授鐳射切割器的操作原理、安全守則及工作流程，符合成本效益。<br>
+      &nbsp;&nbsp;③ <b>程式學習</b>：讓新工人透過電腦互動程式或影片循序漸進自學機器操作步驟與安全測驗，即時獲得回饋。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 C：飛馬航空新聘請了大量缺乏經驗的「飛機維修員、機師、空中服務員及地勤人員」，可如何分別採用「學徒訓練、模擬訓練和角色扮演」來訓練他們？</b><br>
+      • <b>(i) 學徒訓練 ➔ 適用於「飛機維修員」</b>：飛機維修屬需要嚴格技能認證的技術工種；可安排新維修員在機庫協助已獲認可資格的資深飛機工程師進行實地維修實習，同時在專業機構接受航空工程課堂培訓，結合理論與實踐。<br>
+      • <b>(ii) 模擬訓練 ➔ 適用於「機師」（或空服員緊急逃生訓練）</b>：駕駛真實客機在職訓練風險極高；可讓新機師在複製真實客機駕駛室的「模擬駕駛艙（設備模擬）」中反覆練習升降及應對惡劣天氣，安全地熟習飛行技巧。<br>
+      • <b>(iii) 角色扮演 ➔ 適用於「空中服務員及地勤人員」</b>：空服員與地勤人員日常須與大量乘客互動；可讓他們分別扮演乘客與機艙／地勤人員，演練如何招待乘客及處理航班延誤投訴，有效發展人際關係、溝通與待客技巧。
+    </div>`
+  ];
+  function renderTdCase(idx) {
+    document.querySelectorAll('#tdCaseChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('tdCaseBox').innerHTML = tdCases[idx];
+  }
+  renderTdCase(0);
+
+  // 對稱深度設計的 6 道在職 vs 職外培訓比較與個案挑戰題
+  const cmpQuizItems = [
+    {
+      q: "1. 指出下列四項特徵分別屬於「在職培訓」還是「職外培訓」：<br>(a) 無須使用昂貴的培訓設施，成本較低 ｜ (b) 受訓僱員可以在壓力較小的環境下學習 ｜ (c) 受訓僱員可以就他們的實際工作表現即時獲得回饋 ｜ (d) 即使在同一部門，每個受訓僱員的培訓成效也可能存在差異",
+      opts: [
+        "A. (a) 在職培訓 ｜ (b) 職外培訓 ｜ (c) 在職培訓 ｜ (d) 在職培訓",
+        "B. (a) 職外培訓 ｜ (b) 在職培訓 ｜ (c) 職外培訓 ｜ (d) 職外培訓",
+        "C. (a) 在職培訓 ｜ (b) 職外培訓 ｜ (c) 職外培訓 ｜ (d) 在職培訓"
+      ],
+      ans: 0,
+      exp: "正確。(a) 成本較低及 (c) 就實際工作表現即時獲回饋屬「在職培訓」的優點；(d) 因不同培訓人員水平不同導致培訓成效不一屬「在職培訓」的缺點；(b) 學習壓力較小屬「職外培訓」的優點。"
+    },
+    {
+      q: "2. 指出下列三項特徵分別屬於「在職培訓」還是「職外培訓」：<br>(e) 可將對實際工作環境的干擾減至最低 ｜ (f) 受訓僱員可以更有系統地學習概念、原則和理論 ｜ (g) 受訓僱員未必能把學到的技能和知識直接應用到工作上",
+      opts: [
+        "A. (e) 在職培訓 ｜ (f) 在職培訓 ｜ (g) 職外培訓",
+        "B. (e) 職外培訓 ｜ (f) 職外培訓 ｜ (g) 職外培訓",
+        "C. (e) 職外培訓 ｜ (f) 在職培訓 ｜ (g) 在職培訓"
+      ],
+      ans: 1,
+      exp: "正確。這三項全部屬於「職外培訓」的特徵：(e) 將對實際工作環境干擾減至最低及 (f) 系統性較高屬職外培訓的優點；(g) 因培訓環境與實際工作環境有差異，所學未必能直接應用到工作上，屬職外培訓的缺點。"
+    },
+    {
+      q: "3. 與在職培訓相比，採用「職外培訓」有哪三個主要缺點？",
+      opts: [
+        "A. (1) 系統性極低，培訓人員從不計劃培訓內容；(2) 對實際工作環境造成最嚴重的日常干擾；(3) 受訓僱員無法學習任何最新的行業知識和技術",
+        "B. (1) 成本較高（可能須聘請專業培訓人員或使用昂貴設施設備）；(2) 所學的技能和知識未必適用於實際工作環境，也未必切合工作需要；(3) 受訓僱員存在學習差異，在同一環境用相同教材一起學習或會影響學習效能",
+        "C. (1) 受訓僱員在職外培訓環境下的學習壓力必定遠高於繁忙的真實工作現場；(2) 企業完全不能使用課堂講課或角色扮演；(3) 只適用於不足五人的微型企業"
+      ],
+      ans: 1,
+      exp: "正確。職外培訓與在職培訓相比的三大缺點為：(i) 成本較高；(ii) 所學的技能和知識未必適用於實際工作環境，也未必切合工作需要；以及 (iii) 學習差異（受訓僱員學習能力與過往知識不同，用相同教材一起學習或影響效能）。"
+    },
+    {
+      q: "4. 為何與職外培訓相比，「在職培訓」會出現「系統性較低」及「培訓成效不一」的缺點？",
+      opts: [
+        "A. 因為在職培訓的培訓人員或不會仔細計劃和組織培訓內容，通常只專注指導如何完成工作而不解釋背後原因（系統性較低）；而且不同培訓人員的技能、知識水平與投入程度都不同，導致同一部門內每個受訓僱員的成效不盡相同",
+        "B. 因為在職培訓是由外部大學教授按照全港統一的標準化電腦程式教材授課，要求所有不同能力的學員在同一課室以相同進度學習",
+        "C. 因為在職培訓完全禁止培訓人員向受訓僱員提供任何工作示範或即時回饋，學員只能靠自己摸索"
+      ],
+      ans: 0,
+      exp: "正確。在職培訓的三大缺點正是：(i) 系統性較低（或不會仔細計劃組織內容，只教如何完成工作而不解釋每項工序背後原因）；(ii) 取決於培訓人員的投入程度；(iii) 培訓成效不一（不同培訓人員的技能知識水平不同）。"
+    },
+    {
+      q: "5. 森記是一家香港電器用品批發商，人力資源經理計劃在下一個月為銷售人員安排「職外培訓」而非「在職培訓」以改善銷售表現。從森記的角度，下列哪項是安排職外培訓而非在職培訓的合理原因？",
+      opts: [
+        "A. 職外培訓的成本必定比在職培訓便宜得多，而且完全無須聘請任何專業培訓人員或租用場地",
+        "B. 職外培訓的系統性較高（設計較嚴謹正規，能有系統地教授銷售概念與最新技巧），而且在實際工作場所以外進行，可將對批發商日常營業運作的干擾減至最低，同時讓銷售員在壓力較小的環境下專心學習",
+        "C. 職外培訓能確保所有學習能力與過往知識水平截然不同的銷售員，在使用相同教材時完全不會出現任何學習差異"
+      ],
+      ans: 1,
+      exp: "正確（HKDSE 2020 考題概念）。選擇職外培訓而非在職培訓的原因，即職外培訓相對於在職培訓的四大優點：(1) 系統性較高；(2) 將對實際工作環境的干擾減至最低；(3) 學習壓力較小（有助提升學習效能）；(4) 有機會學習最新的知識和技術。"
+    },
+    {
+      q: "6. 飛馬航空上季度新聘請了大批缺乏相關工作經驗的機師、空服員及維修員，並為他們提供了密集式的培訓，結果財務總監發現公司上季度的「人工成本錄得很大的不利差異（實際人工成本高於預算）」。結合培訓與預算知識，下列哪項最能解釋這項不利人工成本差異的成因？",
+      opts: [
+        "A. 因為缺乏經驗的新員工在密集式培訓期間未能全面投入日常航班服務，公司須支付現職資深員工大量的超時工作津貼以維持航班運作（並須指派資深員工擔任導師或聘請專業培訓人員），加上新員工初期工作效率較低需時更長，推高了實際人工成本",
+        "B. 因為公司上季度大幅削減了所有新入職員工的基本薪金與僱員福利，導致實際支付的薪金總額遠低於預算水平",
+        "C. 因為航空燃油的國際採購價格在上季度大幅飆升，直接導致損益表上的員工薪金人工成本出現不利差異"
+      ],
+      ans: 0,
+      exp: "正確。當企業聘請大批無經驗新員工並進行密集式培訓時，一方面新員工受訓期間未具生產力且初期工作效率較低（需更多工時完成工作），另一方面須由現職資深員工加班頂替工作或擔任培訓導師，導致實際人工成本遠高於預算（不利差異）。"
+    }
+  ];
+  let curCMPQ = 0;
+  function renderCmpQuiz() {
+    const it = cmpQuizItems[curCMPQ];
+    document.getElementById('cmpQuizProg').textContent = `題目 ${curCMPQ + 1} / ${cmpQuizItems.length}`;
+    document.getElementById('cmpQuizQ').innerHTML = it.q;
+    document.getElementById('cmpQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkCmpQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('cmpQuizFb').innerHTML = '';
+  }
+  function checkCmpQuiz(idx) {
+    const it = cmpQuizItems[curCMPQ];
+    const fb = document.getElementById('cmpQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curCMPQ=(curCMPQ+1)%cmpQuizItems.length;renderCmpQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderCmpQuiz();
+
+  // ====== 5. 論點建構問答工作坊 (保留一個能力較弱學生常犯的「解說不足」選項作教學示範) ======
+  const workshopQuestions = [
+    {
+      id: "s1", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 1：潮流時裝店（培訓和發展如何從兩方面提升售貨員士氣）", topic: "培訓和發展的目的：激勵僱員，提升僱員士氣", maxMarks: 2,
+      scenario: "一家連鎖時裝店發現旗下門市售貨員的工作士氣低落。人力資源經理建議為全體售貨員提供銷售技巧「培訓」，並提名表現良好的資深售貨員參加店舖管理「發展」計劃，認為這樣做可從兩方面提升售貨員的士氣。",
+      question: "試從「培訓」及「發展」兩方面，解釋這項安排可如何協助該時裝店提升售貨員的士氣。（2 分）",
+      steps: [
+        { label: "第 1 步：解釋「培訓」如何提升售貨員的工作士氣（1分）", colorClass: "hl-s1", opts: [
+          { text: "提供培訓有助售貨員掌握服飾配搭知識與推銷技巧，從而改善他們在現職上的銷售工作表現，讓他們從工作中獲得更大的工作滿足感，提升士氣。", score: 1, status: "best", comment: "【滿分示範】準確點出課文第 4.2B 節「培訓有助改善僱員的工作表現，從而增加他們的工作滿足感」的因果邏輯。" },
+          { text: "提供培訓可以讓時裝店售貨員在上班時間不用招待顧客，因此他們會覺得工作很輕鬆而提升士氣。", score: 0, status: "wrong", comment: "【概念錯誤】培訓旨在提升僱員執行目前工作的能力以提供更佳服務，並非讓員工免除招待顧客的職責。" },
+          { text: "提供培訓可以令售貨員學到更多服飾推銷技巧，讓他們在店舖工作時變得更有士氣。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了中間最關鍵的心理激勵機制——必須指出培訓能「改善售貨員的工作表現，從而增加他們的工作滿足感」，才能解釋為何士氣得以提升。" }
+        ]},
+        { label: "第 2 步：解釋「發展」如何提升售貨員的工作士氣（1分）", colorClass: "hl-s2", opts: [
+          { text: "安排售貨員參加發展計劃，可以讓他們覺得公司對他們很好，所以他們就會更努力工作。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】「覺得公司對他們很好」過於籠統，必須明確點出發展計劃能「向售貨員傳遞公司提供晉升前景（有機會晉升為分店經理）的訊息，激勵他們更努力工作來爭取晉升機會」。" },
+          { text: "安排資深售貨員參加管理發展計劃，可向售貨員傳遞公司提供良好晉升前景的訊息；售貨員知道自己有機會晉升為分店經理，便會受到激勵而更努力工作以爭取晉升機會，士氣因而提高。", score: 1, status: "best", comment: "【滿分示範】清楚說明僱員發展如何向售貨員傳遞公司提供晉升前景的訊息，推動他們為爭取晉升而努力工作。" },
+          { text: "安排售貨員參加發展計劃等同於直接向他們派發雙倍的每月基本底薪，透過增加現金收入來提升士氣。", score: 0, status: "wrong", comment: "【概念錯誤】培訓和發展屬於非金錢報酬，旨在為日後出任更高職位作準備，並非直接派發雙倍底薪。" }
+        ]}
+      ]
+    },
+    {
+      id: "s2", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 2：環球銀行見習管理人員（採用個案研究進行訓練的優點）", topic: "職外培訓方法：個案研究 (Case Study) 的優點", maxMarks: 2,
+      scenario: "「環球商業銀行」每年都會招聘一批大學畢業生作為見習管理人員 (Management Trainees)，並在職外培訓課程中廣泛採用「個案研究 (Case Study)」來訓練他們。",
+      question: "試以其中一項優點為例，解釋該銀行採用「個案研究」來訓練見習管理人員的優點。（2 分）",
+      steps: [
+        { label: "第 1 步：指出採用「個案研究」培訓的單一核心優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "優點之一是所花費的時間在所有職外培訓方法中最短，而且書面個案能夠百分百反映真實銀行界的所有微小細節。", score: 0, status: "wrong", comment: "【概念錯誤】把個案研究的兩個缺點說反了：個案研究需要花時間分析及討論，比較「費時」；而且個案無法列出所有細節，「未必能全面反映實際情況」。" },
+          { text: "優點之一是個案研究非常適用於發展見習管理人員的分析和決策能力，同時亦有助於他們之間建立良好的團隊精神。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3B 節個案研究的兩大標準優點：適用於發展分析和決策能力，以及建立團隊精神。" },
+          { text: "優點之一是銀行採用個案研究來訓練見習管理人員，可以讓他們從真實的商業個案入面學到很多有用的東西。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體優點標題】「學到很多有用的東西」過於空泛，必須明確寫出「適用於發展分析和決策能力」或「建立良好的團隊精神」這兩項標準優點標題。" }
+        ]},
+        { label: "第 2 步：扣連「銀行見習管理人員」說明該優點如何實現（1分）", colorClass: "hl-s2", opts: [
+          { text: "見習管理人員須根據取自真實銀行業務困境的情景描述，與其他學員共同合作分析企業貸款或風險管理個案，並討論及作出決策以解決難題，從中有效改善分析與決策能力並培養團隊合作精神。", score: 1, status: "best", comment: "【滿分示範】緊扣銀行見習管理人員情境，清楚說明如何透過共同合作分析真實銀行困境個案及作出決策，提升分析決策能力與團隊精神。" },
+          { text: "見習管理人員在堂上看完了銀行提供的商業個案之後，他們的分析能力和決策能力就會自動提高。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了個案研究的核心學習過程——必須說明受訓僱員須「共同合作分析個案、與培訓人員討論細節並作出決策以解決難題」，才能解釋為何能改善分析決策能力及建立團隊精神。" },
+          { text: "見習管理人員可在模擬櫃台使用玩具鈔票反覆練習點算鈔票的手勢，從而熟能生巧地掌握出納員的點鈔技巧。", score: 0, status: "wrong", comment: "【概念錯誤】使用複製設備反覆練習點鈔手勢屬於「模擬訓練（設備模擬）」，並非分析商業困境並作出決策的「個案研究」。" }
+        ]}
+      ]
+    },
+    {
+      id: "s3", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 3：企業選擇職外培訓的考量（為何有些企業不採用「講課」方法）", topic: "職外培訓方法：講課（課堂培訓）的缺點與局限", maxMarks: 2,
+      scenario: "雖然「講課（課堂培訓）」能讓企業在同一時間向一大群受訓僱員傳授知識而符合成本效益，但有些企業在培訓前線服務人員時並不採用這種培訓方法。",
+      question: "試以其中一個原因為例，說明為何有些企業並不採用「講課」這種培訓方法。（2 分）",
+      steps: [
+        { label: "第 1 步：指出「講課（課堂培訓）」的單一核心缺點或局限（1分）", colorClass: "hl-s1", opts: [
+          { text: "原因是講課並非適用於所有技能，特別是不適用於有關工作態度的培訓以及訓練人際關係和溝通技巧；此外，受訓僱員可能難以應用所學，且課堂人數眾多時缺乏互動。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3B 節講課的三大缺點：並非適用於所有技能（如工作態度、人際溝通）、可能難以應用所學，以及缺乏互動。" },
+          { text: "原因是講課每次只能由一名專業導師單獨教導一名學員，每名受訓僱員的平均培訓成本在所有職外培訓方法中最高昂。", score: 0, status: "wrong", comment: "【概念錯誤】講課可在同一時間向一大群受訓僱員傳授知識，每名僱員的培訓成本相對較低（符合成本效益是其優點）。" },
+          { text: "原因是有些企業認為單靠講課來訓練員工的效果不太理想，員工上完堂之後也未必能夠幫到公司。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊】「效果不太理想」過於籠統，必須明確指出具體缺點標題：如「受訓僱員可能難以將所學應用到工作上」、「缺乏互動交流」或「不適用於工作態度、人際關係和溝通技巧的培訓」。" }
+        ]},
+        { label: "第 2 步：具體解釋為何「講課」會出現該項局限（1分）", colorClass: "hl-s2", opts: [
+          { text: "由於課堂單向授課的環境與實際工作環境截然不同，且在大班課堂上培訓人員與學員之間缺乏雙向人際互動與實戰演練，受訓僱員可能對培訓失去興趣，亦難以單靠聽講就改善待客工作態度或掌握實際的溝通技巧。", score: 1, status: "best", comment: "【滿分示範】清楚解釋課堂環境與實際工作環境的差異，以及單向聽講缺乏人際互動為何無法有效訓練工作態度與溝通技巧。" },
+          { text: "因為在課室入面上堂同平時真正返工的情況不一樣，所以員工聽完書之後也未必識得怎樣做。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】表述過於口語簡略，應完整說明「由於課堂環境與實際工作環境不同，受訓僱員難以將所學到的技能和知識直接應用到實際工作上（或因人數眾多缺乏互動交流而對培訓失去興趣）」。" },
+          { text: "因為講課要求內向的員工在全體同事面前扮演盛怒的顧客進行即興戲劇表演，令員工感到極度尷尬和不自在。", score: 0, status: "wrong", comment: "【概念錯誤】要求員工在同事面前扮演角色演練而令內向員工感到尷尬不自在，是「角色扮演」的缺點而非「講課」的缺點。" }
+        ]}
+      ]
+    },
+    {
+      id: "s4", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 4：菁華汽車零件廠（指派少數資深工人「指導」大批新工人的問題）", topic: "在職培訓方法：指導 (Coaching) 的定義與缺點", maxMarks: 2,
+      scenario: "「菁華汽車零件廠」新廠房落成，招聘了約 300 名新生產工人。行政總裁希望他們全部學會操作最新的鐳射切割器，建議：「我們可以指派一名資深工人來教導和支援每名新入職的工人。」但營運經理指出，公司內部只有數名工人懂得操作新切割器，擔心這個安排會降低廠房的生產力。",
+      question: "(i) 指出行政總裁所建議的在職培訓方法名稱（1分）；(ii) 根據個案解釋為何這個培訓方法可能會降低廠房的生產力（1分）。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出該在職培訓方法的標準名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "行政總裁所建議的培訓方法是工作輪調。", score: 0, status: "wrong", comment: "【概念錯誤】工作輪調是指按預定時間從負責某項工作調至負責另一項工作；委派經驗豐富僱員教導和支援新員工的方法稱為「指導 (Coaching)」。" },
+          { text: "行政總裁所建議的在職培訓方法是指導，又稱顧問指導，即委派經驗豐富的資深工人擔任導師，向受訓新工人提供指示、回饋和示範。", score: 1, status: "best", comment: "【滿分示範】準確寫出「指導（顧問指導 Coaching）」的標準名稱及其核心定義。" },
+          { text: "行政總裁所建議的培訓方法是由舊人帶新人的在職培訓。", score: 0, status: "partial", comment: "【常見失分示範：未寫出準確專業術語】「舊人帶新人」屬於日常俗稱，在 DSE 考試中必須準確寫出課本的標準專業名稱：「指導 (Coaching)」或「顧問指導」。" }
+        ]},
+        { label: "第 2 步：結合個案中「只有數名資深工人但有 300 名新工人」解釋為何會降低生產力（1分）", colorClass: "hl-s2", opts: [
+          { text: "由於廠內只有數名資深工人懂得操作新切割器，卻要負責教導多達 300 名新工人，對擔任導師的資深工人而言非常費時；他們須耗費大量工作時間進行示範及提供回饋，無暇處理自身的生產工作，從而降低廠房的生產力。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「只有數名資深工人教 300 名新工人」的懸殊比例，結合「對導師而言非常費時，影響導師自身生產力」的缺點作完美解釋。" },
+          { text: "因為廠入面懂得用新切割器的資深工人太少，而新工人又有 300 人咁多，所以會令廠房的生產力下降。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只照抄了題目的數字背景，未有點出指導的核心缺點機制——即「指導對導師而言非常費時，資深工人須花大量時間教導新工人及提供回饋，嚴重影響資深工人自身的生產力」。" },
+          { text: "因為這數名資深工人在指導新工人之後會立即忘記如何操作鐳射切割器，導致全廠沒有人懂得使用機器。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合常理，資深工人不會因為教導他人而忘記自身技能。" }
+        ]}
+      ]
+    },
+    {
+      id: "e1", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 1：凝美連鎖美容院（為新分店僱員提供培訓和發展的目的：保障安全與提升質素）", topic: "培訓和發展的六大目的：結合連鎖美容院擴充新分店", maxMarks: 3,
+      scenario: "「凝美美容院」決定採納擴充計劃開設新分店，並會為新分店的美容師及顧問提供培訓和發展。試以該美容院為例，解釋提供培訓和發展的目的。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「保障僱員（及顧客）的健康和安全」或「提高企業的服務質素與生產力」為核心，結合美容院情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出提供培訓和發展的單一核心目的名稱與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "目的之一是提高企業的服務質素（以及保障健康和安全）：服務業企業可透過為僱員提供適當的培訓，改善僱員的服務態度和專業操作技巧，並建立正確安全的工作態度以避免發生意外。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.2B 節「提高企業的產品或服務質素」及「保障僱員的健康和安全」的目的與核心概念。" },
+          { text: "目的之一是將所有新入職美容師的基本薪金轉化為公司股票，使美容院無須向員工支付任何現金薪酬。", score: 0, status: "wrong", comment: "【概念錯誤】這是混淆了報酬管理中的認股權，並非提供培訓和發展的目的。" },
+          { text: "凝美美容院為新分店的僱員提供培訓和發展，目的是為了讓新分店的美容師工作得更好，幫美容院賺取更多利潤。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準目的標題】用詞過於籠統，必須明確寫出課本的六大標準目的標題之一，如「提高企業的服務質素」、「保障僱員的健康和安全」或「提高效率和生產力」。" }
+        ]},
+        { label: "第 2 步：針對「凝美美容院新分店的美容師」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如美容院為新分店美容師提供高能量光學美容儀器的操作安全培訓，以及面部護理手法與待客禮儀培訓，確保美容師掌握正確的儀器安全設定與細緻的待客技巧。", score: 1, status: "best", comment: "【滿分示範】緊扣美容院業務，具體設定高能量光學美容儀器安全操作及面部護理待客禮儀培訓的例子。" },
+          { text: "例如美容院在招聘網站刊登招聘廣告，並去大型招聘會設置攤位即場面見應徵者，以聘請足夠的美容師。", score: 0, status: "wrong", comment: "【概念錯誤】刊登招聘廣告與參加招聘會屬於「外部招聘」的例子，並非為員工提供「培訓和發展」的例子。" },
+          { text: "例如美容院安排導師去教導新分店的美容師怎樣替客人做美容護理，讓她們學會美容院的工作規矩。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於表面，應具體說明教授「美容儀器的安全操作技巧（避免灼傷意外）」及「專業皮膚護理手藝與待客態度（改善服務技巧）」。" }
+        ]},
+        { label: "第 3 步：深化論述至避免美容意外、為顧客提供優質服務與建立新店口碑的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這一方面能避免美容師在操作高能量儀器時發生灼傷意外，保障員工與顧客的安全；另一方面能減少護理過程出錯，讓美容師為顧客提供更專業舒適的美容服務，從而提升新分店的整體服務質素與口碑。", score: 1, status: "best", comment: "【滿分示範】清楚推演出避免儀器操作意外及提供更佳護理服務，對提升新分店服務質素與口碑的正面影響。" },
+          { text: "這能保證新分店在開業首天便自動收回全部初期投資成本，令擴充項目的回收期縮短為零天。", score: 0, status: "wrong", comment: "【概念錯誤】推論誇張且不合財務邏輯，提供員工培訓並不能令資本投資項目在開業首天即時回本。" },
+          { text: "這樣新分店的美容師接受完培訓之後，她們的服務質素就會提高，達成美容院提供培訓的目的。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「避免操作美容儀器時發生意外」以及「減少護理出錯，為顧客提供更佳服務以建立新店口碑」的具體效果。" }
+        ]}
+      ]
+    },
+    {
+      id: "e2", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 2：凝美連鎖美容院（提供培訓和發展的目的：滿足企業未來需要與增加歸屬感）", topic: "培訓和發展的六大目的：滿足企業目前和未來的需要／增加歸屬感", maxMarks: 3,
+      scenario: "承上題，「凝美美容院」決定開設新分店，並為僱員提供培訓和發展。除了保障安全和提升服務質素外，試以「滿足企業目前和未來的需要」（或「增加僱員歸屬感，促進僱員關係」）為例，解釋美容院提供培訓和發展的目的。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「滿足企業目前和未來的需要（支持新店擴充與應對市場轉變）」為核心，結合美容院情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出提供培訓和發展的單一核心目的名稱與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "目的之一是滿足企業目前和未來的需要：企業可透過培訓和發展，確保僱員具備所需的技能和知識來支持企業的業務擴充發展，以及應對市場未來的轉變；同時亦可增加僱員歸屬感以降低流失率。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.2B 節「滿足企業目前和未來的需要」及「增加僱員歸屬感，促進僱員關係」的目的與核心概念。" },
+          { text: "目的之一是透過減少美容師的培訓時數來迫使現職美容師自願辭職，藉此達成自然流失縮減人手的目標。", score: 0, status: "wrong", comment: "【概念錯誤】美容院正在開設新分店擴充業務，提供培訓和發展是為了支持擴充及留住人才，而非迫使員工辭職。" },
+          { text: "目的之一是幫助凝美美容院應付現在和將來開新分店的時候所需要的員工。", score: 0, status: "partial", comment: "【常見失分示範：概念要素不完整】未能明確指出「確保僱員具備所需的技能和知識來支持企業的發展，以及應對市場未來的轉變和危機，以維持和促進企業增長」。" }
+        ]},
+        { label: "第 2 步：針對「凝美美容院開設新分店及引入新美容趨勢」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如面對市場興起醫學美容的新趨勢及新分店開業需要，美容院可為美容師提供最新醫學煥膚技術的培訓；同時安排將要晉升為新分店店長的資深美容顧問參加僱員發展計劃，學習分店營運、人手編配與決策技巧。", score: 1, status: "best", comment: "【滿分示範】緊扣課文第 4.2B 節例子，同時結合「教授最新醫學美容技術應對市場轉變（培訓）」及「安排準分店店長參加管理發展計劃（發展）」。" },
+          { text: "例如美容院向供應商訂購新分店所需的美容床，並計算每次訂購護膚品的經濟訂貨量。", score: 0, status: "wrong", comment: "【概念錯誤】訂購美容床與計算經濟訂貨量屬於採購與存貨管理，並非為僱員提供培訓和發展的例子。" },
+          { text: "例如美容院在開新分店之前，安排一些員工去上堂學習管理新分店，讓他們將來可以幫手管店。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子較為單薄，應明確指出「安排將要晉升為新分店店長的資深員工參加僱員發展計劃，學習領導與決策技巧，並為美容師提供新美容技術培訓以應對市場轉變」。" }
+        ]},
+        { label: "第 3 步：深化論述至確保新店妥善管理、支持業務持續增長及提升歸屬感的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這能確保準店長日後能妥善地管理新分店，並讓團隊具備最新技能應對美容市場轉變，從而支持及促進美容院的業務增長；同時員工感受到公司對其個人成長和事業發展的重視，亦會增加歸屬感並減少流失。", score: 1, status: "best", comment: "【滿分示範】清楚推演出確保新分店獲妥善管理、支持業務增長以及增加員工歸屬感降低流失率的長遠影響。" },
+          { text: "這能保證香港美容行業的所有競爭對手在明年全部自動結業，讓凝美美容院獨佔整個市場。", score: 0, status: "wrong", comment: "【概念錯誤】提供內部員工培訓和發展可提升自身競爭力，但不可能保證所有競爭對手自動結業。" },
+          { text: "這樣凝美美容院的新分店就可以順利開張，滿足了美容院目前和未來的需要。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「讓準店長日後能妥善管理新分店、應對市場轉變以促進企業增長，並因感受到公司重視個人成長而增加歸屬感」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e3", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 3：銀河百貨公司（採用「工作輪調」培訓年輕售貨員的運作與優點）", topic: "在職培訓方法：工作輪調 (Job Rotation) 的運作與優點", maxMarks: 3,
+      scenario: "「銀河百貨」發現很多年輕售貨員在入職兩年內離職。人力資源經理提議推出「工作輪調計劃」，安排年輕售貨員輪調到不同部門，面對不同類型的顧客並學習銷售各種產品的技巧，認為這除了能增加他們的工作滿足感外，對百貨公司還有其他優點。試描述工作輪調的運作及其另外兩個優點。",
+      question: "請遵循「一段一個獨立重點」原則，以在職培訓中的「工作輪調」及其對百貨公司的優點（「委派工作的靈活性較大」及「發掘受訓僱員的強項」）為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出「工作輪調」的定義及除增加工作滿足感外的優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "工作輪調是指僱員按預定的時間，從負責某項工作調至負責另一項工作；除了增加工作滿足感外，其優點還包括委派工作的靈活性較大，以及讓企業能發掘受訓僱員的強項。", score: 1, status: "best", comment: "【滿分示範】準確界定「工作輪調」的定義，並完整指出除個案已提及的工作滿足感外，課文第 4.3A 節的另外兩個標準優點。" },
+          { text: "工作輪調是指將所有年輕售貨員永久解僱，改為聘用外判清潔承判商負責百貨公司的銷售工作。", score: 0, status: "wrong", comment: "【概念錯誤】工作輪調是在企業內部不同工作崗位之間定期調動以進行在職培訓，並非解僱員工或外判。" },
+          { text: "工作輪調是將年輕售貨員調去百貨公司的不同部門工作，這樣做對銀河百貨有很多不同的好處。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體優點標題】未能明確指出「按預定的時間從負責某項工作調至負責另一項工作」的定義，亦漏了寫出「委派工作的靈活性較大」及「發掘受訓僱員的強項」這兩項優點標題。" }
+        ]},
+        { label: "第 2 步：針對「銀河百貨年輕售貨員輪調不同部門」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如銀河百貨按預定時間表，安排年輕售貨員每三個月依次在化妝品部、運動服飾部、家庭電器部及精品部輪調工作，讓他們在實踐中掌握銷售各類不同產品的知識與技巧，並觀察他們在哪個部門的銷售表現最突出。", score: 1, status: "best", comment: "【滿分示範】緊扣百貨公司不同商品部門（化妝品、運動服飾、家電），具體說明如何定期輪調學習各類產品銷售技巧及觀察表現。" },
+          { text: "例如銀河百貨要求年輕售貨員每天坐在電腦前玩虛擬投資電腦模擬遊戲，完全不接觸任何百貨公司顧客。", score: 0, status: "wrong", comment: "【概念錯誤】玩電腦模擬遊戲屬於職外培訓中的「電腦模擬」，並非在百貨公司不同部門之間調動的「工作輪調」。" },
+          { text: "例如銀河百貨安排年輕售貨員今個月在這個部門賣東西，下個月又調去另一個部門賣其他東西。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】描述過於口語簡略，未有說明售貨員如何透過輪調不同商品部門（如家電部、化妝品部）「掌握與各部門工作相關的多種銷售技能，並讓管理層觀察他們在哪個範疇表現最佳」。" }
+        ]},
+        { label: "第 3 步：深化論述至靈活調配人手應付旺季缺口及安排合適崗位發揮所長的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於受訓售貨員具備跨部門銷售的多種技能，當某部門在促銷旺季人手短缺或有同事請假時，百貨公司在委派和調動工作時便有更大的靈活性；同時公司可找出每位年輕售貨員表現最佳的商品範疇，將他們長遠安排到最合適的部門崗位以發揮所長。", score: 1, status: "best", comment: "【滿分示範】清楚推演出跨部門技能如何提高人手調配靈活性，以及識別強項後如何做到人盡其才、發揮所長。" },
+          { text: "透過每個月不斷調換工作部門，年輕售貨員在每個部門都能停留十年以上，從而成為單一產品的最頂尖專家，且完全不會增加其他同事的工作量。", score: 0, status: "wrong", comment: "【概念錯誤】受訓僱員在每個崗位的時間有限「不能深入發展單一技能」，以及調離後「增加其他僱員的工作量」，正是工作輪調的缺點。" },
+          { text: "這樣銀河百貨的總經理便會覺得很方便，年輕售貨員也可以在百貨公司入面做得更開心。", score: 0, status: "partial", comment: "【常見失分示範：未深化管理效益】未有明確推論至「當某部門人手不足時可靈活委派調動工作」以及「找出員工在哪些範疇表現最佳，安排到合適崗位發揮所長」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e4", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 4：維港精品酒店（為前台員工提供職外培訓方法以改善表現）", topic: "職外培訓方法：角色扮演、個案研究與講課在酒店前台的應用", maxMarks: 3,
+      scenario: "某香港酒店因去年預訂房間數目減少而錄得虧損。該酒店計劃為「前台員工 (Front Desk Staff)」提供「職外培訓」，改善他們的工作表現，藉此提高酒店的服務質素。試為該酒店建議用來培訓前台員工的職外培訓方法，並解釋這些方法如何有助改善他們的工作表現。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「角色扮演 (Role Playing)」（或「個案研究」／「講課」）這種職外培訓方法為核心，結合酒店前台員工情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出適合酒店前台員工的單一「職外培訓方法」名稱與定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "酒店可採用角色扮演這種職外培訓方法：角色扮演是指讓前台員工在培訓人員的指導下，獲分配特定角色資料並演練特定情景的一種主動學習方法（此外亦可採用合作分析真實情景作出決策的個案研究，或傳授語言與系統知識的講課）。", score: 1, status: "best", comment: "【滿分示範】準確指出職外培訓中的「角色扮演」（或個案研究／講課），並清楚界定在培訓人員指導下演練特定情景的定義。" },
+          { text: "酒店可採用工作輪調及指導這兩種職外培訓方法，安排前台員工在酒店大堂一邊替真實住客辦理入住手續、一邊由大堂經理在旁糾正。", score: 0, status: "wrong", comment: "【審題失誤】工作輪調與在酒店大堂現場邊做邊學的指導，均屬於「在職培訓」；而題目明確要求建議「職外培訓方法」。" },
+          { text: "酒店可採用角色扮演的方法來訓練前台員工，讓前台員工在課室入面扮演不同的角色去學習怎樣做。", score: 0, status: "partial", comment: "【常見失分示範：定義不夠完整】應完整寫出「在培訓人員的指導下，獲分配特定角色資料（如背景、目標和情緒表現），在假定情景中演練實際行為的主動學習方法」。" }
+        ]},
+        { label: "第 2 步：針對「酒店前台員工」設定如何進行該培訓及學習甚麼技能的例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如在培訓室中，培訓人員可要求兩名前台員工分別扮演「因航班延誤及房間未執拾妥當而盛怒投訴的海外住客」與「前台接待員」，演練如何安撫住客情緒、有禮地道歉並迅速提供房間升級或替代方案，從中學習人際關係、溝通及處理投訴的技巧。", score: 1, status: "best", comment: "【滿分示範】嚴格遵循課本第 48 頁答題錦囊：具體說明「如何進行培訓（分飾投訴住客與接待員演練）」以及「員工可從中學習到哪些技能（人際關係、溝通與處理投訴技巧）」。" },
+          { text: "例如酒店安排前台員工在模擬飛機駕駛艙內練習操控客機在暴風雨中降落，以學習航空飛行技術。", score: 0, status: "wrong", comment: "【概念錯誤】操控模擬飛機駕駛艙是訓練航空公司機師的設備模擬，與酒店前台員工的接待職責無關。" },
+          { text: "例如酒店叫前台員工進行角色扮演，練習平時在前台怎樣同住客講話，藉此改善他們的溝通技巧。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於簡略，未有具體描述演練甚麼特定酒店前台情景（如分飾無理投訴的住客與前台員工，演練如何處理房間預訂出錯或特殊要求）。" }
+        ]},
+        { label: "第 3 步：深化論述至為應對實際情況作準備、改善前台表現與提升酒店服務質素的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於前台工作需要大量人際互動，角色扮演能讓前台員工就工作中或會遇到的棘手情況預先作好準備；當他們在實際當值時遇到類似的住客投訴或特殊要求，便能冷靜有效地處理，從而改善工作表現並提升酒店的整體服務質素。", score: 1, status: "best", comment: "【滿分示範】清楚推演出「為應對實際情況作準備 ➔ 實際遇到類似情況時能有效處理 ➔ 改善前台表現並提升酒店服務質素」的完整邏輯鏈。" },
+          { text: "透過進行角色扮演，所有內向害羞的前台員工都必定會感到無比自在，絕對不會在同事面前演練時感到任何尷尬或抗拒。", score: 0, status: "wrong", comment: "【概念錯誤】部分員工或會抗拒，且內向員工在他人面前演練或遭批評時會感到尷尬不自在，正是角色扮演的缺點。" },
+          { text: "這樣酒店的前台員工在完成角色扮演培訓之後，他們的工作表現就會得到改善，酒店的服務質素也會提高。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目尾句，未有深化說明角色扮演如何「讓員工就工作中或會遇到的情況預先作準備，使他們在實際工作遇到類似情況時能有效處理」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e5", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 5：跨國金融機構（採用「程式學習」培訓分散各地員工的運作與優缺點）", topic: "職外培訓方法：程式學習 (Programmed Learning) 的過程與優缺點", maxMarks: 3,
+      scenario: "一家跨國金融機構最近更新了全球防洗黑錢合規政策與電腦開戶工作流程，需要培訓分散於亞太區十多個城市的數千名分行職員。人力資源部決定採用「程式學習 (Programmed Learning)」這種職外培訓方法。試描述程式學習的運作過程及其優點（或缺點）。",
+      question: "請遵循「一段一個獨立重點」原則，以「程式學習」的運作過程及其對培訓分散各地員工的優點為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出「程式學習」的定義與三步循序漸進運作過程（1分）", colorClass: "hl-s1", opts: [
+          { text: "程式學習是一種透過書本、電腦或網上平台進行的循序漸進自學方法：受訓僱員先透過電腦程式教材學習某課題的事實和概念，然後回答後續提問；若答案正確，程式便引導學習下一課題，若答案錯誤則返回重新學習。", score: 1, status: "best", comment: "【滿分示範】準確界定程式學習的自學性質，並完整描述課文第 4.3B 節圖 4.9 的三步循序漸進過程（學習概念 ➔ 回答提問 ➔ 答對進下一課題／答錯重學）。" },
+          { text: "程式學習是指聘請電腦程式設計師到課室現場，用黑板向全體員工面對面講授如何編寫手機遊戲程式。", score: 0, status: "wrong", comment: "【概念錯誤】在課室現場面對面授課屬於「講課（課堂培訓）」；程式學習並非指學習寫電腦程式，而是指透過預設教材循序漸進自學的培訓方法。" },
+          { text: "程式學習是一種讓員工自己用電腦上網學習新知識的職外培訓方法，非常適合跨國金融機構使用。", score: 0, status: "partial", comment: "【常見失分示範：欠缺運作過程】未能說明程式學習「循序漸進自學（先學概念、再答問題測試理解、答對才進入下一課題）」的核心運作機制。" }
+        ]},
+        { label: "第 2 步：針對「跨國金融機構更新合規政策與開戶流程」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如金融機構將最新的防洗黑錢守則與電腦開戶流程製作成網上互動自學模組，分散於亞太區十多個城市的分行職員無須飛往總部，只需在各自辦公室或家中登入網上平台自學每節守則並完成課後測試題。", score: 1, status: "best", comment: "【滿分示範】緊扣跨國金融機構分散各地的員工，具體說明如何利用網上自學模組學習合規守則與開戶流程並進行測試。" },
+          { text: "例如金融機構安排亞太區數千名職員輪流進入模擬手術室練習使用醫療設備，以學習防洗黑錢守則。", score: 0, status: "wrong", comment: "【概念錯誤】例子荒謬且錯配，學習防洗黑錢守則與醫療設備模擬毫無關聯。" },
+          { text: "例如金融機構把新的公司政策放在電腦程式入面，叫所有分行職員自己去打開電腦睇熟那些內容。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有結合「分散於不同城市的員工無須集中開班」以及「提交測試答案後即時獲得系統回饋」的具體運作情境。" }
+        ]},
+        { label: "第 3 步：深化論述至適用於分散各地員工、即時回饋確保理解及方便按進度學習的優點（1分）", colorClass: "hl-s3", opts: [
+          { text: "這種方法非常適用於培訓分散各地的僱員（公司無須為各地職員在不同時段和地點開設實體培訓課程），且職員可隨時隨地按自己的進度方便學習，並在提交答案後即時獲得回饋，確保充分理解合規守則後才學習進階內容。", score: 1, status: "best", comment: "【滿分示範】完整涵蓋課文第 4.3B 節程式學習的三大優點：(i) 適用於培訓分散各地的僱員；(ii) 即時回饋（確保充分理解）；(iii) 方便按自己進度學習。" },
+          { text: "開發這套全面電腦化的互動程式教材完全不需要任何開發成本，而且最適合用來訓練需要高度面對面眼神交流的談判技巧。", score: 0, status: "wrong", comment: "【概念錯誤】開發全面電腦化互動教材的成本通常非常高昂（這是其缺點），且程式學習只常用於只需較少人際互動的情況。" },
+          { text: "這樣跨國金融機構的所有員工便都能夠學會新的公司政策，順利完成這次職外培訓。", score: 0, status: "partial", comment: "【常見失分示範：未點出三大標準優點】未能明確寫出「適用於培訓分散各地僱員（無須在不同時段地點開班）」、「即時回饋確保理解」及「方便按自己進度學習」這三項核心優點。" }
+        ]}
+      ]
+    },
+    {
+      id: "e6", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 6：飛馬航空公司（根據不同崗位需要採用學徒訓練、模擬訓練與角色扮演）", topic: "在職與職外培訓方法的綜合配對：飛機維修員、機師與空服員", maxMarks: 3,
+      scenario: "「飛馬航空」積極擴充航線，新聘請了大批缺乏相關工作經驗的機師、空中服務員、地勤人員和飛機維修員。人力資源總監建議根據不同工作崗位的需要，分別採用「學徒訓練、模擬訓練和角色扮演」來訓練他們。試舉例說明飛馬航空可如何採用這三種培訓方法來訓練不同崗位的新入職員工。",
+      question: "請遵循「一段一個獨立重點」原則，清晰說明飛馬航空如何分別運用「學徒訓練、模擬訓練及角色扮演」培訓對應崗位的新員工，並指出各自學習到的技能（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：配對「學徒訓練」與對應航空崗位，說明如何進行及所學技能（1分）", colorClass: "hl-s1", opts: [
+          { text: "在學徒訓練方面，飛馬航空可用於培訓需要嚴格技能認證的「新入職飛機維修員」：安排他們在飛機維修庫協助已獲認可資格的資深飛機工程師進行實地維修實習，同時在專業教育機構接受航空機械課堂培訓，結合理論與實踐掌握飛機檢修技能。", score: 1, status: "best", comment: "【滿分示範】準確將學徒訓練配對予需技能認證的「飛機維修員」，並清楚說明結合機庫實地實習與航空機械課堂培訓以掌握維修技能。" },
+          { text: "在學徒訓練方面，飛馬航空可用於培訓不需要任何技術技能的票務處售貨員，禁止他們進入任何課堂學習理論。", score: 0, status: "wrong", comment: "【概念錯誤】課本明確指出，學徒訓練結合實地實習與課堂培訓，常用於需要技能認證的行業，而不適合不需要技術技能的售貨員。" },
+          { text: "在學徒訓練方面，飛馬航空可以請一些新員工回來做學徒，讓他們在航空公司入面跟師傅學習工作。", score: 0, status: "partial", comment: "【常見失分示範：未指明對應崗位與雙重元素】沒有指明配對給哪一個航空崗位（應為飛機維修員），亦漏了說明學徒訓練必須結合「實地實習」和「課堂培訓」兩部分。" }
+        ]},
+        { label: "第 2 步：配對「模擬訓練」與對應航空崗位，說明如何進行及所學技能（1分）", colorClass: "hl-s2", opts: [
+          { text: "在模擬訓練方面，飛馬航空可用於培訓「新入職機師」：讓他們在複製真實客機駕駛室主要特點的「模擬駕駛艙（設備模擬）」中進行訓練，反覆練習起飛、降落及應對引擎故障或惡劣天氣的操作技巧，在低風險環境下熟能生巧地掌握飛行技術。", score: 1, status: "best", comment: "【滿分示範】準確將模擬訓練（設備模擬）配對予「機師」，並說明利用模擬駕駛艙在低風險下反覆練習飛行與應變技巧。" },
+          { text: "在模擬訓練方面，飛馬航空可安排完全沒有經驗的新機師直接駕駛載滿三百名真實乘客的客機在雷暴中練習降落。", score: 0, status: "wrong", comment: "【概念錯誤】直接駕駛載客真實飛機屬於高風險的在職操作，並非在模擬工作環境中使用複製設備學習的「模擬訓練」。" },
+          { text: "在模擬訓練方面，飛馬航空可以買一些模擬設備回來給新機師練習，讓他們的飛行技術變得更好。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體點出使用複製真實駕駛室特點的「模擬駕駛艙」，讓機師在「無空難風險的模擬環境下反覆練習起降及緊急應變操作技巧」。" }
+        ]},
+        { label: "第 3 步：配對「角色扮演」與對應航空崗位，說明如何進行及所學技能（1分）", colorClass: "hl-s3", opts: [
+          { text: "在角色扮演方面，飛馬航空可用於培訓需要大量人際互動的「新入職空中服務員及地勤人員」：在培訓人員指導下，讓受訓員工分別扮演空中服務員／地勤人員與提出特殊要求或投訴航班延誤的乘客，透過演練特定情景來發展人際關係、溝通及顧客服務技巧。", score: 1, status: "best", comment: "【滿分示範】準確將角色扮演配對予「空中服務員及地勤人員」，並說明分飾職員與乘客演練處理投訴情景，以發展人際溝通與待客技巧。" },
+          { text: "在角色扮演方面，飛馬航空可要求飛機維修員獨自一人在空無一人的房間內閱讀引擎維修手冊，完全不與任何人交談互動。", score: 0, status: "wrong", comment: "【概念錯誤】獨自閱讀手冊屬於程式學習或自修；角色扮演通常需要兩個或以上受訓僱員參與互動演練，適合需要人際互動的客服崗位。" },
+          { text: "在角色扮演方面，飛馬航空可以叫空中服務員和地勤人員玩角色扮演遊戲，改善他們的服務表現。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體說明「如何進行（分飾機艙／地勤人員與投訴乘客演練特定情景）」以及「可從中學習到哪些技能（人際關係、溝通技巧及應對實際突發情況的能力）」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e7", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 7：宏達小型貿易公司（偏向採用「在職培訓」而非「職外培訓」的原因）", topic: "在職培訓 vs 職外培訓的比較：結合小型企業的特徵", maxMarks: 3,
+      scenario: "「宏達貿易」是一家只有十多名員工的小型進出口貿易公司，偏向採用「在職培訓」而非「職外培訓」來訓練新入職的貿易跟單文員。試根據在職培訓的優點和小型企業的特徵，解釋為何在職培訓比職外培訓更適合該小型貿易公司。",
+      question: "請遵循「一段一個獨立重點」原則，結合「小型企業資源與人手有限的特徵」以及「在職培訓相對於職外培訓的優點（成本較低、技能較實用切合需要、即時回饋）」，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出在職培訓相對於職外培訓的核心優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "與職外培訓相比，在職培訓具備成本較低、所學的技能和知識較實用且切合工作需要、受訓僱員可即時獲得回饋，以及切合受訓僱員的需要和能力等優點，非常契合小型企業的特徵。", score: 1, status: "best", comment: "【滿分示範】完整且準確地指出課文第 4.3C 節在職培訓相對於職外培訓的四大優點。" },
+          { text: "與職外培訓相比，在職培訓的最大優點是系統性極高，能完全避免對日常辦公室工作環境造成任何干擾。", score: 0, status: "wrong", comment: "【概念錯誤】系統性較高及將對實際工作環境的干擾減至最低，是「職外培訓」相對於在職培訓的優點，而非在職培訓的優點。" },
+          { text: "因為宏達貿易是一間小型貿易公司，而對很多小型企業來說，在職培訓是他們唯一會採用的培訓模式。", score: 0, status: "partial", comment: "【常見失分示範：未寫出在職培訓的優點標題】只陳述了小企業常用在職培訓的現象，未有指出在職培訓「成本較低」、「所學技能較實用切合工作需要」或「可獲得即時回饋」等具體優點標題。" }
+        ]},
+        { label: "第 2 步：扣連「小型貿易公司的財力、規模與跟單工作特徵」作具體解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "小型貿易公司資金與資源有限，而且每次新聘的跟單文員人數極少（難以負擔聘請專業培訓人員或租用場地開辦職外課程的高昂費用）；採用在職培訓由資深文員在辦公室內直接指導新員工處理真實的報關單據與客戶電郵，無須使用昂貴設施或外聘導師，且能按該名新員工的能力度身指導並提供即時回饋。", score: 1, status: "best", comment: "【滿分示範】緊扣小型貿易公司「資金有限、新聘人數少、日常處理報關跟單」的特徵，完美對接在職培訓「省卻外聘導師與設施費、度身設計及即時回饋」的優勢。" },
+          { text: "小型貿易公司擁有數百億元的充裕流動資金，每次同時間招聘五千名新文員，因此最適合在辦公室內進行在職培訓。", score: 0, status: "wrong", comment: "【概念錯誤】這描述的是超大型跨國企業的特徵，完全背離題目「小型貿易公司」的背景設定。" },
+          { text: "因為小型貿易公司沒有太多錢去外面請老師教新員工，所以在公司入面由舊員工教新員工會比較便宜和方便。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】除提及較便宜外，應同時扣連小企業「人手緊絀及新聘人數少，在職培訓能讓新文員直接學習實用的貿易跟單技能並即時應用到工作上，且可獲得即時回饋」。" }
+        ]},
+        { label: "第 3 步：深化論述至節省培訓開支、讓新員工迅速上手投入工作以維持小企業運作的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這不但能協助財力有限的小型貿易公司大幅節省培訓成本，更能讓新入職的跟單文員把學到的實用技能直接應用到日常貿易業務上，在資深同事的即時回饋下迅速改善表現並投入工作，紓緩小企業緊張的人手壓力。", score: 1, status: "best", comment: "【滿分示範】清楚推演出節省培訓開支、直接應用實用技能及及早改善表現，對維持小型貿易公司順暢運作的實際效益。" },
+          { text: "採用在職培訓能保證同一部門內由不同資深文員帶教的所有新員工，其最終培訓成效必定百分百相同而毫無差異。", score: 0, status: "wrong", comment: "【概念錯誤】由於不同培訓人員的技能知識水平和投入程度不同，在職培訓會出現「培訓成效不一」的缺點。" },
+          { text: "因此，在職培訓比職外培訓更加適合這間小型貿易公司用來訓練新入職的員工。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目尾句，未有深化說明「替小企業節省成本，並讓新員工把實用技能直接應用到工作上、及早改善表現」的影響。" }
+        ]}
+      ]
+    },
+    {
+      id: "e8", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 8：森記電器用品批發商（為銷售人員安排「職外培訓」而非「在職培訓」的原因）", topic: "職外培訓 vs 在職培訓的比較：職外培訓相對於在職培訓的優點", maxMarks: 3,
+      scenario: "「森記」是香港一家電器用品批發商，總經理希望把握經濟環境樂觀的機遇進一步提升向零售商批發電器的銷售額。人力資源經理決定在下一個月為全體銷售人員安排「職外培訓」而非「在職培訓」，以改善他們的銷售表現。試從森記的角度，解釋為銷售人員安排職外培訓而非在職培訓的原因。",
+      question: "請遵循「一段一個獨立重點」原則，從「職外培訓相對於在職培訓的優點（系統性較高、將對實際工作環境干擾減至最低、學習壓力較小、學習最新知識技術）」切入，結合電器批發商情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出選擇「職外培訓」而非「在職培訓」的核心原因（職外培訓的優點 · 1分）", colorClass: "hl-s1", opts: [
+          { text: "原因之一是與在職培訓相比，職外培訓的系統性較高，而且可將對實際工作環境的干擾減至最低；同時銷售人員在職外培訓環境下學習的壓力較小，並有機會學習最新的知識和銷售技術。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3C 節職外培訓相對於在職培訓的四大優點：系統性較高、將干擾減至最低、壓力較小、學習最新知識和技術。" },
+          { text: "原因之一是職外培訓無須聘請任何專業培訓人員或租用場地，其培訓成本遠低於在職培訓，且所學內容必定比在職培訓更切合日常工作需要。", score: 0, status: "wrong", comment: "【概念錯誤】把兩者的優缺點完全顛倒了：成本較低及所學較切合工作需要是「在職培訓」的優點；職外培訓的成本較高。" },
+          { text: "森記的人力資源經理決定為銷售人員安排職外培訓而非在職培訓，是因為職外培訓比在職培訓有更多優點，更適合森記。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體優點標題】只說職外培訓有更多優點，未有明確寫出「系統性較高」、「將對實際工作環境的干擾減至最低」、「學習壓力較小」或「可學習最新知識和技術」等標準標題。" }
+        ]},
+        { label: "第 2 步：針對「森記電器用品批發商的銷售人員」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如森記可聘請外部專業企業銷售顧問，在公司以外的培訓中心開辦設計嚴謹正規的商業談判與智能家電趨勢課程；受訓銷售員暫時離開繁忙的批發營業部，不會在接聽零售商入貨電話時被培訓打斷（將干擾減至最低），亦無須因內部資深同事各自不同的帶教水平而導致成效不一。", score: 1, status: "best", comment: "【滿分示範】緊扣電器批發商銷售人員的工作情境，具體說明外聘專業顧問有系統授課、離開繁忙營業部減少工作干擾，以及避免內部導師水平不一的問題。" },
+          { text: "例如森記安排資深銷售員在日常接見零售商客戶的同時，順便在辦公桌旁隨機指導新銷售員幾句，完全不離開辦公室。", score: 0, status: "wrong", comment: "【概念錯誤】在辦公室內邊見客邊由資深同事指導屬於「在職培訓（指導）」，並非題目要求解釋的「職外培訓」。" },
+          { text: "例如森記安排全體銷售人員在下一個月去公司外面的地方上培訓堂，學習怎樣向零售商推銷電器產品。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體說明職外培訓如何「由專業培訓人員有系統地教授最新智能電器知識與談判理論」，以及離開工作場所如何「避免干擾日常批發營業運作及減輕學習壓力」。" }
+        ]},
+        { label: "第 3 步：深化論述至提升學習效能、全面掌握最新推銷技巧以協助提升批發銷售額的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "在壓力較小且不受日常電話業務干擾的職外環境中，銷售人員能更專注及有系統地吸收最新的B2B銷售概念與談判技巧，大幅提升學習效能，從而在下月重返崗位後有效改善銷售表現，協助森記向零售商爭取更多電器訂單以提升銷售收益。", score: 1, status: "best", comment: "【滿分示範】清楚推演出壓力較小與有系統學習如何提升學習效能，最終改善銷售表現並達成森記提升批發銷售額的目標。" },
+          { text: "安排職外培訓能令森記在 2019 年度的應付貨款周轉率立即自動上升至二十次，瞬間解決現金結餘下跌的問題。", score: 0, status: "wrong", comment: "【概念錯誤】為銷售人員提供職外培訓旨在改善未來銷售表現，並不會自動改變公司過往年度的應付貨款周轉率。" },
+          { text: "這樣森記的銷售人員上完職外培訓之後，他們的表現就會改善，有助提升公司的電器銷售額。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目最後一句，未有深化說明「在壓力較小且無日常工作干擾下有系統地學習最新知識，如何提升學習效能並統一全隊銷售水平」。" }
+        ]}
+      ]
+    }
+  ];
+
+  let curBuilderCat = 'short';
+  let curQIdx = 0;
+  let userSelections = {};
+  let isSubmitted = false;
+
+  function switchBuilderCat(cat, btn) {
+    curBuilderCat = cat;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('builderCatLabel').textContent = cat === 'short' ? '選擇短答題（每題滿分 2 分）：' : '選擇進階論述題（每題滿分 3 分）：';
+    curQIdx = cat === 'short' ? 0 : 4;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function renderQuestionChips() {
+    document.getElementById('questionChips').innerHTML = workshopQuestions
+      .map((q, i) => ({ q, i }))
+      .filter(x => x.q.cat === curBuilderCat)
+      .map(x => `<button class="chip ${x.i===curQIdx?'active':''}" onclick="selectWorkshopQ(${x.i})">${x.q.title}</button>`)
+      .join('');
+  }
+
+  function selectWorkshopQ(idx) {
+    curQIdx = idx;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function pickStepOption(sIdx, oIdx) {
+    userSelections[sIdx] = oIdx;
+    isSubmitted = false;
+    renderWorkshop();
+  }
+
+  function submitConstructedAnswer() {
+    const q = workshopQuestions[curQIdx];
+    if (Object.keys(userSelections).length < q.steps.length) {
+      alert(`請先完成全部 ${q.steps.length} 個步驟的選擇，再點擊批改。`);
+      return;
+    }
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function fillBestChoices() {
+    const q = workshopQuestions[curQIdx];
+    q.steps.forEach((st, sIdx) => {
+      userSelections[sIdx] = st.opts.findIndex(o => o.status === 'best');
+    });
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function renderWorkshop() {
+    const q = workshopQuestions[curQIdx];
+    const letters = ['A', 'B', 'C'];
+
+    let totalScore = 0;
+    q.steps.forEach((st, sIdx) => {
+      if (userSelections[sIdx] !== undefined) {
+        totalScore += st.opts[userSelections[sIdx]].score;
+      }
+    });
+
+    const previewParts = q.steps.map((st, sIdx) => {
+      const selIdx = userSelections[sIdx];
+      if (selIdx === undefined) {
+        return `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［未選擇第 ${sIdx + 1} 步］</span>`;
+      }
+      return `<span class="${st.colorClass}">${st.opts[selIdx].text}</span>`;
+    });
+
+    document.getElementById('builderWorkspace').innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div>
+            <span class="badge b-blue">${q.typeBadge}</span>
+            <span class="badge b-teal">${q.topic}</span>
+          </div>
+          <b style="color:var(--primary);font-size:16px">本段滿分：${q.maxMarks} 分</b>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink)">${q.question}</div>
+      </div>
+
+      ${q.steps.map((st, sIdx) => {
+        const selIdx = userSelections[sIdx];
+        return `
+          <div class="builder-stage">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <h4 style="font-size:16.5px"><span class="${st.colorClass}">${st.label}</span></h4>
+              <span style="font-size:14px;font-weight:600;color:var(--mute)">${selIdx !== undefined ? '已選 ' + letters[selIdx] : '請點選一項'}</span>
+            </div>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = selIdx === oIdx;
+              let gradeCls = '';
+              if (isSubmitted && isSel) {
+                gradeCls = o.status === 'best' ? 'graded-best' : o.status === 'partial' ? 'graded-partial' : 'graded-wrong';
+              }
+              return `
+                <button class="opt-card ${isSel ? 'selected' : ''} ${gradeCls}" onclick="pickStepOption(${sIdx}, ${oIdx})">
+                  <span class="opt-letter">${letters[oIdx]}</span>
+                  <span style="flex:1">${o.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('')}
+
+      <div class="card" style="border:2px solid var(--primary);margin-bottom:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <h3 style="color:var(--primary);font-size:19px">建構段落預覽</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitConstructedAnswer()">批改答案</button>
+            <button class="btn btn-outline" onclick="fillBestChoices()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="font-size:17px;line-height:1.85;background:var(--surface);padding:18px 22px;border-radius:12px;border:1px solid var(--line)">
+          ${previewParts.join(' ')}
+        </div>
+
+        ${isSubmitted ? `
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${totalScore === q.maxMarks ? 'b-green' : totalScore >= 1 ? 'b-amber' : 'b-red'}" style="font-size:15px;padding:6px 14px">
+                得分：${totalScore} / ${q.maxMarks} 分
+              </span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const chosen = st.opts[userSelections[sIdx]];
+              const cCls = chosen.status === 'best' ? 'c-best' : chosen.status === 'partial' ? 'c-partial' : 'c-wrong';
+              return `
+                <div class="critique-item ${cCls}">
+                  <b>第 ${sIdx + 1} 步（選項 ${letters[userSelections[sIdx]]} · ${chosen.score} 分）：</b>${chosen.comment}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  renderQuestionChips();
+  renderWorkshop();
+</script>
+</body>
+</html>

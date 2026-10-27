@@ -1,0 +1,1997 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 發展優質人力資源</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .main-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .main-tabs button {
+      border: 0;
+      background: none;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tabs button:hover { color: var(--ink); }
+    .main-tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Main Container & Views */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 28px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Section Header Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 25px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 680px; }
+
+    /* Sub-navigation Switcher */
+    .sub-nav {
+      display: inline-flex;
+      background: #efecf8;
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sub-nav button {
+      border: 0;
+      background: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--mute);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-nav button:hover { color: var(--ink); }
+    .sub-nav button.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.25);
+    }
+    .sub-view { display: none; }
+    .sub-view.active { display: block; animation: fadeIn 0.2s ease; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 10px 0; }
+    .sidebar-layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    /* Interactive Tools Styling (Meters, Switches, Pyramid) */
+    .pyr-layer { cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+    .pyr-layer:hover { opacity: 0.88; }
+
+    .need-bar-row {
+      display: grid;
+      grid-template-columns: 145px 1fr 125px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 14.5px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+    .need-bar-row.active-target {
+      border: 2px solid var(--amber);
+      background: var(--amber-light);
+    }
+    .bar-track {
+      height: 12px;
+      background: #e9e5f5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* Herzberg Dual Gauge Styling */
+    .gauge-box {
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .gauge-Endpoints {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .gauge-track {
+      height: 20px;
+      background: #e2ddf0;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .gauge-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.35s ease, background-color 0.35s ease;
+    }
+
+    .factor-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      cursor: pointer;
+      font: 600 15px 'Noto Sans TC', sans-serif;
+      transition: all 0.18s;
+      margin-bottom: 8px;
+      text-align: left;
+      width: 100%;
+    }
+    .factor-toggle:hover { border-color: var(--primary); }
+    .factor-toggle.hyg-on { border-color: #0369a1; background: #f0f9ff; color: #0c4a6e; }
+    .factor-toggle.mot-on { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+
+    /* Comparison Table */
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15.5px; }
+    table.comp-table th, table.comp-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+    table.comp-table tr.highlight-row { background: var(--primary-light); }
+
+    .method-btn {
+      padding: 11px 10px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      cursor: pointer;
+      font: 700 14px 'Noto Sans TC', sans-serif;
+      text-align: center;
+      transition: all 0.18s;
+      color: var(--ink-sec);
+    }
+    .method-btn:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+    .method-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2); }
+
+    /* Builder Specific */
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 18px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.correct, .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.wrong, .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #ffffff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    details.guide-Collapsible {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    details.guide-Collapsible summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .grid4, .grid5, .sidebar-layout, .need-bar-row { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+      .main-tabs { width: 100%; justify-content: center; margin-top: 8px; }
+      .sec-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 12px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速切換課室／測驗...</option>
+    <option value="人力資源管理_目錄.html">單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質人力資源.html">第 5 課：發展優質人力資源</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+  <div class="brand">
+    <span>人力資源管理</span>
+    <span class="brand-tag">第 5 課：發展優質人力資源</span>
+  </div>
+  <nav class="main-tabs" id="mainTabs">
+    <button class="on" data-tab="sec-maslow">1. 激勵與馬斯洛需要階梯理論</button>
+    <button data-tab="sec-herzberg">2. 赫茨伯格的兩因子理論</button>
+    <button data-tab="sec-xy">3. 麥格雷戈的 X 理論及 Y 理論</button>
+    <button data-tab="sec-comm">4. 內部溝通與六大 HR 功能應用</button>
+    <button data-tab="sec-builder">5. 論點建構工作坊</button>
+  </nav>
+</header>
+
+<!-- ==================== 1. 激勵與馬斯洛需要階梯理論 ==================== -->
+<section class="view on" id="sec-maslow">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元一：激勵的重要性 ＆ 馬斯洛的需要階梯理論 (Hierarchy of Needs)</span>
+      <h1>五層需要互動金字塔 ＆ 僱員處境與人生階段遞進解鎖模擬器</h1>
+      <p>激勵是激發個人努力達成目標的過程，有助減低缺勤率和員工流失率，並提升企業生產力。馬斯洛指出人類需要由低至高分為五個層次，人們只會在滿足了較低層次的需要後，才有動機去滿足較高層次的需要（且需要會因人而異及隨時間而改變）。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('mas', 0, this)">互動金字塔與僱員處境模擬器</button>
+      <button onclick="switchSub('mas', 1, this)">馬斯洛需要階梯理論挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 1A：馬斯洛互動金字塔 ＋ 僱員處境與人生階段遞進解鎖模擬器 -->
+  <div class="sub-view active" id="mas-sub-0">
+    <div class="grid2">
+      <!-- 左欄：互動五層金字塔 -->
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">馬斯洛五個層次的需要（點擊圖層查看詳情）</span>
+        <h3 style="font-size:20px;margin:6px 0 6px">較低層次需要（靠外在因素滿足）vs 較高層次需要（靠內在因素滿足）</h3>
+        <svg viewBox="0 0 500 255" style="width:100%;height:auto;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-top:4px">
+          <g class="pyr-layer" onclick="renderMaslowLayer(4)">
+            <polygon points="250,12 192,58 308,58" fill="#ddd6fe" stroke="#fff" stroke-width="2"/>
+            <text x="250" y="43" font-size="12.5" font-weight="bold" fill="#5b21b6" text-anchor="middle">5. 自我實現需要</text>
+          </g>
+          <g class="pyr-layer" onclick="renderMaslowLayer(3)">
+            <polygon points="192,58 142,105 358,105 308,58" fill="#fed7aa" stroke="#fff" stroke-width="2"/>
+            <text x="250" y="86" font-size="13.5" font-weight="bold" fill="#c2410c" text-anchor="middle">4. 自我需要 (名譽・地位・自尊)</text>
+          </g>
+          <g class="pyr-layer" onclick="renderMaslowLayer(2)">
+            <polygon points="142,105 92,152 408,152 358,105" fill="#bbf7d0" stroke="#fff" stroke-width="2"/>
+            <text x="250" y="133" font-size="13.5" font-weight="bold" fill="#166534" text-anchor="middle">3. 社交需要 (感情・友情・歸屬感)</text>
+          </g>
+          <g class="pyr-layer" onclick="renderMaslowLayer(1)">
+            <polygon points="92,152 42,199 458,199 408,152" fill="#e9d5ff" stroke="#fff" stroke-width="2"/>
+            <text x="250" y="180" font-size="14" font-weight="bold" fill="#6b21a8" text-anchor="middle">2. 安全需要 (保護・秩序・穩定)</text>
+          </g>
+          <g class="pyr-layer" onclick="renderMaslowLayer(0)">
+            <polygon points="42,199 8,246 492,246 458,199" fill="#bae6fd" stroke="#fff" stroke-width="2"/>
+            <text x="250" y="227" font-size="14.5" font-weight="bold" fill="#0369a1" text-anchor="middle">1. 生理需要 (食物・水・空氣 — 最基本生存需要)</text>
+          </g>
+          <text x="12" y="82" font-size="11.5" font-weight="bold" fill="#15803d">▲ 較高層次需要 (3-5)</text>
+          <text x="12" y="97" font-size="10.5" fill="#666">(主要依賴內在因素滿足)</text>
+          <text x="12" y="182" font-size="11.5" font-weight="bold" fill="#6d28d9">▼ 較低層次需要 (1-2)</text>
+          <text x="12" y="197" font-size="10.5" fill="#666">(主要透過外在因素滿足)</text>
+        </svg>
+        <div id="maslowLayerDetail" style="margin-top:10px"></div>
+      </div>
+
+      <!-- 右欄：全新互動工具 1 — 僱員處境與人生階段遞進解鎖模擬器 -->
+      <div class="card" style="margin-bottom:0;border:2px solid var(--primary)">
+        <span class="badge b-teal">互動實驗工具一：遞進原則與因人而異實測</span>
+        <h3 style="font-size:20px;margin:6px 0 6px">「僱員處境與人生階段」激勵方案配對實驗室</h3>
+        <p style="font-size:14.5px;color:var(--ink-sec);margin:0 0 8px">
+          <b>操作方法：</b>先在下方點選 1 位不同人生階段或處境的僱員，觀察其五層需要的滿足狀況，再點擊最下方的「企業獎勵措施」實測能否有效激勵他！
+        </p>
+        <div class="chips" id="personaChips" style="margin:6px 0 10px">
+          <button class="chip active" onclick="selectPersona(0)">1. 22歲初入職子朗</button>
+          <button class="chip" onclick="selectPersona(1)">2. 32歲成家立室子朗</button>
+          <button class="chip" onclick="selectPersona(2)">3. 獨自在家工作的合約設計師</button>
+          <button class="chip" onclick="selectPersona(3)">4. 厭倦重複影印的資深助理麗詩</button>
+        </div>
+        <div id="personaDashboard"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 1B：馬斯洛挑戰 -->
+  <div class="sub-view" id="mas-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">馬斯洛五個需要層次精準配對挑戰</span>
+        <span id="masQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="masQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="masQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="masQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. 赫茨伯格的兩因子理論 ==================== -->
+<section class="view" id="sec-herzberg">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元二：赫茨伯格的兩因子理論 (Two-Factor Theory / 雙因子理論)</span>
+      <h1>「雙刻度溫度計」實驗室：直觀理解保健因子與激勵因子的本質分別</h1>
+      <p>赫茨伯格指出：「感到滿意」的相反是「沒有感到滿意」，而「感到不滿意」的相反則是「沒有感到不滿意」！外在的「保健因子」存在時只能防止僱員感到不滿意，不能激勵他們；內在的「激勵因子」存在時才能令僱員對工作感到滿意並受到激勵。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('hz', 0, this)">雙刻度溫度計調控實驗室</button>
+      <button onclick="switchSub('hz', 1, this)">兩因子理論辨識挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 2A：全新互動工具 2 — 赫茨伯格雙刻度溫度計（雙軸調控實驗室） -->
+  <div class="sub-view active" id="hz-sub-0">
+    <div class="card" style="border:2px solid var(--primary)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div>
+          <span class="badge b-teal">互動實驗工具二：赫茨伯格雙維度動態調控台</span>
+          <h3 style="font-size:21px;margin-top:4px">親手開關下方的「保健因子」與「激勵因子」，觀察兩把獨立刻度尺的變化！</h3>
+        </div>
+        <div class="chips" style="margin:0">
+          <button class="chip" onclick="applyHzPreset(0)">預設 1：全健廠房（苛刻扣薪＋環境差）</button>
+          <button class="chip active" onclick="applyHzPreset(1)">預設 2：銀泉航空／思力公司（高薪好環境但工作沉悶）</button>
+          <button class="chip" onclick="applyHzPreset(2)">預設 3：理想團隊（保健＋激勵俱備）</button>
+        </div>
+      </div>
+
+      <!-- 雙刻度溫度計顯示區 -->
+      <div class="grid2" style="gap:16px;margin-bottom:14px">
+        <div class="gauge-box" style="margin-bottom:0;border-color:#bae6fd">
+          <div style="font-size:13.5px;font-weight:700;color:#0369a1;margin-bottom:4px">刻度尺 A：外在工作環境維度（只受「保健因子」控制 · 封頂只達「沒有感到不滿意」）</div>
+          <div class="gauge-Endpoints">
+            <span style="color:var(--red)">😡 對工作感到不滿意</span>
+            <span id="lblHygPct" style="color:#0369a1">100%</span>
+            <span style="color:#0369a1">😐 沒有對工作感到不滿意 (上限)</span>
+          </div>
+          <div class="gauge-track">
+            <div class="gauge-fill" id="barHygFill" style="width:100%;background:#0284c7"></div>
+          </div>
+          <div id="txtHygStatus" style="margin-top:8px;font-size:14px;font-weight:700;color:#0c4a6e"></div>
+        </div>
+
+        <div class="gauge-box" style="margin-bottom:0;border-color:#bbf7d0">
+          <div style="font-size:13.5px;font-weight:700;color:var(--green);margin-bottom:4px">刻度尺 B：內在工作內容維度（只受「激勵因子」控制 · 決定能否真正激勵員工）</div>
+          <div class="gauge-Endpoints">
+            <span style="color:var(--mute)">😶 沒有對工作感到滿意 (無激勵)</span>
+            <span id="lblMotPct" style="color:var(--green)">0%</span>
+            <span style="color:var(--green)">🤩 對工作感到滿意並受到激勵！</span>
+          </div>
+          <div class="gauge-track">
+            <div class="gauge-fill" id="barMotFill" style="width:0%;background:var(--green)"></div>
+          </div>
+          <div id="txtMotStatus" style="margin-top:8px;font-size:14px;font-weight:700;color:#064e3b"></div>
+        </div>
+      </div>
+
+      <!-- 8 個互動開關掣 -->
+      <div class="grid2" style="gap:18px">
+        <div>
+          <b style="color:#0369a1;font-size:15.5px;display:block;margin-bottom:8px">🛡️ 點擊開關 4 項「保健因子（外在工作環境因素）」：</b>
+          <div id="hygSwitchesBox"></div>
+        </div>
+        <div>
+          <b style="color:var(--green);font-size:15.5px;display:block;margin-bottom:8px">🔥 點擊開關 4 項「激勵因子（內在工作內容因素）」：</b>
+          <div id="motSwitchesBox"></div>
+        </div>
+      </div>
+
+      <div id="hzLiveVerdict" style="margin-top:12px"></div>
+    </div>
+
+    <!-- 保健因子 vs 激勵因子課本完整對照表 -->
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-blue">課本第 5.3B 節：保健因子與激勵因子完整對照表</span>
+      <table class="comp-table" style="font-size:15px;margin-top:10px">
+        <thead><tr><th style="width:18%">比較維度</th><th style="width:41%">保健因子 (Hygiene Factors — 外在因素)</th><th style="width:41%">激勵因子 (Motivators — 內在因素)</th></tr></thead>
+        <tbody>
+          <tr><td><b>意思與性質</b></td><td><b>可防止僱員對工作感到不滿意的因素</b>。本質上是外在的，主要關乎<b>工作環境</b>的各個方面。</td><td><b>令僱員對工作感到滿意的因素</b>。本質上是內在的，主要與個人的<b>工作內容</b>有關。</td></tr>
+          <tr><td><b>當因素「存在」時</b></td><td>僱員<b>不會對工作感到不滿意</b>（但不會感到滿意，也沒有受到激勵）。</td><td>僱員<b>對工作感到滿意和受到激勵</b>（提升工作效率）。</td></tr>
+          <tr><td><b>當因素「消失」時</b></td><td>僱員<b>會對工作感到不滿意</b>。</td><td>僱員<b>不再對工作感到滿意，也不再受到激勵</b>。</td></tr>
+          <tr class="highlight-row"><td><b>課本常見例子</b></td><td>• <b>薪金（工資）</b><br>• <b>工作環境</b><br>• <b>與主管和同事的關係</b><br>• <b>地位</b><br>• <b>保障</b>（例如不會突然裁員）<br>• <b>監督</b>（例如管理人員對下屬一視同仁）<br>• <b>公司政策和行政</b>（例如政策清晰和一致）</td><td>• <b>成就感</b><br>• <b>認同</b>（表揚與讚賞）<br>• <b>工作本身的性質</b>（例如有意義和有趣的工作）<br>• <b>責任</b>（例如作出決策）<br>• <b>晉升</b>（事業發展空間）<br>• <b>個人成長</b>（例如培訓和發展）<br>• <b>自主權</b>（工作自主權）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 子分頁 2B：兩因子挑戰 -->
+  <div class="sub-view" id="hz-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">保健因子 vs 激勵因子辨識挑戰</span>
+        <span id="hzQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="hzQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="hzQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="hzQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 麥格雷戈的 X 理論及 Y 理論 ==================== -->
+<section class="view" id="sec-xy">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元三：麥格雷戈的 X 理論及 Y 理論 ＆ 三大激勵理論終極貫通</span>
+      <h1>X / Y 理論管理風格模擬器 ＆ 三大激勵理論（馬斯洛・赫茨伯格・麥格雷戈）貫通對照儀</h1>
+      <p>麥格雷戈提出管理人員對人類持兩種不同觀點：X 理論（假設僱員不喜歡工作、逃避責任、沒有抱負）與 Y 理論（假設僱員視工作為生命一部分、會自我激勵和控制、主動承擔責任及有能力作出決策）。麥格雷戈認為 Y 理論在人事管理上比 X 理論更有用。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('xy', 0, this)">X/Y管理模擬與三大理論貫通儀</button>
+      <button onclick="switchSub('xy', 1, this)">X/Y理論實戰挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 3A：X/Y 理論模擬 ＋ 三大激勵理論終極貫通對照儀 -->
+  <div class="sub-view active" id="xy-sub-0">
+    <!-- 互動工具三 A：三大激勵理論終極貫通對照儀 -->
+    <div class="card" style="border:2px solid var(--primary)">
+      <span class="badge b-teal">互動實驗工具三：三大激勵理論（馬斯洛 × 赫茨伯格 × 麥格雷戈）終極貫通對照儀</span>
+      <h3 style="font-size:21px;margin:6px 0 6px">點擊切換「高階內在激勵區」與「基礎外在保障區」，一眼打通三個理論的對應關係！</h3>
+      <div class="chips" id="bridgeChips">
+        <button class="chip active" onclick="renderTheoryBridge(0)">🚀 點擊檢視：高階內在激勵區（馬斯洛高層次 ⟷ 赫茨伯格激勵因子 ⟷ 麥格雷戈 Y 理論）</button>
+        <button class="chip" onclick="renderTheoryBridge(1)">🛡️ 點擊檢視：基礎外在保障區（馬斯洛低層次 ⟷ 赫茨伯格保健因子 ⟷ 麥格雷戈 X 理論）</button>
+      </div>
+      <div id="theoryBridgeBox" style="margin-top:10px"></div>
+    </div>
+
+    <!-- X 理論 vs Y 理論假設、含義與個案舉證 -->
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-blue">第 5.3C 節：X 理論與 Y 理論的假設、含義及個案舉證拆解</span>
+      <div class="chips" id="xyCompChips">
+        <button class="chip active" onclick="renderXyComp(0)">1. X 理論（3項假設・2項含義・激勵方法）</button>
+        <button class="chip" onclick="renderXyComp(1)">2. Y 理論（4項假設・2項含義・激勵方法）</button>
+        <button class="chip" onclick="renderXyComp(2)">3. 考試個案舉證示範：全健廠長柏宏 (X理論) vs 設計公司志濠 (Y理論)</button>
+      </div>
+      <div id="xyCompBox" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 3B：X/Y理論實戰挑戰 -->
+  <div class="sub-view" id="xy-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">麥格雷戈 X 理論 vs Y 理論實戰判斷挑戰</span>
+        <span id="xyQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="xyQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="xyQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="xyQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 內部溝通與六大 HR 功能應用 ==================== -->
+<section class="view" id="sec-comm">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元四：內部溝通的重要性、五種常見方式 ＆ 六大 HR 功能綜合應用</span>
+      <h1>口頭・書面・視覺溝通形式 ＆ 五種內部溝通計劃與六大 HR 功能解決方案</h1>
+      <p>內部溝通是企業內部各方人士和單位交換資訊的過程，以口頭、書面或視覺形式進行。良好的內部溝通能 (i) 促進管理層與員工了解，避免勞資糾紛，建立和諧僱員關係；及 (ii) 提供與工作相關的指引和具體建議，提升表現並激勵努力工作。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('com', 0, this)">五種內部溝通方式與六大HR功能應用</button>
+      <button onclick="switchSub('com', 1, this)">內部溝通方式配對挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 4A：五種內部溝通方式與六大HR功能應用 -->
+  <div class="sub-view active" id="com-sub-0">
+    <div class="card">
+      <span class="badge b-green">促進僱員關係的五種常見「內部溝通方式（內部溝通計劃）」</span>
+      <h3 style="font-size:20.5px;margin:8px 0 8px">點擊下方五種內部溝通方式，掌握其運作描述、具體目的與適用商業情況</h3>
+      <div class="grid5" id="commMethodBtns"></div>
+      <div id="commMethodDetail" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-teal">跨課題綜合攻略：運用「六大 HR 功能」解決企業難題</span>
+      <h3 style="font-size:20.5px;margin:8px 0 8px">點選三大綜合商業難題，學習如何從 6 項人力資源管理功能全方位構思建議</h3>
+      <div class="chips" id="sixHrChips">
+        <button class="chip active" onclick="renderSixHr(0)">1. 銀行／專科診所解決「前線人員短缺」問題</button>
+        <button class="chip" onclick="renderSixHr(1)">2. 護老院／動物庇護所「在預算有限下」減低護理員流失率</button>
+        <button class="chip" onclick="renderSixHr(2)">3. 快餐連鎖店／花店支援「輕度智障及殘障僱員」的措施</button>
+      </div>
+      <div id="sixHrBox" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 4B：內部溝通挑戰 -->
+  <div class="sub-view" id="com-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">內部溝通方式精準配對挑戰</span>
+        <span id="commQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="commQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="commQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="commQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. 論點建構問答工作坊 (12題) ==================== -->
+<section class="view" id="sec-builder">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-amber">實戰寫作與教學示範訓練</span>
+      <h1>「一段一個獨立重點」論點建構工作坊</h1>
+      <p>收錄 4 道短答題（2 步建構 · 2 分）及 8 道進階論述題（3 步建構 · 3 分）。每個步驟除了提供「滿分建構選項（綠燈）」及「概念錯誤選項（紅燈）」外，特別保留一個能力較弱學生常犯的<b>「解說不足／用詞含糊／同義反覆選項（琥珀黃燈）」</b>，方便課堂進行正反對比教學示範。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchBuilderCat('short', this)">短答題訓練 (4題)</button>
+      <button onclick="switchBuilderCat('essay', this)">進階論述題訓練 (8題)</button>
+    </div>
+  </div>
+
+  <details class="guide-Collapsible">
+    <summary>查看「一段一個重點」建構結構與三種選項教學示範指南（點擊展開 / 收起）</summary>
+    <div class="grid2" style="margin-top:14px;font-size:16px">
+      <div style="background:var(--primary-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--primary)">短答題／個案題模式（每段滿分 2 分 — 2 步建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 準確指出單一需要層次／兩因子分類／內部溝通目的或方式名稱<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 結合題目企業情況說明如何激勵員工或達成目的
+      </div>
+      <div style="background:var(--teal-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--teal)">進階論述題模式（每段滿分 3 分 — 3 步深度建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 指出單一需要層次／激勵因子／X或Y理論假設／溝通方式與HR功能名稱<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 針對題目企業設定具體例子並扣連個案情境作解釋<br>
+        <span class="hl-s3">第 3 步 (1分)</span> 深化推論該措施如何提升工作滿意度、激發工作動力、建立和諧關係或降低員工流失率
+      </div>
+    </div>
+  </details>
+
+  <div class="card" style="padding:18px 22px;margin-bottom:18px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px" id="builderCatLabel">選擇短答題（每題滿分 2 分）：</div>
+    <div class="chips" id="questionChips" style="margin:0"></div>
+  </div>
+
+  <div id="builderWorkspace"></div>
+</section>
+
+<script>
+  // Main Tab Switching
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // Sub-view Switching
+  function switchSub(prefix, idx, btn) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`[id^="${prefix}-sub-"]`).forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ====== 1A. 馬斯洛五層金字塔 ＋ 僱員處境與人生階段遞進解鎖模擬器 ======
+  const maslowLayers = [
+    {
+      title: "第 1 層（最基本）：生理需要（生存需要 Physiological Needs）",
+      levelType: "較低層次的需要（靠外在因素滿足）",
+      def: "人類第一類和最基本的需要，人們須要滿足這種需要才能生存。基本必需品如食物、水和空氣都是滿足這類需要不可或缺的項目。",
+      measures: "• 提供<b>優厚的薪金和其他金錢報酬（例如花紅）</b>，讓僱員購買食物和必需品維持生活；<br>• 向僱員提供<b>充足的休息、用餐和如廁時間</b>。"
+    },
+    {
+      title: "第 2 層：安全需要（安全感需要 Safety / Security Needs）",
+      levelType: "較低層次的需要（靠外在因素滿足）",
+      def: "保障自身安全，維持秩序和穩定，以及控制個人生活和環境的需要。",
+      measures: "• 提供<b>安全的工作環境</b>（如更換較安全的廠房機器）；<br>• 提供<b>保險（醫療、人壽保險）和退休福利</b>；<br>• 提供<b>長期的僱傭合約（職業保障，不突然裁員）</b>。"
+    },
+    {
+      title: "第 3 層：社交需要（社會需要 Social Needs）",
+      levelType: "較高層次的需要（靠內在因素滿足）",
+      def: "與他人互動的需要，例子包括對朋友、感情、歸屬感和得到社會接納的需要。",
+      measures: "• 為僱員<b>組織康樂活動和社交聚會</b>（如燒烤聚會、公司旅行）；<br>• 管理層<b>關心和體貼僱員</b>。"
+    },
+    {
+      title: "第 4 層：自我需要（自尊需要或名望需要 Ego / Esteem Needs）",
+      levelType: "較高層次的需要（靠內在因素滿足）",
+      def: "與成就感有關的需要，也是一種對名譽、聲譽、地位、認同和尊重的渴求。包括 (i) 內在自尊因素（自尊、自主權和成就感）及 (ii) 外在自尊因素（地位和認同）。",
+      measures: "• <b>表揚僱員對工作付出的努力</b>（如在員工大會上公開讚賞）；<br>• <b>頒發獎項給僱員</b>，認同他們對企業的貢獻；<br>• <b>尊重僱員的意見</b>及<b>給予更多工作自主權</b>。"
+    },
+    {
+      title: "第 5 層（最高層次）：自我實現需要 (Self-actualisation Needs)",
+      levelType: "較高層次的需要（靠內在因素滿足）",
+      def: "與人類渴望發揮全部潛能和展現獨特才華有關的需要。",
+      measures: "• <b>給予僱員具挑戰性、又能達成的工作</b>；<br>• <b>提供培訓和發展機會</b>；<br>• <b>擢升能力較高的僱員</b>，讓他們發揮潛能。"
+    }
+  ];
+  function renderMaslowLayer(idx) {
+    const l = maslowLayers[idx];
+    document.getElementById('maslowLayerDetail').innerHTML = `
+      <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1.5px solid var(--primary);font-size:14.5px;line-height:1.7">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:4px">
+          <b style="color:var(--primary);font-size:16px">${l.title}</b>
+          <span class="badge ${idx<2?'b-blue':'b-green'}" style="margin:0">${l.levelType}</span>
+        </div>
+        <div style="margin-bottom:6px"><b>定義：</b>${l.def}</div>
+        <div style="background:var(--card);padding:9px 12px;border-radius:8px;border-left:4px solid var(--teal)">
+          <b>企業如何滿足此層次需要的例子：</b><br>${l.measures}
+        </div>
+      </div>`;
+  }
+  renderMaslowLayer(0);
+
+  // 僱員處境與人生階段遞進解鎖模擬器數據
+  const personas = [
+    {
+      name: "22 歲初入職青年子朗（剛開始第一份工作）",
+      bg: "剛大學畢業出來工作，手頭儲蓄極少，正急需賺取更多金錢來支持自己的基本衣食住行生活開支。",
+      bars: [25, 20, 20, 10, 5],
+      targetIdx: 0,
+      targetName: "第 1 層：生理需要（生存需要）"
+    },
+    {
+      name: "32 歲成家立室後的子朗（育有年幼子女）",
+      bg: "工作十年後薪金已相當優厚（生理需要已滿足 100%），但剛結婚生子，現時最擔心自己一旦患病或失業會令家人頓失依靠。",
+      bars: [100, 30, 40, 20, 10],
+      targetIdx: 1,
+      targetName: "第 2 層：安全需要（安全感需要）"
+    },
+    {
+      name: "設計公司合約設計師（高薪、有自主權但長期在家獨自工作）",
+      bg: "東主志濠提供優厚薪金（生理已滿足）及極大工作自主權（自我需要已滿足），但只簽一年期合約且無醫療保險，並要求設計師長期在家獨自完成工作，令他深感孤立及缺乏保障。",
+      bars: [100, 25, 20, 85, 40],
+      targetIdx: 2, // 同時缺安全(1)與社交(2)
+      targetName: "第 2 層：安全需要 及 第 3 層：社交需要"
+    },
+    {
+      name: "資深會計助理麗詩（薪金福利穩定、同事融洽，但每天重複影印存檔）",
+      bg: "在公司工作多年，薪金福利穩健、同事關係融洽且常獲主管讚賞（第 1 至 4 層需要均已滿足），但她抱怨每天只重複做相同的文件影印工作，無法發揮自身才華與潛能。",
+      bars: [100, 100, 100, 90, 20],
+      targetIdx: 4,
+      targetName: "第 5 層：自我實現需要"
+    }
+  ];
+
+  let curPersonaIdx = 0;
+  let lastActionFeedback = "";
+
+  function selectPersona(idx) {
+    curPersonaIdx = idx;
+    document.querySelectorAll('#personaChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    lastActionFeedback = `<span style="color:var(--mute)">請點擊上方任一「企業獎勵措施」按鈕，測試該措施能否有效激勵 <b>${personas[idx].name}</b>！</span>`;
+    renderPersonaDashboard();
+  }
+
+  function testMaslowAction(actionLevel) {
+    const p = personas[curPersonaIdx];
+    const levelNames = ["第1層：生理需要", "第2層：安全需要", "第3層：社交需要", "第4層：自我需要", "第5層：自我實現需要"];
+    const actionNames = [
+      "提供優厚薪金、花紅與充足用膳休息時間（針對生理需要）",
+      "提供長期僱傭合約、全面醫療保險與退休福利（針對安全需要）",
+      "定期舉辦燒烤聚會、公司旅行及團隊午餐交流（針對社交需要）",
+      "在員工大會公開表揚並頒發最佳員工獎項（針對自我需要）",
+      "委派具挑戰性的新項目、提供發展培訓及擢升機會（針對自我實現需要）"
+    ];
+
+    const isMatch = (curPersonaIdx === 2) ? (actionLevel === 1 || actionLevel === 2) : (actionLevel === p.targetIdx);
+
+    if (isMatch) {
+      lastActionFeedback = `
+        <div style="background:var(--green-light);border-left:4px solid var(--green);padding:10px 14px;border-radius:8px;color:#064e3b">
+          <b>✅ 激勵成功！【${actionNames[actionLevel]}】精準命中目標！</b><br>
+          根據馬斯洛理論，這正好滿足了該僱員當前最迫切追求的<b>「${p.targetName}」</b>。這印證了理論的兩大含義：企業必須先了解不同僱員的個別需要，並隨着僱員人生階段或處境轉變而調整獎勵方案！
+        </div>`;
+    } else if (actionLevel > p.targetIdx && curPersonaIdx !== 2) {
+      lastActionFeedback = `
+        <div style="background:var(--red-light);border-left:4px solid var(--red);padding:10px 14px;border-radius:8px;color:#881337">
+          <b>❌ 激勵失效（違反遞進原則）！你選擇了【${actionNames[actionLevel]}】</b><br>
+          根據馬斯洛的<b>「遞進原則」</b>，人們<b>只會在滿足了較低層次的需要後，才有動機去滿足較高層次的需要</b>！該僱員目前的<b>「${p.targetName}」</b>尚未得到滿足，越級提供更高層次的獎勵無法有效激勵他！
+        </div>`;
+    } else {
+      lastActionFeedback = `
+        <div style="background:var(--amber-light);border-left:4px solid var(--amber);padding:10px 14px;border-radius:8px;color:#78350f">
+          <b>⚠️ 激勵效果微弱（該層次需要早已滿足）！你選擇了【${actionNames[actionLevel]}】</b><br>
+          根據馬斯洛理論，當僱員已經滿足了某個層次的需要（${levelNames[actionLevel]}已達標），該層次需要便不再是主要的激勵因素；他目前已轉為追求更高層次的<b>「${p.targetName}」</b>！
+        </div>`;
+    }
+    renderPersonaDashboard();
+  }
+
+  function renderPersonaDashboard() {
+    const p = personas[curPersonaIdx];
+    const barLabels = ["1. 生理需要", "2. 安全需要", "3. 社交需要", "4. 自我需要", "5. 自我實現需要"];
+    const rowsHtml = [4, 3, 2, 1, 0].map(lvl => {
+      const val = p.bars[lvl];
+      const isTarget = (curPersonaIdx === 2) ? (lvl === 1 || lvl === 2) : (lvl === p.targetIdx);
+      const col = val >= 85 ? 'var(--green)' : isTarget ? 'var(--amber)' : '#94a3b8';
+      const statusTxt = val >= 85 ? '✅ 已滿足' : isTarget ? '🔥 當前迫切追求' : '尚未解鎖';
+      return `
+        <div class="need-bar-row ${isTarget?'active-target':''}">
+          <b>${barLabels[lvl]}</b>
+          <div class="bar-track"><div class="bar-fill" style="width:${val}%;background:${col}"></div></div>
+          <span style="font-size:12.5px;font-weight:800;color:${col};text-align:right">${statusTxt} (${val}%)</span>
+        </div>`;
+    }).join('');
+
+    document.getElementById('personaDashboard').innerHTML = `
+      <div style="background:var(--surface);padding:12px 14px;border-radius:10px;border:1px solid var(--line);font-size:14.5px;margin-bottom:10px">
+        <b style="color:var(--primary)">當前診斷對象：${p.name}</b><br>
+        <span>${p.bg}</span>
+      </div>
+      ${rowsHtml}
+      <div style="margin-top:10px">
+        <b style="font-size:14px;color:var(--ink-sec);display:block;margin-bottom:6px">👇 點擊以下企業獎勵措施，測試能否有效激勵該僱員：</b>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button class="btn btn-outline" style="padding:6px 11px;font-size:13.5px" onclick="testMaslowAction(0)">① 加薪派花紅 (生理)</button>
+          <button class="btn btn-outline" style="padding:6px 11px;font-size:13.5px" onclick="testMaslowAction(1)">② 長工合約＋醫療保險 (安全)</button>
+          <button class="btn btn-outline" style="padding:6px 11px;font-size:13.5px" onclick="testMaslowAction(2)">③ 舉辦公司旅行燒烤 (社交)</button>
+          <button class="btn btn-outline" style="padding:6px 11px;font-size:13.5px" onclick="testMaslowAction(3)">④ 公開表揚頒獎 (自我)</button>
+          <button class="btn btn-outline" style="padding:6px 11px;font-size:13.5px" onclick="testMaslowAction(4)">⑤ 委派具挑戰性新工作 (自我實現)</button>
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:14px">${lastActionFeedback}</div>`;
+  }
+  selectPersona(0);
+
+  // 對稱深度設計的 6 道馬斯洛挑戰題
+  const masQuizItems = [
+    {
+      q: "1. 根據馬斯洛的需要階梯理論，指出以下五個情況分別可滿足僱員哪個層次的需要：<br>(a) 汽車生產商將廠房機器更換為較安全的型號 ｜ (b) 行政總裁在員工大會上表揚表現出眾的僱員 ｜ (c) 部門主管為下屬組織燒烤聚會促進關係 ｜ (d) 銀行每年派發優厚花紅給全體員工維持生活 ｜ (e) 向有潛質擔任更高職位的下屬委派具挑戰性的工作",
+      opts: [
+        "A. (a) 安全需要 ｜ (b) 自我需要 ｜ (c) 社交需要 ｜ (d) 生理需要 ｜ (e) 自我實現需要",
+        "B. (a) 生理需要 ｜ (b) 安全需要 ｜ (c) 社交需要 ｜ (d) 自我需要 ｜ (e) 自我實現需要",
+        "C. (a) 安全需要 ｜ (b) 自我實現需要 ｜ (c) 自我需要 ｜ (d) 生理需要 ｜ (e) 社交需要"
+      ],
+      ans: 0,
+      exp: "正確。(a) 更換安全機器屬「安全需要」；(b) 員工大會公開表揚屬「自我需要（認同與自尊）」；(c) 燒烤聚會促進同事情誼屬「社交需要」；(d) 派發優厚花紅維持生活屬「生理需要」；(e) 委派具挑戰性工作發揮潛能屬「自我實現需要」。"
+    },
+    {
+      q: "2. 關於馬斯洛需要階梯理論中「較低層次的需要」與「較高層次的需要」的分類，下列哪項描述最為準確？",
+      opts: [
+        "A. 生理需要、安全需要和社交需要屬於較低層次的需要，主要依賴個人的內在因素來滿足；自我需要和自我實現需要則屬於較高層次的需要",
+        "B. 生理需要和安全需要屬於較低層次的需要，主要透過薪金、年假和工作環境等外在因素來滿足；社交需要、自我需要和自我實現需要則屬於較高層次的需要，主要依賴個人的內在因素來滿足",
+        "C. 五個層次的需要全部都屬於較高層次的需要，而且全部都只能透過發放現金花紅等外在金錢因素來滿足"
+      ],
+      ans: 1,
+      exp: "正確。課文第 5.3A 節指出：(i) 較高層次的需要（社交需要、自我需要和自我實現需要）主要依賴個人的內在因素來滿足；(ii) 較低層次的需要（生理需要和安全需要）則主要透過薪金、年假和工作環境等外在因素來滿足。"
+    },
+    {
+      q: "3. 柏呈是一家小型會計師樓的東主，三個月前解僱數名員工後導致留下的員工工作量大增，現時大多欠缺工作動機且士氣低落（有員工打算請病假，亦有員工打算另覓新公司）。員工欠缺工作動機和士氣低落會對會計師樓造成甚麼負面影響？",
+      opts: [
+        "A. 會令會計師樓的員工缺勤率（經常請病假）和員工流失率（辭職轉工）大幅上升，同時令員工的工作表現和工作效率轉差，削弱會計師樓整體的生產力與服務質素",
+        "B. 會令留下來的會計師自動自覺提高工作效率十倍，使會計師樓無須再聘請任何新員工亦能超額完成所有核數報告",
+        "C. 只會影響員工放假時的私人心情，對會計師樓的日常核數工作進度、員工出勤率或人才留任率不會構成任何影響"
+      ],
+      ans: 0,
+      exp: "正確。激勵僱員的兩大重要性正是：(i) 減低缺勤率和員工流失率；(ii) 提升工作表現、工作效率和企業生產力。反之，當員工欠缺工作動機和士氣低落時，便會導致缺勤率和流失率上升，以及生產力下降。"
+    },
+    {
+      q: "4. 承上題，會計師樓員工麗詩表示：「我能夠應付現時的工作量，但我不喜歡每天重複做相同的文件影印工作。」另一員工偉賢則表示：「我想多花點時間陪伴家人。」柏呈可如何分別滿足麗詩和偉賢的需要以激勵他們？",
+      opts: [
+        "A. 柏呈應強制麗詩每天多影印三千份相同的文件，並要求偉賢在周末連續加班兩天不得回家",
+        "B. 柏呈可為麗詩安排工作輪調或委派更具挑戰性的會計工作以滿足其自我實現需要（或自我需要）；同時為偉賢提供彈性上班時間、額外休假或允許在家工作，讓他有更多時間陪伴家人以維持工作與生活平衡",
+        "C. 柏呈只需在辦公室安裝一部新的冷氣機，便能同時完全解決麗詩覺得工作重複沉悶及偉賢無暇陪伴家人的問題"
+      ],
+      ans: 1,
+      exp: "正確。針對厭倦重複單調工作的麗詩，應透過工作輪調或委派具挑戰性工作滿足其較高層次的自我實現需要；針對希望陪伴家人的偉賢，則應提供工作上的彈性（彈性工時、在家工作或額外休假）。這體現了馬斯洛理論「先了解個別需要，為各人制定相應獎勵方案」的含義。"
+    },
+    {
+      q: "5. 關於馬斯洛需要階梯理論的「遞進原則」與「理論含義」，下列哪項描述最為準確？",
+      opts: [
+        "A. 人們只會在滿足了較低層次的需要後，才有動機去滿足較高層次的需要；而且僱員的需要會隨着時間因滿足了某些層次的需要而改變，企業應時常留意並調整獎勵方案",
+        "B. 所有僱員在任何年齡和人生階段所追求的需要都是完全一模一樣且永遠不會改變的，企業只需用單一的獎勵方案便可永久激勵所有員工",
+        "C. 人們必須先百分百滿足最高層次的自我實現需要，然後才會有動機去追求最基本的生理需要（如對食物和水的需要）"
+      ],
+      ans: 0,
+      exp: "正確。馬斯洛指出人們只會在滿足了較低層次的需要後，才有動機去滿足較高層次的需要；且不同僱員想滿足的需要不同，並會隨時間改變，企業須適時調整獎勵方案。"
+    },
+    {
+      q: "6. 根據馬斯洛的需要階梯理論，企業可向僱員提供哪三種「僱員福利（非金錢報酬）」來滿足他們的「安全需要」？",
+      opts: [
+        "A. 向僱員發放每月基本底薪、銷售佣金以及年終表現花紅這三種現金報酬",
+        "B. 為僱員提供醫療保險（涵蓋醫療開支）、人壽保險（不幸離世時向家屬支付補償金）以及退休福利（如退休金或強積金計劃，支援退休生活穩定）",
+        "C. 為僱員舉辦聖誕聯歡派對、頒發每月最佳員工獎座以及委派具挑戰性的新項目"
+      ],
+      ans: 1,
+      exp: "正確。注意審題要求回答「僱員福利」以滿足「安全需要」：醫療保險、人壽保險及退休福利（退休金）均屬於能保障員工安全與生活穩定的僱員福利（A 屬於金錢報酬；C 分別滿足社交、自我及自我實現需要）。"
+    }
+  ];
+  let curMSQ = 0;
+  function renderMasQuiz() {
+    const it = masQuizItems[curMSQ];
+    document.getElementById('masQuizProg').textContent = `題目 ${curMSQ + 1} / ${masQuizItems.length}`;
+    document.getElementById('masQuizQ').innerHTML = it.q;
+    document.getElementById('masQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkMasQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('masQuizFb').innerHTML = '';
+  }
+  function checkMasQuiz(idx) {
+    const it = masQuizItems[curMSQ];
+    const fb = document.getElementById('masQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curMSQ=(curMSQ+1)%masQuizItems.length;renderMasQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderMasQuiz();
+
+  // ====== 2A. 赫茨伯格雙刻度溫度計（保健 vs 激勵雙軸調控實驗室） ======
+  const hygFactorsList = [
+    { name: "1. 具吸引力的薪金（工資）", on: true },
+    { name: "2. 舒適及安全的工作環境", on: true },
+    { name: "3. 與主管和同事的良好關係", on: true },
+    { name: "4. 清晰公平的公司政策與職業保障（不突然裁員）", on: true }
+  ];
+  const motFactorsList = [
+    { name: "5. 有意義、有趣及具挑戰性的工作本身性質", on: false },
+    { name: "6. 工作自主權與承擔決策責任", on: false },
+    { name: "7. 上司的公開表揚、認同與成就感", on: false },
+    { name: "8. 晉升機會與個人成長（培訓和發展空間）", on: false }
+  ];
+
+  function toggleHygFactor(idx) {
+    hygFactorsList[idx].on = !hygFactorsList[idx].on;
+    updateHzSandbox();
+  }
+  function toggleMotFactor(idx) {
+    motFactorsList[idx].on = !motFactorsList[idx].on;
+    updateHzSandbox();
+  }
+  function applyHzPreset(presetIdx) {
+    if (presetIdx === 0) {
+      // 全健廠房：保健消失 + 激勵消失
+      hygFactorsList.forEach(f => f.on = false);
+      motFactorsList.forEach(f => f.on = false);
+    } else if (presetIdx === 1) {
+      // 銀泉航空 / 思力公司：保健 100% 存在，但激勵 0% 消失
+      hygFactorsList.forEach(f => f.on = true);
+      motFactorsList.forEach(f => f.on = false);
+    } else {
+      // 理想團隊：兩者俱備
+      hygFactorsList.forEach(f => f.on = true);
+      motFactorsList.forEach(f => f.on = true);
+    }
+    updateHzSandbox();
+  }
+
+  function updateHzSandbox() {
+    const hygCount = hygFactorsList.filter(f => f.on).length;
+    const motCount = motFactorsList.filter(f => f.on).length;
+    const hygPct = hygCount * 25;
+    const motPct = motCount * 25;
+
+    document.getElementById('lblHygPct').textContent = `${hygPct}%`;
+    document.getElementById('barHygFill').style.width = `${hygPct}%`;
+    document.getElementById('barHygFill').style.backgroundColor = hygPct >= 75 ? '#0284c7' : hygPct >= 50 ? 'var(--amber)' : 'var(--red)';
+
+    document.getElementById('lblMotPct').textContent = `${motPct}%`;
+    document.getElementById('barMotFill').style.width = `${motPct}%`;
+
+    document.getElementById('txtHygStatus').textContent =
+      hygPct === 100 ? "當前狀態：保健因子充足 ➔ 僱員【不會對工作感到不滿意】（但注意：刻度尺 A 封頂於此，絕不會跨過去變成感到滿意！）" :
+      hygPct >= 50 ? "當前狀態：部分保健因子缺失 ➔ 僱員開始對工作環境或待遇產生微言與不滿。" :
+      "當前狀態：保健因子嚴重消失 ➔ 僱員對工作【感到強烈不滿意】（容易引發投訴與高流失率）！";
+
+    document.getElementById('txtMotStatus').textContent =
+      motPct >= 75 ? "當前狀態：激勵因子充足 ➔ 僱員【對工作感到滿意，並受到強大內在激勵】！" :
+      motPct >= 25 ? "當前狀態：有少量激勵因子 ➔ 僱員獲得一定程度的工作滿足感與動力。" :
+      "當前狀態：激勵因子完全消失 ➔ 僱員【沒有對工作感到滿意，也沒有受到激勵】！";
+
+    document.getElementById('hygSwitchesBox').innerHTML = hygFactorsList.map((f, i) => `
+      <button class="factor-toggle ${f.on?'hyg-on':''}" onclick="toggleHygFactor(${i})">
+        <span>${f.name}</span>
+        <span class="badge ${f.on?'b-blue':'b-red'}" style="margin:0;flex-shrink:0">${f.on?'✓ 存在':'✗ 消失'}</span>
+      </button>
+    `).join('');
+
+    document.getElementById('motSwitchesBox').innerHTML = motFactorsList.map((f, i) => `
+      <button class="factor-toggle ${f.on?'mot-on':''}" onclick="toggleMotFactor(${i})">
+        <span>${f.name}</span>
+        <span class="badge ${f.on?'b-green':'b-red'}" style="margin:0;flex-shrink:0">${f.on?'✓ 存在':'✗ 消失'}</span>
+      </button>
+    `).join('');
+
+    let verdictHtml = "";
+    if (hygPct >= 75 && motPct === 0) {
+      verdictHtml = `
+        <div style="background:var(--amber-light);border-left:5px solid var(--amber);padding:14px 18px;border-radius:10px;font-size:15px">
+          <b style="color:var(--amber);font-size:16.5px">💡 考試最高頻盲點突破（銀泉航空 ／ 思力公司個案情境）：</b><br>
+          請看上方的兩把刻度尺！雖然你已開齊了<b>「具吸引力的薪金」、「舒適工作環境」及「良好關係」</b>，但因為這些全部屬於外在的<b>「保健因子」</b>，它們只會令刻度尺 A 升至「沒有感到不滿意」，而<b>刻度尺 B（滿意度與激勵）依然是 0%</b>！<br>
+          <b>結論：</b>保健因子的存在只能防止僱員對工作感到不滿意，<b>不能讓僱員對工作感到滿意，也不能激勵他們</b>！試點擊右邊開啟第 5 至 8 項「激勵因子」，觀察刻度尺 B 的變化！
+        </div>`;
+    } else if (hygPct < 50) {
+      verdictHtml = `
+        <div style="background:var(--red-light);border-left:5px solid var(--red);padding:14px 18px;border-radius:10px;font-size:15px">
+          <b style="color:var(--red);font-size:16.5px">🚨 警號：保健因子消失導致僱員「對工作感到不滿意」（全健廠房個案情境）！</b><br>
+          當工資被苛刻扣減、工作環境惡劣、公司政策嚴苛時，由於<b>保健因子消失</b>，僱員會對工作產生強烈不滿。如果考題問<b>「如何減少生產工人的不滿」</b>，你必須建議改善左列的<b>「保健因子」</b>（如取消犯錯扣薪規則、改善工作環境與縮短過長工時）！
+        </div>`;
+    } else {
+      verdictHtml = `
+        <div style="background:var(--green-light);border-left:5px solid var(--green);padding:14px 18px;border-radius:10px;font-size:15px">
+          <b style="color:var(--green);font-size:16.5px">🌟 最佳管理狀態：保健因子防止不滿 ＋ 激勵因子帶來工作滿意與激勵！</b><br>
+          企業一方面提供合理的<b>保健因子</b>（確保員工不會對工作環境與待遇感到不滿），同時透過提供與工作內容相關的<b>激勵因子</b>（成就感、認同、具挑戰性工作、責任、晉升、個人成長與自主權），為僱員提供內在獎勵，促使他們提升工作效率！
+        </div>`;
+    }
+    document.getElementById('hzLiveVerdict').innerHTML = verdictHtml;
+  }
+  updateHzSandbox();
+
+  // 對稱深度設計的 7 道兩因子理論挑戰題
+  const hzQuizItems = [
+    {
+      q: "1. 根據赫茨伯格的兩因子理論，辨別下列六項因素屬於「保健因子」還是「激勵因子」：<br>(a) 工作環境 ｜ (b) 工作自主權 ｜ (c) 公司政策和行政 ｜ (d) 職業保障（不會突然裁員） ｜ (e) 事業發展（晉升與個人成長） ｜ (f) 責任",
+      opts: [
+        "A. 保健因子：(a)、(c)、(d) ｜ 激勵因子：(b)、(e)、(f)",
+        "B. 保健因子：(b)、(e)、(f) ｜ 激勵因子：(a)、(c)、(d)",
+        "C. 保健因子：(a)、(b)、(c) ｜ 激勵因子：(d)、(e)、(f)"
+      ],
+      ans: 0,
+      exp: "正確。關乎外在工作環境 (a)、公司政策和行政 (c) 及職業保障 (d) 的屬於「保健因子」；關乎內在工作內容的工作自主權 (b)、事業發展 (e) 及責任 (f) 的屬於「激勵因子」。"
+    },
+    {
+      q: "2. 根據赫茨伯格的兩因子理論，解釋「為僱員安排具挑戰性但可達成的工作」能否激勵企業的僱員：",
+      opts: [
+        "A. 不能激勵僱員 — 因為具挑戰性的工作屬於外在的保健因子，其存在只能防止僱員對工作感到不滿意，並不能帶來任何工作滿足感",
+        "B. 能夠激勵僱員 — 因為具挑戰性但可達成的工作（工作本身的性質與成就感）屬於內在的『激勵因子』；當激勵因子存在時，可令僱員對工作感到滿意，並提供內在獎勵激勵他們提升工作效率",
+        "C. 不能激勵僱員 — 因為根據兩因子理論，只有不斷大幅調高基本月薪才能為僱員提供內在獎勵，改變工作內容對工作態度毫無影響"
+      ],
+      ans: 1,
+      exp: "正確。具挑戰性的工作（工作本身的性質）及從中獲得的成就感屬於「激勵因子」，其存在能令僱員對工作感到滿意並受到激勵。"
+    },
+    {
+      q: "3. 根據赫茨伯格的兩因子理論，解釋「維持管理層和僱員之間的良好關係」能否激勵企業的僱員：",
+      opts: [
+        "A. 能夠激勵僱員 — 因為與主管和同事的良好關係屬於最重要的內在激勵因子，單靠維持良好關係並一起遠足已足以令員工發揮最高生產力",
+        "B. 不能激勵僱員 — 因為與主管和同事的關係屬於外在的『保健因子』；雖然維持良好關係可防止僱員對工作感到不滿意，但保健因子的存在不能讓僱員對工作感到滿意，也不能激勵他們",
+        "C. 不能激勵僱員 — 因為赫茨伯格主張管理層必須與下屬保持敵對關係並每天責罰下屬，才能令下屬對工作感到滿意"
+      ],
+      ans: 1,
+      exp: "正確。這是必考陷阱：與主管和同事的關係屬於「保健因子」，存在時只能防止僱員對工作感到不滿意，不能令他們對工作感到滿意，也不能激勵他們。"
+    },
+    {
+      q: "4. 銀泉航空的機艙服務員薪金在業界中數一數二，工作環境也十分和諧（行政總裁上周末才跟同事遠足），但機艙服務員仍然缺乏工作動機、表現欠佳甚至辭職。根據赫茨伯格的兩因子理論，原因為何？",
+      opts: [
+        "A. 因為優厚的薪金及和諧的工作環境都只是外在的『保健因子』，它們的存在只能防止機艙服務員對工作感到不滿意，但不能令他們對工作感到滿意或激勵他們；公司必須提供『激勵因子』（如認同表揚、晉升及個人成長機會）才能激勵他們",
+        "B. 因為優厚的薪金及和諧的工作環境屬於內在的『激勵因子』，而銀泉航空完全沒有提供任何保健因子，導致機艙服務員對工作環境感到極度不滿",
+        "C. 因為赫茨伯格的兩因子理論指出，當員工的薪金越高、與上司關係越好時，員工對工作的不滿意程度就會自動成正比地大幅增加"
+      ],
+      ans: 0,
+      exp: "正確。薪金、工作環境及與主管同事的關係均屬於「保健因子」，只能防止不滿而不能激勵員工；要激勵機艙服務員，必須引入成就感、認同、責任、晉升或個人成長等「激勵因子」。"
+    },
+    {
+      q: "5. 根據赫茨伯格的兩因子理論，一家時裝店可向售貨員提供哪些「非金錢報酬」來提升他們對工作的「滿意度」？",
+      opts: [
+        "A. 提供免費的員工飯堂、乾淨的洗手間以及準時發放法定最低工資",
+        "B. 提供屬於『激勵因子』的非金錢報酬，例如：(1) 認同和表揚（口頭讚賞或設立每月最佳售貨員獎）；(2) 培訓和發展機會（提供時裝配搭課程及晉升店長機會）；(3) 工作自主權和責任（容許自行設計櫥窗陳列）",
+        "C. 制定清晰嚴格的遲到扣薪政策，並派分店經理在店內貼身監視售貨員的一舉一動"
+      ],
+      ans: 1,
+      exp: "正確。要提升對工作的「滿意度」，必須提供屬於「激勵因子」的非金錢報酬，即認同和表揚、培訓和發展機會（個人成長与晉升）、以及工作自主權和責任。"
+    },
+    {
+      q: "6. 全健衛生用品廠的生產工人工作時間長，要遵守很多嚴格規則，且一旦犯錯更會被扣減薪金，商業顧問建議廠長採取措施「減少生產工人的不滿」。根據赫茨伯格的兩因子理論，廠長應如何減少工人的不滿？",
+      opts: [
+        "A. 由於防止或減少員工感到不滿意的是『保健因子』，廠長應改善保健因子：例如取消犯錯即扣減薪金的苛刻規則（保障穩定薪金與改善公司政策）、放寬過嚴規條並改善監督方式，以及縮短過長工時與改善廠房工作環境",
+        "B. 廠長應繼續保留犯錯扣薪及每日工作十六小時的嚴苛規則，只需在廠房牆上張貼一張『最佳工人獎狀』便可徹底消除工人對扣薪和長工時的不滿",
+        "C. 廠長應將所有生產工人的基本底薪再削減一半，因為在兩因子理論中，薪金越低工人的不滿意程度便越低"
+      ],
+      ans: 0,
+      exp: "正確。審題關鍵在於題目問如何「減少工人的不滿」：在兩因子理論中，保健因子是可防止僱員對工作感到不滿意的因素，因此必須針對個案中缺失的保健因子（公司政策、監督、薪金保障、工作環境與工時）作出改善。"
+    },
+    {
+      q: "7. 關於赫茨伯格兩因子理論的基本觀點，下列哪項陳述是正確的？",
+      opts: [
+        "A. 『感到滿意』的相反是『感到不滿意』，兩者由完全相同的外在因素所決定",
+        "B. 『感到滿意』的相反是『沒有感到滿意』，而『感到不滿意』的相反則是『沒有感到不滿意』；讓人們對工作感到滿意的因素（激勵因子）與讓他們感到不滿意的因素（保健因子）是截然不同的",
+        "C. 當企業的保健因子完全消失時，僱員依然不會對工作感到不滿意，反而會受到最強烈的內在激勵"
+      ],
+      ans: 1,
+      exp: "正確。課文第 5.3B 節明確指出赫茨伯格的兩大核心論點：(i) 感到滿意的相反是沒有感到滿意，感到不滿意的相反是沒有感到不滿意；(ii) 讓人們感到滿意的因素與感到不滿意的因素是截然不同的。"
+    }
+  ];
+  let curHZQ = 0;
+  function renderHzQuiz() {
+    const it = hzQuizItems[curHZQ];
+    document.getElementById('hzQuizProg').textContent = `題目 ${curHZQ + 1} / ${hzQuizItems.length}`;
+    document.getElementById('hzQuizQ').innerHTML = it.q;
+    document.getElementById('hzQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkHzQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('hzQuizFb').innerHTML = '';
+  }
+  function checkHzQuiz(idx) {
+    const it = hzQuizItems[curHZQ];
+    const fb = document.getElementById('hzQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curHZQ=(curHZQ+1)%hzQuizItems.length;renderHzQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderHzQuiz();
+
+  // ====== 3A. 三大激勵理論終極貫通對照儀 ＆ X/Y 理論拆解 ======
+  const bridgeData = [
+    `<div style="background:var(--green-light);padding:18px 20px;border-radius:14px;border:2px solid var(--green)">
+      <h4 style="color:var(--green);font-size:18px;margin-bottom:10px">🚀 高階內在激勵區：如何真正激發員工的內在動力、工作滿意度與高生產力？</h4>
+      <div class="grid3" style="gap:14px;font-size:14.5px">
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid var(--primary)">
+          <b style="color:var(--primary);font-size:16px">1. 馬斯洛：較高層次的需要</b><br>
+          <span style="font-size:13px;color:var(--mute)">（主要依賴個人的內在因素來滿足）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>第 5 層：自我實現需要</b>（發揮全部潛能、挑戰性工作、培訓發展、晉升）</li>
+            <li><b>第 4 層：自我／自尊需要</b>（成就感、自主權、地位、公開表揚、獲頒獎項、意見受尊重）</li>
+            <li><b>第 3 層：社交需要</b>（友情、歸屬感、社交聚會、上司關心體貼）</li>
+          </ul>
+        </div>
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid var(--green)">
+          <b style="color:var(--green);font-size:16px">2. 赫茨伯格：激勵因子 (Motivators)</b><br>
+          <span style="font-size:13px;color:var(--mute)">（與工作內容有關的內在因素 ➔ 令員工感到滿意並受激勵）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>成就感</b> ＆ <b>認同（表揚與獎項）</b></li>
+            <li><b>工作本身的性質</b>（有意義、有趣及具挑戰性的工作）</li>
+            <li><b>責任（參與決策）</b> ＆ <b>工作自主權</b></li>
+            <li><b>晉升</b> ＆ <b>個人成長（培訓和發展）</b></li>
+          </ul>
+        </div>
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid var(--teal)">
+          <b style="color:var(--teal);font-size:16px">3. 麥格雷戈：Y 理論 (Theory Y)</b><br>
+          <span style="font-size:13px;color:var(--mute)">（積極人性假設 ➔ 滿足較高層次需要，在人事管理上更有用）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>人性假設</b>：視工作為生命一部分、自我激勵控制、主動承擔責任、具決策能力</li>
+            <li><b>激勵方法</b>：邀請參與決策、給予具挑戰性工作、頒獎認同貢獻、提供培訓發展機會</li>
+          </ul>
+        </div>
+      </div>
+    </div>`,
+    `<div style="background:#f0f9ff;padding:18px 20px;border-radius:14px;border:2px solid #0284c7">
+      <h4 style="color:#0369a1;font-size:18px;margin-bottom:10px">🛡️ 基礎外在保障區：如何解決基本生存與安全顧慮、防止員工產生不滿？</h4>
+      <div class="grid3" style="gap:14px;font-size:14.5px">
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid #0284c7">
+          <b style="color:#0369a1;font-size:16px">1. 馬斯洛：較低層次的需要</b><br>
+          <span style="font-size:13px;color:var(--mute)">（主要透過薪金、年假和工作環境等外在因素滿足）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>第 2 層：安全需要</b>（保障自身安全與穩定：安全工作環境、醫療與人壽保險、退休福利、長期僱傭合約）</li>
+            <li><b>第 1 層：生理需要</b>（最基本生存需要：優厚薪金、花紅、充足休息與用餐時間）</li>
+          </ul>
+        </div>
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid var(--amber)">
+          <b style="color:var(--amber);font-size:16px">2. 赫茨伯格：保健因子 (Hygiene)</b><br>
+          <span style="font-size:13px;color:var(--mute)">（關乎工作環境的外在因素 ➔ 只能防止不滿，不能激勵員工！）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>薪金（工資）</b> ＆ <b>工作環境</b></li>
+            <li><b>職業保障</b>（不會突然裁員） ＆ <b>地位</b></li>
+            <li><b>與主管和同事的關係</b></li>
+            <li><b>監督</b> ＆ <b>公司政策和行政</b></li>
+          </ul>
+        </div>
+        <div style="background:var(--card);padding:14px;border-radius:10px;border-top:4px solid var(--red)">
+          <b style="color:var(--red);font-size:16px">3. 麥格雷戈：X 理論 (Theory X)</b><br>
+          <span style="font-size:13px;color:var(--mute)">（消極人性假設 ➔ 滿足較低層次需要＋密切監控懲罰）</span>
+          <ul style="margin:8px 0 0;padding-left:18px;line-height:1.7">
+            <li><b>人性假設</b>：本質不喜歡工作（懶惰）、傾向逃避責任需正式指引、無抱負抗拒轉變、只關注金錢與工作保障</li>
+            <li><b>激勵與控制</b>：提供優厚金錢報酬（薪金、花紅）及安全福利（保險、房屋津貼），並密切監控及用懲罰方式（如犯錯扣薪）</li>
+          </ul>
+        </div>
+      </div>
+    </div>`
+  ];
+  function renderTheoryBridge(idx) {
+    document.querySelectorAll('#bridgeChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('theoryBridgeBox').innerHTML = bridgeData[idx];
+  }
+  renderTheoryBridge(0);
+
+  const xyCompData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--red);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--red);font-size:17px">1. 麥格雷戈的「X 理論 (Theory X)」—— 消極人性觀點：</b><br>
+      • <b>(a) 管理人員所持的 3 項假設</b>：<br>
+      &nbsp;&nbsp;(i) 僱員<b>本質上都是不喜歡工作的（懶惰的）</b>，他們總是盡量避免工作。<br>
+      &nbsp;&nbsp;(ii) 僱員<b>傾向逃避責任</b>，以及尋求正式的指引來指導自己工作。<br>
+      &nbsp;&nbsp;(iii) 僱員<b>都沒有抱負（傾向抗拒轉變）</b>。他們須要被人領導，而且<b>主要關注金錢和工作是否有保障</b>，而非與工作相關的其他因素。<br>
+      • <b>(b) X 理論的 2 項含義與常見激勵方法</b>：<br>
+      &nbsp;&nbsp;(i) 激勵僱員的主要方法是滿足他們在馬斯洛需要階梯理論中<b>較低層次的需要（生理需要和安全需要）</b>：例如<b>提供優厚的金錢報酬（如薪金和花紅）</b>，以及<b>提供可滿足安全需要的福利（如保險和房屋津貼）</b>。<br>
+      &nbsp;&nbsp;(ii) 管理人員須<b>密切監控僱員，並採取高壓手段或懲罰方式（如犯錯扣減薪金）</b>使他們努力工作。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--green);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--green);font-size:17px">2. 麥格雷戈的「Y 理論 (Theory Y)」—— 積極人性觀點（在人事管理上比 X 理論更有用）：</b><br>
+      • <b>(a) 管理人員所持的 4 項假設</b>：<br>
+      &nbsp;&nbsp;(i) 僱員<b>視工作為生命的一部分</b>（對他們來說，工作就像休息和玩樂一樣，是自然不過的事）。<br>
+      &nbsp;&nbsp;(ii) 如僱員認同並致力實現企業的目標，就會<b>自我激勵和控制</b>。<br>
+      &nbsp;&nbsp;(iii) 大多數僱員都能<b>學習接受責任，甚或主動承擔更多責任</b>。<br>
+      &nbsp;&nbsp;(iv) 並非只有管理人員才有決策能力，<b>大多數僱員都有能力作出決策</b>。<br>
+      • <b>(b) Y 理論的 2 項含義與常見激勵方法</b>：<br>
+      &nbsp;&nbsp;(i) 激勵僱員的主要方法是滿足他們在馬斯洛需要階梯理論中<b>較高層次的需要（社交需要、自我需要和自我實現需要）</b>。<br>
+      &nbsp;&nbsp;(ii) 大多數僱員<b>並非僅為金錢工作，他們也希望從工作中獲得滿足感（例如得到認同和成就感）</b>。常見激勵方法包括：<b>邀請僱員參與決策、給予更具挑戰性的工作、頒發獎項認同貢獻、提供培訓和發展機會促進個人發展</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17px">3. 考試個案舉證示範：如何從個案引用資料支持管理人員奉行 X 理論或 Y 理論？</b><br>
+      • <b>例子 A：全健衛生用品廠東主柏宏 ➔ 奉行「X 理論」的三項假設與個案理據</b>：<br>
+      &nbsp;&nbsp;1. <i>假設 (i) 僱員本質不喜歡工作（懶惰）</i> ➔ <b>個案理據</b>：柏宏明言「我非常了解公司的工人，他們都非常懶惰」。<br>
+      &nbsp;&nbsp;2. <i>假設 (ii) 僱員傾向逃避責任，尋求正式指引並需密切監控懲罰</i> ➔ <b>個案理據</b>：柏宏訂立「很多嚴格的規則」讓工人遵守，並規定「假如犯錯更會被扣減薪金」。<br>
+      &nbsp;&nbsp;3. <i>假設 (iii) 僱員沒有抱負，只關注金錢</i> ➔ <b>個案理據</b>：柏宏認為工人「只會為金錢而工作」，並以「優厚超時工資和大額花紅」作為激勵手段。<br>
+      &nbsp;&nbsp;<span style="color:var(--teal)"><b>追問：除金錢報酬外，根據 X 理論還可建議甚麼方法激勵工人？</b>可提供<b>滿足安全需要的福利（例如醫療保險、房屋津貼或穩定的長期合約保障）</b>！</span><br>
+      • <b>例子 B：小型設計公司東主志濠 ➔ 奉行「Y 理論」的兩項個案理據</b>：<br>
+      &nbsp;&nbsp;1. <i>假設僱員會自我激勵和控制</i> ➔ <b>個案理據</b>：志濠很少監控設計師的工作，並允許他們在家工作。<br>
+      &nbsp;&nbsp;2. <i>假設僱員有能力作出決策並承擔責任</i> ➔ <b>個案理據</b>：志濠把權力賦予設計師，讓他們自行決定如何完成工作項目。
+    </div>`
+  ];
+  function renderXyComp(idx) {
+    document.querySelectorAll('#xyCompChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('xyCompBox').innerHTML = xyCompData[idx];
+  }
+  renderXyComp(0);
+
+  // 對稱深度設計的 6 道 X/Y 理論挑戰題
+  const xyQuizItems = [
+    {
+      q: "1. 指出下列五位管理人員分別奉行麥格雷戈的「X 理論」還是「Y 理論」：<br>(a) 甲經理要求下屬遵從嚴格的工作守則 ｜ (b) 乙經理允許下屬參與決策 ｜ (c) 丙經理以口頭方式表揚工作表現優秀的下屬 ｜ (d) 丁經理利用懲罰來促使下屬努力工作 ｜ (e) 戊經理以巨額花紅激勵僱員",
+      opts: [
+        "A. X 理論：(a)、(d)、(e) ｜ Y 理論：(b)、(c)",
+        "B. X 理論：(b)、(c) ｜ Y 理論：(a)、(d)、(e)",
+        "C. X 理論：(a)、(b)、(d) ｜ Y 理論：(c)、(e)"
+      ],
+      ans: 0,
+      exp: "正確。(a) 嚴格工作守則、(d) 利用懲罰及 (e) 以巨額花紅（金錢報酬滿足低層次需要）激勵，均屬於「X 理論」的做法；(b) 允許參與決策及 (c) 口頭表揚滿足高層次自尊需要，則屬於「Y 理論」的做法。"
+    },
+    {
+      q: "2. 根據麥格雷戈的「Y 理論」，管理人員對僱員持有下列哪項假設？並會如何激勵下屬？",
+      opts: [
+        "A. 假設僱員本質上不喜歡工作且沒有抱負；主要透過密切監控、嚴格守則及扣減薪金等高壓懲罰手段來促使下屬努力工作",
+        "B. 假設僱員視工作為生命的一部分、認同目標時會自我激勵和控制、能主動承擔責任及具決策能力；主要透過滿足較高層次需要（如邀請參與決策、給予具挑戰性工作、表揚貢獻及提供培訓發展）來激勵下屬",
+        "C. 假設只有高級管理人員才擁有決策能力，基層僱員完全不懂思考，因此只會透過派發免費午餐券來滿足其生理需要"
+      ],
+      ans: 1,
+      exp: "正確。Y 理論持積極人性假設（視工作為生命一部分、自我激勵和控制、主動承擔責任、有能力作決策），並透過滿足馬斯洛較高層次的需要來激勵僱員。"
+    },
+    {
+      q: "3. 新風物流公司的財務經理形容公司員工：「我們的員工都很積極、充滿幹勁和樂於承擔責任！」這支持了管理層認為員工屬於哪種理論類型？除了改變花紅制度外，公司還可採用哪兩種方法激勵這類員工？",
+      opts: [
+        "A. 屬於『X 理論』類型；公司應每天派督察貼身監視員工搬運包裹，並規定遲到一分鐘即扣除半個月底薪",
+        "B. 屬於『Y 理論』類型；公司可透過 (1) 邀請員工參與日常物流路線決策及給予更大工作自主權；(2) 向員工提供培訓和發展機會（或給予更具挑戰性的工作／設立獎項認同貢獻）來激勵他們",
+        "C. 屬於『保健因子』類型；公司只需在倉庫安裝閉路電視便可令員工自動獲得最高層次的自我實現感"
+      ],
+      ans: 1,
+      exp: "正確（HKDSE 2018 考題概念）。「員工積極、充滿幹勁和樂於承擔責任」吻合 Y 理論「員工視工作為生命一部分、會自我激勵及主動承擔更多責任」的假設；因此應採用 Y 理論的激勵方法（參與決策、具挑戰性工作、頒獎認同、提供培訓發展機會）。"
+    },
+    {
+      q: "4. 日光物業在把所有分行經理的底薪削減 10% 後，很多分行經理近日都「無心工作，有些更藉詞缺席會議和拒絕培訓員工」。麥格雷戈的 X 理論還是 Y 理論更能解釋這些分行經理的行為？",
+      opts: [
+        "A. Y 理論 — 因為分行經理缺席會議和拒絕培訓下屬，展示了他們高度自我激勵、主動承擔更多責任及熱愛工作的特質",
+        "B. X 理論 — 因為當底薪被削減 10% 時，分行經理立即變得無心工作，更藉詞缺席會議及拒絕培訓員工，反映他們本質上不喜歡工作、主要只關注金錢回報，且傾向逃避工作與責任",
+        "C. 兩者皆不能解釋 — 因為麥格雷戈的 X 理論及 Y 理論只適用於製造業工廠的藍領工人，不能用來解釋服務業分行經理的行為"
+      ],
+      ans: 1,
+      exp: "正確。分行經理因減薪而無心工作、藉詞缺席會議及拒絕培訓員工，正好印證了 X 理論「僱員只關注金錢、本質上不喜歡工作（盡量避免工作）及傾向逃避責任」的假設。"
+    },
+    {
+      q: "5. 概念判斷：「根據麥格雷戈的 X 理論，由於僱員非常有抱負和進取心，所以他們十分歡迎企業推行重大變革。」",
+      opts: [
+        "A. 正確 — X 理論假設所有僱員都渴望透過企業重組與變革來爭取晉升為行政總裁的機會",
+        "B. 不正確 — 根據 X 理論，管理人員假設僱員『都沒有抱負』，他們需要被人領導，而且只關注金錢和工作是否有保障，因此他們傾向『抗拒轉變』",
+        "C. 不正確 — 無論是 X 理論還是 Y 理論，都沒有提及僱員對工作、責任或抱負的任何假設"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。課文第 5.3C 節明確指出：根據 X 理論，僱員都沒有抱負，只關注金錢和工作保障，所以他們傾向抗拒轉變。"
+    },
+    {
+      q: "6. 全健衛生用品廠的東主柏宏奉行「X 理論」，他目前已向生產工人支付優厚的超時工作工資和大額花紅（金錢報酬）。除了個案已提及的金錢報酬外，根據「X 理論」，柏宏還可採用甚麼方法來激勵生產工人？",
+      opts: [
+        "A. 根據 X 理論，柏宏應完全取消廠房的所有工作守則，並將公司的最高投資決策權交由生產工人自行投票決定",
+        "B. 根據 X 理論『透過滿足較低層次需要來激勵僱員』的原則，柏宏可向生產工人提供能滿足『安全需要』的僱員福利，例如醫療及意外保險、房屋津貼或穩定的長期僱傭合約保障",
+        "C. 根據 X 理論，柏宏只需向生產工人談論公司的長遠願景與自我實現哲學，而無須提供任何實質的金錢或安全福利保障"
+      ],
+      ans: 1,
+      exp: "正確。注意審題要求「根據 X 理論」建議方法：X 理論主張滿足較低層次的需要（生理需要和安全需要），既然柏宏已提供金錢報酬（生理需要），便可進一步提供「可滿足僱員安全需要的福利（例如保險、房屋津貼或長期合約職業保障）」（課本第 71 頁表格列明）。"
+    }
+  ];
+  let curXYQ = 0;
+  function renderXyQuiz() {
+    const it = xyQuizItems[curXYQ];
+    document.getElementById('xyQuizProg').textContent = `題目 ${curXYQ + 1} / ${xyQuizItems.length}`;
+    document.getElementById('xyQuizQ').innerHTML = it.q;
+    document.getElementById('xyQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkXyQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('xyQuizFb').innerHTML = '';
+  }
+  function checkXyQuiz(idx) {
+    const it = xyQuizItems[curXYQ];
+    const fb = document.getElementById('xyQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curXYQ=(curXYQ+1)%xyQuizItems.length;renderXyQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderXyQuiz();
+
+  // ====== 4. 內部溝通與六大 HR 功能應用 ======
+  const commMethods = [
+    {
+      name: "1. 職前輔導計劃",
+      fullTitle: "內部溝通方式 1：職前輔導計劃 ／ 入職引導計劃 (Orientation / Induction Programme)",
+      desc: "向<b>新員工</b>介紹企業（例如企業的<b>文化、願景和價值觀</b>），以及他們的<b>工作單位和工作內容</b>。",
+      purposes: "• <b>(i) 幫助新員工適應新工作環境，提升他們的工作效率</b>；<br>• <b>(ii) 向新員工灌輸企業的文化和價值觀，並確保他們朝着企業的目標努力工作</b>；<br>• <b>(iii) 幫助新員工在企業內發展社交網絡，增加他們的歸屬感</b>。"
+    },
+    {
+      name: "2. 指導計劃",
+      fullTitle: "內部溝通方式 2：指導計劃 ／ 導師計劃 (Coaching / Mentoring Programme)",
+      desc: "安排<b>有經驗的人士（導師）</b>協助和支援<b>新員工（學員）</b>發展工作技能和知識。",
+      purposes: "• <b>(i) 幫助新員工適應新工作環境，提升他們的工作效率</b>；<br>• <b>(ii) 幫助新員工滿足社交需要，從而增加他們的歸屬感</b>；<br>• <b>(iii) 提供一個友善的渠道讓新員工分享挫折，藉此減少他們的不滿</b>；<br>• <b>(iv) 讓新員工認識企業的潛規則和文化</b>。"
+    },
+    {
+      name: "3. 社交聚會",
+      fullTitle: "內部溝通方式 3：社交聚會 (Social Gatherings)",
+      desc: "組織聚會，以<b>促進同事間的友誼</b>。社交聚會的例子包括<b>野餐、燒烤派對和公司旅行</b>等。",
+      purposes: "• <b>(i) 幫助員工適應工作環境，提升他們的工作效率</b>；<br>• <b>(ii) 幫助員工在企業內發展社交網絡，增加他們的歸屬感</b>。"
+    },
+    {
+      name: "4. 定期員工會議",
+      fullTitle: "內部溝通方式 4：定期員工會議 (Regular Staff Meetings)",
+      desc: "定期召開會議，<b>直接向員工傳達企業的政策、願景、目標和策略</b>等（亦可澄清公司內部流傳的裁員或關店謠言）。",
+      purposes: "• <b>(i) 建立員工對企業領導層的信任，增加他們的歸屬感</b>；<br>• <b>(ii) 確保員工朝着企業的目標努力工作</b>。"
+    },
+    {
+      name: "5. 員工意見調查",
+      fullTitle: "內部溝通方式 5：員工意見調查 (Staff Opinion Survey)",
+      desc: "以員工為對象進行調查，藉此<b>了解他們對企業及工作的想法和感受</b>。",
+      purposes: "• <b>(i) 加深企業對員工的理解，讓企業可採取相應的行動來激勵員工和提升他們的士氣</b>；<br>• <b>(ii) 讓員工表達自己的意見和作出投訴，以幫助企業作出更好的決策，避免勞資糾紛（勞資爭執／工業糾紛）</b>。"
+    }
+  ];
+  function renderCommMethod(idx) {
+    document.querySelectorAll('#commMethodBtns .method-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+    const m = commMethods[idx];
+    document.getElementById('commMethodDetail').innerHTML = `
+      <div style="background:var(--surface);padding:16px 20px;border-radius:14px;border:1.5px solid var(--primary);font-size:15.5px;line-height:1.8">
+        <h4 style="color:var(--primary);font-size:18px;margin-bottom:6px">${m.fullTitle}</h4>
+        <div style="margin-bottom:10px"><b>描述：</b>${m.desc}</div>
+        <div style="background:var(--card);padding:12px 16px;border-radius:10px;border-left:4px solid var(--teal)">
+          <b style="color:var(--teal);display:block;margin-bottom:4px">核心目的：</b>${m.purposes}
+        </div>
+      </div>`;
+  }
+  document.getElementById('commMethodBtns').innerHTML = commMethods.map((m, i) => `<button class="method-btn ${i===0?'active':''}" onclick="renderCommMethod(${i})">${m.name}</button>`).join('');
+  renderCommMethod(0);
+
+  const sixHrCases = [
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">1. 答題錦囊示範：根據「六大人力資源管理功能」，為一家銀行（或專科診所）建議解決「出納員／助護短缺」問題的方法：</b><br>
+      • <b>(1) 人力規劃</b>：推出彈性退休計劃（延遲現職出納員的退休年齡以增加內部人力供應），或引入櫃員機及網上銀行科技以減少對出納員人手的需求。<br>
+      • <b>(2) 員工編制</b>：採用更多不同的外部招聘途徑（如舉辦招聘會即場面試、提供獎金鼓勵現職員工推薦親友應徵），擴大求職者來源以加快填補空缺。<br>
+      • <b>(3) 員工考績</b>：檢視員工考績制度，訂立更公平、清晰和合理的表現標準，並在考績面談中提供正面回饋，有助提升出納員的士氣和減低員工流失率。<br>
+      • <b>(4) 報酬管理</b>：提供更具吸引力的金錢報酬（如提高底薪與花紅）及非金錢報酬（如優厚醫療福利、彈性工時及公開表揚），以吸引新人才及留住現職出納員。<br>
+      • <b>(5) 培訓和發展</b>：為出納員提供系統化培訓以減輕工作壓力，並提供良好的晉升發展機會（如晉升為客戶服務主任），增強留任意欲。<br>
+      • <b>(6) 促進僱員關係</b>：為僱員組織燒烤派對等社交聚會（建立友誼及和諧關係），並進行員工意見調查了解並改善出納員的工作處境，這有助留住他們。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">2. 個案應用：香港一家護老院（或動物庇護所）護理員工作辛苦、工資較低導致流失率高企，且「可動用的預算有限」，如何根據 HR 功能減低流失率？</b><br>
+      • <b>審題關鍵</b>：由於個案已指明「可動用的預算有限」，切勿建議大幅加薪或高成本措施，應建議<b>低成本</b>的 HR 方法：<br>
+      • <b>(1) 報酬管理（低成本非金錢報酬）</b>：透過口頭讚賞或設立「每月最佳護理員獎」公開表揚護理員的貢獻（認同和表揚，成本極低甚或不費分文），並提供彈性輪更安排以維持工作與生活平衡。<br>
+      • <b>(2) 培訓和發展（在職培訓）</b>：採用低成本的在職「指導 (Coaching)」，委派資深護理員指導新人掌握省力安全的扶抱及護理技巧，減輕工作辛勞並提升工作滿足感。<br>
+      • <b>(3) 促進僱員關係（內部溝通）</b>：推行「導師計劃」提供友善渠道讓新護理員分享工作挫折以減少不滿，並定期召開員工會議及進行員工意見調查，聆聽訴求以建立和諧互助的團隊。<br>
+      • <b>(4) 員工考績</b>：訂立合理可達成的表現標準，並在考績面談中給予護理員更多鼓勵與支持。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">3. DSE 2016 考題應用：一家快餐連鎖店（或連鎖園藝花店）計劃為新分店聘用「輕度智障及肢體殘障人士」，如何就 HR 功能建議支援他們的措施？</b><br>
+      • <b>(1) 人力規劃與工作分析</b>：重新進行工作分析，根據他們的能力與身體狀況設計及分配合適、安全且工序簡單的工作崗位（如負責執拾餐盤、簡單包裝或後勤清潔，避免高危滾油烹調工序）。<br>
+      • <b>(2) 員工編制</b>：與政府勞工處「展能就業科」或復康機構合作進行招聘配對及職前評估，確保工作環境及無障礙設施切合其需要。<br>
+      • <b>(3) 培訓和發展</b>：採用耐心的一對一在職「指導 (Coaching)」，委派有愛心的資深員工擔任導師親身示範簡單工序，並加強職業安全培訓。<br>
+      • <b>(4) 員工考績</b>：微調或度身訂造一套較簡單、切合他們能力的表現標準，並縮短回饋周期，向他們提供較頻密的正面回饋與鼓勵。<br>
+      • <b>(5) 報酬管理</b>：按他們的個人需要調整報酬，例如發放特別交通或生活津貼提供財政支援，提供醫療保障及彈性工時安排，並多作口頭讚賞。<br>
+      • <b>(6) 促進僱員關係</b>：舉辦專門的「職前輔導計劃」及「導師計劃」協助他們融入新環境，並透過員工會議向其他員工推廣傷健共融文化，建立體諒和諧的工作關係。
+    </div>`
+  ];
+  function renderSixHr(idx) {
+    document.querySelectorAll('#sixHrChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('sixHrBox').innerHTML = sixHrCases[idx];
+  }
+  renderSixHr(0);
+
+  // 對稱深度設計的 6 道內部溝通挑戰題
+  const commQuizItems = [
+    {
+      q: "1. 指出企業在下列四種情況中最適合採用的「內部溝通方式」：<br>(a) 企業想了解員工對新架構重組計劃的想法和感受 ｜ (b) 企業想向新入職員工正式介紹企業的文化、願景和工作單位 ｜ (c) 企業想透過燒烤派對或旅行幫助員工發展社交網絡及促進同事友誼 ｜ (d) 管理層想定期直接向員工傳達政策與目標，以建立員工對領導層的信任",
+      opts: [
+        "A. (a) 員工意見調查 ｜ (b) 職前輔導計劃（入職引導計劃） ｜ (c) 社交聚會 ｜ (d) 定期員工會議",
+        "B. (a) 職前輔導計劃 ｜ (b) 員工意見調查 ｜ (c) 定期員工會議 ｜ (d) 社交聚會",
+        "C. (a) 社交聚會 ｜ (b) 定期員工會議 ｜ (c) 職前輔導計劃 ｜ (d) 員工意見調查"
+      ],
+      ans: 0,
+      exp: "正確。(a) 了解員工對新計劃的想法感受屬「員工意見調查」；(b) 向新員工介紹文化、願景與工作單位屬「職前輔導計劃／入職引導計劃」；(c) 燒烤旅行促進友誼屬「社交聚會」；(d) 定期傳達政策目標以建立信任屬「定期員工會議」。"
+    },
+    {
+      q: "2. 某大型會計師樓剛聘請了 30 名會計見習生。下列哪兩種內部溝通方式最適合用來「增加這批新見習生對公司的歸屬感」？",
+      opts: [
+        "A. (1) 職前輔導計劃（向見習生介紹公司文化與價值觀，並助其在公司內發展社交網絡）；(2) 指導計劃／導師計劃（安排有經驗的資深會計師支援見習生、提供友善渠道分享挫折及滿足社交需要，或舉辦迎新社交聚會促進友誼）",
+        "B. (1) 在各大報章刊登外部招聘廣告；(2) 委託商業獵頭公司篩選求職者履歷",
+        "C. (1) 削減見習生的有薪考試假；(2) 採用簡單排序法將見習生由最好排到最差"
+      ],
+      ans: 0,
+      exp: "正確。職前輔導計劃、指導計劃（導師計劃）以及社交聚會，均列明具有「幫助新員工在企業內發展社交網絡／滿足社交需要，從而增加他們的歸屬感」的目的。"
+    },
+    {
+      q: "3. 日光物業內部流傳謠言，指「公司將會削減人手，而分行經理將會是首批被裁的員工」，但財務經理指出公司現時並沒有裁員的需要。日光物業可採用哪三種內部溝通方式來澄清謠言及改善僱員關係？",
+      opts: [
+        "A. (1) 定期員工會議（召開會議直接向分行經理澄清並無裁員需要，並傳達公司應對淡市的策略以重建對領導層的信任）；(2) 員工意見調查（了解經理對減薪及工作的想法和感受，讓他們表達意見以避免勞資糾紛）；(3) 社交聚會（促進上下級與同事關係，增強歸屬感）",
+        "B. (1) 向買樓客戶派發樓盤傳單；(2) 在電視播放地產代理形象廣告；(3) 向銀行申請按揭貸款",
+        "C. (1) 強制所有分行經理放無薪假半年；(2) 取消所有部門會議並封鎖公司內聯網；(3) 解僱詢問謠言的經理"
+      ],
+      ans: 0,
+      exp: "正確。透過定期員工會議直接傳達實況可闢除謠言並建立對領導層的信任；透過員工意見調查可了解經理對減薪的感受並避免勞資糾紛；透過社交聚會則可修補關係並增強歸屬感。"
+    },
+    {
+      q: "4. 為何「員工意見調查 (Staff Opinion Survey)」對於促進僱員關係及避免勞資糾紛（工業糾紛）非常重要？",
+      opts: [
+        "A. 因為員工意見調查能加深企業對員工想法和感受的理解，讓企業採取相應行動激勵員工；同時提供正式渠道讓員工表達意見和作出投訴，幫助企業作出更好的決策，從而避免勞資糾紛",
+        "B. 因為員工意見調查是由政府勞工處強制執行的法律審訊程序，任何在問卷中提出意見的員工都會被即時解僱",
+        "C. 因為員工意見調查只用來向外部消費者收集對公司產品包裝的意見，完全不涉及內部員工"
+      ],
+      ans: 0,
+      exp: "正確。課文第 5.4 節指出，員工意見調查的兩大目的是：(1) 加深企業對員工的理解以採取行動激勵員工和提升士氣；(2) 讓員工表達意見和作出投訴，助企業作更好決策並避免勞資糾紛。"
+    },
+    {
+      q: "5. 關於「指導計劃 ／ 導師計劃 (Coaching / Mentoring Programme)」作為內部溝通方式的目的，下列哪項描述最為全面準確？",
+      opts: [
+        "A. 安排有經驗的導師支援新員工（學員），既能幫助新員工適應環境提升效率及認識企業的潛規則和文化，又能幫助滿足社交需要以增加歸屬感，並提供一個友善的渠道讓新員工分享挫折以減少不滿",
+        "B. 指導計劃的唯一目的是讓資深員工把自己的全部日常文書工作推卸給新員工處理，而無須向新員工提供任何支援",
+        "C. 指導計劃屬於外部招聘途徑的一種，專門用來吸引海外國家的求職者應徵跨國企業職位"
+      ],
+      ans: 0,
+      exp: "正確。課文第 73 頁表格列明指導計劃（導師計劃）的四項核心目的：幫助適應新工作環境提升效率、滿足社交需要增加歸屬感、提供友善渠道分享挫折減少不滿，以及認識企業的潛規則和文化。"
+    },
+    {
+      q: "6. 企業內部的各方人士和單位（管理人員、僱員和工作單位）在進行「內部溝通」時，一般會以哪三種形式交換資訊？",
+      opts: [
+        "A. 口頭形式（例如對話、會議）、書面形式（例如報告、通告）或視覺形式（例如圖像、圖表、表格）",
+        "B. 只能以具法律效力的書面律師信形式進行，日常的口頭對話或圖表展示均不屬於內部溝通",
+        "C. 報章分類招聘廣告形式、電視商業廣告形式以及戶外大型廣告牌形式"
+      ],
+      ans: 0,
+      exp: "正確。課文第 5.4 節指出，內部溝通一般以口頭（如對話）、書面（如報告、通告）或視覺形式（如圖像、圖表、表格）進行。"
+    }
+  ];
+  let curCMQ = 0;
+  function renderCommQuiz() {
+    const it = commQuizItems[curCMQ];
+    document.getElementById('commQuizProg').textContent = `題目 ${curCMQ + 1} / ${commQuizItems.length}`;
+    document.getElementById('commQuizQ').innerHTML = it.q;
+    document.getElementById('commQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkCommQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('commQuizFb').innerHTML = '';
+  }
+  function checkCommQuiz(idx) {
+    const it = commQuizItems[curCMQ];
+    const fb = document.getElementById('commQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curCMQ=(curCMQ+1)%commQuizItems.length;renderCommQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderCommQuiz();
+
+  // ====== 5. 論點建構問答工作坊 (保留一個能力較弱學生常犯的「解說不足」選項作教學示範) ======
+  const workshopQuestions = [
+    {
+      id: "s1", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 1：智匯建築設計事務所（為新入職見習則師舉辦「職前輔導計劃」的目的）", topic: "內部溝通方式：職前輔導計劃（入職引導計劃）的目的", maxMarks: 2,
+      scenario: "「智匯建築設計事務所」每年都會為新入職的見習建築師舉辦為期兩天的「職前輔導計劃（入職引導計劃）」，向他們介紹事務所的綠色建築理念、願景以及各項目組別的工作內容。",
+      question: "試以其中一項目的為例，解釋該事務所為新員工舉辦「職前輔導計劃」的目的。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出舉辦「職前輔導計劃」的單一核心目的（1分）", colorClass: "hl-s1", opts: [
+          { text: "目的是為了直接解僱表現欠佳的資深建築師，以縮減事務所的人手規模。", score: 0, status: "wrong", comment: "【概念錯誤】職前輔導計劃是向新入職員工介紹企業文化與工作內容的內部溝通方式，並非解僱資深員工的縮減人手措施。" },
+          { text: "目的之一是幫助新入職的見習建築師適應新工作環境，從而提升他們的工作效率；同時亦可向新員工灌輸企業的文化和價值觀，並幫助他們在企業內發展社交網絡以增加歸屬感。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 5.4 節舉辦職前輔導計劃的三大標準目的（適應新環境提升效率、灌輸文化價值觀確保朝目標努力、發展社交網絡增加歸屬感）。" },
+          { text: "目的是讓新入職的見習建築師對這間建築設計事務所有多一點認識，知道公司入面有甚麼人。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準目的標題】用詞過於口語籠統，必須明確寫出「幫助新員工適應新工作環境以提升工作效率」、「灌輸企業文化和價值觀」或「發展社交網絡以增加歸屬感」。" }
+        ]},
+        { label: "第 2 步：扣連「建築設計事務所見習建築師」說明該計劃如何達到上述目的（1分）", colorClass: "hl-s2", opts: [
+          { text: "透過在入職初期向新見習建築師清楚介紹各繪圖組別的工作內容、匯報關係以及事務所的綠色建築願景，能減少新人面對陌生環境的摸索時間，讓他們更快融入團隊並朝着事務所的環保設計目標努力工作。", score: 1, status: "best", comment: "【滿分示範】緊扣建築設計事務所的背景，清楚說明介紹工作內容與綠色建築願景如何協助新人融入環境並朝目標努力。" },
+          { text: "因為參加完兩天的職前輔導計劃之後，新入職的見習建築師就會適應新環境，工作效率亦會提高。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】純粹重複第 1 步的字眼，未有扣連個案說明「如何透過介紹各項目組別的工作內容與綠色建築理念，減少新人摸索時間並確保朝公司目標努力」。" },
+          { text: "這能確保新入職的見習建築師無須考取任何建築師專業資格，即可直接簽署批核所有大型基建工程圖則。", score: 0, status: "wrong", comment: "【概念錯誤】職前輔導計劃只是入職引導溝通，並不能取代法定的專業註冊資格考核。" }
+        ]}
+      ]
+    },
+    {
+      id: "s2", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 2：銀泉航空公司（激勵僱員對企業的重要性）", topic: "激勵僱員對企業的兩大重要性（減低缺勤與流失率、提升效率與生產力）", maxMarks: 2,
+      scenario: "「銀泉航空」近期收到越來越多乘客投訴機艙服務質素欠佳，部分機艙服務員忽視乘客要求甚至將熱水倒在乘客身上，而且人力資源部收到不少辭職信。人力資源經理指出這是因為機艙服務員缺乏工作動機和士氣低落所致。",
+      question: "試以其中一個原因為例，解釋為何「激勵僱員」對銀泉航空非常重要。（2 分）",
+      steps: [
+        { label: "第 1 步：指出激勵僱員對企業的單一核心重要性（1分）", colorClass: "hl-s1", opts: [
+          { text: "原因之一是受到激勵的僱員通常對工作感到滿意並願意努力工作，這有助企業減低缺勤率和員工流失率；同時亦會有較佳的工作表現和較高的工作效率，有助提升企業的生產力與服務質素。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 5.2 節激勵僱員對企業的兩大重要性（減低缺勤率和員工流失率、提升工作表現和生產力）。" },
+          { text: "原因是只要激勵了機艙服務員，銀泉航空便可以合法免除向所有機艙服務員支付基本月薪與法定強積金供款。", score: 0, status: "wrong", comment: "【概念錯誤】激勵僱員旨在提升工作動機與表現，並不能免除僱主支付基本薪金及法定福利的法律責任。" },
+          { text: "原因是機艙服務員對銀泉航空的日常航班運作非常重要，所以公司一定要想辦法激勵他們。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】沒有寫出激勵僱員的具體好處標題，必須明確指出「有助減低缺勤率和員工流失率」或「有助改善工作表現和提高工作效率，提升生產力」。" }
+        ]},
+        { label: "第 2 步：扣連「銀泉航空機艙服務員」作具體解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "當機艙服務員受到有效激勵時，他們會對機艙工作感到滿意而減少遞交辭職信或請病假；在執勤時亦會更專注細心回應乘客要求，避免發生將熱水倒在乘客身上等嚴重失誤，從而挽回銀泉航空的優質服務聲譽。", score: 1, status: "best", comment: "【滿分示範】緊扣個案中「收到不少辭職信」及「忽視乘客要求、倒熱水在乘客身上」的事實，清楚說明激勵如何留住空服員並改善機艙服務質素。" },
+          { text: "當銀泉航空成功激勵了旗下的機艙服務員之後，機艙服務員就會乖乖留低工作，表現也會變好。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】用詞過於口語簡略，未有扣連個案中「減少空服員辭職信、避免忽視乘客要求或倒熱水等嚴重錯誤，以維護航空公司聲譽」的具體情境。" },
+          { text: "這能令銀泉航空旗下的所有旅行社客戶在第二天立即以現金還清所有逾期應收帳款，徹底消除壞帳。", score: 0, status: "wrong", comment: "【審題失誤】旅行社拖欠款項屬於個案另一部分的「應收帳款信貸政策」問題，與激勵內部機艙服務員無關。" }
+        ]}
+      ]
+    },
+    {
+      id: "s3", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 3：思力運動器材零售店（以兩因子理論解釋為何高薪與舒適環境未能激勵員工）", topic: "赫茨伯格的兩因子理論：保健因子 vs 激勵因子", maxMarks: 2,
+      scenario: "「思力公司」銷售運動器材，本年度員工流失率創下新高。離職員工表示：「我們感謝公司提供具吸引力的薪酬和舒適的工作環境；可是，我們抱怨留在同一職位太久和在刻板的指令下做同一工作，感到沉悶乏味。」總經理不明白為何具吸引力的薪酬和舒適環境仍未能激勵員工。",
+      question: "試就「赫茨伯格的兩因子理論」，解釋為何具吸引力的薪酬和舒適的工作環境未能激勵思力公司的員工。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出「薪酬」和「工作環境」在兩因子理論中屬於哪一類因子（1分）", colorClass: "hl-s1", opts: [
+          { text: "根據赫茨伯格的兩因子理論，具吸引力的薪酬和舒適的工作環境屬於內在的激勵因子。", score: 0, status: "wrong", comment: "【概念錯誤】分類顛倒。薪酬（薪金）和工作環境屬於關乎外在工作環境的「保健因子 (Hygiene Factors)」，而非激勵因子。" },
+          { text: "根據赫茨伯格的兩因子理論，具吸引力的薪酬和舒適的工作環境均屬於外在的保健因子。", score: 1, status: "best", comment: "【滿分示範】準確辨識出薪酬和工作環境在兩因子理論中屬於「保健因子」。" },
+          { text: "因為思力公司的員工雖然有高薪和舒適環境，但他們覺得留在同一職位太久和工作沉悶，所以未能受到激勵。", score: 0, status: "partial", comment: "【常見失分示範：未運用指定理論術語】只重抄題目文字，完全沒有點出赫茨伯格兩因子理論的核心術語——即薪酬和工作環境屬於「保健因子（而晉升與工作性質屬於激勵因子）」。" }
+        ]},
+        { label: "第 2 步：運用兩因子理論邏輯解釋為何保健因子的存在不能激勵員工（1分）", colorClass: "hl-s2", opts: [
+          { text: "在兩因子理論中，保健因子的存在只能防止僱員對工作感到不滿意，但並不能讓僱員對工作感到滿意，也不能激勵他們；要真正激勵思力公司的員工，必須提供與工作內容相關的激勵因子，如晉升機會、工作自主權及有趣具挑戰性的工作。", score: 1, status: "best", comment: "【滿分示範】清楚闡明「保健因子的存在只能防止感到不滿意，不能令員工感到滿意或激勵他們（必須靠激勵因子才能激勵）」的核心理論邏輯。" },
+          { text: "因為保健因子對思力公司的員工來說作用不大，不能夠令他們在店舖入面努力推銷運動器材。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未能準確寫出兩因子理論的標準解說——即「保健因子的存在只能防止僱員對工作感到不滿意，但不能讓僱員對工作感到滿意，也不能激勵他們」。" },
+          { text: "因為當保健因子存在時，員工便會對工作產生最強烈的不滿意感，所以思力公司應該立即取消薪酬和冷氣。", score: 0, status: "wrong", comment: "【概念錯誤】保健因子存在時能防止員工感到不滿；若取消保健因子，員工便會對工作感到不滿意。" }
+        ]}
+      ]
+    },
+    {
+      id: "s4", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 4：日光物業代理公司（根據馬斯洛理論分析分行經理未被滿足的需要）", topic: "馬斯洛的需要階梯理論：結合個案理據識別未被滿足的需要層次", maxMarks: 2,
+      scenario: "「日光物業」是一家大型地產代理公司，經紀和分行經理的底薪很低，主要靠佣金收入。最近因經濟不景氣，物業交易宗數急挫，公司上月決定把所有經理級員工的底薪削減 10%；同時內部流傳謠言，指「公司將會削減人手，而分行經理將會是首批被裁的員工」，導致分行經理士氣低落。",
+      question: "根據「馬斯洛的需要階梯理論」，指出日光物業現時可能未能滿足分行經理的其中一個需要層次（1分），並從個案中找出理據支持你的答案（1分）。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出馬斯洛需要階梯理論中的單一需要層次名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "日光物業現時可能未能滿足分行經理的保健因子與 X 理論需要。", score: 0, status: "wrong", comment: "【概念錯誤】張冠李戴。保健因子屬赫茨伯格理論，X 理論屬麥格雷戈理論；題目明確要求根據「馬斯洛的需要階梯理論」指出五個需要層次之一。" },
+          { text: "日光物業現時可能未能滿足分行經理的安全需要，又或者未能滿足他們的生理需要。", score: 1, status: "best", comment: "【滿分示範】準確指出馬斯洛需要階梯理論中的「安全需要」或「生理需要」。" },
+          { text: "日光物業現時未能滿足分行經理在工作和生活上面的需要，令他們士氣低落。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準需要層次名稱】必須明確寫出馬斯洛五個層次的標準名稱：「生理需要」或「安全需要」。" }
+        ]},
+        { label: "第 2 步：從個案中找出具體理據支持並解釋為何未能滿足該需要（1分）", colorClass: "hl-s2", opts: [
+          { text: "個案理據顯示公司內部流傳謠言，指「公司將會削減人手，而分行經理將會是首批被裁的員工」，令分行經理擔心隨時失業而缺乏工作穩定性與保障，故未能滿足安全需要；同時在物業交易急挫令佣金大減下，公司再把經理本已很低的底薪削減 10%，令其難以維持基本生活，故亦未能滿足生理需要。", score: 1, status: "best", comment: "【滿分示範】精準引用個案中「裁員謠言指經理是首批被裁員工（安全需要）」及「交易急挫加上削減本已很低的底薪 10%（生理需要）」作為理據。" },
+          { text: "因為最近香港經濟不景氣，物業市場的生意很差，所以分行經理的需要便得不到滿足。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體引用個案中針對分行經理的兩項核心事實理據：「將經理底薪削減 10%（影響維持基本生活的生理需要）」或「流傳經理將是首批被裁員工的謠言（影響職業保障的安全需要）」。" },
+          { text: "因為公司沒有委派分行經理去參加全港地產代理籃球比賽，所以未能滿足他們的安全需要。", score: 0, status: "wrong", comment: "【概念錯誤】個案並無提及籃球比賽，且球類聯誼活動對應的是社交需要而非安全需要。" }
+        ]}
+      ]
+    },
+    {
+      id: "e1", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 1：飛躍運動鞋連鎖店（根據馬斯洛五層需要吸引優秀售貨員一：生理與安全需要）", topic: "馬斯洛的需要階梯理論：運用生理需要與安全需要吸引人才", maxMarks: 3,
+      scenario: "一家售賣運動鞋的連鎖零售店最近擴張業務，打算聘請大量售貨員。試根據馬斯洛提出的五個層次的需要，向該連鎖零售店建議可吸引優秀售貨員加入公司的方法。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以馬斯洛五個層次中的「安全需要」（或「生理需要」）為核心，結合運動鞋連鎖零售店招聘售貨員的情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出馬斯洛的單一需要層次名稱與核心定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "連鎖零售店可透過滿足安全需要來吸引售貨員：安全需要是指人們對保障自身安全、維持秩序和穩定，以及控制個人生活和環境的需要；此外亦可透過優厚薪金和充足休息時間滿足最基本的生理需要。", score: 1, status: "best", comment: "【滿分示範】準確指出馬斯洛的「安全需要」（及「生理需要」），並清楚界定其保障安全與生活穩定的核心定義。" },
+          { text: "連鎖零售店可透過滿足安全需要來吸引售貨員：安全需要是最高層次的需要，指人類渴望發揮全部潛能和展現獨特才華的需要。", score: 0, status: "wrong", comment: "【概念錯誤】張冠李戴。渴望發揮全部潛能和展現獨特才華是最高層次的「自我實現需要」，而非第 2 層的「安全需要」。" },
+          { text: "馬斯洛的需要階梯理論一共有五個層次的需要，運動鞋連鎖零售店可以用這五個層次來吸引售貨員入職。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體層次名稱與定義】只提及有五個層次，未有針對單一層次（如「安全需要」或「生理需要」）寫出名稱及界定其含義。" }
+        ]},
+        { label: "第 2 步：針對「運動鞋連鎖零售店」設定滿足該需要的具體措施例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如運動鞋連鎖店可在招聘條件中，向售貨員提供永久性僱用的長期僱傭合約（保障工作穩定）、全面的團體醫療及意外保險、優厚的退休福利，以及確保店舖貨倉提取高處鞋盒的梯具與工作環境安全（而在生理需要方面，則提供優厚底薪、銷售佣金及充足的用膳和休息時間）。", score: 1, status: "best", comment: "【滿分示範】緊扣運動鞋零售店售貨員的工作情境，具體列舉長期僱傭合約、醫療保險、退休福利及安全店倉環境等措施。" },
+          { text: "例如運動鞋連鎖店要求售貨員了解消費者購買運動鞋時經過的認識需要、資料搜集、評估選擇、購買決策及購買後行為五個步驟。", score: 0, status: "wrong", comment: "【審題失誤】消費者購買決策過程屬於個案 a 部分的市場營銷問題，並非滿足售貨員安全需要的人力資源措施。" },
+          { text: "例如運動鞋連鎖店向來見工的售貨員承諾，入職之後公司會保障他們的安全，讓他們安心在店舖賣波鞋。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有舉出任何具體的人力資源措施例子（如提供長期僱傭合約、醫療與人壽保險、退休福利或安全的工作環境）。" }
+        ]},
+        { label: "第 3 步：深化論述至消除失業與傷病後顧之憂、吸引優秀售貨員加盟的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這些措施能為售貨員提供穩定的職業保障及完善的醫療與退休安全網，消除他們對意外傷病或突然失業的後顧之憂，有效滿足其安全需要，從而吸引重視工作穩定與保障的優秀銷售人才加入連鎖店。", score: 1, status: "best", comment: "【滿分示範】清楚推演出提供職業保障與醫療安全網如何滿足安全需要，並吸引優秀售貨員加盟。" },
+          { text: "滿足了安全需要後，售貨員便會自動放棄所有基本薪金和佣金，免費為運動鞋連鎖店義務工作。", score: 0, status: "wrong", comment: "【概念錯誤】根據馬斯洛理論，基本的生理需要（薪金）必須持續獲得滿足，員工絕不會因為獲得安全保障而放棄基本薪金。" },
+          { text: "這樣運動鞋連鎖零售店便能夠滿足售貨員的安全需要，吸引到優秀的售貨員加入公司工作。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目尾句，未有深化說明「消除員工對意外傷病與失業的後顧之憂，提供穩定生活保障以增加職位吸引力」的效果。" }
+        ]}
+      ]
+    },
+    {
+      id: "e2", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 2：飛躍運動鞋連鎖店（根據馬斯洛五層需要吸引優秀售貨員二：自我與自我實現需要）", topic: "馬斯洛的需要階梯理論：運用自我需要、自我實現需要及社交需要吸引人才", maxMarks: 3,
+      scenario: "承上題，該售賣運動鞋的連鎖零售店最近擴張業務，打算聘請大量售貨員。除了生理需要和安全需要外，試以較高層次的「自我實現需要」或「自我需要」為例，向該連鎖零售店建議可吸引優秀售貨員加入公司的方法。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「自我實現需要」或「自我需要」為核心，結合運動鞋連鎖零售店情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出馬斯洛的較高層次需要名稱與核心定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "連鎖零售店可透過滿足自我實現需要來吸引優秀售貨員：自我實現需要是最高層次的需要，與人類渴望發揮全部潛能和展現獨特才華有關；同時亦可滿足對名譽、地位、認同、尊重和成就感渴求的自我需要。", score: 1, status: "best", comment: "【滿分示範】準確指出較高層次的「自我實現需要」與「自我需要」，並清楚界定兩者的核心含義。" },
+          { text: "連鎖零售店可透過滿足自我實現需要來吸引售貨員：自我實現需要是指人類對食物、水和空氣等基本生存必需品的需要。", score: 0, status: "wrong", comment: "【概念錯誤】對食物、水和空氣的需要屬於最基本的「生理需要」，而非最高層次的「自我實現需要」。" },
+          { text: "連鎖零售店除了滿足低層次需要之外，還可以透過滿足較高層次的需要來吸引優秀的售貨員入職。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體層次名稱與定義】必須明確寫出「自我實現需要（渴望發揮全部潛能和展現獨特才華）」或「自我需要（對名譽、地位、認同和尊重的渴求）」。" }
+        ]},
+        { label: "第 2 步：針對「運動鞋連鎖零售店售貨員」設定滿足該需要的具體措施例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如運動鞋連鎖店可為售貨員提供專業運動力學知識與零售管理培訓和發展機會，設立清晰的內部晉升階梯（擢升能力較高的售貨員為新分店店長），並委派他們負責策劃具挑戰性的限量版球鞋首發推廣活動（在自我需要方面，則設立每月最佳售貨員獎公開表揚貢獻、尊重其意見及給予工作自主權）。", score: 1, status: "best", comment: "【滿分示範】緊扣課文第 63 頁表格例子，具體結合提供培訓發展機會、擢升能力較高僱員為店長、委派具挑戰性工作，以及頒獎表揚與給予自主權。" },
+          { text: "例如運動鞋連鎖店每天為售貨員提供一小時的午膳用飯時間，並在店舖後勤休息室放置一部飲水機。", score: 0, status: "wrong", comment: "【概念錯誤】提供用膳時間與飲水機滿足的是最基本的「生理需要」，並非較高層次的自我需要或自我實現需要。" },
+          { text: "例如運動鞋連鎖店在請人的時候，告訴應徵者入職之後會有很多機會讓他們在店舖入面發揮自己的潛能。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有舉出任何具體措施例子（如「提供培訓和發展機會」、「擢升能力較高的售貨員為分店經理」或「給予具挑戰性又能達成的工作」）。" }
+        ]},
+        { label: "第 3 步：深化論述至提供長遠事業成長空間、吸引有抱負的優秀銷售人才加盟的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於能力出眾的優秀售貨員往往渴望獲得肯定、追求個人成長及在零售事業上發揮管理潛能，提供清晰的晉升發展機會、具挑戰性的工作與公開認同，能有效滿足他們的高層次需要，吸引有抱負的優秀人才加入擴張中的連鎖店。", score: 1, status: "best", comment: "【滿分示範】清楚推演出提供晉升發展、挑戰性任務與認同，如何滿足高層次需要並吸引有抱負的優秀人才加盟。" },
+          { text: "這能保證新入職的售貨員在入職第一天便自動成為該運動鞋跨國製造商的最大控股股東。", score: 0, status: "wrong", comment: "【概念錯誤】提供培訓與晉升店長機會並不會令售貨員自動成為跨國製造商的最大控股股東。" },
+          { text: "這樣便能夠滿足優秀售貨員的自我實現需要和自我需要，令他們願意加入這間運動鞋連鎖零售店。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「迎合優秀人才對事業成長、獲得肯定與發揮潛能的渴求，從而在招聘市場中突圍吸引高質素人才」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e3", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 3：香港大型餐飲集團（進軍珠海促進僱員關係的內部溝通方式一：指導計劃與職前輔導）", topic: "內部溝通方式：職前輔導計劃與指導計劃（導師計劃）的應用與目的", maxMarks: 3,
+      scenario: "香港某大型餐飲集團打算進軍內地市場，最近在珠海設立辦事處，聘請了一些當地員工；為保留香港的管理和工作風格，集團把部分香港員工（包括數名管理人員）調職至新辦事處。由於集團的架構和人力資源有不少變動，行政總裁計劃透過「內部溝通」促進僱員關係。試舉例說明有助該餐飲集團促進僱員關係的內部溝通方式。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以五種內部溝通方式中的「指導計劃（導師計劃）」或「職前輔導計劃（入職引導計劃）」為核心，結合餐飲集團珠海新辦事處的情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一「內部溝通方式」名稱與核心描述（1分）", colorClass: "hl-s1", opts: [
+          { text: "餐飲集團可採用指導計劃，又稱導師計劃：即安排有經驗的人士擔任導師，協助和支援新員工（學員）發展工作技能和知識；同時亦可採用向新員工介紹企業文化、願景、價值觀及工作內容的職前輔導計劃（入職引導計劃）。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 5.4 節「指導計劃／導師計劃」及「職前輔導計劃／入職引導計劃」的標準名稱與運作描述。" },
+          { text: "餐飲集團可採用商業獵頭公司及勞工處這兩種內部溝通方式，向珠海市民宣傳港式火鍋湯底的特色。", score: 0, status: "wrong", comment: "【概念錯誤】商業獵頭公司與勞工處屬於外部招聘機構，向市民宣傳火鍋屬於市場推廣，兩者均非企業的「內部溝通方式」。" },
+          { text: "餐飲集團可以安排由香港調過去的舊員工多些同珠海的新員工傾偈，教下他們平時怎樣做野。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準內部溝通方式名稱】「舊人同新人傾偈教做野」屬於口語表述，必須明確寫出課本的標準專業名稱：「指導計劃／導師計劃」或「職前輔導計劃／入職引導計劃」。" }
+        ]},
+        { label: "第 2 步：針對「餐飲集團調派香港管理人員與聘請珠海當地新員工」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如餐飲集團可安排調職至珠海辦事處的香港資深管理人員擔任「導師」，一對一配對支援新聘請的珠海當地員工（學員），在日常工作中指導他們港式餐飲的品質控制與工作流程，並舉辦職前輔導向當地新員工介紹集團的香港企業文化、願景與潛規則。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「為保留香港管理和工作風格，把香港員工調職至珠海並聘請當地員工」的背景，具體展示兩地員工的導師配對與文化傳授。" },
+          { text: "例如餐飲集團計算在珠海開設港式火鍋店的初期投資成本、折現率及未來淨現金流入，以得出項目的淨現值。", score: 0, status: "wrong", comment: "【審題失誤】計算火鍋店淨現值屬於個案 b 部分的財務管理問題，並非促進僱員關係的內部溝通例子。" },
+          { text: "例如餐飲集團在珠海辦事處推行指導計劃和職前輔導計劃，讓珠海的新員工認識公司的情況。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有扣連個案中「由調職至珠海的香港資深員工擔任導師，向當地新員工傳授香港的管理工作風格、企業文化與潛規則」的具體情境。" }
+        ]},
+        { label: "第 3 步：深化論述至幫助新員工適應港式風格、提供渠道分享挫折減少不滿並增加歸屬感的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這不但能幫助珠海新員工快速適應港式管理環境以提升工作效率、確保他們朝着集團目標努力，更能提供一個友善的渠道讓新員工向香港導師分享工作挫折以減少不滿，並滿足社交需要、增加對集團的歸屬感，促進兩地員工的和諧關係。", score: 1, status: "best", comment: "【滿分示範】完整涵蓋課文第 73 頁表格所列的四大目的：適應環境提升效率、認識潛規則與文化、提供友善渠道分享挫折減少不滿、滿足社交需要增加歸屬感。" },
+          { text: "這能令珠海辦事處的所有當地員工無須領取任何基本薪金，並自動免除集團在內地繳交的所有稅項。", score: 0, status: "wrong", comment: "【概念錯誤】推行內部溝通計劃旨在促進僱員關係，並不能免除支付員工薪金或繳納稅款的責任。" },
+          { text: "這樣餐飲集團便能夠透過指導計劃和職前輔導計劃促進僱員關係，對珠海新辦事處的發展很有好處。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明該溝通方式如何「幫助新員工適應環境提升效率、提供友善渠道分享挫折以減少不滿，以及發展社交網絡增加歸屬感」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e4", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 4：香港大型餐飲集團（進軍珠海促進僱員關係的內部溝通方式二：員工意見調查、定期會議與社交聚會）", topic: "內部溝通方式：員工意見調查、定期員工會議與社交聚會", maxMarks: 3,
+      scenario: "承上題，該香港大型餐飲集團在珠海設立新辦事處，聘請了當地員工並把部分香港員工調職過去，由於集團的架構和人力資源有不少變動，行政總裁計劃透過「內部溝通」促進僱員關係。除了職前輔導和指導計劃外，試以「員工意見調查」、「定期員工會議」或「社交聚會」為例，舉例說明該內部溝通方式如何有助促進僱員關係。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「員工意見調查」（或「定期員工會議」／「社交聚會」）為核心，結合餐飲集團架構變動與兩地員工磨合情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一「內部溝通方式」名稱與核心描述（1分）", colorClass: "hl-s1", opts: [
+          { text: "餐飲集團可進行員工意見調查：即以員工為對象進行調查，藉此了解他們對企業新架構及工作的想法和感受；同時亦可定期召開員工會議直接傳達政策與目標，以及組織燒烤派對或旅行等社交聚會促進同事友誼。", score: 1, status: "best", comment: "【滿分示範】準確指出「員工意見調查」、「定期員工會議」及「社交聚會」的標準名稱與運作描述。" },
+          { text: "餐飲集團可在珠海街頭向途人派發火鍋試食問卷，藉此調查內地消費者對麻辣湯底口味的喜好。", score: 0, status: "wrong", comment: "【概念錯誤】向街頭消費者派發口味問卷屬於「市場研究」，並非針對企業內部僱員的「員工意見調查（內部溝通）」。" },
+          { text: "餐飲集團可以多些開會同埋搞聚會，問下員工對公司今次架構變動有甚麼睇法。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且欠標準名稱】應明確寫出課本的標準內部溝通方式名稱：「員工意見調查」、「定期員工會議」或「社交聚會」。" }
+        ]},
+        { label: "第 2 步：針對「餐飲集團架構變動與兩地員工想法」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如面對架構和人事變動，集團可向調職至珠海的香港員工及新聘的當地員工發放問卷進行員工意見調查，了解他們對新匯報關係、工作量及跨地調職安排的顧慮與感受；並定期召開員工會議向兩地員工清晰講解內地業務擴展策略，以及舉辦周末燒烤派對讓兩地同事在輕鬆氣氛下聯誼交流。", score: 1, status: "best", comment: "【滿分示範】緊扣個案中「架構和人力資源有不少變動、調職香港員工與聘請當地員工」的背景，具體設定調查新架構顧慮、開會講解策略及舉辦燒烤聯誼的例子。" },
+          { text: "例如餐飲集團規定所有對新架構有疑問的員工必須自行辭職，禁止員工在會議上提出任何問題。", score: 0, status: "wrong", comment: "【概念錯誤】禁止提問並強制辭職屬於單向高壓手段，會引發嚴重勞資糾紛而非促進僱員關係。" },
+          { text: "例如餐飲集團向珠海辦事處的員工派發問卷做調查，看看他們對公司有甚麼意見和想法。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於空泛，未有扣連個案中「集團架構和人力資源變動、香港調職員工與珠海當地員工對新工作風格及匯報關係的想法和顧慮」。" }
+        ]},
+        { label: "第 3 步：深化論述至加深理解採取激勵行動、建立對領導層信任及避免勞資糾紛的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "透過員工意見調查讓兩地員工表達意見和投訴，能加深管理層對員工的理解，幫助集團作出更好的決策並有效避免因架構變動而引發勞資糾紛；配合定期員工會議建立對領導層的信任及透過社交聚會發展社交網絡，能大幅增加歸屬感並建立和諧的僱員關係。", score: 1, status: "best", comment: "【滿分示範】清楚推演出加深理解、助企業作更好決策、避免勞資糾紛、建立對領導層信任及增加歸屬感的完整效果。" },
+          { text: "進行員工意見調查能令珠海火鍋店的食材存貨貯存成本自動降至零元，無須再進行存貨管理。", score: 0, status: "wrong", comment: "【概念錯誤】內部溝通與食材存倉成本毫無關聯。" },
+          { text: "這樣餐飲集團的行政總裁便知道員工想點，香港員工和珠海員工的關係也會變得更好。", score: 0, status: "partial", comment: "【常見失分示範：未點出關鍵目的】未能明確寫出課本的採分關鍵字：「幫助企業作出更好的決策，避免勞資糾紛（工業糾紛）」、「建立員工對企業領導層的信任」以及「增加歸屬感」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e5", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 5：安心護老院（在預算有限下運用 HR 功能減低護理員流失率一：報酬管理與培訓發展）", topic: "跨課題綜合應用：根據六大人力資源管理功能建議減低員工流失率的方法", maxMarks: 3,
+      scenario: "一家香港護老院正面對「護理員短缺」的問題。護理員工作辛苦，工資也較低，導致員工流失率高企。護老院正尋求方法來減低員工流失率，但「可動用的預算有限」。試根據「人力資源管理功能」，向護老院建議方法來減低員工流失率。",
+      question: "請遵循「一段一個獨立重點」及課本第 75 頁答題錦囊（先列出 HR 功能名稱、再結合常識與個案限制解釋）的原則，以「報酬管理」或「培訓和發展」功能為核心，結合護老院預算有限情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：準確列出單一「人力資源管理功能」名稱並點出配合預算有限的方向（1分）", colorClass: "hl-s1", opts: [
+          { text: "根據報酬管理功能，護老院應立即將所有護理員的每月基本底薪調高兩倍，並向每位護理員派發十萬元年終現金花紅。", score: 0, status: "wrong", comment: "【審題失誤】個案已明確指出護老院「可動用的預算有限」，建議大幅調高底薪兩倍及派發巨額現金花紅完全無視個案的財務限制。" },
+          { text: "在報酬管理功能方面，鑑於護老院可動用的預算有限，院方難以大幅提高基本薪金，但可透過向護理員提供低成本甚至不費分文的非金錢報酬（如認同和表揚、工作上的彈性）作為較低工資的補充（或在培訓和發展功能方面，提供低成本的在職培訓及晉升發展機會）。", score: 1, status: "best", comment: "【滿分示範】嚴格遵循課本答題錦囊先列出「報酬管理（或培訓和發展）」功能名稱，並精準配合「預算有限」提出低成本非金錢報酬方向。" },
+          { text: "護老院可以多些關心護理員，在平時多些稱讚他們，讓他們不要那麼快辭職離開護老院。", score: 0, status: "partial", comment: "【常見失分示範：未列出 HR 功能名稱】根據課本第 75 頁答題錦囊，回答此類題目時必須「先列出人力資源管理功能名稱（如：報酬管理／培訓和發展／員工考績／促進僱員關係）」，否則結構不完整。" }
+        ]},
+        { label: "第 2 步：針對「護老院護理員工作辛苦」設定具體的低成本實施例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如護老院院長可透過口頭讚賞，或設立「每月最佳愛心護理員獎」頒發獎座與嘉許狀，公開肯定護理員照顧長者的辛勞付出（不費分文）；同時提供彈性輪更安排協助他們平衡生活，並委派資深護理主任進行在職「指導 (Coaching)」，傳授省力安全的扶抱長者技巧以減輕體力負擔。", score: 1, status: "best", comment: "【滿分示範】緊扣護老院護理員工作辛苦與預算有限的背景，具體提出口頭讚賞、最佳護理員獎、彈性輪更及在職指導扶抱技巧。" },
+          { text: "例如護老院耗資數千萬元委託軟件公司開發一套全電腦化的虛擬實境長者護理模擬訓練艙。", score: 0, status: "wrong", comment: "【審題失誤】開發全電腦化模擬訓練設備的成本極為高昂，嚴重違背護老院「可動用的預算有限」的前提。" },
+          { text: "例如護老院可以在預算有限的情況下，給護理員一些不用花太多錢的非金錢報酬和在職培訓。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只重複了第 1 步的概念，沒有舉出任何針對護老院護理員的具體例子（如設立最佳護理員獎、口頭讚賞、彈性輪更或指導省力扶抱技巧）。" }
+        ]},
+        { label: "第 3 步：深化論述至滿足自尊與成就感、減輕工作辛勞並提高忠誠度以降低流失率的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這些低成本措施一方面能讓護理員掌握正確技巧以減輕日常照顧長者的身體辛勞與受傷風險，另一方面能滿足他們對得到認同、尊重與工作生活平衡的需要，提高他們對護老院的歸屬感和忠誠度，從而在有限預算下有效減低員工流失率。", score: 1, status: "best", comment: "【滿分示範】清楚推演出減輕工作辛勞及滿足受認同需要，如何提高忠誠度並在有限預算下有效減低流失率。" },
+          { text: "這能令護老院內所有長者立即完全康復出院，使護老院無須再聘請任何護理員。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合常理。" },
+          { text: "這樣護老院的護理員便會覺得很開心，不會再因為工作辛苦和工資低而辭職，減低了流失率。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「滿足對得到認同和尊重的較高層次需要、補償較低工資並提高對護老院的忠誠度」的邏輯。" }
+        ]}
+      ]
+    },
+    {
+      id: "e6", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 6：安心護老院（在預算有限下運用 HR 功能減低護理員流失率二：促進僱員關係與員工考績）", topic: "跨課題綜合應用：運用促進僱員關係、員工考績與人力規劃解決流失問題", maxMarks: 3,
+      scenario: "承上題，該香港護老院因護理員工作辛苦、工資較低而面對高流失率，且「可動用的預算有限」。除了報酬管理和培訓發展外，試以「促進僱員關係」或「員工考績」這項人力資源管理功能為例，向護老院建議減低員工流失率的方法。",
+      question: "請遵循「一段一個獨立重點」原則，先列出「促進僱員關係」（或「員工考績」）功能名稱，並結合護老院低預算情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：準確列出單一「人力資源管理功能」名稱與核心做法（1分）", colorClass: "hl-s1", opts: [
+          { text: "在促進僱員關係功能方面，護老院可透過推行低成本的內部溝通方式（如員工意見調查、定期員工會議、指導計劃及小型社交聚會）來加強溝通與同事情誼；而在員工考績功能方面，則可訂立更公平合理的表現標準，並在考績面談中提供支持與鼓勵。", score: 1, status: "best", comment: "【滿分示範】準確列出「促進僱員關係」及「員工考績」兩項 HR 功能名稱，並點出低成本內部溝通與公平考績面談的核心做法。" },
+          { text: "在促進僱員關係功能方面，護老院應每年出資安排全體護理員乘搭商務艙前往歐洲豪華旅遊兩星期。", score: 0, status: "wrong", comment: "【審題失誤】豪華歐洲旅遊開支龐大，違背了題目「可動用的預算有限」的限制。" },
+          { text: "護老院還可以改善管理層和護理員之間的關係，多些聽取護理員的意見，讓大家相處得更加融洽。", score: 0, status: "partial", comment: "【常見失分示範：未列出標準 HR 功能名稱】漏了在段首明確列出「促進僱員關係」或「員工考績」這項人力資源管理功能的標準名稱。" }
+        ]},
+        { label: "第 2 步：針對「護老院護理員」設定具體的內部溝通或考績面談例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如護老院可進行「員工意見調查」及召開「定期員工會議」，主動了解護理員在照顧長者流程上的困難與不滿，並據此優化輪班與工序分工；同時推行「指導計劃（導師計劃）」及舉辦低成本的院舍生日茶會（社交聚會），為新舊護理員提供友善渠道分享工作挫折及建立同事情誼。", score: 1, status: "best", comment: "【滿分示範】緊扣護老院情境，具體結合員工意見調查、定期會議、導師計劃（分享挫折）及生日茶會（社交聚會）。" },
+          { text: "例如護老院在報章刊登招聘廣告，並去勞工處互動就業網站發布護理員職位空缺。", score: 0, status: "wrong", comment: "【概念錯誤】刊登招聘廣告與使用勞工處屬於「員工編制（招聘）」功能，並非「促進僱員關係」或「員工考績」的措施。" },
+          { text: "例如護老院的院長平時多些同護理員傾偈開會，問下他們在護老院做野有甚麼不開心的事情。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有準確運用課本的內部溝通計劃術語（如「員工意見調查」、「指導計劃／導師計劃」、「定期員工會議」或「社交聚會」）作具體說明。" }
+        ]},
+        { label: "第 3 步：深化論述至減少工作不滿、避免勞資糾紛與建立和諧關係以留住護理員的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這能讓護理員有機會表達意見和抒發工作挫折，減少他們對繁重工作的不滿並避免勞資糾紛；同時透過聚會與導師支援建立互相扶持的友誼及和諧工作關係，能在有限預算下顯著增加護理員對護老院的歸屬感，從而減低員工流失率。", score: 1, status: "best", comment: "【滿分示範】清楚推演出抒發挫折減少不滿、避免勞資糾紛及建立友誼與歸屬感，如何協助護老院留住護理員。" },
+          { text: "這能令護老院的流動比率和速動比率在即日內自動上升至五比一，解決所有短期債務問題。", score: 0, status: "wrong", comment: "【概念錯誤】促進僱員關係屬於人力資源管理，不會自動改變財務報表上的流動比率數值。" },
+          { text: "這樣護老院入面的僱員關係就會變得很好，護理員就不會那麼容易辭職，減低了員工流失率。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「提供友善渠道分享挫折以減少不滿、避免勞資糾紛，並滿足社交需要以增加對院舍的歸屬感」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e7", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 7：全健衛生用品生產廠（根據麥格雷戈 X 理論分析廠長假設與激勵方法）", topic: "麥格雷戈的 X 理論：結合個案理據解釋管理層所持的假設與激勵方法", maxMarks: 3,
+      scenario: "「全健有限公司」生產肥皂和消毒搓手液。顧問檢視廠房後發現：「生產工人的工作時間長，而且要遵守很多嚴格的規則；假如他們犯錯，更會被扣減薪金。」東主柏宏回應：「這些規則是我訂立的。我非常了解公司的工人，他們都非常懶惰，只會為金錢而工作。扣減薪金是令他們減少工作失誤的最佳方法。不過，我會支付優厚的超時工作工資，表現優秀的工人也會獲發大額花紅。」",
+      question: "請遵循「一段一個獨立重點」原則，根據麥格雷戈的「X 理論」，列出柏宏在管理生產工人時所作出的假設，並從個案中舉例加以解釋，同時根據 X 理論建議另一個激勵生產工人的方法（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：準確指出柏宏奉行「X 理論」及所持的三項核心假設（1分）", colorClass: "hl-s1", opts: [
+          { text: "柏宏奉行麥格雷戈的 Y 理論，假設生產工人視工作為生命的一部分、會自我激勵和控制，並且主動承擔更多責任。", score: 0, status: "wrong", comment: "【概念錯誤】柏宏認為工人非常懶惰、只為金錢工作，並訂立嚴格規則及犯錯扣薪，這完全是消極的「X 理論」而非 Y 理論。" },
+          { text: "柏宏奉行麥格雷戈的 X 理論，他在管理生產工人時作出了三項假設：(i) 僱員本質上都是不喜歡工作的（懶惰的），總是盡量避免工作；(ii) 僱員傾向逃避責任，尋求正式指引並需密切監控與懲罰；(iii) 僱員都沒有抱負，主要只關注金錢和工作保障。", score: 1, status: "best", comment: "【滿分示範】準確指出「X 理論」並完整列出課文第 5.3C 節的三項標準假設。" },
+          { text: "柏宏奉行麥格雷戈的 X 理論，因為他對廠房入面的生產工人有很多負面的睇法，覺得工人不好管。", score: 0, status: "partial", comment: "【常見失分示範：未寫出三項標準假設】只指出奉行 X 理論，但沒有明確寫出 X 理論的三項核心假設（本質不喜歡工作、傾向逃避責任需正式指引、沒有抱負只關注金錢與保障）。" }
+        ]},
+        { label: "第 2 步：從個案中精準引用具體理據支持上述 X 理論假設（1分）", colorClass: "hl-s2", opts: [
+          { text: "從個案可見：(1) 柏宏明言「公司的工人非常懶惰」，印證他假設工人本質上不喜歡工作；(2) 柏宏訂立「很多嚴格的規則」並規定「假如犯錯更會被扣減薪金」，印證他假設工人傾向逃避責任，須靠嚴格指引及高壓懲罰手段才努力工作；(3) 柏宏認為工人「只會為金錢而工作」並以「優厚超時工資和大額花紅」獎勵，印證他假設工人沒有抱負、只關注金錢。", score: 1, status: "best", comment: "【滿分示範】將三項 X 理論假設與個案中柏宏的言行理據逐一精準對應解釋。" },
+          { text: "從個案可見，全健公司最近收到大量消毒搓手液訂單，而且俊明建議在生產流程實行分工以提升生產力。", score: 0, status: "wrong", comment: "【審題失誤】收到大量訂單及實行分工屬於個案的生產營運背景，並不能作為支持柏宏對工人持 X 理論人性假設的理據。" },
+          { text: "因為柏宏在開會的時候自己親口講出了他對廠房工人的睇法，證明了他真的這樣認為。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有從個案中引用具體事實理據（必須明確引用「工人非常懶惰」、「只會為金錢而工作」、「遵守很多嚴格規則」及「犯錯被扣減薪金」）。" }
+        ]},
+        { label: "第 3 步：除個案已提的金錢報酬外，根據「X 理論」為柏宏建議另一個激勵工人的方法（1分）", colorClass: "hl-s3", opts: [
+          { text: "除個案已提及的超時工資和花紅（滿足生理需要）外，根據 X 理論「透過滿足馬斯洛較低層次需要來激勵僱員」的含義，柏宏可向生產工人提供能滿足「安全需要」的僱員福利，例如醫療及意外保險、房屋津貼或穩定的長期僱傭合約保障。", score: 1, status: "best", comment: "【滿分示範】嚴格遵守題目「根據 X 理論建議方法」的要求，準確提出課文第 71 頁表格所載的「提供可滿足僱員安全需要的福利（如保險和房屋津貼）」。" },
+          { text: "根據 X 理論，柏宏應該立即廢除所有廠房規則，並邀請生產工人參與董事局的重大決策及給予完全的工作自主權。", score: 0, status: "wrong", comment: "【概念錯誤】邀請參與決策與給予工作自主權屬於「Y 理論」的激勵方法，違背了題目「根據題 bi 的理論（X 理論）建議方法」的指令。" },
+          { text: "根據 X 理論，柏宏還可以向表現好的生產工人派發多一點超時工作工資和大額現金花紅來激勵他們。", score: 0, status: "partial", comment: "【常見失分示範：重複個案已提方法】題目已明確規定「除個案提及的方法（超時工資和花紅）外」，重複回答超時工資或花紅不獲給分；應回答滿足另一低層次「安全需要」的福利（如保險、房屋津貼）或按件計酬。" }
+        ]}
+      ]
+    },
+    {
+      id: "e8", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 8：美味快餐連鎖店（就 HR 功能建議支援輕度智障及肢體殘障僱員的措施）", topic: "跨課題綜合應用：運用六大人力資源管理功能支援弱勢社群僱員", maxMarks: 3,
+      scenario: "一家快餐連鎖店將設立新分店。為了履行企業社會責任，連鎖店計劃為新分店聘用「輕度智障及肢體殘障人士」。試就「人力資源管理功能」，建議該快餐連鎖店可支援輕度智障及肢體殘障僱員的措施。",
+      question: "請遵循「一段一個獨立重點」及課本答題錦囊（先列出 HR 功能名稱、再解釋具體措施）的原則，從六大人力資源管理功能中選取具體功能，說明如何度身支援這批輕度智障及肢體殘障僱員（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：從「人力規劃（工作分析）與培訓和發展」功能提出度身支援措施（1分）", colorClass: "hl-s1", opts: [
+          { text: "首先，在人力規劃（工作分析）及培訓和發展功能方面：快餐店應按他們的能力與身體狀況設計及分配合適、安全的工作崗位（如安排負責包裝外賣餐具或清理桌面，避免高危滾油炸爐工序），並改装無障礙工作環境；同時採用在職「指導 (Coaching)」，委派富耐心的資深店員一對一親身示範簡單工序及提供安全培訓。", score: 1, status: "best", comment: "【滿分示範】清楚列出「人力規劃（工作分析）」及「培訓和發展」功能，並針對輕度智障及肢體殘障人士提出崗位調適、無障礙環境與一對一在職指導。" },
+          { text: "快餐店應安排肢體殘障員工每天搬運五十公斤重的冷凍肉類上落樓梯，並要求輕度智障員工獨自負責全店會計帳目審計。", score: 0, status: "wrong", comment: "【概念錯誤】工作安排完全無視員工的身體限制與能力，極易引致工傷意外與嚴重失誤。" },
+          { text: "快餐店在請了輕度智障及肢體殘障人士之後，應該安排一些簡單的工作給他們做，並教導他們怎樣做。", score: 0, status: "partial", comment: "【常見失分示範：未列出 HR 功能名稱】沒有在段首明確列出「人力規劃／工作分析」及「培訓和發展（在職指導）」等標準人力資源管理功能名稱。" }
+        ]},
+        { label: "第 2 步：從「員工考績與報酬管理」功能提出度身調整措施（1分）", colorClass: "hl-s2", opts: [
+          { text: "其次，在員工考績及報酬管理功能方面：快餐店應為他們「微調或度身訂造」一套較簡單、切合其能力的表現標準（而非套用一般資深店員的速度標準），並在考績面談中向他們提供較頻密的正面回饋與鼓勵；在報酬管理上，則可按其個人需要發放特別交通或醫療津貼、提供彈性工時安排，並多作口頭讚賞表揚。", score: 1, status: "best", comment: "【滿分示範】完美整合第 2 課（微調表現標準、向弱勢社群提供較頻密回饋）及第 3 課（按個人需要發放特別津貼、彈性工時與口頭表揚）的課本知識。" },
+          { text: "其次，快餐店應為他們訂立比一般店員高兩倍的出餐速度標準，一旦未能達標即扣減其基本薪金以作懲罰。", score: 0, status: "wrong", comment: "【概念錯誤】過高標準與扣薪懲罰會令弱勢社群員工承受極大壓力而無法適應工作。" },
+          { text: "其次，快餐店在做員工考績和出糧的時候，應該特別遷就一下這批輕度智障及肢體殘障員工。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】「特別遷就一下」過於空泛，必須明確說明如何調整：即「微調或度身訂造切合其能力的表現標準、提供較頻密的回饋」以及「發放特別津貼、提供彈性工時與公開表揚」。" }
+        ]},
+        { label: "第 3 步：從「促進僱員關係（內部溝通）」功能提出建立共融環境的措施與整體影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "最後，在促進僱員關係功能方面：快餐店可為他們舉辦專門的「職前輔導計劃」和「指導計劃（導師計劃）」，提供友善渠道讓他們分享工作挫折並協助融入新環境，同時透過「定期員工會議」向分店其他員工推廣傷健共融與互相體諒的文化；這能全方位支援他們克服障礙，增加歸屬感並穩定愉快地工作。", score: 1, status: "best", comment: "【滿分示範】清楚列出「促進僱員關係」功能，並結合職前輔導、導師計劃（分享挫折）與定期員工會議（推廣共融文化），總結全方位支援效果。" },
+          { text: "這能令快餐連鎖店無須再遵守政府的《僱傭條例》及法定最低工資規定。", score: 0, status: "wrong", comment: "【概念錯誤】聘用弱勢社群員工仍須嚴格遵守政府的僱傭法例規定。" },
+          { text: "這樣快餐連鎖店便能夠好好支援這批輕度智障及肢體殘障僱員，順利履行企業社會責任。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有補充「促進僱員關係（如推行職前輔導計劃、導師計劃及營造傷健共融文化以增加歸屬感）」這一重要功能維度。" }
+        ]}
+      ]
+    }
+  ];
+
+  let curBuilderCat = 'short';
+  let curQIdx = 0;
+  let userSelections = {};
+  let isSubmitted = false;
+
+  function switchBuilderCat(cat, btn) {
+    curBuilderCat = cat;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('builderCatLabel').textContent = cat === 'short' ? '選擇短答題（每題滿分 2 分）：' : '選擇進階論述題（每題滿分 3 分）：';
+    curQIdx = cat === 'short' ? 0 : 4;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function renderQuestionChips() {
+    document.getElementById('questionChips').innerHTML = workshopQuestions
+      .map((q, i) => ({ q, i }))
+      .filter(x => x.q.cat === curBuilderCat)
+      .map(x => `<button class="chip ${x.i===curQIdx?'active':''}" onclick="selectWorkshopQ(${x.i})">${x.q.title}</button>`)
+      .join('');
+  }
+
+  function selectWorkshopQ(idx) {
+    curQIdx = idx;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function pickStepOption(sIdx, oIdx) {
+    userSelections[sIdx] = oIdx;
+    isSubmitted = false;
+    renderWorkshop();
+  }
+
+  function submitConstructedAnswer() {
+    const q = workshopQuestions[curQIdx];
+    if (Object.keys(userSelections).length < q.steps.length) {
+      alert(`請先完成全部 ${q.steps.length} 個步驟的選擇，再點擊批改。`);
+      return;
+    }
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function fillBestChoices() {
+    const q = workshopQuestions[curQIdx];
+    q.steps.forEach((st, sIdx) => {
+      userSelections[sIdx] = st.opts.findIndex(o => o.status === 'best');
+    });
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function renderWorkshop() {
+    const q = workshopQuestions[curQIdx];
+    const letters = ['A', 'B', 'C'];
+
+    let totalScore = 0;
+    q.steps.forEach((st, sIdx) => {
+      if (userSelections[sIdx] !== undefined) {
+        totalScore += st.opts[userSelections[sIdx]].score;
+      }
+    });
+
+    const previewParts = q.steps.map((st, sIdx) => {
+      const selIdx = userSelections[sIdx];
+      if (selIdx === undefined) {
+        return `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［未選擇第 ${sIdx + 1} 步］</span>`;
+      }
+      return `<span class="${st.colorClass}">${st.opts[selIdx].text}</span>`;
+    });
+
+    document.getElementById('builderWorkspace').innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div>
+            <span class="badge b-blue">${q.typeBadge}</span>
+            <span class="badge b-teal">${q.topic}</span>
+          </div>
+          <b style="color:var(--primary);font-size:16px">本段滿分：${q.maxMarks} 分</b>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink)">${q.question}</div>
+      </div>
+
+      ${q.steps.map((st, sIdx) => {
+        const selIdx = userSelections[sIdx];
+        return `
+          <div class="builder-stage">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <h4 style="font-size:16.5px"><span class="${st.colorClass}">${st.label}</span></h4>
+              <span style="font-size:14px;font-weight:600;color:var(--mute)">${selIdx !== undefined ? '已選 ' + letters[selIdx] : '請點選一項'}</span>
+            </div>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = selIdx === oIdx;
+              let gradeCls = '';
+              if (isSubmitted && isSel) {
+                gradeCls = o.status === 'best' ? 'graded-best' : o.status === 'partial' ? 'graded-partial' : 'graded-wrong';
+              }
+              return `
+                <button class="opt-card ${isSel ? 'selected' : ''} ${gradeCls}" onclick="pickStepOption(${sIdx}, ${oIdx})">
+                  <span class="opt-letter">${letters[oIdx]}</span>
+                  <span style="flex:1">${o.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('')}
+
+      <div class="card" style="border:2px solid var(--primary);margin-bottom:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <h3 style="color:var(--primary);font-size:19px">建構段落預覽</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitConstructedAnswer()">批改答案</button>
+            <button class="btn btn-outline" onclick="fillBestChoices()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="font-size:17px;line-height:1.85;background:var(--surface);padding:18px 22px;border-radius:12px;border:1px solid var(--line)">
+          ${previewParts.join(' ')}
+        </div>
+
+        ${isSubmitted ? `
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${totalScore === q.maxMarks ? 'b-green' : totalScore >= 1 ? 'b-amber' : 'b-red'}" style="font-size:15px;padding:6px 14px">
+                得分：${totalScore} / ${q.maxMarks} 分
+              </span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const chosen = st.opts[userSelections[sIdx]];
+              const cCls = chosen.status === 'best' ? 'c-best' : chosen.status === 'partial' ? 'c-partial' : 'c-wrong';
+              return `
+                <div class="critique-item ${cCls}">
+                  <b>第 ${sIdx + 1} 步（選項 ${letters[userSelections[sIdx]]} · ${chosen.score} 分）：</b>${chosen.comment}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  renderQuestionChips();
+  renderWorkshop();
+</script>
+</body>
+</html>

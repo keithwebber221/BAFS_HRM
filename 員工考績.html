@@ -1,0 +1,1787 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 員工考績</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .main-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .main-tabs button {
+      border: 0;
+      background: none;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tabs button:hover { color: var(--ink); }
+    .main-tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Main Container & Views */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 28px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Section Header Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 25px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 680px; }
+
+    /* Sub-navigation Switcher */
+    .sub-nav {
+      display: inline-flex;
+      background: #efecf8;
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sub-nav button {
+      border: 0;
+      background: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--mute);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-nav button:hover { color: var(--ink); }
+    .sub-nav button.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.25);
+    }
+    .sub-view { display: none; }
+    .sub-view.active { display: block; animation: fadeIn 0.2s ease; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .sidebar-layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    /* Interactive Selector Lists */
+    .nav-list { display: flex; flex-direction: column; gap: 10px; }
+    .nav-item {
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .nav-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary) 0%, #9333ea 100%);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 16px rgba(109, 40, 217, 0.24);
+    }
+    .nav-item.active span.sub-txt { color: #ede9fe; }
+    .sub-txt { font-size: 13px; color: var(--mute); font-weight: 500; flex-shrink: 0; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      padding: 11px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    .note-box {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+    .case-box {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 14px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+
+    /* Comparison Table & Rating Circles */
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15.5px; }
+    table.comp-table th, table.comp-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+    table.comp-table tr.highlight-row { background: var(--primary-light); }
+
+    .score-circle {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 14px;
+      background: var(--card);
+      transition: all 0.15s;
+    }
+    .score-circle:hover { border-color: var(--primary); }
+    .score-circle.picked { background: var(--primary); color: #fff; border-color: var(--primary); transform: scale(1.1); }
+
+    .slider-row { display: grid; grid-template-columns: 210px 1fr 125px; gap: 12px; align-items: center; margin-bottom: 10px; font-size: 15px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
+
+    /* Builder Specific */
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 18px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.correct, .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.wrong, .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #ffffff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    details.guide-Collapsible {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    details.guide-Collapsible summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .sidebar-layout, .slider-row { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+      .main-tabs { width: 100%; justify-content: center; margin-top: 8px; }
+      .sec-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 12px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速切換課室／測驗...</option>
+    <option value="人力資源管理_目錄.html">單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質工作團隊.html">第 5 課：發展優質工作團隊</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+  <div class="brand">
+    <span>人力資源管理</span>
+    <span class="brand-tag">第 2 課：員工考績</span>
+  </div>
+  <nav class="main-tabs" id="mainTabs">
+    <button class="on" data-tab="sec-purpose">1. 認識員工考績與三大目的</button>
+    <button data-tab="sec-process">2. 員工考績四步過程與模擬器</button>
+    <button data-tab="sec-methods">3. 量度與評核員工表現的方法</button>
+    <button data-tab="sec-cases">4. 考績制度診斷與特別員工調整</button>
+    <button data-tab="sec-builder">5. 論點建構工作坊</button>
+  </nav>
+</header>
+
+<!-- ==================== 1. 認識員工考績與三大目的 ==================== -->
+<section class="view on" id="sec-purpose">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元一：何謂員工考績與員工考績的目的</span>
+      <h1>表現管理 vs 員工考績、三大核心目的與提升表現雙途徑</h1>
+      <p>表現管理是管理人員為量度、評核和獎勵僱員的表現而進行的一切活動；而員工考績（又稱工作評核）是表現管理中不可或缺的一環，指運用預設的表現標準來評核員工的工作表現。企業通常每年進行一次員工考績，主要目的是找出員工與工作相關的強項和弱項，並就員工的工作表現提供回饋。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('purp', 0, this)">三大核心目的與概念辨析</button>
+      <button onclick="switchSub('purp', 1, this)">概念與目的判斷挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 1A：三大核心目的與概念辨析 -->
+  <div class="sub-view active" id="purp-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="purpNavList"></div>
+      <div class="card" id="purpDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 1B：員工考績概念與三大目的判斷挑戰 -->
+  <div class="sub-view" id="purp-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">員工考績概念與三大目的判斷挑戰</span>
+        <span id="purpQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="purpQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="purpQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="purpQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. 員工考績四步過程與模擬器 ==================== -->
+<section class="view" id="sec-process">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元二：員工考績的過程（四個基本步驟）</span>
+      <h1>員工考績的四個順序步驟 ＆ 不同職位的表現標準設計</h1>
+      <p>企業進行員工考績包含四個順序步驟：(1) 訂立表現標準，並和員工溝通 ➔ (2) 量度實際表現，並與表現標準比較 ➔ (3) 進行考績面談，並向員工提供回饋 ➔ (4) 作出人力資源管理決策。在制定表現標準時，應檢視相關的工作說明、工作要求及企業目標，且標準應是清晰、具體和可量度的。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('prc', 0, this)">四步過程詳解與職位表現標準</button>
+      <button onclick="switchSub('prc', 1, this)">動態考績模擬器與挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 2A：四步過程詳解與不同職位表現標準 -->
+  <div class="sub-view active" id="prc-sub-0">
+    <div class="sidebar-layout" style="margin-bottom:20px">
+      <div class="nav-list" id="procNavList"></div>
+      <div class="card" id="procDetailCard" style="margin-bottom:0"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-teal">適用於不同職位的表現標準與考績制度比較</span>
+      <h3 style="font-size:20.5px;margin:8px 0 8px">點選不同行業職位，檢視具體「表現標準」例子及基層 vs 管理層的考績制度差異</h3>
+      <div class="chips" id="jobStdChips">
+        <button class="chip active" onclick="renderJobStd(0)">1. 生產工人・銷售人員・巴士司機</button>
+        <button class="chip" onclick="renderJobStd(1)">2. 酒店房務員 vs 酒店接待員</button>
+        <button class="chip" onclick="renderJobStd(2)">3. 珠寶鑲嵌技師 vs 專櫃銷售顧問</button>
+        <button class="chip" onclick="renderJobStd(3)">4. 制度比較：基層收銀／配藥員 vs 市場營銷／拓展經理</button>
+      </div>
+      <div id="jobStdBox" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 2B：動態考績模擬器與挑戰 -->
+  <div class="sub-view" id="prc-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">員工考績四步曲動態模擬</span>
+        <h3 style="font-size:20px;margin:8px 0 6px">調整「珠寶專櫃顧問」的實際表現數據，即時模擬考績第 2、3、4 步</h3>
+        <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1px solid var(--line);font-size:14.5px;margin-top:8px">
+          <div style="margin-bottom:10px;font-weight:700;color:var(--primary)">
+            第 1 步（預設表現標準，已於年初與顧問溝通並獲同意）：<br>
+            ① 全年個人珠寶銷售額達 <b>$2,000,000</b>；② 顧客服務問卷平均評分達 <b>4.0 / 5.0 分</b>。
+          </div>
+          <div class="slider-row">
+            <b>第 2 步 A：實際全年銷售額</b>
+            <input type="range" id="paSalesSlider" min="100" max="300" step="20" value="240" oninput="updatePaSim()">
+            <span id="lblPaSales" style="font-weight:800;color:var(--primary)">$2,400,000</span>
+          </div>
+          <div class="slider-row" style="margin-bottom:0">
+            <b>第 2 步 B：實際服務評分</b>
+            <input type="range" id="paCsSlider" min="2.5" max="5.0" step="0.5" value="4.5" oninput="updatePaSim()">
+            <span id="lblPaCs" style="font-weight:800;color:var(--teal)">4.5 / 5.0 分</span>
+          </div>
+        </div>
+        <div id="paSimOutput" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">員工考績步驟與表現標準挑戰</span>
+        <h3 style="font-size:20px;margin:8px 0 10px">排列員工考績步驟或選出合適的表現標準（共 6 題）</h3>
+        <p id="procQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="procQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="procQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="procQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 量度與評核員工表現的方法 ==================== -->
+<section class="view" id="sec-methods">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元三：量度員工表現的三大途徑 ＆ 四種常用評核方法</span>
+      <h1>觀察・從公司記錄獲取數據・向不同人士收集意見 ＆ 四種評核工具</h1>
+      <p>在員工考績的第 2 步中，企業可透過三種主要途徑量度員工的實際表現：(1) 觀察、(2) 從公司記錄獲取數據、(3) 向不同人士（顧客、員工本人、員工的同事、外部持份者如供應商）收集意見；並可運用四種常用方法評核員工表現：圖表打分法、簡單排序法、清單法和關鍵事件法。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('mth', 0, this)">三大設定量度途徑與四種評核工具體驗</button>
+      <button onclick="switchSub('mth', 1, this)">量度與評核方法配對挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 3A：三大設定量度途徑與四種評核工具體驗 -->
+  <div class="sub-view active" id="mth-sub-0">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">量度員工實際表現的三大途徑</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點擊三種量度途徑，查看不同行業的實際應用例子</h3>
+        <div class="chips" id="measWayChips">
+          <button class="chip active" onclick="renderMeasWay(0)">1. 觀察 (Observation)</button>
+          <button class="chip" onclick="renderMeasWay(1)">2. 從公司記錄獲取數據</button>
+          <button class="chip" onclick="renderMeasWay(2)">3. 向不同人士收集意見</button>
+        </div>
+        <div id="measWayBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">進階學堂：四種評核員工表現的方法</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點擊切換四種評核工具，親手體驗「圖表打分法」與「清單法」</h3>
+        <div class="chips" id="appToolChips">
+          <button class="chip active" onclick="renderAppTool(0)">1. 圖表打分法 (互動評分)</button>
+          <button class="chip" onclick="renderAppTool(1)">2. 清單法 (互動勾選)</button>
+          <button class="chip" onclick="renderAppTool(2)">3. 簡單排序法</button>
+          <button class="chip" onclick="renderAppTool(3)">4. 關鍵事件法</button>
+        </div>
+        <div id="appToolBox" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 3B：量度與評核方法配對挑戰 -->
+  <div class="sub-view" id="mth-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">量度途徑與評核方法配對挑戰</span>
+        <span id="methQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="methQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="methQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="methQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 考績制度診斷與特別員工調整 ==================== -->
+<section class="view" id="sec-cases">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元四：高階個案分析（表現標準設計盲點、特殊員工調整與激勵效果）</span>
+      <h1>為何單看服務數量會損害服務質素？如何為弱勢社群員工調整考績制度？</h1>
+      <p>若表現標準設計不當（如只追求服務顧客數量而忽略服務質素），會驅使員工倉卒行事，長遠令企業流失顧客。此外，當企業聘請弱勢社群（如輕度智障或聽障人士）或新入職畢業生時，須靈活調整員工考績制度（如度身微調表現標準及提供較頻密的回饋）。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('cas', 0, this)">兩大經典個案深度拆解</button>
+      <button onclick="switchSub('cas', 1, this)">個案診斷實戰挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 4A：兩大經典個案深度拆解 -->
+  <div class="sub-view active" id="cas-sub-0">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">個案一：專業服務中心的表現標準設計</span>
+        <h3 style="font-size:20px;margin:8px 0 8px">為何不應單以「所服務的顧客／病人數量」評核髮型師或物理治療師？</h3>
+        <div class="chips" id="salonChips">
+          <button class="chip active" onclick="renderSalonCase(0)">1. 單以「服務人數」評核的主要問題</button>
+          <button class="chip" onclick="renderSalonCase(1)">2. 建議更合適的表現標準</button>
+          <button class="chip" onclick="renderSalonCase(2)">3. 量度該新標準的兩個方法</button>
+        </div>
+        <div id="salonCaseBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">個案二：特殊員工考績調整與花紅激勵效果</span>
+        <h3 style="font-size:20px;margin:8px 0 8px">如何調整考績制度以評核弱勢社群員工 ＆ 影響考績激勵效果的因素</h3>
+        <div class="chips" id="cafeChips">
+          <button class="chip active" onclick="renderCafeCase(0)">1. 如何調整考績制度以評核弱勢社群員工？</button>
+          <button class="chip" onclick="renderCafeCase(1)">2. 影響考績制度「激勵效果」的因素</button>
+        </div>
+        <div id="cafeCaseBox" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 4B：個案診斷實戰挑戰 -->
+  <div class="sub-view" id="cas-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">考績制度設計與個案應用挑戰</span>
+        <span id="caseQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="caseQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="caseQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="caseQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. 論點建構問答工作坊 (12題) ==================== -->
+<section class="view" id="sec-builder">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-amber">實戰寫作與教學示範訓練</span>
+      <h1>「一段一個獨立重點」論點建構工作坊</h1>
+      <p>收錄 4 道短答題（2 步建構 · 2 分）及 8 道進階論述題（3 步建構 · 3 分）。每個步驟除了提供「滿分建構選項（綠燈）」及「概念錯誤選項（紅燈）」外，特別保留一個能力較弱學生常犯的<b>「解說不足／用詞籠統／同義反覆選項（琥珀黃燈）」</b>，方便課堂進行正反對比教學示範。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchBuilderCat('short', this)">短答題訓練 (4題)</button>
+      <button onclick="switchBuilderCat('essay', this)">進階論述題訓練 (8題)</button>
+    </div>
+  </div>
+
+  <details class="guide-Collapsible">
+    <summary>查看「一段一個重點」建構結構與三種選項教學示範指南（點擊展開 / 收起）</summary>
+    <div class="grid2" style="margin-top:14px;font-size:16px">
+      <div style="background:var(--primary-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--primary)">短答題／個案題模式（每段滿分 2 分 — 2 步建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 準確指出單一提升表現途徑、HR 決策類別、量度方法或考績問題<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 結合題目企業情況說明如何執行或為何產生該影響
+      </div>
+      <div style="background:var(--teal-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--teal)">進階論述題模式（每段滿分 3 分 — 3 步深度建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 指出單一考績步驟、目的或比較維度名稱並界定其核心含義<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 針對題目職位（如理財策劃師、製錶技師與專櫃顧問、配藥員與業務拓展總監、游泳教練）設定具體例子<br>
+        <span class="hl-s3">第 3 步 (1分)</span> 深化推論該步驟、目的或制度設計如何影響員工表現、公平性、服務質素或企業整體業績
+      </div>
+    </div>
+  </details>
+
+  <div class="card" style="padding:18px 22px;margin-bottom:18px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px" id="builderCatLabel">選擇短答題（每題滿分 2 分）：</div>
+    <div class="chips" id="questionChips" style="margin:0"></div>
+  </div>
+
+  <div id="builderWorkspace"></div>
+</section>
+
+<script>
+  // Main Tab Switching
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // Sub-view Switching
+  function switchSub(prefix, idx, btn) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`[id^="${prefix}-sub-"]`).forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ====== 1. 認識員工考績與三大目的 ======
+  const purpCatalog = [
+    {
+      title: "核心概念：表現管理 vs 員工考績",
+      badge: "第 2.1 & 2.2 節",
+      def: "「表現管理 (Performance Management)」是管理人員監管僱員表現的活動，包括為量度、評核和獎勵僱員的表現而進行的一切活動；而「員工考績（又稱為工作評核 Performance Appraisal）」是表現管理中不可或缺的一環，指運用預設的表現標準來評核員工的工作表現。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>表現管理涵蓋的四項活動</b>：(1) 為僱員定出具體的目標；(2) 發展僱員的能力；(3) 評核僱員的表現（即員工考績）；以及 (4) 獎勵僱員的表現（注意：員工考績只是表現管理的其中一環，兩者並不完全相同）。</p>
+        <p style="margin:0">• <b>員工考績的主要目的與頻率</b>：企業通常<b>每年進行一次</b>員工考績，其主要目的是<b>找出員工與工作相關的強項和弱項</b>（注意：並非了解員工私下的個人個性和業餘興趣），並就員工的工作表現提供回饋，識別表現卓越或欠佳的員工。</p>
+      `
+    },
+    {
+      title: "目的 1：協助管理人員作出 HR 決策",
+      badge: "員工考績的目的",
+      def: "企業在進行員工考績時，可根據特定的表現標準，公平地評核員工的表現。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>(i) 作出人事與薪酬決策</b>：這些評核結果可作為重要的參考資料，讓管理人員作出各項人力資源管理決策，包括<b>晉升、調職、終止僱傭合約（或決定是否續約），以及調整薪金</b>等。</p>
+        <p style="margin:0">• <b>(ii) 妥善安排工作</b>：企業亦可根據員工考績的結果，<b>因應員工的技能和知識來安排工作</b>，以確保企業有合適的員工擔任合適的職務。</p>
+      `
+    },
+    {
+      title: "目的 2：識別培訓需要，以提升員工表現",
+      badge: "員工考績的目的",
+      def: "企業可將員工的工作表現與表現標準作比較，藉此了解他們的強項和弱項。這樣，企業就可識別員工的培訓需要，並為他們安排適當的培訓，協助他們改善技能和發展能力，最終提升工作表現。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>商業例子</b>：一名經理通過員工考績識別出某售貨員與顧客溝通的能力較弱（弱項），接着為該名售貨員提供適當的溝通技巧培訓，令售貨員的表現得以提升。</p>
+        <p style="margin:0">• <b>配合考績面談指導</b>：此外，經理與下屬進行<b>員工考績面談</b>時，可與他們討論須要改善的地方，並<b>給予指導或建議</b>，這也有助改善員工的表現。</p>
+      `
+    },
+    {
+      title: "目的 3：確保員工與企業的目標一致",
+      badge: "員工考績的目的",
+      def: "企業進行員工考績時，一般會根據企業目標制定表現標準。舉例而言，假設一家企業的目標是增加銷售額，它可能會為銷售部員工制定較高的銷售額標準。",
+      detail: `
+        <p style="margin:0">• 員工可透過表現標準<b>了解企業對自己工作表現的期望，從而更清楚明白企業的整體目標</b>。<br>
+        • 因此，良好的員工考績制度有助員工更深入了解企業的目標，並<b>朝着這些目標努力工作</b>。長遠而言，這有助提升企業整體的生產力和業績。</p>
+      `
+    }
+  ];
+
+  function renderPurp(idx) {
+    document.getElementById('purpNavList').innerHTML = purpCatalog.map((p, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderPurp(${i})">
+        <span>${p.title}</span>
+      </button>
+    `).join('');
+    const p = purpCatalog[idx];
+    document.getElementById('purpDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${p.title}</h3>
+        <span class="badge ${idx===0?'b-blue':'b-teal'}">${p.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${p.def}</p>
+      <div class="case-box">${p.detail}</div>
+    `;
+  }
+  renderPurp(0);
+
+  // 對稱深度設計的 6 道員工考績概念與三大目的挑戰題
+  const purpQuizItems = [
+    {
+      q: "1. 指出以下三個商業情況分別展示「哪項員工考績的目的」：<br>(a) 一家餐廳進行員工考績後，發現部分侍應未能妥善使用手機替顧客下單，遂舉辦工作坊教授操作 ｜ (b) 某銀行希望提升顧客服務水平，因此為出納員的顧客服務質素制定較高的標準 ｜ (c) 一家超級市場透過員工考績評核收銀員的表現，並根據結果決定是否與他們續約",
+      opts: [
+        "A. (a) 確保員工與企業的目標一致 ｜ (b) 識別員工的培訓需要，以提升員工表現 ｜ (c) 協助管理人員作出人力資源管理決策",
+        "B. (a) 識別員工的培訓需要，以提升員工表現 ｜ (b) 確保員工與企業的目標一致 ｜ (c) 協助管理人員作出人力資源管理決策",
+        "C. (a) 協助管理人員作出人力資源管理決策 ｜ (b) 確保員工與企業的目標一致 ｜ (c) 識別員工的培訓需要，以提升員工表現"
+      ],
+      ans: 1,
+      exp: "正確。(a) 發現侍應弱項並舉辦工作坊屬「識別員工的培訓需要，以提升員工表現」；(b) 按銀行提升服務目標制定出納員標準屬「確保員工與企業的目標一致」；(c) 根據考績結果決定是否續約屬「協助管理人員作出人力資源管理決策」。"
+    },
+    {
+      q: "2. 辨別以下陳述是否正確：「員工考績又稱為表現管理，兩者的意思和涵蓋範圍完全相同。」",
+      opts: [
+        "A. 正確 — 員工考績與表現管理屬於同義詞，兩者均指企業在每年年終向全體員工派發表現花紅及計算遣散費的財務活動",
+        "B. 不正確 — 員工考績又稱為『工作評核』，它只是『表現管理』中不可或缺的一環；表現管理還涵蓋定出目標、發展能力和獎勵表現等一切活動",
+        "C. 不正確 — 表現管理只適用於評核初級前線員工的日常出勤紀錄，而員工考績則只適用於決定跨國企業行政總裁的股息分派比例"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。員工考績又稱為「工作評核」，只是表現管理的其中一部分；表現管理包括為量度、評核和獎勵僱員表現而進行的一切活動。"
+    },
+    {
+      q: "3. 辨別以下陳述是否正確：「企業通常每年進行一次員工考績，適切的員工考績制度有助企業識別表現優秀或欠佳的員工。」",
+      opts: [
+        "A. 正確 — 企業一般每年進行一次員工考績，透過將實際表現與預設表現標準作比較，識別表現卓越、達標或欠佳的員工以配合業務發展",
+        "B. 不正確 — 根據香港勞工法例規定，所有企業必須每天進行一次正式的員工考績面談，而且考績制度並不能區分員工表現的優劣",
+        "C. 不正確 — 員工考績只能在員工遞交辭職信後的離職面談中進行，目的純粹是統計企業全年的員工流失率而非識別優秀員工"
+      ],
+      ans: 0,
+      exp: "正確。企業通常每年進行一次員工考績，通過推行適切的員工考績制度加深對員工的了解，並識別表現卓越或欠佳的員工。"
+    },
+    {
+      q: "4. 辨別以下陳述是否正確：「員工考績的主要目的是幫助企業了解員工私下的個人個性和業餘興趣。」",
+      opts: [
+        "A. 正確 — 管理人員必須透過員工考績深入調查每位下屬的私人生活習慣、個人性格及假日業餘愛好，才能為他們編排日常的值班時間表",
+        "B. 不正確 — 員工考績的主要目的是找出員工『與工作相關』的強項和弱項，並就其工作表現提供回饋，而非了解與工作無關的個人個性和興趣",
+        "C. 不正確 — 員工考績的主要目的是評估外部就業市場的失業率與人口老化趨勢，完全不會涉及對企業內部現職僱員任何強項或弱項的評估"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。員工考績的主要目的是找出員工「與工作相關」的強項和弱項，並就員工的工作表現提供回饋。"
+    },
+    {
+      q: "5. 宗培是一家速遞公司的東主，習慣以經驗和年資作為晉升員工的準則。最近幾位表現優秀但年資尚淺的年輕速遞員因覺得沒有得到公平回報而辭職。引入「員工考績制度」可為宗培帶來甚麼好處？",
+      opts: [
+        "A. 可讓宗培直接解僱所有部門經理，使速遞公司在完全沒有任何管理人員監督的情況下自動運作，藉此大幅節省管理層的薪酬成本",
+        "B. 可制定客觀表現標準並將速遞員表現與標準比較，協助宗培公平地作出晉升與調薪決策、找出需改善範疇以提供培訓，並確保員工朝着公司目標努力",
+        "C. 可確保所有年資最深但表現未達標的老員工繼續自動獲得優先晉升，同時禁止年輕速遞員在考績面談中向管理層表達任何對工作的意見"
+      ],
+      ans: 1,
+      exp: "正確。引入員工考績制度可帶來三大好處：(1) 根據表現公平作出晉升及調整薪金等 HR 決策；(2) 找出需改善範疇並提供適當培訓；(3) 根據公司目標制定表現標準，確保員工朝着公司目標努力（注意 A 錯誤：員工考績並不能讓企業減少聘請管理人員）。"
+    },
+    {
+      q: "6. 除了作出晉升、調職、終止僱傭合約和調整薪金等決策外，員工考績的評核結果在「日常工作安排」上還可如何協助管理人員？",
+      opts: [
+        "A. 企業可根據員工考績的結果，因應員工所展現的技能和知識強項來安排工作，以確保企業有合適的員工擔任合適的職務",
+        "B. 企業可根據員工考績的結果，將所有與核心業務相關的重要管理職責全部外判給商業招聘機構（獵頭公司）代為執行",
+        "C. 企業可根據員工考績的結果，免除為新開設職位進行工作分析的程序，無須再制定任何工作說明或工作要求文件"
+      ],
+      ans: 0,
+      exp: "正確。課文第 2.3 節指出，企業亦可根據員工考績的結果，因應員工的技能和知識來安排工作，以確保企業有合適的員工擔任合適的職務。"
+    }
+  ];
+  let curPQ = 0;
+  function renderPurpQuiz() {
+    const it = purpQuizItems[curPQ];
+    document.getElementById('purpQuizProg').textContent = `題目 ${curPQ + 1} / ${purpQuizItems.length}`;
+    document.getElementById('purpQuizQ').innerHTML = it.q;
+    document.getElementById('purpQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkPurpQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('purpQuizFb').innerHTML = '';
+  }
+  function checkPurpQuiz(idx) {
+    const it = purpQuizItems[curPQ];
+    const fb = document.getElementById('purpQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curPQ=(curPQ+1)%purpQuizItems.length;renderPurpQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderPurpQuiz();
+
+  // ====== 2. 員工考績四步過程與模擬器 ======
+  const procCatalog = [
+    {
+      title: "第 1 步：訂立表現標準，並和員工溝通",
+      badge: "員工考績第 1 步",
+      def: "首先，企業應訂立適用於員工考績的表現標準。在制定表現標準時，企業應檢視相關的工作說明、工作要求，以及企業的目標。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>良好表現標準的特徵</b>：一般而言，表現標準應該是<b>清晰、具體和可量度的</b>，能夠為員工提供指引，讓他們朝着企業的目標努力工作（在某些情況下，企業可能須要微調或度身訂造一套表現標準，以切合個別員工的需要）。</p>
+        <p style="margin:0">• <b>與員工溝通的重要性</b>：企業應（例如於每年年初舉行會議）和員工溝通，向他們傳達表現標準，並<b>確保他們了解和同意這些標準</b>。這樣可保證全體員工都明白公司對他們的期望。</p>
+      `
+    },
+    {
+      title: "第 2 步：量度實際表現，並與表現標準比較",
+      badge: "員工考績第 2 步",
+      def: "在這個階段，企業須根據第 1 步所訂立的表現標準，量度員工的實際表現，然後與表現標準作比較。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>(a) 量度員工表現的三大方法</b>：透過<b>(i) 觀察</b>、<b>(ii) 從公司記錄獲取數據</b>，以及<b>(iii) 向不同人士（顧客、員工本人、員工的同事、外部持份者如供應商）收集意見</b>來量度員工表現。</p>
+        <p style="margin:0">• <b>(b) 與表現標準作比較</b>：檢查員工的表現是否達標，完成比較後便可識別三類員工：<br>
+        &nbsp;&nbsp;(i) <b>表現欠佳的員工</b>：即那些未能達到表現標準的員工；<br>
+        &nbsp;&nbsp;(ii) <b>表現達標的員工</b>；<br>
+        &nbsp;&nbsp;(iii) <b>表現優秀的員工</b>：即那些超越表現標準的員工。</p>
+      `
+    },
+    {
+      title: "第 3 步：進行考績面談，並向員工提供回饋",
+      badge: "員工考績第 3 步",
+      def: "企業應與員工就員工考績的結果進行溝通和討論。企業可與員工進行考績面談 (Appraisal Interview)，向他們提供回饋和聆聽他們的回應。",
+      detail: `
+        <p style="margin:0 0 10px"><b>管理人員進行考績面談時可以執行的四項工作：</b><br>
+        • <b>(i) 找出影響下屬工作表現的障礙，並向下屬提供改善表現的建議</b>；<br>
+        • <b>(ii) 表揚下屬的優秀表現</b>；<br>
+        • <b>(iii) 給予下屬鼓勵</b>；以及<br>
+        • <b>(iv) 聆聽下屬對工作的憂慮和意見</b>。</p>
+        <p style="margin:0">• <b>作用與回饋頻率</b>：向員工提供回饋可確保他們了解如何達到表現標準，鼓勵他們改善工作表現，並<b>協助員工制定計劃，藉此改善弱點和鞏固強項</b>（註：提供回饋的頻率視情況而定，企業可向<b>新入職的畢業生和弱勢社群員工</b>提供較頻密的回饋）。</p>
+      `
+    },
+    {
+      title: "第 4 步：作出人力資源管理決策",
+      badge: "員工考績第 4 步",
+      def: "員工考績可提供準則，讓企業決定如何獎勵員工、改善員工表現，以及留住和激勵員工。企業可根據考績結果作出三大類重要的人力資源管理決策：",
+      detail: `
+        <ul style="margin:0;padding-left:20px;line-height:1.85">
+          <li><b>(i) 培訓決策</b>：例如為服務質素欠佳的銷售人員提供更多顧客服務培訓。</li>
+          <li><b>(ii) 人力規劃決策</b>：例如晉升表現優秀的員工、調職、決定是否續約或解僱。</li>
+          <li><b>(iii) 薪酬決策</b>：例如提高表現優秀員工的加薪幅度和給予他們較多的花紅。</li>
+        </ul>
+        <p style="margin:8px 0 0">這樣，企業就能有效地運用人力資源，建立一個高質素的工作團隊。</p>
+      `
+    }
+  ];
+
+  function renderProc(idx) {
+    document.getElementById('procNavList').innerHTML = procCatalog.map((p, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderProc(${i})">
+        <span>${p.title}</span>
+      </button>
+    `).join('');
+    const p = procCatalog[idx];
+    document.getElementById('procDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${p.title}</h3>
+        <span class="badge b-blue">${p.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${p.def}</p>
+      <div class="case-box">${p.detail}</div>
+    `;
+  }
+  renderProc(0);
+
+  const jobStds = [
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">1. 課本三大典型職位的「表現標準」例子：</b><br>
+      • <b>生產工人（如縫紉工人、手機組裝工人）</b>：(i) 每小時生產的貨品數量；(ii) 生產的瑕疵品數量。<br>
+      • <b>銷售人員（如零售店售貨員、銀行銷售主任）</b>：(i) 每月的銷售額；(ii) 招攬的新顧客數量；(iii) 接獲的顧客投訴數量（或顧客服務問卷評分）。<br>
+      • <b>巴士司機（或旅遊巴、物流貨車司機）</b>：(i) 違反交通規例的次數；(ii) 接獲的顧客投訴數量（或準時送達率）。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">2. 挑戰站職位：酒店「房務員」vs 酒店「接待員」的表現標準：</b><br>
+      • <b>(a) 酒店房務員</b>：(i) 每天完成清潔及整理客房的數量（或整理每間客房所需的平均時間）；(ii) 客房衛生抽查合格率（或住客對房間整潔度的投訴數量）。<br>
+      • <b>(b) 酒店接待員</b>：(i) 為住客辦理入住及退房手續的平均所需時間與準確度；(ii) 住客滿意度問卷中的服務禮貌評分（或接獲住客投訴的數量）。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">3. 製造與零售企業：「工坊製錶／珠寶技師」vs「專門店銷售顧問」的表現標準：</b><br>
+      • <b>工坊製錶／珠寶技師</b>：(i) 每星期／每月完成組裝腕錶或鑲嵌首飾的數量；(ii) 未能通過品質檢驗的瑕疵品（次貨）數量或比例。<br>
+      • <b>專門店銷售顧問</b>：(i) 每月／每季的個人銷售額；(ii) 招攬的新 VIP 顧客數量；(iii) 接獲的顧客投訴數量或顧客問卷平均服務評分。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.7">
+      <b style="color:var(--teal);font-size:16.5px">4. 高階比較：連鎖超市／藥妝店「(i) 基層收銀員／配藥員」與「(ii) 市場營銷／業務拓展經理」的考績制度有何不同？</b>
+      <table class="comp-table" style="font-size:14.5px;margin-top:8px">
+        <thead><tr><th>比較維度</th><th>(i) 基層收銀員 ／ 門店配藥員</th><th>(ii) 市場營銷經理 ／ 業務拓展總監</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. 表現標準的性質與內容</b></td><td>側重<b>日常操作效率、準確度與待客態度</b>（如每小時處理交易宗數、收銀或配藥零出錯率、準時出勤率、顧客投訴數量）。</td><td>側重<b>部門整體策略成效、公司宏觀業績與領導能力</b>（如全線分店總銷售額增長率、市場佔有率、推廣計劃成效及帶領團隊能力）。</td></tr>
+          <tr><td><b>2. 量度實際表現的方法</b></td><td>主要透過分店主管<b>現場觀察</b>其待客態度、從<b>POS收銀或配藥系統記錄</b>擷取交易與出錯數據，以及統計<b>顧客投訴或評分</b>。</td><td>主要透過審視<b>公司整體銷售與財務報告數據</b>、市場調查報告，以及向管理層、同級主管、下屬及外部夥伴<b>收集多方意見</b>。</td></tr>
+          <tr><td><b>3. 考績周期與回饋頻率</b></td><td>工作屬日常重複性規範操作，可進行<b>較頻密的短期評核與即時回饋</b>（如按月或按季檢視）。</td><td>市場營銷與業務拓展策略需時見效，考績周期較長（通常<b>按年或按大型推廣項目周期</b>進行深入評核）。</td></tr>
+        </tbody>
+      </table>
+    </div>`
+  ];
+  function renderJobStd(idx) {
+    document.querySelectorAll('#jobStdChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('jobStdBox').innerHTML = jobStds[idx];
+  }
+  renderJobStd(0);
+
+  function updatePaSim() {
+    const sales = +document.getElementById('paSalesSlider').value;
+    const cs = +document.getElementById('paCsSlider').value;
+    document.getElementById('lblPaSales').textContent = `$${(sales * 10000).toLocaleString()}`;
+    document.getElementById('lblPaCs').textContent = `${cs.toFixed(1)} / 5.0 分`;
+
+    const salesOk = sales >= 200;
+    const csOk = cs >= 4.0;
+    const salesEx = sales >= 240;
+    const csEx = cs >= 4.5;
+
+    let cat = '', step3 = '', step4 = '', boxCol = '';
+    if (salesEx && csEx) {
+      cat = '【表現優秀的員工】（兩項指標均超越表現標準）';
+      boxCol = 'var(--green)';
+      step3 = '• <b>第 3 步（考績面談與回饋）</b>：經理在面談中<b>表揚</b>該顧問在銷售額及待客服務上的優秀表現，給予鼓勵，並協助制定鞏固強項的計劃。';
+      step4 = '• <b>第 4 步（作出 HR 決策）</b>：① <b>人力規劃決策</b>：將該名優秀顧問<b>晉升為高級珠寶主管</b>；② <b>薪酬決策</b>：提高年度加薪幅度及給予較多花紅。';
+    } else if (salesOk && csOk) {
+      cat = '【表現達標的員工】（兩項指標均符合預設表現標準）';
+      boxCol = 'var(--primary)';
+      step3 = '• <b>第 3 步（考績面談與回饋）</b>：經理肯定顧問達標的工作表現，給予鼓勵，並討論如何在來年進一步突破業績。';
+      step4 = '• <b>第 4 步（作出 HR 決策）</b>：① <b>人力規劃決策</b>：繼續留任／續約；② <b>薪酬決策</b>：按公司標準幅度調整薪金及派發常規花紅。';
+    } else if (!salesOk && csOk) {
+      cat = '【部分未達標：銷售額低於標準（弱項：促成交易技巧）】';
+      boxCol = 'var(--amber)';
+      step3 = '• <b>第 3 步（考績面談與回饋）</b>：經理肯定其待客禮貌，同時與她一起<b>找出影響銷售額未達標的障礙</b>，向下屬提供改善推銷表現的建議。';
+      step4 = '• <b>第 4 步（作出 HR 決策）</b>：① <b>培訓決策</b>：識別其弱項，安排她參加「高階珠寶知識與銷售技巧」培訓；② <b>薪酬決策</b>：維持基本薪金，暫緩晉升。';
+    } else if (salesOk && !csOk) {
+      cat = '【部分未達標：服務評分低於標準（弱項：待客溝通態度）】';
+      boxCol = 'var(--amber)';
+      step3 = '• <b>第 3 步（考績面談與回饋）</b>：經理肯定其銷售額，但明確指出服務評分未達標，找出導致顧客不滿的障礙並提供改善待客態度的建議。';
+      step4 = '• <b>第 4 步（作出 HR 決策）</b>：① <b>培訓決策</b>：為服務質素欠佳的銷售顧問<b>提供更多顧客服務及溝通技巧培訓</b>。';
+    } else {
+      cat = '【表現欠佳的員工】（銷售額與服務評分均未能達到表現標準）';
+      boxCol = 'var(--red)';
+      step3 = '• <b>第 3 步（考績面談與回饋）</b>：經理在面談中指出兩項指標均未達標，找出影響工作表現的障礙、聆聽下屬對工作的憂慮，並協助制定改善弱點的計劃。';
+      step4 = '• <b>第 4 步（作出 HR 決策）</b>：① <b>培訓決策</b>：安排基礎銷售與待客培訓；② <b>人力規劃與薪酬決策</b>：不予加薪或花紅；若經培訓後仍持續未達標，則考慮調職或終止僱傭合約。';
+    }
+
+    document.getElementById('paSimOutput').innerHTML = `
+      <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border-left:5px solid ${boxCol};font-size:14.5px;line-height:1.7">
+        <div style="font-size:15.5px;font-weight:800;color:${boxCol};margin-bottom:4px">第 2 步比較結果：${cat}</div>
+        <div>${step3}</div>
+        <div style="margin-top:4px">${step4}</div>
+      </div>`;
+  }
+  updatePaSim();
+
+  // 對稱深度設計的 6 道員工考績步驟與表現標準挑戰題
+  const procQuizItems = [
+    {
+      q: "1. 卓賢是一家餐廳的東主。根據員工考績的過程，按正確先後次序排列以下四項活動：<br>(a) 卓賢為員工制定表現標準後，和每名員工會面，與他們討論表現標準 ｜ (b) 卓賢決定為表現優秀的員工加薪 ｜ (c) 卓賢在考績面談中向員工提供回饋 ｜ (d) 卓賢觀察員工的實際表現，並與表現標準比較",
+      opts: [
+        "A. 正確次序：(a) 訂立表現標準並溝通 ➔ (d) 量度實際表現並與標準比較 ➔ (c) 進行考績面談提供回饋 ➔ (b) 作出人力資源管理決策（加薪）",
+        "B. 正確次序：(d) 量度實際表現並與標準比較 ➔ (a) 訂立表現標準並溝通 ➔ (b) 作出人力資源管理決策（加薪） ➔ (c) 進行考績面談提供回饋",
+        "C. 正確次序：(a) 訂立表現標準並溝通 ➔ (c) 進行考績面談提供回饋 ➔ (d) 量度實際表現並與標準比較 ➔ (b) 作出人力資源管理決策（加薪）"
+      ],
+      ans: 0,
+      exp: "正確。員工考績的四個順序步驟必定是：第 1 步訂立表現標準並和員工溝通 (a) ➔ 第 2 步量度實際表現並與標準比較 (d) ➔ 第 3 步進行考績面談並提供回饋 (c) ➔ 第 4 步作出人力資源管理決策 (b)。"
+    },
+    {
+      q: "2. 在員工考績的第 1 步「訂立表現標準，並和員工溝通」中，企業應檢視哪些資料來制定表現標準？而良好的表現標準應具備甚麼特質？",
+      opts: [
+        "A. 應檢視外部勞動市場的失業率與人口老化數據；而表現標準應該盡量保持含糊和具彈性，切勿向員工公開以免對員工造成心理壓力",
+        "B. 應檢視相關職位的『工作說明、工作要求，以及企業的目標』；而表現標準應該是『清晰、具體和可量度的』，並確保員工了解和同意這些標準",
+        "C. 應檢視員工個人的業餘興趣與家庭背景資料；而表現標準應該設定在沒有任何員工能夠達成的極高水平，以節省公司的花紅開支"
+      ],
+      ans: 1,
+      exp: "正確。在制定表現標準時，企業應檢視相關的工作說明、工作要求及企業目標；表現標準應是清晰、具體和可量度的，並須向員工傳達以確保他們了解和同意。"
+    },
+    {
+      q: "3. 某智能手機生產商打算為生產工人作員工考績。生產商已為這些員工制定表現標準，並把這些標準傳達給他們（已完成第 1 步）。接下來生產商須依次執行哪三個步驟？",
+      opts: [
+        "A. 依次執行：第 2 步評估內部與外部人力供應 ➔ 第 3 步比較人力需求和供應以識別短缺 ➔ 第 4 步制定招聘或外判的行動計劃",
+        "B. 依次執行：第 2 步與工人進行考績面談提供回饋 ➔ 第 3 步作出加薪或培訓決策 ➔ 第 4 步量度工人的每小時產量並與標準比較",
+        "C. 依次執行：第 2 步量度工人的實際表現並與表現標準比較 ➔ 第 3 步與工人進行考績面談並提供回饋 ➔ 第 4 步根據考績結果作出培訓、晉升或薪酬等決策"
+      ],
+      ans: 2,
+      exp: "正確。完成第 1 步後，接下來的三個步驟依次為：第 2 步量度實際表現並與表現標準比較、第 3 步進行考績面談並提供回饋、第 4 步作出人力資源管理決策（注意 A 是人力規劃的步驟）。"
+    },
+    {
+      q: "4. 一家銷售運動服飾的店鋪為其銷售人員作員工考績後，決定「晉升一名初級售貨員至高級職位」。描述在作出這項晉升決定「之前」，員工考績過程所經歷的三個步驟：",
+      opts: [
+        "A. (1) 在求職網站刊登高級售貨員招聘廣告；(2) 篩選所有外部求職者的履歷並進行面試；(3) 與獲選者訂立正式聘用條款及簽署合約",
+        "B. (1) 為售貨員訂立表現標準（如每月銷售額）並與他們溝通；(2) 量度售貨員的實際表現並與標準比較；(3) 與售貨員進行考績面談，表揚優秀表現並提供回饋",
+        "C. (1) 決定提高該名初級售貨員的加薪幅度；(2) 安排表現欠佳的售貨員參加顧客服務培訓；(3) 解僱未能達到銷售標準的售貨員"
+      ],
+      ans: 1,
+      exp: "正確（HKDSE 2020 考題概念）。決定晉升員工屬於員工考績的最後第 4 步（作出人力資源管理決策），因此在作出晉升決定「之前」的三個步驟正是考績的第 1、2、3 步。"
+    },
+    {
+      q: "5. 在員工考績的第 3 步「進行考績面談，並向員工提供回饋」中，管理人員應執行哪些工作？",
+      opts: [
+        "A. 找出影響下屬工作表現的障礙並提供改善建議、表揚優秀表現、給予鼓勵、聆聽下屬對工作的憂慮和意見，並協助制定改善弱點和鞏固強項的計劃",
+        "B. 只單方面宣讀下屬在過去一年的所有工作失誤並即時扣減其基本薪金，同時拒絕聆聽下屬對工作環境或資源不足所提出的任何解釋與意見",
+        "C. 與下屬重新商討並簽署首份入職僱傭合約，確定試用期內的每周工作時數、匯報關係以及法定最低工資水平"
+      ],
+      ans: 0,
+      exp: "正確。在考績面談中，管理人員可找出影響表現的障礙並提供改善建議、表揚優秀表現、給予鼓勵及聆聽下屬的憂慮和意見，協助員工制定計劃改善弱點和鞏固強項。"
+    },
+    {
+      q: "6. 一家航空公司完成全體機艙服務員及地勤人員的年度員工考績後，可根據考績結果作出哪三大類「人力資源管理決策（第 4 步）」？",
+      opts: [
+        "A. (1) 短期籌資決策（申請銀行透支）；(2) 資本投資評估決策（計算購買新客機的淨現值）；(3) 風險轉移決策（購買公眾責任保險）",
+        "B. (1) 培訓決策（為服務評分未達標的地勤人員安排待客培訓）；(2) 人力規劃決策（晉升表現優秀的機艙服務員為座艙長）；(3) 薪酬決策（給予優秀員工較高加薪幅度及花紅）",
+        "C. (1) 產品組合決策（開辦新航線）；(2) 價格決策（調低經濟艙機票售價）；(3) 推廣組合決策（在社交媒體投放旅遊廣告）"
+      ],
+      ans: 1,
+      exp: "正確。員工考績第 4 步的人力資源管理決策包括三大類：(i) 培訓決策、(ii) 人力規劃決策（如晉升、調職、續約或解僱）、以及 (iii) 薪酬決策（如加薪幅度和花紅）。"
+    }
+  ];
+  let curPRQ = 0;
+  function renderProcQuiz() {
+    const it = procQuizItems[curPRQ];
+    document.getElementById('procQuizProg').textContent = `題目 ${curPRQ + 1} / ${procQuizItems.length}`;
+    document.getElementById('procQuizQ').innerHTML = it.q;
+    document.getElementById('procQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkProcQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('procQuizFb').innerHTML = '';
+  }
+  function checkProcQuiz(idx) {
+    const it = procQuizItems[curPRQ];
+    const fb = document.getElementById('procQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curPRQ=(curPRQ+1)%procQuizItems.length;renderProcQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderProcQuiz();
+
+  // ====== 3. 量度與評核員工表現的方法 ======
+  const measWays = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">途徑 1：觀察 (Observation)</b><br>
+      • <b>運作方式</b>：管理人員在工作場所直接觀察下屬執行職務的情況與工作態度。<br>
+      • <b>商業例子</b>：<br>
+      &nbsp;&nbsp;(i) <b>時裝店／珠寶店</b>：經理透過觀察某售貨員應對顧客的情況，評核他的工作態度。<br>
+      &nbsp;&nbsp;(ii) <b>語言學習中心／游泳學院</b>：中心主管定期「觀課」，直接觀察課程導師或教練的課堂教學表現。<br>
+      &nbsp;&nbsp;(iii) <b>旅遊巴士公司</b>：派督察隨車觀察司機的實際駕駛態度與安全意識。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">途徑 2：從公司記錄獲取數據 (Obtaining Data from Company Records)</b><br>
+      • <b>運作方式</b>：管理人員從公司的營運系統或檔案記錄中，擷取客觀數據來量度員工表現。<br>
+      • <b>商業例子</b>：<br>
+      &nbsp;&nbsp;(i) <b>時裝店／保險公司</b>：經理從銷售記錄擷取銷售數據，以量度某售貨員或保險經紀在上月的銷售額。<br>
+      &nbsp;&nbsp;(ii) <b>旅遊巴士／物流公司</b>：從行車記錄系統及安全檔案中，查閱司機違反交通規例的次數、交通意外紀錄及準時到達率。<br>
+      &nbsp;&nbsp;(iii) <b>服裝廠／手機廠</b>：從生產及質檢記錄查閱工人的每小時產量及瑕疵品數量。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">途徑 3：向不同人士收集意見 (Collecting Opinions from Different Parties)</b><br>
+      • <b>運作方式</b>：企業經常使用<b>問卷</b>來量度較主觀的表現範疇（如服務質素、溝通技巧）。<br>
+      • <b>可向哪四類人士收集意見？</b><br>
+      &nbsp;&nbsp;1. <b>顧客</b>：例如時裝店經理計算某售貨員在顧客問卷中所得的平均服務評分，以評核其服務質素；旅遊巴公司向乘客派發問卷收集對司機的評分。<br>
+      &nbsp;&nbsp;2. <b>員工本人</b>（自我評核）。<br>
+      &nbsp;&nbsp;3. <b>員工的同事</b>（同儕評核）。<br>
+      &nbsp;&nbsp;4. <b>外部持份者（例如供應商）</b>。
+    </div>`
+  ];
+  function renderMeasWay(idx) {
+    document.querySelectorAll('#measWayChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('measWayBox').innerHTML = measWays[idx];
+  }
+  renderMeasWay(0);
+
+  let graphicScores = [5, 3, 4, 4];
+  let checklistTicks = [true, true, false, true];
+
+  function pickGraphicScore(rowIdx, score) {
+    graphicScores[rowIdx] = score;
+    renderAppTool(0);
+  }
+  function toggleCheckItem(idx) {
+    checklistTicks[idx] = !checklistTicks[idx];
+    renderAppTool(1);
+  }
+
+  function renderAppTool(idx) {
+    document.querySelectorAll('#appToolChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    if (idx === 0) {
+      const dims = ["工作知識", "人際關係技巧", "解決問題的能力", "團隊合作"];
+      const tot = graphicScores.reduce((a, b) => a + b, 0);
+      document.getElementById('appToolBox').innerHTML = `
+        <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1px solid var(--line);font-size:14.5px">
+          <b style="color:var(--primary);font-size:16px">1. 圖表打分法（又稱圖尺度評價法／圖示評定量表 Graphic Rating Scale）：</b><br>
+          企業列出某項工作要取得高績效的若干範疇，然後就各範疇為員工評分（點擊下方數字即可互動評分）：
+          <table class="comp-table" style="font-size:14px;margin-top:8px;text-align:center">
+            <thead><tr><th>表現範疇</th><th>優秀(5)</th><th>良好(4)</th><th>尚可(3)</th><th>不足(2)</th><th>差劣(1)</th></tr></thead>
+            <tbody>
+              ${dims.map((d, rIdx) => `
+                <tr>
+                  <td><b>${d}</b></td>
+                  ${[5,4,3,2,1].map(sc => `<td style="text-align:center"><span class="score-circle ${graphicScores[rIdx]===sc?'picked':''}" onclick="pickGraphicScore(${rIdx},${sc})">${sc}</span></td>`).join('')}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div style="margin-top:10px;font-weight:800;color:var(--primary)">該員工目前總評分：${tot} / 20 分（平均：${(tot/4).toFixed(1)} 分 — ${tot>=16?'表現優秀':tot>=12?'表現達標':'表現有待改善'}）</div>
+        </div>`;
+    } else if (idx === 1) {
+      const items = [
+        "1. 該員工總是準時上班。",
+        "2. 該員工願意協助同事。",
+        "3. 該員工受下屬尊敬。",
+        "4. 該員工嚴格遵守安全守則。"
+      ];
+      const yesCount = checklistTicks.filter(Boolean).length;
+      document.getElementById('appToolBox').innerHTML = `
+        <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1px solid var(--line);font-size:14.5px">
+          <b style="color:var(--primary);font-size:16px">2. 清單法 (Checklist Method)：</b><br>
+          企業製作一張描述員工工作表現的清單，檢查當中的陳述與員工的工作表現是否吻合，並<b>根據吻合的正面描述數量</b>評核該名員工的工作表現（點擊可切換是／否）：
+          <div style="margin-top:10px">
+            ${items.map((txt, i) => `
+              <div onclick="toggleCheckItem(${i})" style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:10px 14px;border-radius:10px;border:1.5px solid ${checklistTicks[i]?'var(--green)':'var(--line)'};margin-bottom:8px;cursor:pointer">
+                <span>${txt}</span>
+                <span class="badge ${checklistTicks[i]?'b-green':'b-red'}" style="margin:0">${checklistTicks[i]?'是 (吻合)':'否'}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div style="margin-top:8px;font-weight:800;color:var(--primary)">吻合的正面描述數量：${yesCount} / ${items.length} 項</div>
+        </div>`;
+    } else if (idx === 2) {
+      document.getElementById('appToolBox').innerHTML = `
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16px;line-height:1.8">
+          <b style="color:var(--primary);font-size:17px">3. 簡單排序法 (Simple Ranking Method)：</b><br>
+          • <b>運作方式</b>：企業根據各主要的表現範疇，把所有員工<b>由最好排到最差</b>。<br>
+          • <b>特點</b>：簡單直接，能清楚分出員工表現的先後次序以決定晉升人選；但較難顯示員工之間表現差距的具體幅度。
+        </div>`;
+    } else {
+      document.getElementById('appToolBox').innerHTML = `
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16px;line-height:1.8">
+          <b style="color:var(--primary);font-size:17px">4. 關鍵事件法 (Critical Incident Method)：</b><br>
+          • <b>運作方式</b>：企業保存與員工工作行為有關的<b>正面和負面事件（即關鍵事件）的記錄</b>，然後與員工定期會面，並根據這些記錄與員工討論其工作表現。<br>
+          • <b>特點</b>：以具體事實和行為事件為依據，能幫助管理人員在考績面談中向員工提供具體且有說服力的回饋。
+        </div>`;
+    }
+  }
+  renderAppTool(0);
+
+  // 對稱深度設計的 6 道量度途徑與評核方法配對挑戰題
+  const methQuizItems = [
+    {
+      q: "1. 時裝店經理採用了以下三種做法來量度售貨員的表現，指出它們分別屬於哪種「量度表現的方法」：<br>(a) 經理透過觀察某售貨員應對顧客的情況，評核他的工作態度 ｜ (b) 經理從銷售記錄擷取銷售數據，以量度某售貨員在上月的銷售額 ｜ (c) 經理計算某售貨員在顧客問卷中所得的平均服務評分，以評核他的服務質素",
+      opts: [
+        "A. (a) 從公司記錄獲取數據 ｜ (b) 觀察 ｜ (c) 向不同人士收集意見",
+        "B. (a) 觀察 ｜ (b) 從公司記錄獲取數據 ｜ (c) 向不同人士收集意見",
+        "C. (a) 向不同人士收集意見 ｜ (b) 從公司記錄獲取數據 ｜ (c) 觀察"
+      ],
+      ans: 1,
+      exp: "正確。(a) 現場留意應對顧客情況屬「觀察」；(b) 從銷售記錄擷取銷售數據屬「從公司記錄獲取數據」；(c) 計算顧客問卷平均服務評分屬「向不同人士收集意見」。"
+    },
+    {
+      q: "2. 在員工考績的第 2 步中，當企業採用「向不同人士收集意見」來量度員工表現時，除了向「顧客」收集意見外，還可以向哪三類人士收集意見？",
+      opts: [
+        "A. 還可以向『員工本人（自評）』、『員工的同事（同儕）』，以及『外部持份者（例如供應商）』收集意見，以全面評核表現",
+        "B. 只可以向政府勞工處的就業主任、稅務局評稅主任以及商業罪案調查科警員收集意見，不可向公司內部人員查詢",
+        "C. 只可以向員工的家屬、員工小學時期的班主任以及與公司沒有任何業務往來的街頭途人收集意見"
+      ],
+      ans: 0,
+      exp: "正確。除了顧客外，企業還可向員工本人、員工的同事，以及外部持份者（例如供應商）收集意見。"
+    },
+    {
+      q: "3. 某科技公司設計了一份考績表，列出「工作知識、人際關係技巧、解決問題的能力、團隊合作」四個表現範疇，並就每個範疇按「優秀(5)、良好(4)、尚可(3)、不足(2)、差劣(1)」為員工評分。這種評核方法稱為甚麼？",
+      opts: [
+        "A. 關鍵事件法 — 透過保存與員工工作行為有關的正面和負面關鍵事件文字記錄，在定期會面時與員工討論表現",
+        "B. 簡單排序法 — 不設任何具體評分等級，直接將部門內所有員工按整體印象由第一名排到最後一名",
+        "C. 圖表打分法（又稱圖尺度評價法或圖示評定量表） — 列出工作要取得高績效的若干範疇，然後就各範疇為員工評分"
+      ],
+      ans: 2,
+      exp: "正確。列出某項工作要取得高績效的若干範疇，然後就各範疇為員工評分（如 1 至 5 分），稱為「圖表打分法（圖尺度評價法／圖示評定量表）」。"
+    },
+    {
+      q: "4. 某企業製作了一張描述員工工作表現的陳述表（例如：「該員工總是準時上班：是／否」、「該員工願意協助同事：是／否」），檢查當中的陳述與員工表現是否吻合，並根據吻合的正面描述數量評核表現。這種方法稱為甚麼？",
+      opts: [
+        "A. 清單法 (Checklist Method) — 檢查清單中的描述陳述與員工的工作表現是否吻合，並根據吻合的正面描述數量評核工作表現",
+        "B. 圖表打分法 (Graphic Rating Scale) — 將每個表現範疇劃分為一至五分的連續分數尺度，由主管圈選相應分數並計算總分",
+        "C. 簡單排序法 (Simple Ranking Method) — 將部門內所有員工的名字順序排列，從而找出表現最好和最差的員工"
+      ],
+      ans: 0,
+      exp: "正確。製作描述員工工作表現的清單，檢查陳述與表現是否吻合（是／否），並根據吻合的正面描述數量評核表現，稱為「清單法」。"
+    },
+    {
+      q: "5. 某醫院護士長在日常工作中，保存與每位護士工作行為有關的「正面和負面事件」的記錄，然後與護士定期會面，並根據這些記錄與護士討論其工作表現。這種評核方法稱為甚麼？",
+      opts: [
+        "A. 簡單排序法 — 根據各主要的表現範疇，直接把病房內所有護士由最好排到最差而不保存具體事件記錄",
+        "B. 關鍵事件法 — 保存與員工工作行為有關的正面和負面事件（即關鍵事件）的記錄，並根據這些記錄與員工定期會面討論表現",
+        "C. 清單法 — 僅透過勾選預設的是非題陳述清單來點算正面描述數量，而不記錄任何具體發生的特殊工作事件"
+      ],
+      ans: 1,
+      exp: "正確。保存與員工工作行為有關的正面和負面事件（即關鍵事件）的記錄，並據此與員工定期會面討論表現，稱為「關鍵事件法」。"
+    },
+    {
+      q: "6. 企業在完成量度員工的實際表現並與第 1 步訂立的「表現標準」作比較後，可以從中識別出哪三類員工？",
+      opts: [
+        "A. 可識別出『永久性僱用員工』、『暫時僱用員工』以及『外判承判商員工』這三種不同僱用形式的勞工類別",
+        "B. 可識別出『內部招聘入職員工』、『外部招聘入職員工』以及『現職員工推薦入職員工』這三種不同來源的員工",
+        "C. 可識別出『表現欠佳的員工（未能達到表現標準）』、『表現達標的員工』以及『表現優秀的員工（超越表現標準）』"
+      ],
+      ans: 2,
+      exp: "正確。將員工的實際表現與表現標準作比較後，企業便可識別：(i) 表現欠佳的員工（未達標）、(ii) 表現達標的員工、以及 (iii) 表現優秀的員工（超越表現標準）。"
+    }
+  ];
+  let curMTQ = 0;
+  function renderMethQuiz() {
+    const it = methQuizItems[curMTQ];
+    document.getElementById('methQuizProg').textContent = `題目 ${curMTQ + 1} / ${methQuizItems.length}`;
+    document.getElementById('methQuizQ').innerHTML = it.q;
+    document.getElementById('methQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkMethQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('methQuizFb').innerHTML = '';
+  }
+  function checkMethQuiz(idx) {
+    const it = methQuizItems[curMTQ];
+    const fb = document.getElementById('methQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curMTQ=(curMTQ+1)%methQuizItems.length;renderMethQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderMethQuiz();
+
+  // ====== 4. 考績制度診斷與特別員工調整 ======
+  const salonData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--red);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--red);font-size:17px">1. 個案診斷：錦繡髮廊（或舒筋物理治療中心）憑藉「為顧客提供優質服務」這個目標吸引顧客。若單以「髮型師／治療師所服務的顧客數量」來評核他們的表現，會有甚麼主要問題？</b><br>
+      • <b>違背企業目標（犧牲服務質素）</b>：員工為了追求服務更多顧客以取得良好考績，可能會<b>在服務過程中倉卒行事（只求速度而不顧質素），導致剪髮或治療的服務質素大幅下降</b>。<br>
+      • <b>長遠流失顧客</b>：這與企業「為顧客提供優質服務」的目標背道而馳；當顧客因服務馬虎、質素下降而感到不滿時，便不會再光顧，<b>長遠而言只會令企業流失顧客，損害商譽與業績</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--green);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--green);font-size:17px">2. 改善建議：應改用甚麼「表現標準」來評核髮型師／物理治療師的工作表現？</b><br>
+      為確保員工與企業「提供優質服務」的目標一致，應訂立與<b>服務質素及顧客滿意度</b>相關的表現標準：<br>
+      • <b>標準 (i)：顧客服務滿意度評分（或接獲的顧客投訴數量）</b> — 直接反映員工提供的服務質素是否令顧客滿意。<br>
+      • <b>標準 (ii)：回頭客比例（指定預約同一位髮型師／治療師的顧客數量或比例）</b> — 顧客願意再次指定預約同一位員工，能客觀證明其手藝與服務質素優良。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17px">3. 配套方法：企業可如何「量度」髮型師／治療師在上述表現標準下的實際工作表現？</b><br>
+      • <b>方法 (i) 向不同人士（顧客）收集意見</b>：在完成服務後向顧客派發簡短的服務滿意度問卷，收集顧客對員工服務態度與手藝的評分（或統計接獲顧客投訴的紀錄）。<br>
+      • <b>方法 (ii) 觀察</b>：經理在店內直接觀察髮型師／治療師為顧客提供服務時的細心程度、技巧與待客態度。<br>
+      • <b>方法 (iii) 從公司記錄獲取數據</b>：從店鋪的預約系統記錄中，查閱每位員工獲熟客指定預約的次數與比例數據。
+    </div>`
+  ];
+  function renderSalonCase(idx) {
+    document.querySelectorAll('#salonChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('salonCaseBox').innerHTML = salonData[idx];
+  }
+  renderSalonCase(0);
+
+  const cafeData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17px">1. 個案診斷：喜喜茶餐廳（或陽光烘焙工坊）聘請了「輕度智障或聽障等弱勢社群人士」，東主可如何「調整員工考績制度」以更適切地評核他們的表現？</b><br>
+      • <b>調整方法 (i)：微調或度身訂造切合其能力的表現標準（第 1 步調整）</b><br>
+      &nbsp;&nbsp;考慮到弱勢社群員工的能力與學習進度，企業不應套用一般資深員工的高難度標準，而應<b>微調或度身訂造一套較簡單、清晰具體且可達成的表現標準</b>，以切合他們的需要（例如以「準時上班、保持工作區清潔、遵守安全指引」為主）。<br>
+      • <b>調整方法 (ii)：提供較頻密的回饋與正面鼓勵（第 3 步調整）</b><br>
+      &nbsp;&nbsp;課本指出，企業可向<b>新入職的畢業生和弱勢社群員工提供較頻密的回饋</b>（例如每週或每月進行簡短面談提供回饋，而非一年才進行一次），給予耐心的指導、表揚與鼓勵，協助他們逐步了解如何達到表現標準。<br>
+      • <b>調整方法 (iii)：採用更直接的量度與評核方法（第 2 步調整）</b><br>
+      &nbsp;&nbsp;主要由主管透過日常<b>現場觀察</b>及簡單的<b>清單法</b>來量度表現，避免要求他們進行複雜的文字自我評核。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--teal);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--teal);font-size:17px">2. 餐廳／烘焙工坊打算引入員工考績制度，並「根據考績結果分發花紅」。有甚麼因素會影響這個制度的「激勵效果」？</b><br>
+      • <b>因素 (i) 表現標準是否公平、合理及可達成</b>：如果訂立的表現標準過高（員工無論如何努力都無法達到），或評核過程流於主觀偏私、欠缺公平性，員工便會失去努力工作的動力。<br>
+      • <b>因素 (ii) 花紅金額是否具吸引力（及與考績結果掛鈎的程度）</b>：如果餐廳賺取的利潤微薄導致分發的花紅金額極少，或者表現優秀與表現平庸的員工所獲得的花紅金額相差無幾，員工便不會受到激勵去付出額外努力。<br>
+      • <b>因素 (iii) 員工是否清楚了解和同意表現標準</b>：若事前未有與員工充分溝通，員工不明白怎樣才能取得優秀考績，制度亦難以發揮激勵作用。
+    </div>`
+  ];
+  function renderCafeCase(idx) {
+    document.querySelectorAll('#cafeChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('cafeCaseBox').innerHTML = cafeData[idx];
+  }
+  renderCafeCase(0);
+
+  // 對稱深度設計的 5 道高階個案診斷挑戰題
+  const caseQuizItems = [
+    {
+      q: "1. 位於元朗的小型髮廊「錦繡」正面對人手短缺，經理指出「合適的外部髮型師人選供應很少，很難填補空缺」。結合第 1 課知識，下列哪項最能解釋該髮廊外部人選供應很少的原因？",
+      opts: [
+        "A. 因為錦繡髮廊內部的員工流失率過高，而且髮廊降低了現職髮型師的退休年齡，這兩個因素直接導致外部就業市場上的髮型師總人數大幅減少",
+        "B. 因為企業所處地區較偏遠（跨區求職者或因通勤時間長及交通費高而不願應徵，或同區大型連鎖髮廊提供更優厚待遇吸走人才），加上市場上具備熟練剪髮技能的人才出現技能短缺",
+        "C. 因為政府放寬了輸入海外勞工的限制，而且本港整體失業率大幅上升，這兩個宏觀因素必然會令小型髮廊面對的外部勞動力供應大幅減少"
+      ],
+      ans: 1,
+      exp: "正確。企業所處地區（位處偏遠地區或同區有大型競爭對手提供較優厚待遇）以及市場上欠缺具備所需技能的人才（技能短缺），均會令適合該企業的外部人選供應減少（注意 A 是影響內部供應的因素；C 會令外部供應增加）。"
+    },
+    {
+      q: "2. 喜喜茶餐廳過往不論員工表現如何，一律根據餐廳利潤「向所有員工分發相同金額的花紅」，結果勤奮的員工覺得不公平並揚言辭職。改為「引入員工考績制度並根據考績結果分發花紅」有何好處？",
+      opts: [
+        "A. 能根據特定的表現標準公平地評核員工表現，向表現優秀的勤奮員工派發較多花紅，消除不公平感，從而激勵和留住優秀員工",
+        "B. 能讓餐廳東主合法地免除向任何員工支付基本薪金與法定假日薪酬的責任，將餐廳的全年人工成本降至零元",
+        "C. 能確保工作態度懶散、未能達到表現標準的員工繼續獲得與勤奮員工完全相同金額的花紅，避免懶散員工感到不滿"
+      ],
+      ans: 0,
+      exp: "正確。員工考績可根據特定表現標準公平地評核員工表現，作為作出薪酬決策（如給予表現優秀員工較多花紅）的準則，從而激勵及留住優秀員工。"
+    },
+    {
+      q: "3. 當企業聘請「新入職的畢業生」或「弱勢社群員工（如輕度智障人士）」時，在執行員工考績的「第 1 步（訂立表現標準）」及「第 3 步（提供回饋）」上可作出甚麼適切調整？",
+      opts: [
+        "A. 在第 1 步應為他們訂立比資深部門主管更高難度的營業額標準；在第 3 步則應每五年才向他們提供一次回饋，以免干擾他們工作",
+        "B. 在第 1 步應完全取消所有表現標準讓他們隨意工作；在第 3 步則應取消考績面談，改為把他們的考績結果直接張貼在店外供市民查閱",
+        "C. 在第 1 步可微調或度身訂造一套切合他們能力需要的表現標準；在第 3 步則可向他們提供『較頻密的回饋』與耐心指導，協助他們適應及改善表現"
+      ],
+      ans: 2,
+      exp: "正確。課文第 2.4 節指出，企業可能須要微調或度身訂造一套表現標準以切合個別員工的需要；同時可向新入職的畢業生和弱勢社群員工提供較頻密的回饋。"
+    },
+    {
+      q: "4. 一所語言學習中心（或兒童游泳學院）為課程導師設立員工考績制度以保證教學質素。下列哪項表現標準及量度方法的配對最為合適？",
+      opts: [
+        "A. 表現標準：導師每天清潔課室地板的次數 ｜ 量度方法：查閱中心的文具採購發票記錄及向文具供應商收集意見",
+        "B. 表現標準：學生／家長課後滿意度問卷評分、學生成績進度或續報率 ｜ 量度方法：向學生派發問卷收集意見、中心主管觀課（觀察）、查閱學生續報與考核記錄",
+        "C. 表現標準：導師在社交媒體個人的私人朋友數量 ｜ 量度方法：調查導師在假日期間的業餘興趣與私人聚會記錄"
+      ],
+      ans: 1,
+      exp: "正確。為保證教學質素，應訂立與教學質素相關的標準（如學生問卷評分、續報率、考核合格率），並結合向學生收集意見（問卷）、主管觀課（觀察）及查閱公司記錄三種方法量度。"
+    },
+    {
+      q: "5. 某大型連鎖超級市場同時為「(i) 收銀員」和「(ii) 市場營銷經理」設計員工考績制度。關於兩者考績制度的不同之處，下列哪項描述最為準確？",
+      opts: [
+        "A. 收銀員的表現標準側重結帳速度、收銀準確度與待客禮貌，主要透過主管現場觀察及收銀系統記錄量度；市場營銷經理的標準則側重整體銷售額增長、推廣活動成效與領導能力，主要透過公司銷售報告及多方持份者意見量度",
+        "B. 收銀員的表現標準側重制定全公司五年期的電子市場營銷策略與跨國收購計劃；市場營銷經理的表現標準則側重每天在收銀機前掃描貨品條碼的速度與找贖準確度",
+        "C. 由於兩人同屬一家連鎖超級市場的僱員，為了確保絕對公平，公司必須為收銀員和市場營銷經理訂立完全一模一樣的表現標準，並採用完全相同的量度方法"
+      ],
+      ans: 0,
+      exp: "正確。由於收銀員與市場營銷經理的工作說明和工作要求截然不同，企業在制定表現標準及選擇量度方法時，必須按各自職位的職責性質度身設計。"
+    }
+  ];
+  let curCSQ = 0;
+  function renderCaseQuiz() {
+    const it = caseQuizItems[curCSQ];
+    document.getElementById('caseQuizProg').textContent = `題目 ${curCSQ + 1} / ${caseQuizItems.length}`;
+    document.getElementById('caseQuizQ').innerHTML = it.q;
+    document.getElementById('caseQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkCaseQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('caseQuizFb').innerHTML = '';
+  }
+  function checkCaseQuiz(idx) {
+    const it = caseQuizItems[curCSQ];
+    const fb = document.getElementById('caseQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curCSQ=(curCSQ+1)%caseQuizItems.length;renderCaseQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderCaseQuiz();
+
+  // ====== 5. 論點建構問答工作坊 (保留一個能力較弱學生常犯的「解說不足」選項作教學示範) ======
+  const workshopQuestions = [
+    {
+      id: "s1", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 1：星海物業管理公司（員工考績如何幫助提升會所管理員表現）", topic: "員工考績提升員工表現的兩個途徑（培訓與考績面談指導）", maxMarks: 2,
+      scenario: "「星海物業管理公司」的營運總監希望透過推行正式的「員工考績制度」，改善並提升旗下私人屋苑會所管理員的工作表現與住戶服務質素。",
+      question: "試以其中一個途徑為例，解釋員工考績可如何幫助該物業管理公司提升會所管理員的表現。（2 分）",
+      steps: [
+        { label: "第 1 步：指出員工考績提升員工表現的單一核心途徑（1分）", colorClass: "hl-s1", opts: [
+          { text: "物管公司可透過員工考績深入了解每位會所管理員私下的個人性格、家庭背景與假日業餘興趣，藉此替他們安排私人聯誼活動。", score: 0, status: "wrong", comment: "【概念錯誤】員工考績的主要目的是找出員工「與工作相關」的強項和弱項並提供工作表現回饋，而非了解與工作無關的個人個性和業餘興趣。" },
+          { text: "物管公司可透過員工考績識別會所管理員的培訓需要，並為他們安排適當的培訓課程，協助他們改善工作技能和發展能力。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績提升員工表現的核心途徑——透過識別員工的培訓需要並安排適當培訓來改善技能（另一途徑為在考績面談中提供回饋、指導與建議）。" },
+          { text: "物管公司可透過員工考績評估會所管理員的工作表現，從而要求表現未如理想的管理員在下一年自己加以改善。", score: 0, status: "partial", comment: "【常見失分示範：未指出具體途徑】只籠統提及評估表現並要求員工自己改善，未能明確寫出「識別員工的培訓需要並安排適當培訓」或「在考績面談中提供回饋與指導」的具體途徑。" }
+        ]},
+        { label: "第 2 步：扣連「屋苑會所管理員」說明該途徑如何實際改善技能與表現（1分）", colorClass: "hl-s2", opts: [
+          { text: "經理在完成考績後會知道哪些管理員表現較弱，便安排他們上培訓班，上完堂後他們的表現就會提升。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只簡略提及安排上培訓班，未有扣連「將會所管理員的實際表現與表現標準比較，以找出與工作相關的具體弱項（如不熟習預約系統或處理投訴技巧不足）」，難以取得解說分數。" },
+          { text: "經理無須將會所管理員的表現與任何標準作比較，只須強制要求所有表現優秀及表現欠佳的管理員每天重複抄寫會所的守則條文。", score: 0, status: "wrong", comment: "【概念錯誤】若不將實際表現與表現標準比較以找出具體弱項，便無法針對性地提供適切培訓來改善技能。" },
+          { text: "透過將會所管理員的實際表現與標準比較，經理能找出管理員與工作相關的弱項，例如不熟習智能設施預約系統或應對住戶投訴技巧不足，從而安排針對性培訓以提升表現。", score: 1, status: "best", comment: "【滿分示範】緊扣屋苑會所管理員的工作情境，清楚推演出比較表現標準找出具體弱項、再安排針對性培訓以改善技能與工作表現的過程。" }
+        ]}
+      ]
+    },
+    {
+      id: "s2", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 2：康健私家專科醫院（根據考績結果作出的 HR 決策）", topic: "員工考績第 4 步：根據考績結果作出的三類人力資源管理決策", maxMarks: 2,
+      scenario: "「康健私家專科醫院」剛完成了全院註冊護士及病房助理的年度員工考績。人力資源部準備根據是次考績結果作出相應的人力資源管理決策。",
+      question: "試以其中一類「人力資源管理決策」為例，舉例解釋該私家醫院可根據考績結果作出的決策。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出單一人力資源管理決策類別名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "私家醫院可根據員工考績的結果作出人力規劃決策，例如決定晉升、調職或是否與合約醫護人員續約，又或者作出培訓決策及薪酬決策。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績第 4 步可根據考績結果作出的三大類人力資源管理決策（人力規劃決策、培訓決策或薪酬決策）。" },
+          { text: "私家醫院可根據員工考績的結果，對院內的註冊護士及病房助理作出合適的人事安排與日常管理決定。", score: 0, status: "partial", comment: "【常見失分示範：未寫出準確決策類別】用詞流於籠統，未能明確指出課本的三大標準決策類別名稱（即「人力規劃決策［如晉升、調職、續約或解僱］」、「培訓決策」或「薪酬決策」）。" },
+          { text: "私家醫院可根據員工考績的結果作出長期舉債融資決策，決定向商業銀行借取五年期按揭貸款以擴建醫院的專科門診大樓。", score: 0, status: "wrong", comment: "【概念錯誤】向銀行借取長期貸款擴建大樓屬於財務管理中的融資與資本投資決策，並非人力資源管理決策。" }
+        ]},
+        { label: "第 2 步：扣連「私家醫院醫護人員」舉出具體決策例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如醫院可根據考績結果，把所有在護理專業與病人安全評分上嚴重未達標的表現欠佳護士，全部破格晉升為專科病房的部門主管。", score: 0, status: "wrong", comment: "【概念錯誤】表現欠佳（未達標）的員工應安排接受培訓、調職或終止合約，只有超越表現標準的優秀員工才應獲得晉升。" },
+          { text: "例如若考績結果顯示某位資深註冊護士在臨床護理、督導能力及病人滿意度上均超越表現標準，醫院便可作出晉升決策，將她晉升為專科病房護士長。", score: 1, status: "best", comment: "【滿分示範】緊扣私家專科醫院情境，具體舉出將超越表現標準的優秀註冊護士晉升為病房護士長的例子，清晰展示考績結果如何支援晉升決策。" },
+          { text: "例如當醫院見到有註冊護士在考績中表現良好時，便決定將她升職，讓她在醫院入面擔任更高職位。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於單薄，未有具體說明該護士在臨床護理與督導能力上「超越預設表現標準」，以及將其晉升為「專科病房護士長」以配合醫院人力需要。" }
+        ]}
+      ]
+    },
+    {
+      id: "s3", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 3：安達跨境冷鏈物流車隊（量度冷凍車車長實際表現的方法）", topic: "員工考績第 2 步：量度員工實際表現的三大途徑", maxMarks: 2,
+      scenario: "「安達冷鏈物流公司」專門運送急凍食材及醫藥疫苗，十分重視行車安全、車廂溫控達標率與收貨商戶滿意度，每年均會為旗下冷凍車車長進行員工考績。",
+      question: "試以其中一種量度表現的方法為例，解釋該冷鏈物流公司可如何量度車長的實際駕駛及送貨服務表現。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出量度員工實際表現的單一途徑名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "物流公司可透過檢查車長的日常送貨工作情況，來量度他們在過去一年的駕駛及送貨服務表現。", score: 0, status: "partial", comment: "【常見失分示範：未寫出準確量度途徑】表述過於含糊，未能明確寫出「從公司記錄獲取數據」、「觀察」或「向不同人士收集意見」這三種標準量度方法名稱。" },
+          { text: "物流公司可透過在各大求職招聘網站刊登招聘廣告，以及委託商業獵頭公司篩選外部求職者履歷的方法，來量度現職車長的駕駛表現。", score: 0, status: "wrong", comment: "【概念錯誤】刊登招聘廣告及使用商業獵頭公司屬於員工編制中「發布職位空缺（外部招聘）」的途徑，並非量度現職員工實際表現的方法。" },
+          { text: "物流公司可透過從公司記錄獲取數據的方法，又或者透過向不同人士收集意見以及現場觀察的方法，來量度冷凍車車長的實際工作表現。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績第 2 步量度員工實際表現的標準方法（從公司記錄獲取數據、向不同人士收集意見或觀察）。" }
+        ]},
+        { label: "第 2 步：扣連「冷鏈物流車長表現」描述該方法的具體執行方式（1分）", colorClass: "hl-s2", opts: [
+          { text: "車隊經理可從冷凍車的 GPS 行車記錄系統、車廂溫控記錄儀及公司的交通違例檔案中擷取客觀數據，統計每位車長在過去一年違反交通規例的次數、準時送達率及溫度達標率。", score: 1, status: "best", comment: "【滿分示範】緊扣冷鏈物流車長的工作特點，具體說明如何從公司行車及溫控記錄擷取違反交通規例次數與準時送達率數據來量度表現。" },
+          { text: "車隊經理可以查閱公司的電腦記錄，看看每位冷凍車車長過去一年的工作表現數據是否合乎要求。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只籠統提及查閱電腦記錄，未有扣連冷鏈車長職位指明擷取甚麼具體記錄數據（如 GPS 系統的違反交通規例次數、準時送達率或車廂溫控達標記錄）。" },
+          { text: "車隊經理可從公司的會計系統中擷取過去一年的辦公室文具採購發票及茶水間耗電量數據，以此作為量度冷凍車車長道路駕駛表現的唯一指標。", score: 0, status: "wrong", comment: "【概念錯誤】辦公室文具開支及茶水間耗電量與冷凍車車長在道路上的駕駛安全及送貨表現毫無關聯。" }
+        ]}
+      ]
+    },
+    {
+      id: "s4", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 4：舒筋痛症物理治療中心（單以診症病人數量評核治療師的問題）", topic: "表現標準設計診斷：追求數量而忽略專業服務質素的問題", maxMarks: 2,
+      scenario: "位於沙田的「舒筋痛症物理治療中心」一直憑藉「為痛症患者提供細緻專業的復康治療」這個目標吸引區內病人。在預約爆滿的繁忙時段，行政經理提議：「不如單以物理治療師每日所診治的病人數量來評核他們的表現吧！這可以加快治療師的工作速度。」但醫務總監反對，認為這長遠只會令中心流失病人。",
+      question: "根據個案解釋為何以「物理治療師所診治的病人數量」來評核他們的表現會出現問題。（2 分）",
+      steps: [
+        { label: "第 1 步：指出單以「診症病人數量」評核對治療師工作行為及服務質素的負面影響（1分）", colorClass: "hl-s1", opts: [
+          { text: "這會令物理治療師花費過多時間在每一位病人身上進行詳盡檢查與復康指導，導致每位病人的診症時間大幅延長，減慢了中心的整體運作速度。", score: 0, status: "wrong", comment: "【概念錯誤】因果推論完全相反。若以「所診治的病人數量」作為評核標準，治療師為了衝高人數只會縮短每位病人的診治時間，而非花過多時間詳盡檢查。" },
+          { text: "若單以診治的病人數量作為評核標準，物理治療師為了爭取服務更多病人以獲得良好考績，可能會在治療過程中倉卒行事，縮短為每位病人檢查及治療的時間，導致服務質素下降。", score: 1, status: "best", comment: "【滿分示範】準確點出單以服務人數評核會驅使治療師只求速度而倉卒行事，導致治療效果及服務質素下降的核心問題。" },
+          { text: "若單以診治的病人數量作為評核標準，物理治療師為了求快便不會用心替病人做治療，影響他們的服務表現。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】雖點出求快，但解說過於口語簡略，未有具體說明治療師為衝高診症人數而「倉卒完成療程、縮短為每位病人檢查與治療的時間，導致治療效果及服務質素下降」。" }
+        ]},
+        { label: "第 2 步：扣連中心「提供細緻專業治療的企業目標」及「長遠流失病人」作解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "這樣做會令前來求診的痛症病人感到不滿意，對物理治療中心的長遠生意及發展造成負面影響。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有明確扣連個案中「違背中心提供細緻專業復康治療的企業目標」，以及病人因痛症未見改善而「不再預約覆診，導致中心長遠流失病人」的因果關係。" },
+          { text: "這與該中心「為痛症患者提供細緻專業復康治療」的企業目標背道而馳；當病人因治療過程馬虎、痛症未見改善而感到不滿時，便不會再預約覆診，長遠而言會令中心流失病人。", score: 1, status: "best", comment: "【滿分示範】完整扣連個案中「提供細緻專業治療」的企業目標，清楚說明服務質素下降如何引致病人不滿並在長遠令中心流失病人。" },
+          { text: "這會令所有痛症病人在接受一次治療後便立即完全康復，因此病人無須再來覆診，導致中心未來的預約人數減少。", score: 0, status: "wrong", comment: "【概念錯誤】倉卒馬虎的治療只會令治療效果變差及引致病人不滿離棄，絕不會令病人立即完全康復。" }
+        ]}
+      ]
+    },
+    {
+      id: "e1", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 1：宏富財富管理顧問公司（為理財策劃師作員工考績的步驟一：訂立標準與溝通）", topic: "員工考績的過程：第 1 步（訂立表現標準，並和員工溝通）", maxMarks: 3,
+      scenario: "「宏富財富管理顧問公司」每年都會進行一次員工考績，以評核旗下理財策劃師（投資及強積金顧問）的工作表現。試說明為理財策劃師作員工考績時所涉及的步驟。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「第 1 步：訂立表現標準，並和員工溝通」為核心，結合理財策劃師職位建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出員工考績第 1 步的名稱與核心內容（1分）", colorClass: "hl-s1", opts: [
+          { text: "首先，財富管理公司應執行第 1 步訂立表現標準，並和員工溝通：管理層應檢視理財策劃師的工作說明、工作要求及公司目標，訂立清晰、具體和可量度的表現標準，並向策劃師傳達這些標準。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績第 1 步「訂立表現標準，並和員工溝通」，並完整點出檢視工作說明、工作要求與企業目標，以及標準須清晰、具體和可量度的要求。" },
+          { text: "首先，財富管理公司應執行第 1 步訂立表現標準，由管理層為旗下的理財策劃師定出今年的工作目標。", score: 0, status: "partial", comment: "【常見失分示範：概念要素不完整】只簡略提及定出工作目標，漏了說明制定標準時須「檢視工作說明、工作要求及企業目標」，亦漏了指出標準須「清晰、具體和可量度」並「與員工溝通」的關鍵要素。" },
+          { text: "首先，財富管理公司應執行第 1 步訂立表現標準：管理層應在年終考績結束後才秘密制定一套含糊抽象的評分準則，並嚴格保密不向理財策劃師透露，以免員工預先知道公司的期望。", score: 0, status: "wrong", comment: "【概念錯誤】表現標準必須在考績期初預先訂立，且標準必須清晰、具體和可量度，並須向員工傳達以確保他們了解和同意。" }
+        ]},
+        { label: "第 2 步：針對「宏富公司的理財策劃師」設定具體的表現標準與溝通例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如公司為理財策劃師訂立「每小時在工廠生產線上組裝 50 件電子零件」及「全年駕駛巴士零交通違例」的表現標準，並在年初會議上向策劃師宣布。", score: 0, status: "wrong", comment: "【概念錯誤】組裝電子零件屬生產工人的標準，駕駛零違例屬巴士司機的標準，均不適用於財富管理公司的理財策劃師。" },
+          { text: "例如公司根據全年資產管理增長目標，為理財策劃師訂立「每年成功簽訂的理財計劃總額達 $3,000,000」、「每年招攬最少 25 名新客戶」及「監管合規零違規投訴」等具體標準，並在年初會議上與策劃師討論及確認。", score: 1, status: "best", comment: "【滿分示範】緊扣理財策劃師的工作性質，具體設定簽訂理財計劃金額、招攬新客戶數量及零違規投訴等可量度標準，並結合年初會議溝通。" },
+          { text: "例如公司要求理財策劃師在今年努力推銷投資及強積金計劃，盡量爭取比去年更好的銷售業績與服務表現。", score: 0, status: "partial", comment: "【常見失分示範：解說不足／例子欠具體】所舉的標準（「努力推銷、爭取更好業績」）含糊空泛且不可量度，必須設定如「全年簽訂理財計劃總額達 $3,000,000」或「招攬 25 名新客戶」等清晰可量度的具體例子。" }
+        ]},
+        { label: "第 3 步：深化論述至確保策劃師了解並同意標準、明白公司期望並朝着目標努力的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這樣理財策劃師便會知道公司訂立的表現標準是甚麼，順利完成員工考績的第一個步驟。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆／未深化影響】只重複了步驟字面意思，未有深化解釋「確保策劃師了解和同意標準，從而明白公司對他們的期望並朝着公司目標努力工作」的影響。" },
+          { text: "透過事前與理財策劃師充分溝通並確保他們了解和同意這些表現標準，能保證全體策劃師清楚明白公司對他們的期望，為他們提供清晰指引，讓他們朝着公司的業績目標努力工作。", score: 1, status: "best", comment: "【滿分示範】清楚推演出確保員工了解和同意表現標準，如何保證全體員工明白公司期望並朝着企業目標努力工作。" },
+          { text: "透過在年初訂立表現標準，財富管理公司便無須在年終量度理財策劃師的實際表現，可以直接向所有策劃師發放相同金額的年終花紅並完成整個考績過程。", score: 0, status: "wrong", comment: "【概念錯誤】訂立表現標準後必須繼續進行第 2 步量度實際表現並與標準比較，才能識別員工表現優劣並按表現公平獎勵。" }
+        ]}
+      ]
+    },
+    {
+      id: "e2", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 2：宏富財富管理顧問公司（為理財策劃師作員工考績的步驟二：考績面談與提供回饋）", topic: "員工考績的過程：第 3 步（進行考績面談，並向員工提供回饋）", maxMarks: 3,
+      scenario: "承上題，「宏富財富管理顧問公司」已完成對理財策劃師的表現量度與標準比較（第 2 步）。試以「第 3 步：進行考績面談，並向員工提供回饋」為例，說明後續的員工考績步驟。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「第 3 步：進行考績面談，並向員工提供回饋」為核心，結合理財策劃師情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出員工考績第 3 步的名稱與核心內容（1分）", colorClass: "hl-s1", opts: [
+          { text: "在完成表現量度後，公司應執行第 3 步進行考績面談，由分區總監約見理財策劃師告知其考績分數。", score: 0, status: "partial", comment: "【常見失分示範：概念要素不完整】將考績面談簡化為單向告知分數，忽略了「就考績結果與員工進行雙向溝通和討論，向他們提供表現回饋並聆聽他們的回應」的核心含義。" },
+          { text: "在完成表現量度與比較後，公司應執行第 3 步進行考績面談，並向員工提供回饋：管理層應與理財策劃師就員工考績的結果進行溝通和討論，向他們提供回饋和聆聽他們的回應。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績第 3 步「進行考績面談，並向員工提供回饋」，並點出就考績結果雙向溝通、提供回饋與聆聽回應的核心內容。" },
+          { text: "在完成表現量度與比較後，公司應執行第 3 步甄選求職者：管理層應根據工作要求篩選外部求職者的履歷表，並安排他們進行入職面試以找出最適合該職位的人選。", score: 0, status: "wrong", comment: "【概念錯誤】篩選外部求職者履歷並安排入職面試屬於「員工編制（招聘與甄選）」的工作，而非為現職員工進行的「員工考績面談」。" }
+        ]},
+        { label: "第 2 步：針對「區域總監與理財策劃師進行考績面談」設定具體討論例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如分區總監與理財策劃師進行考績面談時，表揚他在招攬新客戶上的優秀表現並給予鼓勵，同時一起找出導致其基金續約率未達標的障礙，提供改善建議，並聆聽他對推廣新產品的憂慮和意見。", score: 1, status: "best", comment: "【滿分示範】完整結合管理人員在考績面談中的四項工作：表揚優秀表現、給予鼓勵、找出影響表現的障礙並提供建議、聆聽下屬對工作的憂慮和意見。" },
+          { text: "例如分區總監在考績面談中向理財策劃師指出他今年做得好和做得不好的地方，叫他在下一年繼續努力改善。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】描述流於表面，未有結合考績面談的具體工作（如表揚招攬新客的優秀表現、共同找出基金續約率未達標的障礙並提供改善建議，以及聆聽下屬對工作的憂慮）。" },
+          { text: "例如分區總監在考績面談中全程只查問理財策劃師的私人感情生活與周末業餘嗜好，並禁止策劃師就日常銷售工作所遇到的困難發表任何個人意見。", score: 0, status: "wrong", comment: "【概念錯誤】考績面談必須聚焦於與工作表現相關的強弱項，並須聆聽下屬對工作的憂慮和意見，而非查問私人生活或禁止下屬發言。" }
+        ]},
+        { label: "第 3 步：深化論述至確保策劃師明白如何達標、協助制定改善計劃以鞏固強項改善弱點的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "透過向理財策劃師提供回饋並進行考績面談，能確保他們了解如何達到表現標準，鼓勵他們改善工作表現，並協助策劃師制定個人計劃，藉此改善弱點和鞏固強項。", score: 1, status: "best", comment: "【滿分示範】清楚推演出考績面談與回饋如何確保員工了解達標方法，並協助制定計劃以改善弱點和鞏固強項。" },
+          { text: "透過進行考績面談，財富管理公司便能直接增加外部就業市場上具備金融牌照的求職者人數，徹底解決香港金融服務業面對的技能短缺問題。", score: 0, status: "wrong", comment: "【概念錯誤】內部考績面談旨在幫助現職僱員改善弱點和鞏固強項，並不會增加外部勞動市場的求職者人數。" },
+          { text: "這樣理財策劃師在完成考績面談後，便會清楚知道自己過去一年的工作表現有甚麼強項和弱項。", score: 0, status: "partial", comment: "【常見失分示範：未深化至行動影響】停留於知道強弱項，未有進一步推論至「確保員工了解如何達到表現標準，並協助員工制定個人計劃以改善弱點和鞏固強項」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e3", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 3：巧手精工腕錶公司（為製錶技師與專櫃顧問作員工考績的目的）", topic: "員工考績的三大目的：結合精工腕錶製造及零售公司", maxMarks: 3,
+      scenario: "「巧手精工腕錶公司」專門在工坊組裝高級機械腕錶，並透過自家旗艦專門店把腕錶售賣予顧客。公司每年都會為工坊的「製錶技師」和專門店的「銷售顧問」作員工考績。試解釋該腕錶公司為員工作員工考績的目的。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以員工考績三大目的中的「確保員工與企業的目標一致」為核心，結合腕錶公司情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出員工考績的單一核心目的名稱與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "目的之一是確保員工與企業的目標一致：企業進行員工考績時，一般會根據企業目標制定表現標準，讓員工透過表現標準了解企業對自己工作表現的期望，從而更清楚明白企業的整體目標。", score: 1, status: "best", comment: "【滿分示範】準確指出「確保員工與企業的目標一致」這項目的，並清楚說明根據企業目標制定表現標準以讓員工明白公司期望的機制。" },
+          { text: "目的之一是完全取代公司的會計預算控制制度，透過評核製錶技師的手藝直接計算出全公司來年的現金預算盈餘與淨現值。", score: 0, status: "wrong", comment: "【概念錯誤】計算現金預算盈餘與淨現值屬於財務管理工作，並非人力資源管理中進行員工考績的目的。" },
+          { text: "目的之一是確保員工與企業的目標一致，讓腕錶公司的製錶技師和銷售顧問都明白公司的發展方向。", score: 0, status: "partial", comment: "【常見失分示範：欠缺運作機制】只寫出目的標題，未有解釋「企業如何根據整體目標制定表現標準，讓員工透過表現標準了解企業對自己工作表現的期望」的邏輯機制。" }
+        ]},
+        { label: "第 2 步：針對「巧手精工腕錶公司的製錶技師及專門店銷售顧問」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如腕錶公司希望今年賺取更多利潤，因此在考績時要求製錶技師和銷售顧問一齊努力為公司達成目標。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有扣連兩個職位的工作性質，具體說明如何將公司目標轉化為製錶技師的「低瑕疵品率標準」及銷售顧問的「每月腕錶銷售額與服務評分標準」。" },
+          { text: "例如巧手精工腕錶公司的企業目標是「以零瑕疵的精工機械錶及高銷售額擴充高檔市場」，公司便據此為工坊製錶技師制定嚴格的「低瑕疵品數量」標準，同時為專門店銷售顧問制定較高的「每月腕錶銷售額與服務評分」標準。", score: 1, status: "best", comment: "【滿分示範】緊扣手工腕錶製造與專門店零售的業務特點，具體展示如何將公司的品質與銷售目標轉化為製錶技師與銷售顧問的表現標準。" },
+          { text: "例如腕錶公司在求職網站刊登招聘廣告，並去大型招聘會設置攤位即場面見求職者，以吸引更多外部求職者應徵專門店銷售顧問的職位。", score: 0, status: "wrong", comment: "【概念錯誤】刊登招聘廣告與參加招聘會屬於「外部招聘」的例子，並非運用員工考績確保現職員工與企業目標一致的例子。" }
+        ]},
+        { label: "第 3 步：深化論述至引導員工朝着共同目標努力、提升整體生產力和業績的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "因此，良好的員工考績制度有助製錶技師與銷售顧問更深入了解腕錶公司的品質與銷售目標，並促使他們在日常工作中朝着這些共同目標努力，長遠而言有助提升公司整體的生產力和業績。", score: 1, status: "best", comment: "【滿分示範】清楚推演出員工深入了解企業目標並朝着目標努力工作，長遠如何提升企業整體的生產力和業績。" },
+          { text: "這樣製錶技師和銷售顧問的工作目標便會與腕錶公司的企業目標一致，不會出現背道而馳的情況。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】純粹重複第 1 步的論點標題，未有深化推論至「促使後勤與前線朝着共同目標努力，長遠而言有助提升企業整體的生產力和業績」。" },
+          { text: "透過制定這些表現標準，製錶技師與銷售顧問便無須再接受任何在職技能培訓，亦無須在年終進行任何考績面談或表現量度。", score: 0, status: "wrong", comment: "【概念錯誤】制定表現標準只是考績的第 1 步，後續仍須量度表現、進行考績面談及按需要安排培訓。" }
+        ]}
+      ]
+    },
+    {
+      id: "e4", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 4：巧手精工腕錶公司（製錶技師與銷售顧問的表現標準及量度方法）", topic: "為生產技師與銷售人員訂立表現標準及量度實際表現的方法", maxMarks: 3,
+      scenario: "承上題，「巧手精工腕錶公司」每年都會為工坊的「製錶技師」和專門店的「銷售顧問」作員工考績。試舉例描述該腕錶公司可為製錶技師和銷售顧問訂立的表現標準，並解釋量度他們實際表現的方法。",
+      question: "請遵循「一段一個獨立重點」原則，分別為「製錶技師」及「銷售顧問」訂立具體可量度的表現標準，並配對說明量度其表現的三種方法（觀察、從公司記錄獲取數據、向不同人士收集意見）（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：為「製錶技師」訂立具體表現標準並配對量度方法（1分）", colorClass: "hl-s1", opts: [
+          { text: "針對工坊的製錶技師，公司可訂立「每月在專門店向遊客推銷腕錶的銷售額」作為表現標準，並透過計算遊客在專門店填寫的服務問卷評分來量度技師表現。", score: 0, status: "wrong", comment: "【概念錯誤】製錶技師在工坊負責生產及組裝機械腕錶，並不負責在專門店向遊客推銷腕錶。" },
+          { text: "針對工坊的製錶技師，公司可訂立「每星期或每月組裝完成的手工腕錶數量」及「生產的瑕疵品數量」作為表現標準；工坊主管可透過從公司的生產及質檢記錄獲取數據，以及現場觀察技師組裝機芯的情況來量度表現。", score: 1, status: "best", comment: "【滿分示範】準確為生產部製錶技師訂立「生產的貨品數量」與「瑕疵品數量」兩項標準，並合理配對「從公司記錄獲取數據」及「觀察」兩種量度方法。" },
+          { text: "針對工坊的製錶技師，公司可訂立整錶手工要好、速度要快的表現標準，並由工坊主管去檢查他們整出來的手錶。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且欠專業術語】「手工好、速度快」不夠具體可量度，應寫出「每月生產數量及瑕疵品數量」，並明確指出「從公司生產質檢記錄獲取數據」及「觀察」兩項標準量度方法名稱。" }
+        ]},
+        { label: "第 2 步：為「專門店銷售顧問」訂立具體表現標準並配對量度方法（1分）", colorClass: "hl-s2", opts: [
+          { text: "針對專門店的銷售顧問，公司可訂立「每月的腕錶銷售額」、「招攬的新顧客數量」及「接獲的顧客投訴數量或服務評分」為標準；店舖經理可從銷售記錄擷取銷售額數據、現場觀察顧問應對顧客的工作態度，並透過顧客問卷收集意見來量度表現。", score: 1, status: "best", comment: "【滿分示範】準確為銷售顧問訂立銷售額、新顧客數量及顧客投訴／服務評分標準，並完整配對公司銷售記錄、現場觀察及顧客問卷收集意見三大途徑。" },
+          { text: "針對專門店的銷售顧問，公司只須訂立「每天違反道路交通規例的次數」為唯一表現標準，並透過查閱警方交通違例告票記錄來量度他們在店內售賣腕錶的表現。", score: 0, status: "wrong", comment: "【概念錯誤】違反交通規例次數是評核巴士或貨車司機的表現標準，與在專門店內售賣腕錶的銷售顧問無關。" },
+          { text: "針對專門店的銷售顧問，公司可訂立每月腕錶銷售額標準，並由店舖經理在年終查看誰賣得最多手錶。", score: 0, status: "partial", comment: "【常見失分示範：解說單薄】只提及單一銷售額指標，未能全面涵蓋銷售人員的服務質素標準（如新顧客數量、顧客投訴或服務評分）以及結合「從銷售記錄獲取數據、現場觀察與顧客問卷收集意見」的量度方法。" }
+        ]},
+        { label: "第 3 步：深化論述至結合量化數據與質化觀察意見、確保考績客觀全面的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "透過為製錶技師和銷售顧問訂立這些標準並量度表現，腕錶公司便能順利完成每年一次的員工考績工作。", score: 0, status: "partial", comment: "【常見失分示範：未深化影響】未能總結結合量化記錄數據與質化觀察意見對於「全面、客觀及公平地識別表現優秀、達標與欠佳員工」的作用。" },
+          { text: "透過按工坊生產與門市銷售的不同職責訂立清晰可量度的標準，並結合客觀的公司記錄數據、主管現場觀察及顧客問卷意見，腕錶公司能全面且公平地識別表現優秀、達標與欠佳的員工。", score: 1, status: "best", comment: "【滿分示範】清楚總結按職位性質訂立標準並結合多元量度途徑，如何協助公司全面、客觀地識別表現優劣的員工。" },
+          { text: "透過為製錶技師和銷售顧問訂立表現標準，腕錶公司便能保證所有生產出來的機械腕錶成本降至零元，且無須再向任何員工支付基本薪金。", score: 0, status: "wrong", comment: "【概念錯誤】員工考績旨在評核及改善員工工作表現，並不能令腕錶生產成本或員工基本薪金變成零。" }
+        ]}
+      ]
+    },
+    {
+      id: "e5", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 5：康健大型連鎖藥妝店（門店配藥員與業務拓展總監的考績制度差異一：表現標準）", topic: "比較不同層級職位的員工考績制度：表現標準的差異", maxMarks: 3,
+      scenario: "「康健連鎖藥妝店」的行政總裁為了更有效地評核不同職級與職能員工的表現，打算重新設計公司的員工考績制度。試解釋該連鎖藥妝店的「(i) 門店配藥員」和「(ii) 採購及業務拓展總監」的員工考績制度有何不同之處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以兩者在「所訂立的表現標準內容與性質」上的不同之處為核心，建構一個 3 分雙向對比深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一比較維度（表現標準的性質與內容差異）（1分）", colorClass: "hl-s1", opts: [
+          { text: "門店配藥員和業務拓展總監的員工考績制度有所不同，因為他們在藥妝店入面負責的工作職責不一樣，所以表現標準也不同。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只籠統指出職責不同故標準不同，未有概括對比「基層配藥員側重日常前線操作的準確度與效率，而高層總監側重部門整體策略成效、宏觀業績與領導能力」的本質差異。" },
+          { text: "兩者的考績制度在所訂立的表現標準內容與性質上截然不同：由於兩者的工作說明和工作要求不同，基層門店配藥員的表現標準側重日常前線配藥操作的準確度、效率與待客禮貌；而高級業務拓展總監的標準則側重部門整體策略成效、公司宏觀業績目標與領導能力。", score: 1, status: "best", comment: "【滿分示範】準確指出「所訂立的表現標準內容與性質」這一比較維度，並清楚對比基層前線操作效率準確度與高層宏觀策略業績的差異。" },
+          { text: "兩者在表現標準上的分別，在於門店配藥員須按全公司五年期的跨國收購回報率及全線分店總毛利率來評核；而業務拓展總監則只須按每天在藥房櫃台清潔藥樽的數量來評核。", score: 0, status: "wrong", comment: "【概念錯誤】把兩個職位的職責與表現標準完全顛倒。配藥員負責前線核藥配藥，業務拓展總監才負責宏觀業務增長與採購策略。" }
+        ]},
+        { label: "第 2 步：針對「藥妝店配藥員 vs 業務拓展總監」舉出具體表現標準作雙向對比（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如藥妝店為門店配藥員訂立的表現標準包括每日核對處方配藥的平均時間、配藥零出錯率、準時出勤率及顧客投訴次數；相反，為業務拓展總監訂立的表現標準則包括全線藥妝店年度總營業額增長率、成功引入獨家代理品牌的數目、整體毛利率及團隊領導表現。", score: 1, status: "best", comment: "【滿分示範】具體列舉配藥員（配藥時間、零出錯率、出勤率、顧客投訴）與業務拓展總監（總營業額增長率、引入獨家品牌數、毛利率、團隊領導）的表現標準作雙向對比。" },
+          { text: "例如門店配藥員的表現標準是每天在藥房替客人配藥要準確；而業務拓展總監的表現標準則是替藥妝店拓展業務。", score: 0, status: "partial", comment: "【常見失分示範：例子過於空泛】「替公司拓展業務」並非具體可量度的表現標準；應具體列舉如「全線年度總營業額增長率、成功引入獨家代理品牌數目、整體毛利率及團隊領導表現」與配藥員作雙向對比。" },
+          { text: "例如藥妝店為門店配藥員和業務拓展總監訂立完全相同的「每小時收銀結帳宗數」標準，要求總監每天必須在收銀機前替三百名顧客結帳。", score: 0, status: "wrong", comment: "【概念錯誤】業務拓展總監並不負責前線收銀結帳，不能套用前線收銀員的操作標準。" }
+        ]},
+        { label: "第 3 步：深化論述至切合各自崗位職責、確保考績公平性與有效指引工作方向的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "針對前線配藥操作崗位與高層策略管理崗位分別設計切合其職責範圍的表現標準，能確保考績制度對不同職級員工均公平合理，並分別為前線用藥安全服務與高層業務規劃提供清晰的努力方向。", score: 1, status: "best", comment: "【滿分示範】清楚推演出按各自職責範圍度身設計表現標準，如何確保考績公平合理並有效指引前線與管理層的工作方向。" },
+          { text: "透過為配藥員與業務拓展總監訂立不同的表現標準，連鎖藥妝店便無須再向表現優秀的配藥員發放任何薪金，只需向業務拓展總監一人支付薪酬。", score: 0, status: "wrong", comment: "【概念錯誤】不論職級高低，企業都必須向所有僱員支付法定及合約訂明的薪酬，並按各自考績結果公平獎賞。" },
+          { text: "因此，康健連鎖藥妝店為門店配藥員和業務拓展總監訂立不同的表現標準，是切合他們兩個職位需要的做法。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明按各自職責範圍度身設計表現標準，如何「確保考績制度對不同職級員工公平合理，並有效指引前線安全服務與高層策略規劃的方向」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e6", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 6：康健大型連鎖藥妝店（門店配藥員與業務拓展總監的考績制度差異二：量度方法與周期）", topic: "比較不同層級職位的員工考績制度：量度實際表現的方法與考績周期差異", maxMarks: 3,
+      scenario: "承上題，「康健連鎖藥妝店」重新設計「(i) 門店配藥員」和「(ii) 採購及業務拓展總監」的員工考績制度。除了表現標準的內容外，試以「量度實際表現的方法與考績周期」為例，解釋兩者的員工考績制度有何不同之處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以兩者在「量度實際表現的方法與考績周期」上的不同之處為核心，建構一個 3 分雙向對比深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一比較維度（量度實際表現的方法與考績周期差異）（1分）", colorClass: "hl-s1", opts: [
+          { text: "兩者的考績制度在量度實際表現的方法與考績周期上只會採用單一的顧客問卷調查，完全不會使用現場觀察或查閱任何公司記錄數據。", score: 0, status: "wrong", comment: "【概念錯誤】量度不同職位表現應靈活結合觀察、從公司記錄獲取數據及向不同人士收集意見，而非只靠單一顧客問卷。" },
+          { text: "兩者的考績制度在量度實際表現的方法與考績周期上有所不同：配藥員的工作屬日常標準化操作，易於透過主管現場觀察及日常電腦系統記錄作較頻密量度；而業務拓展總監的工作涉及長遠策劃與跨部門協作，需透過宏觀財務報告及向多方持份者收集意見作年度綜合評估。", score: 1, status: "best", comment: "【滿分示範】準確指出「量度實際表現的方法與考績周期」這一比較維度，並清楚對比日常現場觀察／系統記錄與年度宏觀財務報告／多方意見的分別。" },
+          { text: "除了表現標準不同外，藥妝店在量度門店配藥員和業務拓展總監的實際工作表現時，所使用的方法和時間也是不同的。", score: 0, status: "partial", comment: "【常見失分示範：欠缺概念對比】未有點出「基層標準化操作易於透過現場觀察與日常系統記錄作短期頻密量度；高層長遠策略工作則需透過宏觀財務報告與多方持份者意見作年度評估」的核心分別。" }
+        ]},
+        { label: "第 2 步：針對「藥妝店配藥員 vs 業務拓展總監」舉出具體量度途徑作雙向對比（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如分店主管會在店內觀察配藥員的工作情況；而行政總裁則會在年底查看業務拓展總監的工作報告來評核他。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子未夠充實，未有具體點出從「電腦配藥系統擷取配藥速度與出錯數據」對比「審視全公司年度銷售毛利報告及向同級主管、下屬與海外供應商收集多方意見」。" },
+          { text: "例如分店藥劑師主管可每天在配藥房直接觀察配藥員核對處方與解答病人的態度，並按月從電腦配藥系統擷取其配藥速度與出錯記錄；相反，行政總裁則須在年底審視全公司的年度銷售及毛利財務報告，並向其他部門主管、拓展部下屬及海外藥廠供應商收集意見，以評核業務拓展總監的策略與領導表現。", score: 1, status: "best", comment: "【滿分示範】具體對比配藥員（藥劑師主管現場觀察、電腦配藥系統記錄）與業務拓展總監（年度銷售毛利報告、向同級主管／下屬／供應商收集意見）的量度方法。" },
+          { text: "例如行政總裁每天站在業務拓展總監座位旁用秒錶計算他每分鐘打字的字數；而對門店配藥員則完全不作任何觀察，只向海外藥廠行政總裁收集意見。", score: 0, status: "wrong", comment: "【概念錯誤】高層業務拓展總監的工作成效並非取決於每分鐘打字速度，而門店配藥員亦不會直接與海外藥廠行政總裁接洽。" }
+        ]},
+        { label: "第 3 步：深化論述至配合工作特性、提高評核準確度與減少評估偏差的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "針對基層配藥操作與高層策略管理工作的特性採用不同的量度途徑與評核周期，能大幅提高員工考績的準確性與全面性，為後續的培訓、晉升與薪酬決策提供客觀可靠的依據。", score: 1, status: "best", comment: "【滿分示範】清楚推演出配合崗位特性採用合適量度途徑與周期，如何提高考績準確性與全面性，以支援後續的 HR 決策。" },
+          { text: "採用不同的量度方法會令連鎖藥妝店的考績制度變得極度混亂和不公平，導致所有門店配藥員與業務拓展總監因無法比較分數而立即集體辭職。", score: 0, status: "wrong", comment: "【概念錯誤】因材施教、按不同職位特性採用合適的量度方法，才能真實反映各崗位的表現並提升考績的公平性與準確度。" },
+          { text: "這樣藥妝店的管理層便能清楚知道門店配藥員和業務拓展總監在過去一段時間的工作表現是否達到標準。", score: 0, status: "partial", comment: "【常見失分示範：未深化影響】未有說明配合工作特性採用不同量度途徑與周期，如何「提高考績結果的準確性與全面性，為後續的培訓、晉升與薪酬決策提供客觀依據」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e7", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 7：陽光有機烘焙工坊（影響考績制度激勵效果的因素與特殊員工調整）", topic: "影響員工考績制度激勵效果的因素／為弱勢社群員工調整考績制度", maxMarks: 3,
+      scenario: "「陽光有機烘焙工坊」以往向所有員工派發相同金額的年終花紅，令勤奮的西餅師傅感到不公並揚言辭職。東主決定引入員工考績制度，並根據考績結果分發花紅；同時工坊亦聘請了一些聽障及輕度智障復康人士擔任麵包包裝工作。試解釋影響這個新考績制度「激勵效果」的因素。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以影響考績制度激勵效果的關鍵因素「表現標準是否公平客觀、清晰且可達成，並事前與員工充分溝通」為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出影響考績制度「激勵效果」的單一核心因素（1分）", colorClass: "hl-s1", opts: [
+          { text: "影響該考績制度激勵效果的關鍵因素之一，是所訂立的表現標準是否公平客觀、清晰具體且可達成，以及管理層有否事前與員工溝通並確保他們了解和同意該標準。", score: 1, status: "best", comment: "【滿分示範】準確指出影響考績制度激勵效果的核心因素——表現標準是否公平、清晰具體且可達成，以及員工是否了解和同意標準（另一重要因素為花紅金額是否具吸引力及與考績掛鈎程度）。" },
+          { text: "影響該考績制度激勵效果的因素之一，是烘焙工坊為員工所訂立的表現標準好不好，以及員工對這個制度有甚麼睇法。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊】「標準好不好」過於口語化，必須明確寫出「所訂立的表現標準是否公平客觀、清晰具體且可達成，以及管理層有否事前與員工溝通確保他們了解和同意標準」。" },
+          { text: "影響該考績制度激勵效果的唯一因素，是烘焙工坊在招聘新學徒時究竟採用了政府勞工處還是商業獵頭公司來發布職位空缺。", score: 0, status: "wrong", comment: "【概念錯誤】採用哪種外部招聘途徑發布空缺屬於員工編制的問題，與內部員工考績制度連結花紅的激勵效果無關。" }
+        ]},
+        { label: "第 2 步：針對「陽光有機烘焙工坊的西餅師傅及包裝員工」設定具體情境說明（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如東主為西餅師傅和輕度智障包裝員工訂立每天必須焗製一萬個完美雙層結婚蛋糕的極高標準，且在年終前絕不告知他們評分準則。", score: 0, status: "wrong", comment: "【概念錯誤】訂立完全不可能達成的極高標準且不與員工溝通，只會令員工覺得無論怎樣努力都無法獲獎而徹底放棄。" },
+          { text: "例如東主為西餅師傅訂立清晰且在合理努力下可達成的每日烘焙產量與出品合格率標準，並為輕度智障包裝員工微調度身訂造切合其能力的簡單衛生與出勤標準；反之若標準過高無法達成或主管評分偏私，員工便會覺得努力也是徒然。", score: 1, status: "best", comment: "【滿分示範】緊扣西餅師傅與輕度智障包裝員工的不同能力，具體說明設定合理可達成標準及為特殊員工微調標準如何維持公平感與達標信心。" },
+          { text: "例如東主在制定表現標準時，如果將標準訂得太高或者不公平，西餅師傅和包裝員工便不會努力工作去爭取花紅。", score: 0, status: "partial", comment: "【常見失分示範：未充分扣連個案背景】只作一般性陳述，未有扣連個案中「為西餅師傅訂立合理的烘焙產量與合格率標準，並為輕度智障包裝員工微調切合其能力的簡單標準」作具體說明。" }
+        ]},
+        { label: "第 3 步：深化論述至建立付出與回報信任、激發工作動力與留住勤奮員工的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "因此，只要東主訂立一個好的表現標準，員工考績制度便可以發揮激勵效果，令員工滿意公司的花紅安排。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化推論至「建立付出與回報的正向信任，激發員工提升烘焙品質與效率的工作動力，從而消除勤奮師傅的不滿並降低流失率」。" },
+          { text: "只有當烘焙工坊的員工認同考績標準公平客觀、明白公司期望且確信自己能透過努力達標以獲取應得的花紅回報時，才能真正激發他們的工作動力，消除勤奮師傅的不滿並降低流失率。", score: 1, status: "best", comment: "【滿分示範】清楚推演出認同標準公平可達成與建立多勞多得信任，如何激發工作動力並留住勤奮的西餅師傅。" },
+          { text: "當員工認同表現標準公平合理時，他們便會主動要求東主取消所有年終花紅及基本薪金，免費為有機烘焙工坊義務工作。", score: 0, status: "wrong", comment: "【概念錯誤】勤奮員工原本正是因為覺得花紅分配不公而揚言辭職，公平的考績制度是為了讓他們獲得應有的花紅回報而非取消薪酬。" }
+        ]}
+      ]
+    },
+    {
+      id: "e8", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 8：飛躍兒童游泳及體藝學院（為游泳教練作員工考績的步驟：量度表現與標準比較）", topic: "員工考績的四個步驟：結合兒童游泳學院教練", maxMarks: 3,
+      scenario: "「飛躍兒童游泳及體藝學院」開辦幼兒習泳班及泳隊訓練班。為保證教學質素與水上安全，學院決定為旗下所有游泳教練設立正式的員工考績制度。試闡釋為游泳教練作員工考績所需的步驟。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「第 2 步：量度實際表現，並與表現標準比較」為核心，結合游泳學院教練情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出員工考績第 2 步的名稱與核心工作（1分）", colorClass: "hl-s1", opts: [
+          { text: "在完成第 1 步訂立教學表現標準並與教練溝通後，游泳學院須執行第 2 步量度實際表現，並與表現標準比較：學院須透過觀察、從公司記錄獲取數據及向不同人士收集意見，量度教練的實際表現並與標準比較。", score: 1, status: "best", comment: "【滿分示範】準確指出員工考績第 2 步「量度實際表現，並與表現標準比較」，並完整點出三大設定量度途徑及與預設標準作比較的核心工作。" },
+          { text: "在完成第 1 步後，游泳學院須執行第 2 步決定發布職位空缺的方法：學院須在報章刊登招聘廣告、參加大型招聘會及透過香港游泳教練工會向會員發布空缺消息。", score: 0, status: "wrong", comment: "【概念錯誤】決定發布職位空缺的方法屬於第 1 課「招聘」的步驟，並非第 2 課「員工考績」的步驟。" },
+          { text: "在訂立標準後，游泳學院須執行第 2 步量度游泳教練的實際教學表現，看看他們的表現有沒有達到學院的要求。", score: 0, status: "partial", comment: "【常見失分示範：概念要素不完整】漏了指出量度員工實際表現的三大標準途徑（即「觀察」、「從公司記錄獲取數據」及「向不同人士收集意見」），以及將實際表現「與第 1 步表現標準作比較」的關鍵動作。" }
+        ]},
+        { label: "第 2 步：針對「兒童游泳學院教練」設定三種量度途徑的具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如主教務總監可定期到泳池邊進行觀課，直接觀察教練的泳術示範、安全監控與對待幼兒的耐性；同時從學院記錄獲取各教練班別的學員續報率、泳章考核合格率及安全紀錄數據；並向學員家長派發問卷收集對教練教學質素的評分意見。", score: 1, status: "best", comment: "【滿分示範】緊扣兒童游泳學院情境，將「觀察（池邊觀課）」、「從公司記錄獲取數據（續報率與泳章考核合格率）」及「向不同人士收集意見（家長問卷）」三大途徑具體應用於游泳教練身上。" },
+          { text: "例如主教務總監可以去泳池邊觀察教練教水的情況，或者問下學員家長對游泳教練的教學表現滿唔滿意。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於口語簡略，且漏了「從學院記錄獲取數據（如查閱學員續報率、泳章考核合格率及課堂安全記錄）」這一重要量度途徑的應用。" },
+          { text: "例如主教務總監只須查閱游泳學院去年向銀行借貸購買恆溫泳池過濾設備的利息支出記錄，便能準確量度每位游泳教練的幼兒泳術教學表現。", score: 0, status: "wrong", comment: "【概念錯誤】銀行貸款利息支出屬於學院的財務記錄，並不能反映個別游泳教練的教學質素或水上安全表現。" }
+        ]},
+        { label: "第 3 步：深化論述至與標準比較以識別優劣教練、為面談回饋及續約培訓決策提供依據的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "量度後將每位教練的實際表現數據與第 1 步訂立的標準作比較，學院便能識別出表現優秀、表現達標及表現欠佳的教練，為第 3 步進行考績面談提供具體回饋，以及第 4 步作出續約、加薪晉升或安排幼兒教學培訓等決策提供客觀依據。", score: 1, status: "best", comment: "【滿分示範】清楚推演出將實際表現與標準比較以識別三類員工（優秀、達標、欠佳），如何銜接並支援後續第 3 步考績面談與第 4 步 HR 決策。" },
+          { text: "量度並比較教練的表現後，游泳學院便可立即取消所有水上安全守則，並規定以後所有新入職的游泳教練均無須持有任何拯溺或游泳教學證書。", score: 0, status: "wrong", comment: "【概念錯誤】學院設立考績制度正是為了「保證教學質素與水上安全」，絕不會因此取消水上安全守則或專業資格要求。" },
+          { text: "量度完教練的表現並與標準比較後，游泳學院便知道哪些教練教得好、哪些教得不好，完成第二個步驟。", score: 0, status: "partial", comment: "【常見失分示範：未銜接後續考績作用】未能準確寫出識別出「表現優秀、表現達標及表現欠佳」三類教練，並說明這如何為後續「第 3 步考績面談提供回饋」及「第 4 步作出續約、加薪或培訓決策」提供客觀依據。" }
+        ]}
+      ]
+    }
+  ];
+
+  let curBuilderCat = 'short';
+  let curQIdx = 0;
+  let userSelections = {};
+  let isSubmitted = false;
+
+  function switchBuilderCat(cat, btn) {
+    curBuilderCat = cat;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('builderCatLabel').textContent = cat === 'short' ? '選擇短答題（每題滿分 2 分）：' : '選擇進階論述題（每題滿分 3 分）：';
+    curQIdx = cat === 'short' ? 0 : 4;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function renderQuestionChips() {
+    document.getElementById('questionChips').innerHTML = workshopQuestions
+      .map((q, i) => ({ q, i }))
+      .filter(x => x.q.cat === curBuilderCat)
+      .map(x => `<button class="chip ${x.i===curQIdx?'active':''}" onclick="selectWorkshopQ(${x.i})">${x.q.title}</button>`)
+      .join('');
+  }
+
+  function selectWorkshopQ(idx) {
+    curQIdx = idx;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function pickStepOption(sIdx, oIdx) {
+    userSelections[sIdx] = oIdx;
+    isSubmitted = false;
+    renderWorkshop();
+  }
+
+  function submitConstructedAnswer() {
+    const q = workshopQuestions[curQIdx];
+    if (Object.keys(userSelections).length < q.steps.length) {
+      alert(`請先完成全部 ${q.steps.length} 個步驟的選擇，再點擊批改。`);
+      return;
+    }
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function fillBestChoices() {
+    const q = workshopQuestions[curQIdx];
+    q.steps.forEach((st, sIdx) => {
+      userSelections[sIdx] = st.opts.findIndex(o => o.status === 'best');
+    });
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function renderWorkshop() {
+    const q = workshopQuestions[curQIdx];
+    const letters = ['A', 'B', 'C'];
+
+    let totalScore = 0;
+    q.steps.forEach((st, sIdx) => {
+      if (userSelections[sIdx] !== undefined) {
+        totalScore += st.opts[userSelections[sIdx]].score;
+      }
+    });
+
+    const previewParts = q.steps.map((st, sIdx) => {
+      const selIdx = userSelections[sIdx];
+      if (selIdx === undefined) {
+        return `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［未選擇第 ${sIdx + 1} 步］</span>`;
+      }
+      return `<span class="${st.colorClass}">${st.opts[selIdx].text}</span>`;
+    });
+
+    document.getElementById('builderWorkspace').innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div>
+            <span class="badge b-blue">${q.typeBadge}</span>
+            <span class="badge b-teal">${q.topic}</span>
+          </div>
+          <b style="color:var(--primary);font-size:16px">本段滿分：${q.maxMarks} 分</b>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink)">${q.question}</div>
+      </div>
+
+      ${q.steps.map((st, sIdx) => {
+        const selIdx = userSelections[sIdx];
+        return `
+          <div class="builder-stage">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <h4 style="font-size:16.5px"><span class="${st.colorClass}">${st.label}</span></h4>
+              <span style="font-size:14px;font-weight:600;color:var(--mute)">${selIdx !== undefined ? '已選 ' + letters[selIdx] : '請點選一項'}</span>
+            </div>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = selIdx === oIdx;
+              let gradeCls = '';
+              if (isSubmitted && isSel) {
+                gradeCls = o.status === 'best' ? 'graded-best' : o.status === 'partial' ? 'graded-partial' : 'graded-wrong';
+              }
+              return `
+                <button class="opt-card ${isSel ? 'selected' : ''} ${gradeCls}" onclick="pickStepOption(${sIdx}, ${oIdx})">
+                  <span class="opt-letter">${letters[oIdx]}</span>
+                  <span style="flex:1">${o.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('')}
+
+      <div class="card" style="border:2px solid var(--primary);margin-bottom:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <h3 style="color:var(--primary);font-size:19px">建構段落預覽</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitConstructedAnswer()">批改答案</button>
+            <button class="btn btn-outline" onclick="fillBestChoices()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="font-size:17px;line-height:1.85;background:var(--surface);padding:18px 22px;border-radius:12px;border:1px solid var(--line)">
+          ${previewParts.join(' ')}
+        </div>
+
+        ${isSubmitted ? `
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${totalScore === q.maxMarks ? 'b-green' : totalScore >= 1 ? 'b-amber' : 'b-red'}" style="font-size:15px;padding:6px 14px">
+                得分：${totalScore} / ${q.maxMarks} 分
+              </span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const chosen = st.opts[userSelections[sIdx]];
+              const cCls = chosen.status === 'best' ? 'c-best' : chosen.status === 'partial' ? 'c-partial' : 'c-wrong';
+              return `
+                <div class="critique-item ${cCls}">
+                  <b>第 ${sIdx + 1} 步（選項 ${letters[userSelections[sIdx]]} · ${chosen.score} 分）：</b>${chosen.comment}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  renderQuestionChips();
+  renderWorkshop();
+</script>
+</body>
+</html>

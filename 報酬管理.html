@@ -1,0 +1,1702 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 報酬管理</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .main-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .main-tabs button {
+      border: 0;
+      background: none;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tabs button:hover { color: var(--ink); }
+    .main-tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Main Container & Views */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 28px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Section Header Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 25px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 680px; }
+
+    /* Sub-navigation Switcher */
+    .sub-nav {
+      display: inline-flex;
+      background: #efecf8;
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sub-nav button {
+      border: 0;
+      background: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--mute);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-nav button:hover { color: var(--ink); }
+    .sub-nav button.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.25);
+    }
+    .sub-view { display: none; }
+    .sub-view.active { display: block; animation: fadeIn 0.2s ease; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .sidebar-layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    /* Interactive Selector Lists */
+    .nav-list { display: flex; flex-direction: column; gap: 10px; }
+    .nav-item {
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .nav-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary) 0%, #9333ea 100%);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 16px rgba(109, 40, 217, 0.24);
+    }
+    .nav-item.active span.sub-txt { color: #ede9fe; }
+    .sub-txt { font-size: 13px; color: var(--mute); font-weight: 500; flex-shrink: 0; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      padding: 11px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    .note-box {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+    .case-box {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 14px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+
+    /* Comparison Table & Ad Lines */
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15.5px; }
+    table.comp-table th, table.comp-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+    table.comp-table tr.highlight-row { background: var(--primary-light); }
+
+    .slider-row { display: grid; grid-template-columns: 205px 1fr 115px; gap: 12px; align-items: center; margin-bottom: 10px; font-size: 15px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
+
+    .ad-line {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 15.5px;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+    }
+    .ad-line:hover { border-color: var(--primary); background: var(--primary-light); }
+
+    /* Builder Specific */
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 18px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.correct, .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.wrong, .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #ffffff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    details.guide-Collapsible {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    details.guide-Collapsible summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .sidebar-layout, .slider-row { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+      .main-tabs { width: 100%; justify-content: center; margin-top: 8px; }
+      .sec-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 12px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速切換課室／測驗...</option>
+    <option value="人力資源管理_目錄.html">單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質工作團隊.html">第 5 課：發展優質工作團隊</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+  <div class="brand">
+    <span>人力資源管理</span>
+    <span class="brand-tag">第 3 課：報酬管理</span>
+  </div>
+  <nav class="main-tabs" id="mainTabs">
+    <button class="on" data-tab="sec-monetary">1. 金錢報酬：7種常見方式</button>
+    <button data-tab="sec-comp-sim">2. 按時 vs 按表現 ＆ 認股權模擬</button>
+    <button data-tab="sec-non-mon">3. 非金錢報酬與僱員福利目的</button>
+    <button data-tab="sec-adv-cases">4. 金錢 vs 非金錢好處 ＆ 診斷室</button>
+    <button data-tab="sec-builder">5. 論點建構工作坊</button>
+  </nav>
+</header>
+
+<!-- ==================== 1. 金錢報酬：7種常見方式 ==================== -->
+<section class="view on" id="sec-monetary">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元一：何謂報酬管理與七種常見的金錢報酬方式</span>
+      <h1>按時計算報酬（底薪）＆ 按表現計算報酬（件薪・佣金・花紅・績效・利潤・認股權）</h1>
+      <p>報酬管理是指管理用以吸引、留住和激勵僱員的報酬制度，包括提供金錢報酬和非金錢報酬（應定在合理公平水平，亦可按個人需要調整，如向殘障僱員發放特別津貼）。金錢報酬是以金錢為本的報酬，分為「按時計算報酬」和十分倚賴員工考績的「按表現計算報酬」。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('mon', 0, this)">七種金錢報酬方式詳解</button>
+      <button onclick="switchSub('mon', 1, this)">金錢報酬方式辨識挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 1A：七種金錢報酬方式詳解 -->
+  <div class="sub-view active" id="mon-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="sevenRewardNavList"></div>
+      <div class="card" id="sevenRewardDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 1B：七種金錢報酬方式辨識與概念挑戰 -->
+  <div class="sub-view" id="mon-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">七種金錢報酬方式辨識與概念挑戰</span>
+        <span id="monQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="monQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="monQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="monQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. 按時 vs 按表現比較 ＆ 認股權模擬 ==================== -->
+<section class="view" id="sec-comp-sim">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元二：按時計算與按表現計算報酬的比較 ＆ 認股權模擬</span>
+      <h1>按時計算 vs 按表現計算的整體好壞處 ＆ 易混淆薪酬概念對照</h1>
+      <p>企業在設計金錢報酬方案時，須權衡「按時計算報酬」（減少僱員之間競爭、簡單和節省成本、方便規劃和預算，但激勵效果弱及對優秀人才吸引力低）與「按表現計算報酬」（激勵效果強、較易吸引優秀人才，但易忽略某些表現範疇、導致競爭激烈及取決於考績制度是否有效）的利弊。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('cmp', 0, this)">整體比較與易混淆概念區分</button>
+      <button onclick="switchSub('cmp', 1, this)">認股權模擬器與判斷挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 2A：整體比較與易混淆概念區分 -->
+  <div class="sub-view active" id="cmp-sub-0">
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-blue">第 3.3C 節：核心概念比較</span>
+      <h3 style="font-size:21px;margin:8px 0 8px">點擊切換比較視角，掌握按時與按表現計算報酬的優劣及三大獎賞分別</h3>
+      <div class="chips" id="compPayChips">
+        <button class="chip active" onclick="renderCompPay(0)">1. 按時計算報酬 vs 按表現計算報酬（整體好壞處比較）</button>
+        <button class="chip" onclick="renderCompPay(1)">2. 重要區分：花紅 vs 績效薪酬 vs 利潤分享</button>
+        <button class="chip" onclick="renderCompPay(2)">3. 重要區分：件薪 vs 佣金</button>
+      </div>
+      <div id="compPayBox" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 2B：認股權模擬器與判斷挑戰 -->
+  <div class="sub-view" id="cmp-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">員工認股權運作模擬</span>
+        <h3 style="font-size:20px;margin:8px 0 6px">拉動滑桿調整「一年後公司市場股價」，觀察認股權的運作與優缺點</h3>
+        <p style="font-size:15px;color:var(--ink-sec);margin:0 0 10px">
+          假設上市公司向僱員推出<b>認股權計劃</b>：僱員可在<b>一年後以指定價格每股 $10 購買 5,000 股公司股票</b>（只適用於有限公司，仍算金錢報酬）：
+        </p>
+        <div class="slider-row">
+          <b>一年後公司股票市價 ($)</b>
+          <input type="range" id="optPriceSlider" min="6" max="26" step="2" value="18" oninput="updateOptSim()">
+          <span id="lblOptPrice" style="font-weight:800;color:var(--primary);font-size:16px">每股 $18</span>
+        </div>
+        <div id="optSimOutput" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">按時與按表現計算報酬概念挑戰</span>
+        <h3 style="font-size:20px;margin:8px 0 10px">辨別陳述正誤與應用分析（共 6 題）</h3>
+        <p id="compQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="compQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="compQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="compQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 非金錢報酬與僱員福利目的 ==================== -->
+<section class="view" id="sec-non-mon">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元三：非金錢報酬的方式 ＆ 提供僱員福利的目的</span>
+      <h1>非金錢報酬的四種方式（福利・培訓發展・認同表揚・自主權）＆ 五大福利目的</h1>
+      <p>非金錢報酬是指以金錢以外的方式給予僱員的報酬，包括四種方式：(1) 僱員福利（又稱附帶福利或附加福利，是最主要的非金錢報酬方式）、(2) 培訓和發展機會、(3) 認同和表揚、以及 (4) 工作自主權和責任。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('nm', 0, this)">四種非金錢報酬與五大福利目的</button>
+      <button onclick="switchSub('nm', 1, this)">招聘廣告待遇分類與挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 3A：四種非金錢報酬與五大福利目的 -->
+  <div class="sub-view active" id="nm-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="nmNavList"></div>
+      <div class="card" id="nmDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 3B：招聘廣告待遇分類器與挑戰 -->
+  <div class="sub-view" id="nm-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">金錢報酬 vs 非金錢報酬分類器</span>
+        <h3 style="font-size:20px;margin:8px 0 6px">點擊空中服務員招聘廣告中的 9 項待遇，識別它屬於「金錢報酬」還是「非金錢報酬」</h3>
+        <div id="flightAdList" style="margin-top:10px"></div>
+        <div id="flightAdFb" class="note-box" style="margin-top:12px;font-size:15.5px">請點擊上方招聘廣告中的任一待遇項目查看分類解析。</div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">非金錢報酬與僱員福利目的挑戰</span>
+        <h3 style="font-size:20px;margin:8px 0 10px">識別非金錢報酬種類與提供福利的目的（共 6 題）</h3>
+        <p id="nmQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="nmQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="nmQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="nmQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 金錢 vs 非金錢好處 ＆ 診斷室 ==================== -->
+<section class="view" id="sec-adv-cases">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元四：金錢和非金錢報酬的好處 ＆ 企業薪酬制度診斷室</span>
+      <h1>提供金錢報酬（4項好處）與非金錢報酬（3項好處）的比較 ＆ 高階個案拆解</h1>
+      <p>所有僱員都可受惠於金錢報酬並用以維持生活水平，而部分非金錢報酬（如產假、侍產假、婚假）則未必能惠及所有僱員；另一方面，非金錢報酬可根據財務預算靈活調整（部分如口頭讚賞和獎座更不費分文），並能滿足金錢以外的高層次心理需要。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('adv', 0, this)">金錢 vs 非金錢好處與三大個案診斷</button>
+      <button onclick="switchSub('adv', 1, this)">高階個案分析挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 4A：金錢 vs 非金錢好處與三大個案診斷 -->
+  <div class="sub-view active" id="adv-sub-0">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">第 3.5 節：金錢和非金錢報酬的好處</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點擊查看提供金錢報酬與非金錢報酬的好處及最低工資個案應用</h3>
+        <div class="chips" id="benCompChips">
+          <button class="chip active" onclick="renderBenComp(0)">1. 提供金錢報酬的 4 項好處</button>
+          <button class="chip" onclick="renderBenComp(1)">2. 提供非金錢報酬的 3 項好處</button>
+          <button class="chip" onclick="renderBenComp(2)">3. 個案應用：最低工資餐廳的招聘與激勵</button>
+        </div>
+        <div id="benCompBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">三大高階商業薪酬制度診斷室</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點選三大企業薪酬難題，掌握成因剖析與解決措施</h3>
+        <div class="chips" id="diagCaseChips">
+          <button class="chip active" onclick="renderDiagCase(0)">個案 A：廠房件薪工人抗拒新技術與次貨問題</button>
+          <button class="chip" onclick="renderDiagCase(1)">個案 B：銀行頂薪點元老「花紅 vs 績效薪酬」之爭</button>
+          <button class="chip" onclick="renderDiagCase(2)">個案 C：奢侈品 vs 中價品牌薪酬與「統一加薪 5%」壞處</button>
+        </div>
+        <div id="diagCaseBox" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 4B：高階個案分析挑戰 -->
+  <div class="sub-view" id="adv-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">金錢與非金錢報酬好處及個案診斷挑戰</span>
+        <span id="advQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="advQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="advQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="advQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. 論點建構問答工作坊 (12題) ==================== -->
+<section class="view" id="sec-builder">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-amber">實戰寫作與教學示範訓練</span>
+      <h1>「一段一個獨立重點」論點建構工作坊</h1>
+      <p>收錄 4 道短答題（2 步建構 · 2 分）及 8 道進階論述題（3 步建構 · 3 分）。每個步驟除了提供「滿分建構選項（綠燈）」及「概念錯誤選項（紅燈）」外，特別保留一個能力較弱學生常犯的<b>「解說不足／用詞含糊／同義反覆選項（琥珀黃燈）」</b>，方便課堂進行正反對比教學示範。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchBuilderCat('short', this)">短答題訓練 (4題)</button>
+      <button onclick="switchBuilderCat('essay', this)">進階論述題訓練 (8題)</button>
+    </div>
+  </div>
+
+  <details class="guide-Collapsible">
+    <summary>查看「一段一個重點」建構結構與三種選項教學示範指南（點擊展開 / 收起）</summary>
+    <div class="grid2" style="margin-top:14px;font-size:16px">
+      <div style="background:var(--primary-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--primary)">短答題／個案題模式（每段滿分 2 分 — 2 步建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 準確指出單一福利措施、報酬好壞處標題或非金錢報酬種類名稱<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 結合題目企業情況說明如何執行或為何產生該好壞處
+      </div>
+      <div style="background:var(--teal-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--teal)">進階論述題模式（每段滿分 3 分 — 3 步深度建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 指出單一報酬方式、福利目的或好壞處名稱並界定其核心含義<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 針對題目企業（如機能服飾商、冷鏈速遞平台、動畫製作公司、連鎖點心店）設定具體例子<br>
+        <span class="hl-s3">第 3 步 (1分)</span> 深化推論該報酬方式或福利如何影響員工士氣、生產力、銷售收益、忠誠度或企業財務負擔
+      </div>
+    </div>
+  </details>
+
+  <div class="card" style="padding:18px 22px;margin-bottom:18px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px" id="builderCatLabel">選擇短答題（每題滿分 2 分）：</div>
+    <div class="chips" id="questionChips" style="margin:0"></div>
+  </div>
+
+  <div id="builderWorkspace"></div>
+</section>
+
+<script>
+  // Main Tab Switching
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // Sub-view Switching
+  function switchSub(prefix, idx, btn) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`[id^="${prefix}-sub-"]`).forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ====== 1. 金錢報酬：7種常見方式 ======
+  const sevenRewards = [
+    {
+      name: "1. 底薪 (Base Salary)",
+      cat: "按時計算報酬",
+      def: "按時計算報酬是指根據僱員在某段指定時間內所提供的服務而支付報酬，一般以「底薪（又稱基本薪金或工資）」的方式支付。底薪是僱員提供服務所換取的定額報酬，可以時薪（如清潔工人）、日薪（如展銷會銷售人員）或月薪（如大部分辦公室文職工作）支付。底薪金額與提供服務的時間掛鈎，而非取決於表現，為僱員提供重要和穩定的財政支援。",
+      pros: "• <b>(i) 吸引人才</b>：底薪通常是求職者選擇工作時的主要考慮因素，所以是最能吸引和留住人才的報酬形式。<br>• <b>(ii) 簡單</b>：底薪的計算和管理方法簡單，企業只須在每段指定時間後向僱員支付固定金額的報酬。",
+      cons: "• <b>激勵效果弱</b>：底薪一經確定後，在某段時間內會維持不變。由於領取底薪的僱員不會因為表現良好而獲得較多報酬，所以底薪的激勵效果遜於按表現計算報酬。"
+    },
+    {
+      name: "2. 件薪 (Piece Rate)",
+      cat: "按表現計算報酬",
+      def: "按表現計算報酬（又稱以獎勵形式計算報酬）是指報酬與工作表現直接掛鈎，十分倚賴員工考績。當中「件薪」是指就僱員每件生產的產品或每項完成的工作所支付的報酬（多勞多得）。傳統多用於藍領僱員（如製衣廠縫紉工人），也適用於服務業（如快遞公司送貨員；除自由工作外，香港提供件薪的工作通常同時提供較低底薪）。性質複雜或難以量度產出的工作不宜採用件薪。",
+      pros: "• <b>(i) 簡單</b>：計算件薪的方法十分簡單，僱員也容易理解。<br>• <b>(ii) 公平</b>：與表現直接掛鈎，僱員通常認為公平。<br>• <b>(iii) 有助提升生產力</b>：鼓勵僱員提高工作效率，繼而提升企業的生產力（<span style='color:var(--red)'>注意：採用件薪有助提升企業的生產力，但不能提高銷售額！</span>）。",
+      cons: "• <b>(i) 忽略品質</b>：僱員往往只着重生產量或完成的工作量，而忽略產品的質量或服務的質素（導致次貨增加）。<br>• <b>(ii) 僱員不願轉換崗位</b>：由於報酬取決於對工作的熟悉程度，他們往往拒絕轉換崗位。<br>• <b>(iii) 僱員可能抗拒新科技</b>：熟習新科技需時，期間的收入或會減少，所以可能會抗拒學習和使用新科技。"
+    },
+    {
+      name: "3. 佣金 (Commission)",
+      cat: "按表現計算報酬",
+      def: "佣金是指按僱員賺取的銷售收益（如銷售收益的 10%）或售出的產品數量（如每售出一件產品可獲 $10）而支付的報酬，常用作銷售人員的報酬。為解決銷售人員收入不穩定和欠缺安全感的問題，很多企業會提供「底薪加佣金」作為報酬。",
+      pros: "• <b>(i) 簡單</b>：容易理解，而且易於執行。<br>• <b>(ii) 激勵效果強</b>：僱員很清楚努力工作和回報之間的關係，為努力工作提供最大誘因。<br>• <b>(iii) 有助提高銷售收益</b>：僱員會努力工作以賺取更多佣金，有助提高企業的銷售收益。",
+      cons: "• <b>(i) 部分產品可能會被忽略</b>：可能促使僱員只專注於銷售佣金較高，或廣為顧客熟悉的產品。<br>• <b>(ii) 可能導致過於進取的銷售行為</b>：為賺取更多佣金，或會採用過於進取的銷售手法（如具威嚇性的營銷手法），可能導致顧客流失。<br>• <b>(iii) 僱員欠缺安全感</b>：若只以佣金作為報酬，僱員可能會因收入非常不穩定而欠缺安全感，或會令員工流失率上升。"
+    },
+    {
+      name: "4. 花紅 (Bonus)",
+      cat: "按表現計算報酬",
+      def: "花紅是給予工作表現良好的僱員的一次性報酬（底薪以外的額外報酬，通常每年發放一次）。企業通常會將花紅與企業的財務業績和僱員的工作表現（取決於員工考績結果）掛鈎。",
+      pros: "• <b>(i) 激勵效果明顯</b>：由於僱員必須有良好的工作表現才能獲發花紅，所以能有效激勵僱員努力工作。<br>• <b>(ii) 財政負擔較輕</b>：企業通常不會保證派發花紅；若業績不理想或僱員表現不達標，企業有權發放較少的花紅。",
+      cons: "• <b>(i) 取決於員工考績制度是否有效</b>：若員工考績制度未能恰當和公平地評核表現（如存有偏見，或給予所有僱員相同的評分），獲發的花紅便會存在不公，打擊士氣。<br>• <b>(ii) 滯後</b>：通常在財政年度結束時發放，僱員即使表現良好，也要相隔一段時間才能獲發花紅。<br>• <b>(iii) 不實際的期望</b>：若僱員在本年獲發花紅，他們會預期在來年也會獲發花紅。"
+    },
+    {
+      name: "5. 績效薪酬 (Merit Pay)",
+      cat: "按表現計算報酬",
+      def: "績效薪酬（又稱勞績獎賞）是根據僱員的表現（員工考績結果）而給予的加薪。<span style='color:var(--red)'><b>關鍵特點：績效薪酬一般會成為僱員「底薪的一部分」（與一次性支付的花紅不同！）。</b></span>",
+      pros: "• <b>激勵效果強</b>：由於績效薪酬會成為底薪的一部分（永久提高往後每期的底薪金額），所以能大大推動僱員努力工作。",
+      cons: "• <b>(i) 取決於員工考績制度是否有效</b>：若員工考績制度未能恰當和公平地評核僱員的表現，獲發的績效薪酬便會存在不公。<br>• <b>(ii) 長遠的財政負擔</b>：由於績效薪酬會成為僱員底薪的一部分，這會對企業構成長遠的財政負擔。"
+    },
+    {
+      name: "6. 利潤分享 (Profit-sharing)",
+      cat: "按表現計算報酬",
+      def: "利潤分享是指企業撥出利潤的某個百分比，作為給予僱員的獎勵（不會成為底薪的一部分）。<span style='color:var(--red)'><b>注意與花紅的分別：僱員通常因應個人表現獲發不同金額的花紅；但在利潤分享制度下，所有合資格僱員通常會獲發相同金額的利潤。</b></span>",
+      pros: "• <b>(i) 使僱員和企業的目標一致</b>：由於僱員的報酬直接取決於企業的業績，僱員會較有動力去提升生產力。<br>• <b>(ii) 財政負擔較輕</b>：企業不一定要與僱員分享利潤；若某年未能賺取利潤，便不用分享任何利潤。",
+      cons: "• <b>(i) 激勵效果弱</b>：所有合資格的僱員通常都會獲發相同金額的利潤；此外，僱員可能會認為他們的表現對企業利潤的影響微不足道，未必可以激勵他們努力工作。<br>• <b>(ii) 利潤可被操控</b>：有些管理人員可能會使用財務技倆操控企業的利潤，藉此賺取較多報酬。<br>• <b>(iii) 滯後</b>：通常在財政年度結束時與僱員分享利潤，表現與獲發利潤相隔一段時間。"
+    },
+    {
+      name: "7. 認股權 (Stock Option)",
+      cat: "按表現計算報酬",
+      def: "認股權（又稱員工認股權）讓僱員有權在特定時間內，以指定價格購買一定數量的公司股票。<span style='color:var(--red)'><b>這種金錢報酬方式只適用於有限公司！</b></span>（雖然沒有直接獲得金錢，但認股權仍算是金錢報酬）。僱員購買公司的股票後便成為公司的股東，可透過股息或資本利潤賺取回報。",
+      pros: "• <b>(i) 激勵僱員的長遠方法</b>：僱員須在某段時間後才能行使認股權，為了在日後賺取更高回報，會有動力去努力工作，以推高公司長遠的股價。<br>• <b>(ii) 提高僱員的忠誠度和投入度</b>：僱員在行使認股權後便會成為公司的東主（股東），可提高對公司的忠誠度，令他們更投入工作。",
+      cons: "• <b>(i) 激勵效果視乎股價而定</b>：公司的股價會受業績以外的因素影響；若股價受宏觀經濟因素或行業因素影響而下跌，便會大幅降低認股權的激勵效果。<br>• <b>(ii) 股價可被操控</b>：有些管理人員可能會在行使認股權前，試圖推高股價，以賺取較高回報。"
+    }
+  ];
+
+  function renderSevenReward(idx) {
+    document.getElementById('sevenRewardNavList').innerHTML = sevenRewards.map((r, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderSevenReward(${i})">
+        <span>${r.name}</span>
+      </button>
+    `).join('');
+    const r = sevenRewards[idx];
+    document.getElementById('sevenRewardDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${r.name}</h3>
+        <span class="badge ${idx===0?'b-blue':'b-teal'}">${r.cat}</span>
+      </div>
+      <p style="margin:0 0 14px;font-size:16.5px">${r.def}</p>
+      <div class="grid2" style="gap:14px">
+        <div style="background:var(--green-light);padding:14px 16px;border-radius:12px;border-left:4px solid var(--green);font-size:15px">
+          <b style="color:var(--green);display:block;margin-bottom:6px;font-size:16px">好處：</b>${r.pros}
+        </div>
+        <div style="background:var(--red-light);padding:14px 16px;border-radius:12px;border-left:4px solid var(--red);font-size:15px">
+          <b style="color:var(--red);display:block;margin-bottom:6px;font-size:16px">壞處：</b>${r.cons}
+        </div>
+      </div>
+    `;
+  }
+  renderSevenReward(0);
+
+  // 對稱深度設計的 8 道金錢報酬方式辨識與概念挑戰題
+  const monQuizItems = [
+    {
+      q: "1. 識別下列四項描述分別指哪種「金錢報酬方式」：<br>(a) 按僱員的表現而作出的加薪（成為底薪的一部分） ｜ (b) 僱員提供服務而獲取的定額報酬 ｜ (c) 根據僱員每件生產的產品或每項完成的工作而支付的報酬 ｜ (d) 發放給表現卓越的僱員的一次性報酬",
+      opts: [
+        "A. (a) 花紅 ｜ (b) 底薪 ｜ (c) 佣金 ｜ (d) 績效薪酬",
+        "B. (a) 績效薪酬 ｜ (b) 底薪 ｜ (c) 件薪 ｜ (d) 花紅",
+        "C. (a) 績效薪酬 ｜ (b) 件薪 ｜ (c) 底薪 ｜ (d) 利潤分享"
+      ],
+      ans: 1,
+      exp: "正確。(a) 按表現作出並成為底薪一部分的加薪是「績效薪酬」；(b) 提供服務換取的定額報酬是「底薪」；(c) 按每件生產產品或完成工作支付的是「件薪」；(d) 發放給表現卓越僱員的一次性額外報酬是「花紅」。"
+    },
+    {
+      q: "2. 識別下列三項描述分別指哪種「按表現計算的金錢報酬方式」：<br>(e) 按僱員賺取的銷售收益或售出的產品數量而支付的報酬 ｜ (f) 企業撥出利潤的某個百分比，作為給予僱員的獎勵 ｜ (g) 僱員有權在特定時間內，以指定價格購買一定數量的公司股票",
+      opts: [
+        "A. (e) 佣金 ｜ (f) 利潤分享 ｜ (g) 認股權",
+        "B. (e) 件薪 ｜ (f) 花紅 ｜ (g) 認股權",
+        "C. (e) 佣金 ｜ (f) 績效薪酬 ｜ (g) 利潤分享"
+      ],
+      ans: 0,
+      exp: "正確。(e) 按賺取的銷售收益或售出產品數量支付的是「佣金」；(f) 撥出利潤某百分比作獎勵的是「利潤分享」；(g) 在特定時間內以指定價格購買公司股票的是「認股權」。"
+    },
+    {
+      q: "3. 一家藥房只以「純佣金（無底薪）」作為售貨員的報酬。這種做法可能會造成哪三個問題？",
+      opts: [
+        "A. (1) 售貨員只專注推銷佣金較高或廣為顧客熟悉的產品，忽略其他產品；(2) 可能導致過於進取或具威嚇性的銷售行為，引致顧客流失；(3) 售貨員因收入極不穩定而欠缺安全感，令員工流失率上升",
+        "B. (1) 藥房每月的固定底薪開支變得極為沉重；(2) 售貨員完全不清楚努力推銷與個人回報之間的關係，激勵效果最弱；(3) 售貨員在行使佣金後會成為藥房的股東並奪取公司控制權",
+        "C. (1) 售貨員會拒絕向任何進店顧客推銷高價藥品；(2) 佣金必須等到財政年度結束結算全年利潤後才能派發，出現嚴重滯後；(3) 這種報酬方式只適用於上市有限公司"
+      ],
+      ans: 0,
+      exp: "正確。只以佣金作為售貨員報酬的三大壞處是：(i) 部分產品可能會被忽略；(ii) 可能導致過於進取的銷售行為（導致顧客流失）；以及 (iii) 僱員欠缺安全感（令員工流失率上升）。"
+    },
+    {
+      q: "4. 新潮玩具公司的廠房工人一直以「件薪」支薪。公司計劃投放資金在新的生產技術上，且上月收到大量顧客投訴與旺季生產的產品出現瑕疵有關。為何件薪工人會抗拒新技術及導致瑕疵品增加？",
+      opts: [
+        "A. 因為件薪工人的收入與產量無關，學習新技術需要額外加班而無加班費；而旺季瑕疵品增加是因為工人只領取固定月薪而故意放慢生產速度",
+        "B. 因為工人熟習新技術需時，期間生產速度減慢會令件薪收入減少，故抗拒新技術；而件薪只按生產數量支薪，工人在旺季為賺取更多收入只着重生產量而忽略產品質量，導致次貨增加",
+        "C. 因為件薪制度規定必須在財政年度結束時才根據公司整體利潤派發報酬，出現嚴重滯後，令工人在旺季無心工作而生產大量次貨"
+      ],
+      ans: 1,
+      exp: "正確。件薪的三大壞處為：(i) 忽略品質（只着重生產量而忽略質量，導致次貨增加）；(ii) 僱員不願轉換崗位；及 (iii) 僱員可能抗拒新科技（熟習新科技需時，期間收入或會減少）。"
+    },
+    {
+      q: "5. 辨別以下陳述是否正確：「採用『件薪』向工廠工人支薪，既有助提升企業的生產力，亦能直接提高企業的銷售額。」",
+      opts: [
+        "A. 正確 — 工廠工人每多生產一件貨品便代表市場上自動多售出一件貨品，因此件薪能同時直接提高生產力與銷售收益",
+        "B. 不正確 — 採用『件薪』有助鼓勵工人提高工作效率，繼而提升企業的『生產力』，但不能提高『銷售額』（有助提高銷售收益的是向銷售人員支付的『佣金』）",
+        "C. 不正確 — 採用『件薪』只能直接提高零售分店的『銷售額』，但完全無助提升工廠生產線的『生產力』或工作效率"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。課本特別提示：採用件薪有助提升企業的生產力，但不能提高銷售額；有助提高銷售收益的是佣金。"
+    },
+    {
+      q: "6. 辨別以下陳述是否正確：「由於『認股權』並沒有直接向僱員派發現金，所以認股權屬於非金錢報酬，而且所有商業擁有權類型均可採用。」",
+      opts: [
+        "A. 正確 — 認股權只是給予僱員一張榮譽嘉許狀，並不涉及任何財務利益，因此獨資企業與合夥均可向員工發放認股權",
+        "B. 不正確 — 雖然僱員並沒有直接獲得現金，但認股權讓僱員以指定價格購買公司股票並透過股息或資本利潤賺取回報，仍算是『金錢報酬』；而且只適用於『有限公司』",
+        "C. 不正確 — 認股權屬於按時計算的『底薪』一部分，只適用於政府部門的公務員，私營有限公司不能採用認股權"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。課本明確指出：雖然僱員並沒有直接獲得金錢，但認股權仍算是金錢報酬（按表現計算），而且這種方式只適用於有限公司。"
+    },
+    {
+      q: "7. 大亨銀行發現大批薪金早已達到職級「頂薪點」的資深行政支援員工缺乏努力工作的動力。人力資源總監提議引入「花紅」，市場總監則提議採用「績效薪酬」，但財務總監反對以績效薪酬取代花紅。下列哪項是財務總監反對的合理原因？",
+      opts: [
+        "A. 因為『績效薪酬』會永久成為僱員底薪的一部分，對銀行構成沉重的『長遠財政負擔』；而『花紅』是一次性支付且不保證派發，在業績不理想時可少發，財政負擔較輕",
+        "B. 因為『花紅』會永久計入僱員的每月底薪基數內，而『績效薪酬』則只是一次性派發的年終獎勵，完全不會增加銀行未來的固定人工成本",
+        "C. 因為『績效薪酬』規定所有合資格僱員不論表現優劣都必須獲發完全相同金額的加薪，因此激勵效果遠遜於按年資派發的底薪"
+      ],
+      ans: 0,
+      exp: "正確。績效薪酬與花紅不同：花紅是一次性支付的款項且不保證派發（財政負擔較輕）；而績效薪酬會成為僱員底薪的一部分，會對企業構成長遠的財政負擔。"
+    },
+    {
+      q: "8. 為何「利潤分享」制度雖然能使僱員和企業的目標一致，但對個別僱員的「激勵效果卻較弱」？",
+      opts: [
+        "A. 因為利潤分享規定只能在僱員正式退休當天才能領取，而且領取時必須先向公司支付指定價格購買公司股票",
+        "B. 因為在利潤分享制度下，所有合資格的僱員通常都會獲發相同金額的利潤，而且僱員可能會認為自己的個人表現對整間企業利潤的影響微不足道",
+        "C. 因為利潤分享會成為僱員每月底薪的一部分，不論企業當年錄得盈利還是巨額虧損，都必須按固定金額每月向僱員發放"
+      ],
+      ans: 1,
+      exp: "正確。在利潤分享制度下，所有合資格僱員通常都會獲發相同金額的利潤，且僱員可能認為個人表現對企業整體利潤的影響微不足道，加上在財政年度結束時才獲發（出現滯後），因此激勵效果較弱。"
+    }
+  ];
+  let curMQ = 0;
+  function renderMonQuiz() {
+    const it = monQuizItems[curMQ];
+    document.getElementById('monQuizProg').textContent = `題目 ${curMQ + 1} / ${monQuizItems.length}`;
+    document.getElementById('monQuizQ').innerHTML = it.q;
+    document.getElementById('monQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkMonQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('monQuizFb').innerHTML = '';
+  }
+  function checkMonQuiz(idx) {
+    const it = monQuizItems[curMQ];
+    const fb = document.getElementById('monQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curMQ=(curMQ+1)%monQuizItems.length;renderMonQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderMonQuiz();
+
+  // ====== 2. 按時 vs 按表現比較 ＆ 認股權模擬 ======
+  const compPayData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:17px">1. 按時計算報酬 vs 按表現計算報酬 的好處和壞處比較：</b>
+      <table class="comp-table" style="font-size:15px;margin-top:8px">
+        <thead><tr><th style="width:16%">比較項目</th><th style="width:42%">按時計算報酬（如底薪）</th><th style="width:42%">按表現計算報酬（如件薪／佣金／花紅）</th></tr></thead>
+        <tbody>
+          <tr><td><b>好處</b></td><td>• <b>(i) 減少僱員之間的競爭</b>：由於報酬不是與表現掛鈎，僱員之間的競爭得以減少，有助建立和諧的工作環境。<br>• <b>(ii) 簡單和節省成本</b>：比較簡單易明，企業可省卻評估僱員表現的行政費用和麻煩。<br>• <b>(iii) 方便規劃和預算</b>：會較容易規劃和預算人工成本。</td><td>• <b>(i) 激勵效果較強</b>：按僱員表現的優劣來計算報酬，能大大加強僱員改善工作表現的動力。<br>• <b>(ii) 較容易吸引優秀人才</b>：較能吸引優秀的人才，他們能透過卓越的工作表現賺取更多報酬。</td></tr>
+          <tr><td><b>壞處</b></td><td>• <b>(i) 激勵效果較弱</b>：所得報酬與工作表現無關，難以激勵僱員努力工作。<br>• <b>(ii) 對優秀人才的吸引力較低</b>：較難吸引優秀人才，他們難以透過卓越表現賺取更多報酬。</td><td>• <b>(i) 忽略某些表現範疇</b>：僱員可能只專注於用作評核表現的範疇，而忽略其他對企業長遠發展非常重要的表現範疇。<br>• <b>(ii) 僱員之間競爭激烈</b>：若過度依賴按表現計酬，或會加劇僱員之間的競爭，損害工作環境的和諧。<br>• <b>(iii) 取決於員工考績制度是否有效</b>：當考績制度未能恰當和公平地評核表現時，獲發的報酬便會存在不公。</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--teal);font-size:17px">2. 重要概念區分：「花紅」vs「績效薪酬」vs「利潤分享」</b>
+      <table class="comp-table" style="font-size:14.5px;margin-top:8px">
+        <thead><tr><th>比較維度</th><th>花紅 (Bonus)</th><th>績效薪酬 (Merit Pay)</th><th>利潤分享 (Profit-sharing)</th></tr></thead>
+        <tbody>
+          <tr><td><b>發放形式與底薪關係</b></td><td>給予表現良好僱員的<b>一次性</b>額外報酬，<b>不會</b>成為底薪的一部分。</td><td>根據表現給予的<b>加薪</b>，一般<b>會成為僱員底薪的一部分</b>。</td><td>撥出利潤的某個百分比作獎勵，<b>不會</b>成為底薪的一部分。</td></tr>
+          <tr><td><b>計算依據與個人差異</b></td><td>與企業財務業績和<b>僱員個人工作表現掛鈎</b>（因應個人表現獲發不同金額）。</td><td>與<b>僱員個人考績表現掛鈎</b>（表現越好加薪幅度越高）。</td><td>與<b>企業整體利潤掛鈎</b>（所有合資格僱員通常獲發<b>相同金額</b>的利潤）。</td></tr>
+          <tr><td><b>企業財政負擔</b></td><td><b>財政負擔較輕</b>（不保證派發，業績不理想或表現不達標可發放較少）。</td><td>構成<b>長遠的財政負擔</b>（因為永久成為底薪的一部分）。</td><td><b>財政負擔較輕</b>（若某年未能賺取利潤便不用分享）。</td></tr>
+          <tr><td><b>激勵效果與滯後</b></td><td>激勵效果<b>明顯</b>；但有<b>滯後</b>及令僱員產生<b>不實際的期望</b>。</td><td>激勵效果<b>強</b>；無滯後。</td><td>激勵效果<b>弱</b>（所有合資格僱員獲發相同金額，且覺個人表現對利潤影響微不足道）；有<b>滯後</b>及利潤可被操控。</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17px">3. 重要概念區分：「件薪 (Piece Rate)」vs「佣金 (Commission)」</b><br>
+      • <b>件薪</b>：就僱員<b>每件生產的產品或每項完成的工作</b>所支付的報酬（如製衣廠縫紉工人、快遞公司送貨員）。有助鼓勵僱員提高工作效率以<b>提升企業的生產力（但不能提高銷售額）</b>；壞處是僱員往往只着重生產量而<b>忽略品質、不願轉換崗位及可能抗拒新科技</b>。<br>
+      • <b>佣金</b>：按僱員<b>賺取的銷售收益（某個百分比）或售出的產品數量</b>而支付的報酬（常用於銷售人員）。激勵效果強並<b>有助提高企業的銷售收益</b>；壞處是<b>部分產品可能會被忽略、可能導致過於進取的銷售行為（導致顧客流失），以及若只以佣金作報酬會令僱員欠缺安全感</b>。
+    </div>`
+  ];
+  function renderCompPay(idx) {
+    document.querySelectorAll('#compPayChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('compPayBox').innerHTML = compPayData[idx];
+  }
+  renderCompPay(0);
+
+  function updateOptSim() {
+    const mktPrice = +document.getElementById('optPriceSlider').value;
+    document.getElementById('lblOptPrice').textContent = `每股 $${mktPrice}`;
+    const strikePrice = 10;
+    const shares = 5000;
+    const diff = mktPrice - strikePrice;
+    const totalGain = Math.max(0, diff * shares);
+
+    document.getElementById('optSimOutput').innerHTML = `
+      <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1.5px solid ${diff>0?'var(--green)':'var(--red)'};font-size:14.5px;line-height:1.7">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+          <span><b>認股權指定購買價：</b>每股 $10（共 5,000 股）</span>
+          <span class="badge ${diff>0?'b-green':'b-red'}" style="margin:0">${diff > 0 ? '值得行使認股權' : '市價低於或等於指定價（不會行使）'}</span>
+        </div>
+        ${diff > 0 ? `
+          <div>• <b>行使認股權成為公司股東</b>：僱員可以每股 $10（合共 $50,000）購買市值每股 $${mktPrice}（合共 $${(mktPrice*shares).toLocaleString()}）的公司股票，帳面資本利潤達 <b style="color:var(--green);font-size:16.5px">$${totalGain.toLocaleString()}</b>。</div>
+          <div style="margin-top:6px;color:var(--ink-sec)"><b>認股權的好處體現：</b>(1) <b>激勵僱員的長遠方法</b>：僱員須在一年後才能行使認股權，為了在日後賺取更高回報，會有動力努力工作以推高公司長遠的股價；(2) <b>提高忠誠度和投入度</b>：行使後僱員成為公司的股東（東主），享有財務利益，令他們更投入工作。</div>
+        ` : `
+          <div style="color:var(--red)">• <b>認股權失去價值</b>：由於一年後股票市價（$${mktPrice}）低於或等於指定購買價（$10），僱員不會行使認股權（回報 ＝ <b>$0</b>）。</div>
+          <div style="margin-top:6px;color:var(--ink-sec)"><b>認股權的壞處體現：</b><b>激勵效果視乎股價而定</b>。公司的股價會受業績以外的因素影響；如果公司的股價受宏觀經濟因素或行業因素影響而下跌，便會大幅降低認股權的激勵效果。</div>
+        `}
+      </div>`;
+  }
+  updateOptSim();
+
+  // 對稱深度設計的 6 道按時與按表現計算報酬概念判斷題
+  const compQuizItems = [
+    {
+      q: "1. 辨別以下陳述是否正確：「一般而言，按時計算報酬的激勵效果比按表現計算報酬強。」",
+      opts: [
+        "A. 正確 — 按時計算報酬的金額在每段指定時間內固定不變，最能推動僱員付出額外努力去超額完成工作目標",
+        "B. 不正確 — 按時計算報酬的僱員所得報酬與工作表現無關，不會因表現良好而獲發較多報酬，因此其激勵效果比按表現計算報酬弱",
+        "C. 不正確 — 按時計算報酬與按表現計算報酬兩者的激勵效果完全相同，都無法激勵僱員改善工作表現"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。由於按時計算報酬的金額與工作表現無關，其激勵效果比與表現直接掛鈎的按表現計算報酬弱。"
+    },
+    {
+      q: "2. 辨別以下陳述是否正確：「與按時計算報酬相比，按表現計算報酬會令僱員之間出現較多的競爭，但同時較容易吸引優秀人才。」",
+      opts: [
+        "A. 正確 — 按表現計算報酬讓有能力的優秀人才可透過卓越表現賺取更多報酬，但過度依賴亦會加劇僱員之間的競爭，損害工作環境和諧",
+        "B. 不正確 — 按時計算報酬才會導致僱員之間出現最激烈的惡性競爭，而按表現計算報酬則能完全消除同事之間的任何競爭",
+        "C. 不正確 — 按表現計算報酬對優秀人才的吸引力極低，因為卓越的工作表現並不會為他們帶來任何額外的金錢回報"
+      ],
+      ans: 0,
+      exp: "正確。按表現計算報酬的好處是激勵效果較強及較容易吸引優秀人才；但壞處是會令僱員之間競爭激烈，損害工作環境的和諧。"
+    },
+    {
+      q: "3. 辨別以下陳述是否正確：「企業只會按月（以月薪形式）向僱員發放底薪。」",
+      opts: [
+        "A. 正確 — 根據香港僱傭慣例，所有行業的底薪都必須一律按月計算及發放，並不存在按小時或按日計算的底薪",
+        "B. 不正確 — 底薪是僱員提供服務所換取的定額報酬，除了可以『月薪』支付外，也可以按『時薪（如清潔工人）』或『日薪（如展銷會銷售人員）』支付",
+        "C. 不正確 — 底薪只能根據僱員每件生產的產品數量按件計算發放，絕不可以按月、按日或按小時等時間單位計算"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。底薪是按時計算的定額報酬，可以時薪、日薪或月薪支付，並非只會按月發放。"
+    },
+    {
+      q: "4. 辨別以下陳述是否正確：「花紅是向工作表現良好的僱員發放的一次性報酬，但績效薪酬不是。」",
+      opts: [
+        "A. 正確 — 花紅是底薪以外的一次性額外報酬（不會成為底薪一部分）；而績效薪酬則是根據表現給予的加薪，一般會成為僱員底薪的一部分",
+        "B. 不正確 — 績效薪酬才是一次性支付的年終額外款項，而花紅則是永久計入僱員每月底薪基數內的固定加薪",
+        "C. 不正確 — 花紅和績效薪酬兩者都屬於非金錢報酬中的有薪休假福利，並不會以任何金錢形式向僱員發放"
+      ],
+      ans: 0,
+      exp: "正確。花紅是一次性支付的額外款項；績效薪酬則是根據表現而給予的加薪，一般會成為僱員底薪的一部分。"
+    },
+    {
+      q: "5. 某小型貿易公司決定「只按時計算僱員的報酬（只發放固定月薪）」。這種做法對該小型貿易公司有甚麼好處？",
+      opts: [
+        "A. (1) 可提供全行最強烈的激勵效果推動員工超額推銷；(2) 當公司某年錄得虧損時可隨時拒絕支付該月的固定底薪以減輕財政負擔",
+        "B. (1) 減少僱員之間的競爭，有助建立和諧的工作環境；(2) 計算和管理方法簡單，可省卻評估僱員表現的行政費用和麻煩；(3) 方便公司規劃和預算人工成本",
+        "C. (1) 可直接將員工變成貿易公司的股東以提升忠誠度；(2) 最能吸引渴望透過卓越個人業績賺取高額獎金的頂尖銷售人才加盟"
+      ],
+      ans: 1,
+      exp: "正確。按時計算報酬的三大好處為：(i) 減少僱員之間的競爭（建立和諧工作環境）；(ii) 簡單和節省成本（省卻評估表現的行政費用和麻煩）；及 (iii) 方便規劃和預算人工成本。"
+    },
+    {
+      q: "6. 某跨國運動鞋生產及零售商過度依賴「按表現計算報酬」的方式向工廠工人及零售店員發放報酬。這會帶來甚麼壞處？",
+      opts: [
+        "A. (1) 僱員可能只專注於用作評核表現的範疇，而忽略其他對企業長遠發展重要的表現範疇；(2) 加劇僱員之間的競爭，損害工作環境和諧；(3) 取決於員工考績制度是否公平有效",
+        "B. (1) 計算和管理方法過於簡單，完全無須倚賴員工考績制度；(2) 僱員所得報酬與工作表現毫無關聯，導致所有員工失去努力工作的動力",
+        "C. (1) 令企業完全無法吸引任何具備能力的優秀人才應徵；(2) 所有的按表現計算報酬都必須永久計入底薪，完全沒有任何靈活性"
+      ],
+      ans: 0,
+      exp: "正確。按表現計算報酬的三大壞處為：(i) 忽略某些表現範疇；(ii) 僱員之間競爭激烈（損害工作環境和諧）；以及 (iii) 取決於員工考績制度是否有效。"
+    }
+  ];
+  let curCPQ = 0;
+  function renderCompQuiz() {
+    const it = compQuizItems[curCPQ];
+    document.getElementById('compQuizProg').textContent = `題目 ${curCPQ + 1} / ${compQuizItems.length}`;
+    document.getElementById('compQuizQ').innerHTML = it.q;
+    document.getElementById('compQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkCompQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('compQuizFb').innerHTML = '';
+  }
+  function checkCompQuiz(idx) {
+    const it = compQuizItems[curCPQ];
+    const fb = document.getElementById('compQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curCPQ=(curCPQ+1)%compQuizItems.length;renderCompQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderCompQuiz();
+
+  // ====== 3. 非金錢報酬與僱員福利目的 ======
+  const nmCatalog = [
+    {
+      title: "方式 1：僱員福利（附帶福利／附加福利）",
+      badge: "最主要的非金錢報酬方式",
+      def: "非金錢報酬是指以金錢以外的方式給予僱員的報酬。當中「僱員福利（又稱附帶福利或附加福利 Fringe Benefits）」是最主要的非金錢報酬方式，常見類別包括：",
+      detail: `
+        <table class="comp-table" style="font-size:14.5px;margin-top:6px">
+          <thead><tr><th style="width:22%">僱員福利類別</th><th>具體例子與說明</th></tr></thead>
+          <tbody>
+            <tr><td><b>(1) 有薪休假</b></td><td>指僱員可就非工作時間獲取報酬，例子包括：<b>休假和年假、有薪病假、產假和侍產假、生日假、婚假和喪假、考試假</b>。</td></tr>
+            <tr><td><b>(2) 保險</b></td><td>• <b>醫療保險</b>：涵蓋僱員的醫療開支。<br>• <b>人壽保險</b>：僱員不幸離世時向家屬支付補償金。</td></tr>
+            <tr><td><b>(3) 退休福利</b></td><td>向退休僱員支付一筆合理的款項（如<b>退休金 Pension</b> 或強積金）或提供其他福利，以支援他們的退休生活。</td></tr>
+            <tr><td><b>(4) 工作上的彈性</b></td><td>實施<b>彈性上班時間</b>或允許僱員<b>在家工作</b>，這有助僱員維持<b>工作和生活的平衡</b>，從而提升士氣。</td></tr>
+            <tr><td><b>(5) 其他福利</b></td><td>• <b>員工折扣</b>（如購買公司產品折扣優惠、員工及家屬旅遊優惠）<br>• <b>員工設施</b>（如員工飯堂和健身中心）<br>• <b>康樂活動和社交聚會</b>（如公司旅行、聖誕派對）<br>• <b>津貼</b>（如教育和房屋津貼、免費身體檢查服務）</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    {
+      title: "方式 2 至 4：其餘三種非金錢報酬方式",
+      badge: "除僱員福利外的非金錢報酬",
+      def: "除了僱員福利外，企業還可向僱員提供以下三種非金錢報酬（當試題問及「除僱員福利外，可提供哪些種類的非金錢報酬」時，必須回答這三項）：",
+      detail: `
+        <p style="margin:0 0 10px">• <b>方式 2：培訓和發展機會 (Training and Development Opportunities)</b><br>
+        企業可向僱員提供更多培訓和發展機會（例如每月向僱員提供網上培訓課程，並給予僱員更多<b>晉升機會／良好晉升前景</b>），以表達公司對僱員個人成長和事業發展的重視。</p>
+        <p style="margin:0 0 10px">• <b>方式 3：認同和表揚 (Recognition and Praise)</b><br>
+        企業可透過<b>口頭讚賞</b>，表揚僱員對工作所付出的努力；此外也可設立不同的獎項（例如<b>最佳售貨員獎、每月最佳員工獎</b>等），頒發獎座或嘉許狀以肯定僱員對企業的貢獻。</p>
+        <p style="margin:0">• <b>方式 4：工作自主權和責任 (Job Autonomy and Responsibility)</b><br>
+        有些僱員渴望從工作中獲得<b>成就感</b>。企業要滿足這方面的渴求，可以給予他們更多<b>工作自主權（容許他們自行作出決策）</b>，或透過授權讓他們<b>承擔更多責任</b>，或給予一些<b>較具挑戰性的工作</b>。</p>
+      `
+    },
+    {
+      title: "提供僱員福利的 5 個目的",
+      badge: "第 3.4B 節核心重點",
+      def: "現時很多企業都會以僱員福利作為建立優質工作團隊的策略工具。提供僱員福利的五個目的如下：",
+      detail: `
+        <p style="margin:0 0 8px">• <b>(1) 符合法例要求</b>：香港法例要求的僱員福利例子包括：<b>法定假期、休息日、病假、產假、侍產假，以及強制性公積金（強積金）計劃</b>。</p>
+        <p style="margin:0 0 8px">• <b>(2) 建立良好僱主的形象</b>：提供優厚福利（如獲頒「卓越僱主大獎」獲媒體廣泛報道）可建立良好僱主形象，有助在人才爭奪戰中突圍而出，<b>吸引人才加入企業</b>。</p>
+        <p style="margin:0 0 8px">• <b>(3) 滿足僱員的安全和社交需要</b>：提供福利可保障僱員的<b>身心健康</b>（例如提供<b>醫療保險</b>滿足<b>安全需要</b>；舉辦<b>康樂活動</b>滿足<b>社交需要</b>），最終提升僱員的生產力及對企業的滿意度。</p>
+        <p style="margin:0 0 8px">• <b>(4) 提高僱員的忠誠度</b>：透過各種福利表達對<b>僱員及其家庭成員的關心</b>，有助提高僱員對企業的歸屬感和忠誠度，鞏固僱員關係。</p>
+        <p style="margin:0">• <b>(5) 作為金錢報酬的補充</b>：如金錢報酬不能滿足某些需要，或有些企業在聘請僱員時<b>只能給予較低的薪金（如最低工資），便可提供更優厚的僱員福利，作為較低薪金的補償</b>以吸引和留住人才。</p>
+      `
+    }
+  ];
+
+  function renderNm(idx) {
+    document.getElementById('nmNavList').innerHTML = nmCatalog.map((n, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderNm(${i})">
+        <span>${n.title}</span>
+      </button>
+    `).join('');
+    const n = nmCatalog[idx];
+    document.getElementById('nmDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${n.title}</h3>
+        <span class="badge ${idx===2?'b-teal':'b-blue'}">${n.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${n.def}</p>
+      <div class="case-box">${n.detail}</div>
+    `;
+  }
+  renderNm(0);
+
+  const flightAdItems = [
+    { txt: "1. 13 個月薪金", type: "金錢報酬", exp: "屬於按時計算的基本薪金（底薪），直接以金錢支付，屬<b>金錢報酬</b>。" },
+    { txt: "2. 年終花紅", type: "金錢報酬", exp: "按表現發放的一次性額外金錢款項，屬<b>金錢報酬</b>。" },
+    { txt: "3. 彈性輪更安排", type: "非金錢報酬", exp: "屬於僱員福利中的「工作上的彈性」，有助維持工作與生活平衡，屬<b>非金錢報酬</b>。" },
+    { txt: "4. 達國際水平的培訓課程", type: "非金錢報酬", exp: "屬於非金錢報酬中的「培訓和發展機會」，屬<b>非金錢報酬</b>。" },
+    { txt: "5. 良好晉升前景", type: "非金錢報酬", exp: "屬於非金錢報酬中的「培訓和發展機會（事業發展）」，屬<b>非金錢報酬</b>。" },
+    { txt: "6. 安全、合作性高的工作環境", type: "非金錢報酬", exp: "良好的工作環境屬於金錢以外的回報，屬<b>非金錢報酬</b>。" },
+    { txt: "7. 飛行／地勤津貼", type: "金錢報酬", exp: "直接以現金形式發放的工作津貼，屬<b>金錢報酬</b>。" },
+    { txt: "8. 全面的員工保險和醫療保障計劃", type: "非金錢報酬", exp: "屬於僱員福利中的「保險福利」，滿足安全需要，屬<b>非金錢報酬</b>。" },
+    { txt: "9. 員工及家屬旅遊優惠", type: "非金錢報酬", exp: "屬於僱員福利中的「員工折扣優惠」，表達對員工及家屬關心，屬<b>非金錢報酬</b>。" }
+  ];
+  function checkFlightAd(idx) {
+    const it = flightAdItems[idx];
+    const isMon = it.type === '金錢報酬';
+    document.getElementById('flightAdFb').innerHTML = `<b style="color:${isMon?'var(--primary)':'var(--teal)'};font-size:16.5px">「${it.txt}」屬於：【${it.type}】</b><br>${it.exp}`;
+  }
+  document.getElementById('flightAdList').innerHTML = flightAdItems.map((it, i) => `
+    <div class="ad-line" onclick="checkFlightAd(${i})">
+      <span>${it.txt}</span>
+      <span class="badge ${it.type==='金錢報酬'?'b-blue':'b-teal'}" style="margin:0;flex-shrink:0">點擊檢視</span>
+    </div>
+  `).join('');
+
+  // 對稱深度設計的 6 道非金錢報酬與僱員福利目的挑戰題
+  const nmQuizItems = [
+    {
+      q: "1. 偉遜是一家小型貿易公司的東主，見員工每晚加班工作到深夜，擔心影響員工身心健康及引致辭職，決定向員工提供「彈性工作安排（可在家工作）」及「每星期額外半天休假」。從偉遜的角度而論，為員工提供上述福利有哪些好處？",
+      opts: [
+        "A. 可在短期內立即大幅節省公司的人工成本，並免除向員工提供法定強積金供款的法律責任",
+        "B. 可建立良好僱主的形象、提高員工的士氣和忠誠度（減少辭職），並滿足員工需要，讓他們有更多時間與家人相處以維持工作與生活平衡",
+        "C. 可將所有員工的固定月薪轉化為純佣金制度，迫使員工在周末假期繼續留在家中超時工作"
+      ],
+      ans: 1,
+      exp: "正確。提供彈性工作安排與額外休假，有助維持工作和生活的平衡，從而建立良好僱主形象、提高士氣和忠誠度及滿足員工需要（注意 A 錯誤：提供額外休假不會在短期內節省人工成本）。"
+    },
+    {
+      q: "2. 下列哪一組全部屬於「香港法例強制要求」企業必須向合資格僱員提供的指定僱員福利？",
+      opts: [
+        "A. 法定假期、休息日、病假、產假、侍產假，以及強制性公積金（強積金）計劃",
+        "B. 生日假、婚假、考試假、免費周年身體檢查、公司日本旅行，以及員工購物五折優惠",
+        "C. 員工飯堂、健身中心設施、人壽保險、房屋津貼、教育津貼，以及每月最佳員工獎座"
+      ],
+      ans: 0,
+      exp: "正確。課文第 3.4B 節列明，香港法例要求的僱員福利例子包括：法定假期、休息日、病假、產假、侍產假，以及強制性公積金（強積金）計劃（而 B 和 C 均屬於僱主自願提供的額外福利或非金錢報酬）。"
+    },
+    {
+      q: "3. 一家巴士公司希望透過提供「附帶福利（僱員福利）」來滿足巴士車長的「社交需要 (Social Needs)」。下列哪兩項福利最能達到這個目的？",
+      opts: [
+        "A. 向車長發放雙倍的超時駕駛現金津貼，並為每位車長購買個人住院醫療保險及意外人壽保險",
+        "B. 在巴士總站設立設備完善的車長休息室及員工飯堂（方便車長用膳休息時與同事交流），並定期舉辦公司旅行、周年晚宴或球類比賽等康樂社交活動",
+        "C. 根據車長全年的安全駕駛紀錄向他們派發年終表現花紅，並向服務滿十年的車長授予公司認股權"
+      ],
+      ans: 1,
+      exp: "正確。設立員工飯堂／休息室等員工設施，以及舉辦公司旅行、聖誕派對等康樂活動和社交聚會，能促進車長與同事之間的人際交流與聯繫，滿足他們的「社交需要」（注意 A 的醫療保險滿足的是安全需要，而超時津貼、花紅和認股權屬於金錢報酬）。"
+    },
+    {
+      q: "4. 香港一家廣告公司計劃透過削減「僱員福利」來節省成本，但承諾不會減少「其他種類的非金錢報酬」。除了僱員福利外，該廣告公司還可向僱員提供哪三種非金錢報酬？",
+      opts: [
+        "A. 可向僱員提供『底薪』、『年終表現花紅』以及『利潤分享』這三種無須計入僱員福利的報酬方式",
+        "B. 可向僱員提供『有薪年假』、『團體醫療保險』以及『彈性上班時間』這三種成本較低的報酬方式",
+        "C. 可向僱員提供『培訓和發展機會（如培訓課程及晉升機會）』、『認同和表揚（如口頭讚賞或最佳員工獎）』以及『工作自主權和責任（如容許自行作決策或給予具挑戰性工作）』"
+      ],
+      ans: 2,
+      exp: "正確。非金錢報酬共有四種方式：除去 (1) 僱員福利外，其餘三種正是 (2) 培訓和發展機會、(3) 認同和表揚、以及 (4) 工作自主權和責任（注意 A 屬於金錢報酬；B 仍屬於僱員福利）。"
+    },
+    {
+      q: "5. 辨別以下陳述是否正確：「向僱員提供福利可保障他們的心理健康，但無助促進身體健康狀況。」",
+      opts: [
+        "A. 正確 — 僱員福利只包括口頭讚賞和頒發獎座，只能滿足員工的心理自尊需要，對身體健康毫無幫助",
+        "B. 不正確 — 企業向僱員提供醫療保險、免費身體檢查服務、健身中心設施以及充足的有薪病假與休息日等福利，能同時保障和促進僱員的『身體健康』與心理健康",
+        "C. 不正確 — 向僱員提供任何附帶福利都會增加他們的工作壓力，必然會同時損害他們的身體健康與心理健康"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。企業可透過提供僱員福利（如醫療保險、免費身體檢查、健身設施及休假），全面保障僱員的「身心健康（身體健康與心理健康）」。"
+    },
+    {
+      q: "6. 辨別以下陳述是否正確：「非金錢報酬是求職者選擇工作時最主要的考慮因素。」",
+      opts: [
+        "A. 正確 — 絕大多數求職者應徵工作都只為了獲得上司的口頭讚賞，完全不介意公司是否支付基本薪金",
+        "B. 不正確 — 求職者選擇工作時，最主要考慮的是『金錢報酬（特別是底薪）』以維持生活水平；非金錢報酬則是作為金錢報酬的補充",
+        "C. 不正確 — 求職者選擇工作時完全不會考慮金錢報酬或非金錢報酬，只會考慮公司的槓桿比率是否低於 50%"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。課文第 3.3A 及 3.5 節指出，求職者選擇工作時主要考慮的是「金錢報酬（底薪）」，以支付生活開支養活自己和家人；非金錢報酬則可作為金錢報酬的補充。"
+    }
+  ];
+  let curNMQ = 0;
+  function renderNmQuiz() {
+    const it = nmQuizItems[curNMQ];
+    document.getElementById('nmQuizProg').textContent = `題目 ${curNMQ + 1} / ${nmQuizItems.length}`;
+    document.getElementById('nmQuizQ').innerHTML = it.q;
+    document.getElementById('nmQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkNmQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('nmQuizFb').innerHTML = '';
+  }
+  function checkNmQuiz(idx) {
+    const it = nmQuizItems[curNMQ];
+    const fb = document.getElementById('nmQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curNMQ=(curNMQ+1)%nmQuizItems.length;renderNmQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderNmQuiz();
+
+  // ====== 4. 金錢 vs 非金錢好處 ＆ 診斷室 ======
+  const benCompData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17px">1. 提供「金錢報酬」的四項好處：</b><br>
+      • <b>(i) 吸引人才</b>：求職者選擇工作時主要考慮金錢報酬；提供吸引的金錢報酬會較容易招攬人才。<br>
+      • <b>(ii) 有效激勵僱員</b>：可將向僱員提供的報酬與他們付出的努力和工作表現掛鈎，推動僱員努力工作。<br>
+      • <b>(iii) 所有僱員皆可受惠</b>：所有僱員都可受惠於金錢報酬，可使用金錢購買任何想要的東西；相反，<b>部分非金錢報酬（例如產假、侍產假和婚假）未必能惠及所有僱員（如單身人士無法受惠）</b>。<br>
+      • <b>(iv) 幫助僱員維持生活水平</b>：僱員可直接使用金錢報酬來養活自己和家人。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--teal);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--teal);font-size:17px">2. 提供「非金錢報酬」的三項好處：</b><br>
+      • <b>(i) 吸引和留住人才</b>：提供優厚僱員福利的企業較易吸引人才；非金錢報酬也可<b>作為金錢報酬的補充，滿足僱員各方面的需要（例如對得到認同和參與具挑戰性工作的需要等）</b>，有助留住有能力的僱員。<br>
+      • <b>(ii) 提高僱員的忠誠度</b>：向僱員提供多元化的非金錢報酬（如優厚的福利、發展機會和認同等），可讓僱員感受到企業對自己的關心和重視，提高對企業的忠誠度。<br>
+      • <b>(iii) 更為靈活</b>：企業可<b>根據財務預算調整給予僱員的非金錢報酬</b>（例如想節省開支時，可將員工旅行目的地由日本改為泰國）；而且<b>部分非金錢報酬的成本很低，甚或不費分文（例如口頭讚賞和獎座等）</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--green);font-size:15.5px;line-height:1.8">
+      <b style="color:var(--green);font-size:17px">3. 個案應用：最低工資小型餐廳（美琴）的招聘與激勵難題：</b><br>
+      • <b>(1) 支付最低工資屬哪種報酬方式？</b>屬於<b>按時計算的金錢報酬（底薪）</b>，按侍應提供服務的時間（時薪）支付定額報酬。<br>
+      • <b>(2) 餐廳難以負擔較高工資，可提供哪些僱員福利吸引侍應應徵？</b>可提供<b>免費膳食（包伙食）、彈性輪更時間、額外有薪休假（如生日假）、醫療保險或員工用餐折扣優惠</b>，作為較低薪金的補償。<br>
+      • <b>(3) 如何採用按表現計算報酬激勵表現欠佳的大廚？</b>可向大廚提供與餐廳營業額／利潤及大廚考績表現（如出品速度、食物質素、食材成本控制）掛鈎的<b>花紅</b>或<b>績效薪酬</b>。
+    </div>`
+  ];
+  function renderBenComp(idx) {
+    document.querySelectorAll('#benCompChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('benCompBox').innerHTML = benCompData[idx];
+  }
+  renderBenComp(0);
+
+  const diagCases = [
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 A：新潮玩具公司（廠房工人以「件薪」支薪，抗拒新技術及旺季次貨率偏高）</b><br>
+      • <b>1. 為何件薪工人會抗拒使用新技術？如何解決？</b><br>
+      &nbsp;&nbsp;• <b>抗拒原因</b>：工人熟習新技術需時，期間生產速度減慢會令他們的件薪收入減少。<br>
+      &nbsp;&nbsp;• <b>兩項解決措施</b>：(i) 在引入新技術初期，向工人提供<b>保證底薪或過渡期津貼</b>，確保熟習期間收入不減；(ii) 提供充足的<b>新技術操作培訓</b>，並解釋掌握新技術後長遠可提升生產速度及件薪收入。<br>
+      • <b>2. 為何件薪會導致旺季瑕疵品增加？應補充哪種報酬方式？</b><br>
+      &nbsp;&nbsp;• <b>次貨原因</b>：件薪工人為賺取更多收入，往往<b>只着重生產量（求快）而忽略產品質量</b>。<br>
+      &nbsp;&nbsp;• <b>補充報酬方式</b>：提供<b>「底薪」</b>（保障基本穩定收入，減少盲目求快壓力）或與品質檢驗合格率掛鈎的<b>「花紅」</b>作為件薪的補充。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 B：大亨銀行（行政支援員工已達職級頂薪點而缺乏動力，「花紅 vs 績效薪酬」之爭）</b><br>
+      • <b>1. 以「花紅」獎勵行政支援員工的兩個壞處：</b><br>
+      &nbsp;&nbsp;(i) <b>取決於員工考績制度是否有效</b>（行政支援工作較難量化，若考績不公會引發不滿）；(ii) <b>出現滯後</b>（財政年度結束才發放）及可能令員工對來年花紅存有<b>不實際的期望</b>。<br>
+      • <b>2. 財務總監反對以「績效薪酬」取代「花紅」的兩個原因：</b><br>
+      &nbsp;&nbsp;(i) <b>造成長遠的財政負擔</b>：績效薪酬會永久成為底薪的一部分（推高已達頂薪點元老的每月底薪基數），而花紅只是一次性款項且在業績差時可少發；(ii) 行政支援員工屬後勤人員，不會直接為銀行帶來營業收益，永久推高其固定底薪會損害銀行財政狀況。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 C：豐盛手袋經銷商（奢侈品「仕維」vs 中價品牌「永好」薪酬方案及「統一加薪 5%」壞處）</b><br>
+      • <b>1. 為何不應為兩個品牌的售貨員提供相同的薪酬方案？</b><br>
+      &nbsp;&nbsp;因為兩個品牌的目標顧客與銷售工作要求不同：奢侈品「仕維」針對高收入顧客，售價極高但成交件數較少，要求售貨員提供高度個人化及專業尊貴服務（宜設較高底薪加按銷售額百分比計算的佣金）；中價品牌「永好」針對一般大眾，成交件數較多（宜按售出件數計佣）。<br>
+      • <b>2. 為所有員工「統一加薪 5%」的兩個壞處：</b><br>
+      &nbsp;&nbsp;(i) <b>激勵效果弱</b>：統一加薪與售貨員的個人工作表現無關（表現好壞均加薪 5%），難以激勵他們努力推銷；(ii) 永久推高固定底薪成本，<b>增加長遠財政負擔</b>。<br>
+      • <b>3. 建議兩種「不會滯後」的按表現計算報酬方式改善售貨員表現：</b><br>
+      &nbsp;&nbsp;採用<b>「佣金」</b>（按每月賺取的銷售收益百分比或售出手袋數量即時發放）及<b>「按月／按季發放的短期表現花紅」</b>，免卻年終利潤分享的滯後問題。
+    </div>`
+  ];
+  function renderDiagCase(idx) {
+    document.querySelectorAll('#diagCaseChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('diagCaseBox').innerHTML = diagCases[idx];
+  }
+  renderDiagCase(0);
+
+  // 對稱深度設計的 5 道金錢與非金錢好處及高階個案挑戰題
+  const advQuizItems = [
+    {
+      q: "1. 辨別以下陳述是否正確：「所有僱員都能受惠於金錢報酬，但部分非金錢報酬未必能惠及某些僱員。」",
+      opts: [
+        "A. 正確 — 所有僱員都可使用金錢報酬購買任何想要的東西；相反，部分非金錢報酬（例如產假、侍產假和婚假）對於單身或不生育的僱員而言並無用處，未必能惠及所有僱員",
+        "B. 不正確 — 只有公司的高級管理人員才能受惠於金錢報酬，而產假和侍產假等非金錢報酬則能令公司內每一位單身男員工都獲得直接受惠",
+        "C. 不正確 — 金錢報酬不能用來購買日常生活用品，因此所有僱員都無法從金錢報酬中受惠，只有非金錢報酬才能幫助僱員維持生活水平"
+      ],
+      ans: 0,
+      exp: "正確。這是提供金錢報酬的重要好處之一：所有僱員皆可受惠於金錢報酬（可用來購買任何想要的東西），避免出現部分非金錢福利（如產假、侍產假、婚假）不適用於部分僱員的情況。"
+    },
+    {
+      q: "2. 關於企業提供「非金錢報酬」相對於「金錢報酬」在財務管理上的特點，下列哪項描述最為準確？",
+      opts: [
+        "A. 非金錢報酬一經提供便會永久成為僱員每月基本底薪的一部分，即使企業面對嚴重虧損亦絕對不能根據財務預算作出任何調整",
+        "B. 提供非金錢報酬更為靈活，企業可根據財務預算調整給予僱員的非金錢報酬（如更改員工旅行目的地），而且部分非金錢報酬（如口頭讚賞和獎座）成本很低甚或不費分文",
+        "C. 所有非金錢報酬（包括主管的一句口頭讚賞）所需要的財務開支都必定比向全體員工發放雙倍年終現金花紅更加昂貴"
+      ],
+      ans: 1,
+      exp: "正確。課文第 3.5 節指出，提供非金錢報酬的好處之一是「更為靈活」：企業可根據財務預算調整非金錢報酬，且部分非金錢報酬（如口頭讚賞和獎座）成本很低，甚或不費分文。"
+    },
+    {
+      q: "3. 遊戲家是一家上市遊戲公司，發現旗下軟件工程師在員工考績的評分都很好，而且得到不錯的「績效薪酬」，但大多在薪金調整後離職。下列哪項最能解釋「績效薪酬」無法激勵和留住這些軟件工程師的可能原因？",
+      opts: [
+        "A. 因為績效薪酬只適用於非上市的獨資企業，上市遊戲公司向軟件工程師發放績效薪酬屬於違反公司法例的行為",
+        "B. 因為工程師可能認為績效薪酬的加幅仍未能達到市場同業的薪酬水平（或員工考績制度未能公平反映其特殊貢獻），又或者他們更重視工作自主權、參與具挑戰性新遊戲開發及獲得認同表揚等非金錢報酬",
+        "C. 因為績效薪酬規定工程師必須自掏腰包向公司支付現金購買股票，導致工程師在薪金調整後出現個人破產而不得不離職"
+      ],
+      ans: 1,
+      exp: "正確。當金錢報酬（績效薪酬）未能留住高能力專才時，原因可能是加薪後的整體薪金水平仍低於同業競爭對手、考績評核未能拉開差距，或高學歷工程師重視金錢以外的高層次需要（如工作自主權、發展機會與認同表揚）。"
+    },
+    {
+      q: "4. 豐盛手袋經銷商的行政總裁為了改善奢侈品分店售貨員的銷售表現，計劃「為所有員工統一加薪 5%」。從報酬管理的角度分析，這種做法有哪兩個壞處？",
+      opts: [
+        "A. (1) 激勵效果弱，因為統一加薪屬於按時計算的底薪調整，不論售貨員表現好壞均獲加薪 5%，與銷售表現無關；(2) 永久推高全體員工的每月底薪基數，對公司構成長遠的財政負擔",
+        "B. (1) 會導致售貨員之間為了爭奪 5% 的固定底薪而出現極度激烈的惡性搶客競爭；(2) 統一加薪需要經過極為繁複的員工考績計算程序，行政費用最高",
+        "C. (1) 統一加薪屬於只適用於有限公司的認股權計劃，會攤薄行政總裁的股權；(2) 售貨員必須等到十年後才能領取該 5% 的加薪，出現嚴重滯後"
+      ],
+      ans: 0,
+      exp: "正確。為所有員工統一加薪 5% 屬於按時計算報酬（底薪）的調整，其壞處是：(1) 激勵效果弱（所得報酬與個人銷售表現無關，表現欠佳者同樣獲加薪）；及 (2) 永久增加固定底薪開支，造成長遠的財政負擔。"
+    },
+    {
+      q: "5. 新風物流公司的財務經理建議改變薪酬制度：「凍結員工的底薪，改為發出基於『公司周年會計利潤』和『員工考績結果』的年終花紅。」下列哪項是這項薪酬制度改變的缺點？",
+      opts: [
+        "A. 凍結底薪並改發不保證派發的年終花紅，會令員工收入變得不穩定而欠缺安全感；而且年終花紅在財政年度結束時才發放（出現滯後），同時極度取決於員工考績制度是否公平有效及公司利潤會否受外在因素拖累",
+        "B. 這項改變會令公司的固定底薪開支在短期內立即暴增三倍，而且花紅一旦派發便會永久成為員工往後每月底薪的一部分，加重長遠財政負擔",
+        "C. 這項改變會完全消除員工工作表現與個人收入之間的任何掛鈎關係，令表現最優秀的員工與表現最懶散的員工必定獲發完全相同金額的花紅"
+      ],
+      ans: 0,
+      exp: "正確（HKDSE 2018 考題概念）。凍結底薪改發年終利潤及考績花紅的缺點包括：(1) 員工失去底薪穩定增長，收入變得不穩定而欠缺安全感（削弱吸引及留住人才能力）；(2) 取決於員工考績制度是否公平有效；(3) 年終發放出現滯後；(4) 公司會計利潤受外在經濟因素影響（甚至可被管理層操控），員工努力工作亦未必能獲發花紅。"
+    }
+  ];
+  let curADQ = 0;
+  function renderAdvQuiz() {
+    const it = advQuizItems[curADQ];
+    document.getElementById('advQuizProg').textContent = `題目 ${curADQ + 1} / ${advQuizItems.length}`;
+    document.getElementById('advQuizQ').innerHTML = it.q;
+    document.getElementById('advQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkAdvQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('advQuizFb').innerHTML = '';
+  }
+  function checkAdvQuiz(idx) {
+    const it = advQuizItems[curADQ];
+    const fb = document.getElementById('advQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curADQ=(curADQ+1)%advQuizItems.length;renderAdvQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderAdvQuiz();
+
+  // ====== 5. 論點建構問答工作坊 (保留一個能力較弱學生常犯的「解說不足」選項作教學示範) ======
+  const workshopQuestions = [
+    {
+      id: "s1", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 1：康樂離島渡輪公司（提供附帶福利滿足船長的社交需要）", topic: "提供僱員福利的目的：滿足僱員的社交需要", maxMarks: 2,
+      scenario: "「康樂渡輪公司」管理層發現旗下渡輪船長及輪機師日常在駕駛室獨立執勤，缺乏與其他船隊同事交流的機會，容易感到孤立及缺乏歸屬感。公司決定透過提供附帶福利（僱員福利）來滿足船長的「社交需要」。",
+      question: "試以其中一項具體附帶福利為例，描述該渡輪公司可如何透過提供附帶福利，滿足船長的「社交需要」。（2 分）",
+      steps: [
+        { label: "第 1 步：準確提出一項能促進人際互動的「附帶福利」措施（1分）", colorClass: "hl-s1", opts: [
+          { text: "渡輪公司可向每位船長發放雙倍的個人超時航行現金津貼，並為他們購買個人住院醫療保險及意外人壽保險。", score: 0, status: "wrong", comment: "【審題失誤】超時現金津貼屬於金錢報酬，而醫療及人壽保險滿足的是員工的「安全需要」，兩者均無法滿足題目指定要求的「社交需要（人際交往與歸屬感）」。" },
+          { text: "渡輪公司可定期為船長及船員舉辦康樂活動和社交聚會，例如公司旅行、周年晚宴、聖誕派對或船隊球類比賽，或在碼頭設立設備完善的員工飯堂及休息室。", score: 1, status: "best", comment: "【滿分示範】準確提出舉辦康樂活動和社交聚會（或設立員工飯堂及休息室設施）這項能直接促進員工交流的附帶福利。" },
+          { text: "渡輪公司可向船長提供更多不同的附帶福利，讓船長知道公司很關心他們的日常需要。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體附帶福利名稱】只重複了題目「提供附帶福利」的字眼，未有舉出任何能促進人際交流的具體福利例子（如舉辦公司旅行、聖誕派對等康樂活動，或設立員工飯堂）。" }
+        ]},
+        { label: "第 2 步：扣連「渡輪船長」解釋該福利如何滿足其「社交需要」（1分）", colorClass: "hl-s2", opts: [
+          { text: "透過舉辦員工旅行、聚餐或球類比賽，平時在不同航線獨立執勤的船長便有機會與其他船員及管理人員在工餘時間溝通交流並建立同事情誼，從而滿足他們對人際交往與團隊歸屬感的社交需要。", score: 1, status: "best", comment: "【滿分示範】緊扣船長平時獨立執勤的背景，清楚說明康樂聚會如何創造交流機會、建立同事友誼並滿足社交需要。" },
+          { text: "因為參加完公司的康樂活動之後，渡輪船長便會覺得很開心，滿足了他們的需要。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】「覺得很開心」過於口語籠統，必須明確解釋該福利如何「促進船長與其他同事之間的溝通交流、建立友誼與團隊歸屬感」，才算扣準「社交需要」。" },
+          { text: "這能確保船長在不幸患病入院時獲得全額醫療費用賠償，無須擔心醫藥費開支。", score: 0, status: "wrong", comment: "【概念錯誤】獲得醫療費用賠償滿足的是「安全需要」，而非「社交需要」。" }
+        ]}
+      ]
+    },
+    {
+      id: "s2", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 2：安心院舍護理中心（向保健員提供非金錢報酬的好處）", topic: "提供非金錢報酬的好處", maxMarks: 2,
+      scenario: "「安心院舍護理中心」除了向院舍保健員發放底薪及表現花紅等金錢報酬外，亦同時向他們提供多項非金錢報酬（如頒發每月傑出愛心保健員獎座、提供長者復康護理進修課程及完善的員工福利）。",
+      question: "試以其中一項好處為例，解釋該護理中心向保健員提供「非金錢報酬」的好處。（2 分）",
+      steps: [
+        { label: "第 1 步：指出提供「非金錢報酬」的單一核心好處標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "好處之一是保健員可以直接使用口頭讚賞和獎座來購買日常想要的東西，直接幫助他們支付衣食住行開支以維持生活水平。", score: 0, status: "wrong", comment: "【概念錯誤】可用來購買想要的東西並幫助維持生活水平，是提供「金錢報酬」的好處，而非非金錢報酬的好處。" },
+          { text: "好處之一是提供非金錢報酬更為靈活，中心可根據財務預算靈活調整，而且部分非金錢報酬的成本很低甚或不費分文；此外亦有助提高保健員的忠誠度及吸引和留住人才。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.5 節提供非金錢報酬的三大核心好處（更為靈活、提高僱員忠誠度、吸引和留住人才）。" },
+          { text: "好處之一是向院舍保健員提供非金錢報酬，可以為安心院舍護理中心帶來很多正面的幫助。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體好處標題】純粹重複題目字眼，未有明確寫出「更為靈活（可按財務預算調整且部分成本極低）」、「提高僱員的忠誠度」或「吸引和留住人才」等標準好處標題。" }
+        ]},
+        { label: "第 2 步：扣連「安心院舍護理中心」作具體解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "這樣護理中心入面的保健員收到這些非金錢報酬之後，就會更加喜歡在這間院舍工作。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】闡述過於簡略，必須具體說明「中心可按財務預算靈活調整非金錢報酬，且如口頭讚賞與頒發獎座成本極低甚或不費分文」（或說明「讓保健員感受到中心對自己的關心和重視，從而提高忠誠度」）。" },
+          { text: "護理中心可根據每年的財務預算靈活調整給予保健員的非金錢報酬，而且如院長的口頭讚賞及頒發每月傑出愛心保健員獎座等項目成本極低甚或不費分文，卻能滿足保健員對得到認同的需要並提高忠誠度。", score: 1, status: "best", comment: "【滿分示範】緊扣護理中心的獎座與讚賞例子，清楚說明如何按財務預算靈活調整及以極低成本滿足員工受認同需要、提升忠誠度。" },
+          { text: "因為所有求職者在選擇院舍工作時都完全不會考慮基本薪金高低，只會考慮院舍有沒有頒發最佳員工獎座。", score: 0, status: "wrong", comment: "【概念錯誤】求職者選擇工作時最主要考慮的是金錢報酬（底薪），非金錢報酬是作為金錢報酬的補充。" }
+        ]}
+      ]
+    },
+    {
+      id: "s3", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 3：雲端網絡安全上市公司（以認股權獎勵資安工程師的好處）", topic: "按表現計算的金錢報酬：認股權 (Stock Option) 的好處", maxMarks: 2,
+      scenario: "在香港上市的防黑客軟件開發商「盾安網絡安全有限公司」發現旗下資安工程師流失率不斷上升。由於公司股價近年穩步上揚，人力資源經理建議除了績效薪酬外，同時向表現優秀的資安工程師發放「認股權」。",
+      question: "試以其中一項好處為例，解釋以「認股權」獎勵資安工程師的好處。（2 分）",
+      steps: [
+        { label: "第 1 步：指出以「認股權」獎勵僱員的單一核心好處標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "好處之一是認股權是激勵資安工程師的長遠方法，而且在工程師行使認股權成為公司股東後，能大大提高他們對公司的忠誠度和投入度。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.3B 節以認股權獎勵僱員的兩大核心好處：激勵僱員的長遠方法，以及提高僱員的忠誠度和投入度。" },
+          { text: "好處之一是認股權的價值永遠固定不變，完全不會受到股票市場價格波動、宏觀經濟衰退或行業因素所影響。", score: 0, status: "wrong", comment: "【概念錯誤】認股權的激勵效果極度視乎公司股價而定；若股價受宏觀經濟或行業因素影響而下跌，便會大幅降低其激勵效果（這是其壞處）。" },
+          { text: "好處之一是向表現優秀的資安工程師發放認股權，可以鼓勵他們繼續留在網絡安全公司工作。", score: 0, status: "partial", comment: "【常見失分示範：未點出認股權的獨有好處標題】只重複題目「留住他們」的背景，未有明確點出「激勵僱員的長遠方法（須在某段時間後才能行使）」或「行使後成為公司股東／東主，提高忠誠度和投入度」。" }
+        ]},
+        { label: "第 2 步：扣連「上市網絡安全公司的工程師」解釋其運作邏輯（1分）", colorClass: "hl-s2", opts: [
+          { text: "因為資安工程師拿到公司發放的認股權之後，可以賺到更多錢，所以他們就會更努力工作。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了認股權的核心運作機制——必須解釋「工程師須在某段指定時間後才能行使認股權，為了在日後賺取更高回報，會有動力努力工作以推高公司長遠的股價」（或解釋「行使後成為公司股東／東主，故更投入工作」）。" },
+          { text: "由於資安工程師須在某段指定時間後才能行使認股權以指定價格購買公司股票，工程師為了在日後賺取更高回報，會有動力留在公司努力研發防黑客軟件以推高公司長遠的股價；而且行使後成為公司股東，亦能提高忠誠度和投入度。", score: 1, status: "best", comment: "【滿分示範】清楚推演出須在某段時間後才可行使、為賺取更高回報而努力推高長遠股價，以及成為股東提高忠誠度與投入度的完整邏輯。" },
+          { text: "因為工程師在收到認股權當天便必須立即辭職離開公司，才能到銀行將認股權兌換成雙倍的每月基本底薪。", score: 0, status: "wrong", comment: "【概念錯誤】認股權規定員工必須繼續留任至特定時間後才能行使購買公司股票，並非即日辭職兌換底薪。" }
+        ]}
+      ]
+    },
+    {
+      id: "s4", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 4：雲端網絡安全上市公司（除僱員福利外可提供的非金錢報酬）", topic: "非金錢報酬的方式：除僱員福利外的另外三種非金錢報酬", maxMarks: 2,
+      scenario: "承上題，「盾安網絡安全有限公司」現時向資安工程師提供的「僱員福利（如醫療保險、有薪年假、免費健身室）」已經非常優厚，但管理層希望同時向工程師提供「其他種類的非金錢報酬」來留住他們。",
+      question: "除了僱員福利外，試以另外一種「非金錢報酬」為例，舉例說明該公司可向資安工程師提供甚麼非金錢報酬來留住他們。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出「僱員福利以外」的單一非金錢報酬種類名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "公司可向資安工程師提供更高級的團體人壽保險、有薪生日假、員工飯堂以及免費日本員工旅行。", score: 0, status: "wrong", comment: "【審題失誤】人壽保險、有薪休假、員工飯堂及公司旅行全部都屬於「僱員福利」！題目已指明現有僱員福利非常優厚，並明確要求回答「除了僱員福利外」的其他種類非金錢報酬。" },
+          { text: "除了僱員福利外，公司可向資安工程師提供工作自主權和責任，又或者提供培訓和發展機會，以及認同和表揚。", score: 1, status: "best", comment: "【滿分示範】準確避開僱員福利陷阱，點出課文第 3.4A 節僱員福利以外的另外三種非金錢報酬（工作自主權和責任、培訓和發展機會、認同和表揚）。" },
+          { text: "除了僱員福利外，公司還可以向資安工程師提供其他金錢以外的報酬，讓工程師覺得在公司工作很有意義。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體非金錢報酬類別名稱】未能明確寫出課本另外三種非金錢報酬的標準名稱（即「培訓和發展機會」、「認同和表揚」或「工作自主權和責任」）。" }
+        ]},
+        { label: "第 2 步：扣連「網絡安全公司資安工程師」舉出具體實施例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如公司可給予資安工程師更多工作自主權，容許他們在研發新一代雲端防火牆時自行作出技術決策，或透過授權讓他們承擔更多責任及負責較具挑戰性的新資安項目，以滿足他們從工作中獲得成就感的渴求。", score: 1, status: "best", comment: "【滿分示範】緊扣資安工程師的研發工作，具體舉出容許自行作出技術決策及負責具挑戰性新項目的例子，清楚說明如何滿足其成就感需要。" },
+          { text: "例如公司可以給予資安工程師多一點工作自主權和責任，讓他們在日常工作中自己決定怎樣做。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只重複了第 1 步的標題字眼，未有結合網絡安全工程師的工作背景設定具體例子（如容許自行決定防黑客系統技術方案、或授權負責具挑戰性的新項目以獲得成就感）。" },
+          { text: "例如公司按工程師每成功推銷一套防毒軟件向他們發放銷售收益百分之十的現金佣金。", score: 0, status: "wrong", comment: "【概念錯誤】發放現金佣金屬於「金錢報酬」，並非題目要求的「非金錢報酬」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e1", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 1：歐陸機能服飾生產及零售商（按表現計算報酬的方式：件薪與佣金）", topic: "按表現計算報酬的方式：針對製衣廠工人與專門店店員的應用", maxMarks: 3,
+      scenario: "一家跨國登山機能服飾品牌在越南設有兩家製衣工廠，並在亞太區開設超過 40 家零售專門店。公司主要「按表現計算報酬」，並以多種不同方式向不同崗位的僱員發放報酬。試描述該機能服飾公司可採用哪些按表現計算報酬的方式來發放僱員報酬。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「件薪」或「佣金」這種按表現計算報酬的方式為核心，結合該機能服飾公司的業務建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一「按表現計算報酬」的方式名稱與定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "機能服飾公司可採用件薪方式向製衣廠生產工人發放報酬：件薪是指就僱員每件生產的產品或每項完成的工作所支付的報酬；同時亦可採用佣金方式，按專門店售貨員賺取的銷售收益或售出的產品數量支付報酬。", score: 1, status: "best", comment: "【滿分示範】準確指出按表現計算報酬中的「件薪」與「佣金」，並清楚界定兩者的計算定義。" },
+          { text: "機能服飾公司可採用固定月薪方式，根據工人及售貨員在每個月內提供服務的工作時間支付固定金額的基本薪金，而不考慮他們的產量或銷量。", score: 0, status: "wrong", comment: "【審題失誤】根據提供服務時間支付固定金額的基本薪金屬於「按時計算報酬（底薪）」，並非題目要求描述的「按表現計算報酬」。" },
+          { text: "機能服飾公司可採用件薪或佣金的方式來向旗下的製衣廠工人和零售專門店售貨員發放薪酬，這兩種都屬於按表現計算報酬的方式。", score: 0, status: "partial", comment: "【常見失分示範：有標題無定義】只寫出「件薪」和「佣金」的名稱，漏了界定其核心含義（即「就每件生產的產品或每項完成的工作支付報酬」及「按賺取的銷售收益或售出產品數量支付報酬」）。" }
+        ]},
+        { label: "第 2 步：針對「製衣廠車衣工人或專門店售貨員」設定具體計酬例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如公司根據工廠縫紉工人的工作表現計算件薪，並根據零售專門店售貨員的銷售表現計算佣金，表現越好的員工拿到的錢就越多。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於空泛，未有扣連題目背景具體說明「按製衣廠工人每縫製一件合格防水登山外套支付指定金額件薪」或「按專門店售貨員每月售出服飾的銷售收益百分比計算佣金」。" },
+          { text: "例如在越南的兩家製衣工廠中，公司可按縫紉工人每成功縫製一件合格防水登山外套支付指定金額的件薪；而在亞太區的 40 多家零售專門店中，則可按售貨員每月賺取的服飾銷售收益某個百分比或每售出一件外套支付佣金。", score: 1, status: "best", comment: "【滿分示範】緊扣題目中「兩家製衣工廠」與「40 多家零售專門店」的背景，具體設定縫製登山外套的件薪及門市推銷的佣金例子。" },
+          { text: "例如公司為越南製衣廠的縫紉工人提供有薪產假、侍產假及免費員工飯堂，並向專門店售貨員頒發每月最佳員工獎座。", score: 0, status: "wrong", comment: "【概念錯誤】有薪休假、員工飯堂及最佳員工獎座均屬於「非金錢報酬」，並非按表現計算的金錢報酬方式。" }
+        ]},
+        { label: "第 3 步：深化論述至多勞多得、提升工廠生產力或門市銷售收益的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於件薪和佣金與員工的產出及銷量直接掛鈎、多勞多得，採用件薪有助鼓勵製衣廠工人提高工作效率，繼而提升工廠的生產力；而採用佣金則提供強大誘因促使專門店售貨員努力推銷，有助提高零售店的銷售收益。", score: 1, status: "best", comment: "【滿分示範】清楚推演出件薪如何提高工作效率以提升工廠「生產力」，以及佣金如何推動努力推銷以提高專門店「銷售收益」。" },
+          { text: "採用件薪向越南製衣廠的縫紉工人支薪，能確保工人在趕貨旺季時將百分之百的精力放在檢查產品質量上，完全不會出現任何次貨或抗拒新科技的情況。", score: 0, status: "wrong", comment: "【概念錯誤】忽略產品質量（導致次貨增加）及抗拒新科技，正是採用件薪的壞處而非好處。" },
+          { text: "這樣機能服飾公司便能夠透過件薪和佣金這兩種方式，按員工的工作表現向他們發放合理的金錢報酬。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明採用件薪對「提升工廠生產力」以及採用佣金對「提高專門店銷售收益」的正面影響。" }
+        ]}
+      ]
+    },
+    {
+      id: "e2", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 2：歐陸機能服飾生產及零售商（過度依賴按表現計算報酬的壞處）", topic: "按表現計算報酬的整體壞處（忽略其他表現範疇／競爭激烈／取決於考績制度）", maxMarks: 3,
+      scenario: "承上題，該跨國機能服飾生產及零售商主要依賴「按表現計算報酬」的方式向製衣廠工人及專門店店員發放報酬。試解釋該公司過度依賴按表現計算報酬的方式來發放僱員報酬的壞處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以過度依賴按表現計算報酬的壞處「僱員可能只專注於用作評核表現的範疇，而忽略其他重要表現範疇」為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出過度依賴「按表現計算報酬」的單一核心壞處標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "壞處之一是對優秀人才的吸引力極低，因為有能力的銷售及生產人才無法透過卓越的工作表現賺取更多金錢報酬。", score: 0, status: "wrong", comment: "【概念錯誤】對優秀人才吸引力較低是「按時計算報酬」的壞處；按表現計算報酬讓優秀人才可憑卓越表現賺取更多回報，較容易吸引優秀人才。" },
+          { text: "壞處之一是會令僱員忽略某些表現範疇：僱員可能只專注於用作評核表現及計算報酬的範疇，而忽略其他對企業長遠發展非常重要的表現範疇；此外亦會導致僱員之間競爭激烈，損害工作環境和諧。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.3C 節按表現計算報酬的核心壞處——忽略某些表現範疇，以及導致僱員之間競爭激烈（另一壞處為取決於員工考績制度是否有效）。" },
+          { text: "如果機能服飾公司過度依賴按表現計算報酬的方式來發放薪酬，會對工廠工人和專門店售貨員的工作表現帶來一些負面影響。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體壞處標題】只作籠統陳述，未能明確寫出課本的三大標準壞處標題：「忽略某些表現範疇」、「僱員之間競爭激烈（損害工作環境和諧）」或「取決於員工考績制度是否有效」。" }
+        ]},
+        { label: "第 2 步：針對「機能服飾廠工人或專門店售貨員」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如專門店的售貨員為了賺取更多佣金，只顧着努力賣衫，而不理會店舖入面的其他工作；工廠工人也只顧着自己快點車衫。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於口語簡略，應具體說明店員「只專注推銷高佣金外套（甚至採取過於進取的銷售手法），而忽略整理貨場、解答售後保養查詢或協助新同事」，或工人「只着重生產數量而忽略防水服飾的縫製質量」。" },
+          { text: "例如零售專門店的售貨員為求賺取最高佣金，只專注於推銷高佣金的登山外套甚至採取過於進取的銷售手法，卻忽略了解答顧客售後保養查詢、整理貨場及協助新同事等無佣金的工作；而製衣廠件薪工人亦只着重生產量而忽略服飾品質。", score: 1, status: "best", comment: "【滿分示範】緊扣機能服飾專門店店員（只顧推銷高佣金外套而忽略售後服務與協作）及工廠工人（只顧產量忽略品質）設定具體例子。" },
+          { text: "例如專門店售貨員與製衣廠工人因為每月都領取固定不變的月薪，所以在上班時間偷懶聊天，完全不願向顧客推銷任何服飾。", score: 0, status: "wrong", comment: "【概念錯誤】領取固定月薪無動力推銷屬於「按時計算報酬（底薪）」激勵效果弱的壞處，並非過度依賴按表現計酬的壞處。" }
+        ]},
+        { label: "第 3 步：深化論述至損害顧客購物體驗、產品質素與品牌長遠發展的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這些被忽略的範疇如良好的售後服務、團隊互助及穩定的產品質素，對機能服飾品牌的長遠商譽極為重要；長期忽略這些範疇並任由店員為搶單而惡性競爭，最終會損害工作環境和諧並導致顧客流失，妨礙企業的長遠發展。", score: 1, status: "best", comment: "【滿分示範】清楚推演出忽略售後服務與產品質素及同事惡性競爭，如何損害品牌商譽、導致顧客流失並妨礙企業長遠發展。" },
+          { text: "過度依賴按表現計算報酬會令機能服飾公司每年完全無須進行任何員工考績，省卻所有評估員工表現的行政費用。", score: 0, status: "wrong", comment: "【概念錯誤】按表現計算報酬十分倚賴員工考績來量度表現；省卻評估表現行政費用的是「按時計算報酬」。" },
+          { text: "這樣就會令機能服飾公司的專門店和製衣廠出現很多問題，所以過度依賴按表現計算報酬是不好的。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明被忽略的售後服務與品質範疇對「品牌商譽、顧客留存及企業長遠發展」的負面影響。" }
+        ]}
+      ]
+    },
+    {
+      id: "e3", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 3：閃電同城冷鏈速遞平台（向冷鏈貨車司機提供金錢報酬的好處）", topic: "提供金錢報酬的四項好處：結合冷鏈速遞服務公司", maxMarks: 3,
+      scenario: "香港「閃電同城冷鏈速遞公司」面臨司機短缺，計劃招聘多名冷凍貨車司機，並向他們提供優厚的金錢報酬：除了每小時的底薪外，司機在完成每張急凍食材送貨單後可獲發件薪獎金，表現優秀的司機更可獲發年終花紅。試以該冷鏈速遞公司為例，解釋向僱員提供「金錢報酬」的好處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以提供金錢報酬四項好處中的「所有僱員皆可受惠，並幫助維持生活水平」（或「吸引人才及有效激勵僱員」）為核心，結合冷鏈貨車司機情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出提供「金錢報酬」的單一核心好處標題與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "好處之一是所有僱員皆可受惠，並能幫助僱員維持生活水平：所有僱員都可受惠於金錢報酬，因為他們可使用金錢購買任何想要的東西來養活自己和家人，避免出現部分非金錢福利未必能惠及所有僱員的情況。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.5 節提供金錢報酬的核心好處——所有僱員皆可受惠及幫助維持生活水平（其餘好處包括吸引人才及有效激勵僱員）。" },
+          { text: "好處之一是提供金錢報酬的成本極低甚或不費分文，速遞公司完全無須動用任何財務資金便可向司機發放底薪、件薪獎金及花紅。", score: 0, status: "wrong", comment: "【概念錯誤】成本很低甚或不費分文的是部分「非金錢報酬（如口頭讚賞和獎座）」，而發放金錢報酬必須動用企業資金。" },
+          { text: "好處之一是向冷凍貨車司機提供金錢報酬，可以令所有的貨車司機都得到好處，對他們的生活很有幫助。", score: 0, status: "partial", comment: "【常見失分示範：欠缺對比解釋機制】只寫出所有司機得到好處，未有點出「僱員可使用金錢購買任何想要的東西，相反部分非金錢報酬（如產假和侍產假）未必能惠及所有僱員」的關鍵比較邏輯。" }
+        ]},
+        { label: "第 2 步：針對「閃電同城冷鏈速遞公司的貨車司機」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如冷鏈速遞公司向貨車司機發放每小時底薪、每單送貨獎金和年終花紅，司機收到這些現金之後便可以拿去買東西和養家。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子較為單薄，若能同時對比「單身或無子女的司機無法受惠於侍產假、婚假等非金錢福利，但每位司機都能直接運用底薪、派件獎金及花紅支付日常衣食住行開支」，論點會更完整有力。" },
+          { text: "例如應徵冷凍貨車司機的人士家庭背景各異，若公司只提供侍產假或婚假等非金錢報酬，單身司機便一點用處也沒有；相反，發放每小時底薪、每單送貨獎金及花紅等金錢報酬，每位司機都能直接用來支付衣食住行開支以養活自己和家人。", score: 1, status: "best", comment: "【滿分示範】緊扣不同家庭背景的貨車司機，清楚對比侍產假／婚假（單身司機無法受惠）與現金底薪／獎金／花紅（所有司機皆可用以維持生活）。" },
+          { text: "例如冷鏈速遞公司向貨車司機頒發每月最佳安全駕駛獎座及口頭讚賞，讓司機直接拿獎座去超級市場換取日常食米和蔬菜。", score: 0, status: "wrong", comment: "【概念錯誤】獎座與口頭讚賞屬於非金錢報酬，並不能直接用來在超市購買生活物資。" }
+        ]},
+        { label: "第 3 步：深化論述至全面滿足不同司機需要、強化招攬與激勵效果的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於金錢報酬是求職者選擇工作時的主要考慮因素，且能確保每一位不同背景的司機都切實受惠，這套結合穩定底薪與多勞多得獎金花紅的方案能有效吸引新司機加入以解決人力短缺，並激勵現職司機努力完成更多送貨訂單。", score: 1, status: "best", comment: "【滿分示範】清楚推演出全體受惠與多勞多得如何協助冷鏈速遞公司吸引司機解決人力短缺，並激勵司機提升派件表現。" },
+          { text: "透過提供每小時底薪及每單獎金，冷鏈速遞公司便能徹底消除所有道路交通意外風險，無須再為冷凍貨車購買汽車第三者責任保險。", score: 0, status: "wrong", comment: "【概念錯誤】提供金錢報酬並不能消除交通意外風險，公司仍須依法購買法定的汽車第三者責任保險。" },
+          { text: "這樣閃電同城冷鏈速遞公司便能夠透過提供金錢報酬，讓旗下的冷凍貨車司機感到滿意。", score: 0, status: "partial", comment: "【常見失分示範：未扣連個案目標】未有扣連題目情境中「解決司機人力短缺（吸引人才）」及「推動司機完成更多訂單（有效激勵僱員）」的雙重效果。" }
+        ]}
+      ]
+    },
+    {
+      id: "e4", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 4：幻彩數碼動畫製作公司（向僱員提供僱員福利的目的）", topic: "提供僱員福利的五大目的：結合數碼動畫製作公司", maxMarks: 3,
+      scenario: "香港一家「幻彩數碼動畫製作公司」正檢視其薪酬福利政策。試舉例解釋該公司向動畫師及特效師提供「僱員福利（附帶福利）」的目的。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以提供僱員福利五大目的中的「建立良好僱主的形象以吸引人才」（或「滿足僱員的安全和社交需要」）為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出提供僱員福利的單一核心目的名稱與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "目的之一是建立良好僱主的形象：企業為僱員提供優厚的附帶福利，可在業界及公眾心目中建立良好僱主的形象，有助吸引人才加入企業；同時亦可滿足僱員的安全和社交需要以保障身心健康。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.4B 節提供僱員福利的目的——建立良好僱主的形象以吸引人才（其餘目的包括符合法例要求、滿足安全和社交需要、提高忠誠度及作為金錢報酬的補充）。" },
+          { text: "目的之一是將所有僱員福利直接計入動畫師每月的固定底薪之內，藉此取代《僱傭條例》規定的法定最低工資要求。", score: 0, status: "wrong", comment: "【概念錯誤】僱員福利屬於金錢以外的非金錢報酬，並不能計入底薪或用以取代法定的最低工資。" },
+          { text: "動畫製作公司向旗下的動畫師提供僱員福利，目的是為了讓公司看起來更好，吸引多些人來公司見工。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且欠標準標題】「讓公司看起來更好」過於口語化，必須明確寫出課本的標準目的標題：「建立良好僱主的形象，有助吸引人才加入企業」。" }
+        ]},
+        { label: "第 2 步：針對「數碼動畫製作公司」設定具體的僱員福利例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如動畫公司按動畫師每完成一秒鐘的 3D 動畫鏡頭向他們支付 $500 的現金件薪，並在年底向他們派發公司利潤百分之十的現金花紅。", score: 0, status: "wrong", comment: "【概念錯誤】件薪及現金花紅均屬於「金錢報酬」，並非題目要求舉例說明的「僱員福利（非金錢報酬）」。" },
+          { text: "例如動畫製作公司除法定福利外，更主動為動畫師提供彈性上班時間、有薪生日假、全面醫療保險及人體工學休息室，並憑藉這些優厚福利獲頒發「卓越僱主大獎」及獲媒體廣泛報道。", score: 1, status: "best", comment: "【滿分示範】緊扣動畫製作公司背景，具體舉出提供彈性上班時間、醫療保險及獲頒「卓越僱主大獎」獲媒體報道的例子。" },
+          { text: "例如動畫製作公司為旗下的動畫師及特效師提供很多不同的優厚福利，令外面的求職者都知道這間公司的福利很好。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有舉出任何具體的僱員福利例子（如醫療保險、彈性上班時間、有薪休假、員工休息室或獲頒「卓越僱主大獎」）。" }
+        ]},
+        { label: "第 3 步：深化論述至在人才爭奪戰中突圍而出、吸引優秀人才加入的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "從而建立起關愛員工的良好企業形象，協助動畫製作公司在數碼創意行業激烈的人才爭奪戰中突圍而出，吸引更多優秀的動畫及特效人才加入團隊。", score: 1, status: "best", comment: "【滿分示範】清楚推演出建立良好企業形象如何協助公司在人才爭奪戰中突圍而出，吸引優秀人才加入。" },
+          { text: "這會令動畫製作公司的所有現職動畫師在獲得優厚福利後立即集體辭職，轉投完全不提供任何福利的競爭對手。", score: 0, status: "wrong", comment: "【概念錯誤】提供優厚福利能提高員工滿意度、歸屬感與忠誠度，有助留住人才而非導致集體辭職。" },
+          { text: "這樣幻彩數碼動畫製作公司便能夠達成向員工提供僱員福利的目的，對公司的運作很有好處。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明建立良好僱主形象對於「協助企業在人才爭奪戰中突圍而出，吸引優秀人才加入並提升生產力」的影響。" }
+        ]}
+      ]
+    },
+    {
+      id: "e5", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 5：幻彩數碼動畫製作公司（除僱員福利外的其他非金錢報酬方式）", topic: "非金錢報酬的方式：培訓和發展機會、認同和表揚、工作自主權和責任", maxMarks: 3,
+      scenario: "承上題，該「幻彩數碼動畫製作公司」計劃透過削減部分昂貴的僱員福利來節省成本，但承諾不會減少「其他種類的非金錢報酬」。試描述除僱員福利外，該動畫公司可向僱員提供哪些種類的非金錢報酬。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以僱員福利以外的其中一種非金錢報酬——「認同和表揚」（或「工作自主權和責任」／「培訓和發展機會」）為核心，結合動畫公司情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出除僱員福利外的單一「非金錢報酬」種類名稱與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "除僱員福利外，動畫公司可向僱員提供認同和表揚這種非金錢報酬：即透過口頭讚賞或設立不同的獎項，表揚僱員對工作所付出的努力並肯定他們對企業的貢獻。", score: 1, status: "best", comment: "【滿分示範】準確指出僱員福利以外的「認同和表揚」非金錢報酬，並清楚說明透過口頭讚賞與設立獎項肯定員工貢獻的含義。" },
+          { text: "除僱員福利外，動畫公司可向僱員提供有薪年假、團體醫療保險、免費員工飯堂以及在家工作的彈性工作安排。", score: 0, status: "wrong", comment: "【審題失誤】有薪休假、醫療保險、員工設施及彈性工作安排全部都屬於「僱員福利」！題目明確要求描述「除僱員福利外」的其他非金錢報酬種類。" },
+          { text: "除僱員福利外，動畫公司可以在平時多些稱讚表現好的動畫師，讓他們知道公司很欣賞他們的工作表現。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準類別名稱】只用口語寫出「多些稱讚」，未有明確寫出課本的標準非金錢報酬方式名稱：「認同和表揚 (Recognition and Praise)」。" }
+        ]},
+        { label: "第 2 步：針對「幻彩數碼動畫製作公司」設定具體的認同和表揚例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如當特效團隊完成高難度的電影視覺特效製作時，創作總監可在員工大會上公開口頭讚賞團隊的努力，並設立「每月最佳動畫師獎」或「傑出視覺特效獎」，向表現出色的員工頒發獎座。", score: 1, status: "best", comment: "【滿分示範】緊扣動畫製作公司背景，具體舉出創作總監公開口頭讚賞及設立「每月最佳動畫師獎」頒發獎座的例子。" },
+          { text: "例如動畫公司撥出全年利潤的百分之五，在財政年度結束時以現金支票形式平均分發給全體動畫師及特效師。", score: 0, status: "wrong", comment: "【概念錯誤】撥出利潤百分比發放現金屬於金錢報酬中的「利潤分享」，並非非金錢報酬中的「認同和表揚」。" },
+          { text: "例如當動畫公司的員工做得好的時候，經理就口頭讚賞他們幾句，或者頒一個獎給他們作為表揚。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於籠統，未有扣連「數碼動畫製作公司」的業務背景（如表揚完成高難度 3D 動畫特效，或設立「每月最佳動畫師獎」）。" }
+        ]},
+        { label: "第 3 步：深化論述至低成本滿足自尊與成就感、提升士氣與留住人才的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這類口頭讚賞與獎座的成本很低甚或不費分文，既能配合動畫公司節省成本的計劃，又能滿足動畫師對得到認同和尊重的需要，有助提高他們對公司的忠誠度並留住有能力的創作人才。", score: 1, status: "best", comment: "【滿分示範】清楚推演出口頭讚賞與獎座「成本極低甚或不費分文」如何配合公司省成本目標，同時滿足員工受認同需要以留住人才。" },
+          { text: "透過向動畫師提供口頭讚賞和頒發獎座，動畫師便無須再支取任何基本月薪，令公司的人工成本直接降至零元。", score: 0, status: "wrong", comment: "【概念錯誤】認同和表揚只能作為金錢報酬的補充，並不能取代員工維持生活水平所需的基本薪金。" },
+          { text: "這樣幻彩數碼動畫製作公司的員工便會得到認同和表揚，即使公司削減了部分僱員福利也不會介意。", score: 0, status: "partial", comment: "【常見失分示範：未深化效益】未有明確點出「口頭讚賞和獎座的成本很低甚或不費分文（切合節省成本目標），且能滿足員工對得到認同的需要，提高忠誠度並留住人才」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e6", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 6：御品上市連鎖點心專門店（激勵點心師傅的金錢報酬方式一：花紅與績效薪酬）", topic: "按表現計算的金錢報酬：結合上市連鎖點心專門店激勵點心師傅", maxMarks: 3,
+      scenario: "「御品點心」是一家在香港上市的連鎖港式點心專門店，近期盈利正在下滑。管理層除了調整市場營銷策略外，亦打算改革薪酬制度，運用不同的「金錢報酬方式」來激勵各分店的點心師傅提升出品水準與工作效率。試描述該上市連鎖點心店可用來激勵點心師傅的金錢報酬方式。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「花紅」或「績效薪酬」這種按表現計算的金錢報酬方式為核心，結合上市連鎖點心店激勵點心師傅的情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出可用來激勵點心師傅的單一金錢報酬方式名稱與定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "點心店可採用花紅方式：花紅是給予工作表現良好的僱員的一次性額外金錢報酬，通常每年發放一次，並與企業的財務業績和僱員的工作表現掛鈎；此外亦可採用根據表現給予加薪並成為底薪一部分的績效薪酬。", score: 1, status: "best", comment: "【滿分示範】準確指出按表現計算的「花紅」與「績效薪酬」，並清楚界定花紅為與公司業績及個人表現掛鈎的一次性額外報酬。" },
+          { text: "點心店可向點心師傅提供免費的日本料理培訓課程、彈性輪更時間以及頒發年度最佳點心師傅獎座。", score: 0, status: "wrong", comment: "【審題失誤】培訓課程、彈性輪更及頒發獎座全部屬於「非金錢報酬」，而題目明確要求描述可用來激勵點心師傅的「金錢報酬方式」。" },
+          { text: "點心店可以在年底向表現好的點心師傅發放一筆花紅，用金錢來獎勵他們在過去一年的辛勤工作。", score: 0, status: "partial", comment: "【常見失分示範：定義要素不完整】未能完整界定花紅是「底薪以外的一次性額外報酬，並與企業的財務業績和僱員的工作表現（考績結果）掛鈎」。" }
+        ]},
+        { label: "第 2 步：針對「連鎖點心店的點心師傅」設定具體的計酬掛鈎例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如點心店規定所有分店的點心師傅不論出品好壞或有沒有浪費食材，在年底都必定獲發完全相同金額的固定雙糧。", score: 0, status: "wrong", comment: "【概念錯誤】不論表現好壞均獲發固定金額屬於按時計算的底薪，並不能按表現差異激勵點心師傅改善出品。" },
+          { text: "例如御品點心可將點心師傅的年終花紅，與分店的盈利表現及師傅個人的考績結果，如點心製作速度、食材損耗控制、廚房衛生及食客評價直接掛鈎；表現優秀且協助分店改善盈利的師傅可獲發較多花紅。", score: 1, status: "best", comment: "【滿分示範】緊扣點心師傅的工作特點（製作速度、食材損耗、衛生與食客評價）及分店盈利表現，具體展示花紅如何與表現掛鈎。" },
+          { text: "例如御品點心在每年年底看看哪位點心師傅的工作表現最好，就發放多一點花紅給那位表現好的師傅。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有結合點心師傅的具體工作指標（如點心出品速度、品質水準、控制食材損耗）及公司盈利表現來說明如何計算花紅。" }
+        ]},
+        { label: "第 3 步：深化論述至激勵師傅改善出品效率、同時減輕盈利下滑期間固定財政負擔的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於點心師傅必須有良好的工作表現並協助分店改善業績才能獲發較多花紅，這能產生明顯的激勵效果；同時因公司不會保證派發花紅，在目前盈利下滑期間可視乎業績減少發放，對點心店造成的財政負擔較輕。", score: 1, status: "best", comment: "【滿分示範】清楚推演出花紅「激勵效果明顯」及「在公司盈利下滑時財政負擔較輕」兩大優勢。" },
+          { text: "發放一次性年終花紅會永久計入點心師傅往後每個月的基本底薪之內，令點心店在盈利下滑期間背負極沉重的長遠固定財政負擔。", score: 0, status: "wrong", comment: "【概念錯誤】花紅是一次性支付的款項，不會成為底薪的一部分；會成為底薪一部分並構成長遠財政負擔的是「績效薪酬」。" },
+          { text: "這樣御品點心入面的點心師傅為了拿到花紅，就會在廚房入面更加努力包點心，提升自己的工作表現。", score: 0, status: "partial", comment: "【常見失分示範：未扣連個案盈利下滑背景】只提及師傅更努力，未有結合個案中「盈利正在下滑」的背景，說明花紅不作保證、對公司造成的「財政負擔較輕」這一重要優勢。" }
+        ]}
+      ]
+    },
+    {
+      id: "e7", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 7：御品上市連鎖點心專門店（激勵點心師傅的金錢報酬方式二：認股權與利潤分享）", topic: "按表現計算的金錢報酬：上市連鎖點心店採用認股權或利潤分享", maxMarks: 3,
+      scenario: "承上題，「御品點心」是一家在香港「上市」的連鎖點心專門店，正面對盈利下滑的挑戰，希望以金錢報酬激勵店舖的資深點心師傅。除了花紅和績效薪酬外，試結合其「上市公司」背景，描述另一種可用來激勵點心師傅的金錢報酬方式。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「認股權」或「利潤分享」為核心，結合上市連鎖點心店情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出切合「上市公司」的單一金錢報酬方式名稱與定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "由於御品點心是一家上市公司，可採用認股權這種金錢報酬方式：讓點心師傅有權在特定時間內，以指定價格購買一定數量的御品點心公司股票；此外亦可採用撥出利潤某個百分比作獎勵的利潤分享方式。", score: 1, status: "best", comment: "【滿分示範】精準捕捉題目「上市連鎖點心店」的關鍵線索，準確提出只適用於有限公司的「認股權」及其完整定義。" },
+          { text: "點心店可採用認股權方式，即在每個月底免費贈送五十張點心禮券給點心師傅的親戚朋友到店內免費品嚐點心。", score: 0, status: "wrong", comment: "【概念錯誤】免費贈送食品禮券屬於非金錢報酬中的員工折扣福利，並非以指定價格購買公司股票的「認股權」。" },
+          { text: "由於御品點心是一間上市公司，所以公司可以給表現好的點心師傅一些認股權，讓他們可以買公司的股票。", score: 0, status: "partial", comment: "【常見失分示範：定義要素不完整】漏了認股權定義中的兩個關鍵條件——即僱員有權在「特定時間內（如一年或兩年後）」，以「指定價格（行使價）」購買一定數量的公司股票。" }
+        ]},
+        { label: "第 2 步：針對「上市點心店向點心師傅發放認股權」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如御品點心向資深點心師傅推出認股權計劃，容許他們在一年後以每股 $5 的指定價格購買 10,000 股公司股票；當師傅在一年後行使認股權購買股票後，便會成為點心店的股東，可透過股息或股價上升的資本利潤賺取回報。", score: 1, status: "best", comment: "【滿分示範】具體設定一年後以指定價每股 $5 購買 10,000 股公司股票的例子，並清楚說明行使後成為公司股東、透過股息或資本利潤獲利的過程。" },
+          { text: "例如點心師傅自己用每月的底薪儲蓄，透過銀行證券戶口在股票市場買入其他上市地產發展商的股票收息。", score: 0, status: "wrong", comment: "【概念錯誤】員工自己去股市買其他公司的股票屬於個人投資，並非由受僱企業授予購買本公司股票權利的「員工認股權」。" },
+          { text: "例如御品點心向各分店的資深點心師傅發放認股權，讓他們在將來可以買入御品點心的股票賺錢。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體說明「在特定時間後以指定價格認購公司股票」，以及行使認股權買入股票後「正式成為公司的股東（東主），透過股息或資本利潤賺取回報」。" }
+        ]},
+        { label: "第 3 步：深化論述至長遠激勵師傅研發新點心扭轉盈利推高股價、並提高忠誠度的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於點心師傅須在某段時間後才能行使認股權，為了在日後賺取更高回報，他們會有動力長遠努力研發新點心及改善品質以協助公司扭轉盈利跌勢、推高長遠股價；而且成為公司東主亦能提高他們的忠誠度和工作投入度。", score: 1, status: "best", comment: "【滿分示範】完整結合認股權的兩大好處——「激勵僱員推高長遠股價的長遠方法」及「成為公司東主以提高忠誠度和投入度」。" },
+          { text: "向點心師傅發放認股權可保證御品點心的股票價格在第二天立即暴升十倍，完全不會受到外在經濟衰退或飲食業不景氣影響。", score: 0, status: "wrong", comment: "【概念錯誤】公司股價會受業績以外的宏觀經濟或行業因素影響而下跌，發放認股權並不能保證股價必定上升。" },
+          { text: "這樣點心師傅收到認股權之後便會受到激勵，更加用心為御品點心工作，幫助公司改善生意。", score: 0, status: "partial", comment: "【常見失分示範：未點出長遠激勵與股東身份】未能明確指出「因須在某段時間後才可行使，故是激勵僱員推高長遠股價的長遠方法」以及「行使後成為公司東主（股東），能提高忠誠度和投入度」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e8", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 8：新風跨境物流公司（凍結底薪改發利潤與考績掛鈎花紅的缺點分析）", topic: "綜合分析：凍結底薪並改發與公司利潤及考績結果掛鈎花紅的缺點", maxMarks: 3,
+      scenario: "「新風公司」是一家從內地運送包裹到香港的物流公司。財務經理建議改變薪酬制度：「我們應凍結員工的底薪，改為發出基於『公司周年會計利潤』和『員工考績結果』的年終花紅，使員工收入與公司表現掛鈎！」常務董事對此存疑，擔心這新制度會有缺點。試解釋財務經理建議的薪酬制度改變有何缺點。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以該薪酬制度改變的其中一項缺點（如「員工收入變得不穩定而欠缺安全感，削弱吸引及留住人才能力」或「取決於員工考績制度是否公平有效、年終發放出現滯後及公司利潤受外在因素影響」）為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出該薪酬制度改變的單一核心缺點（1分）", colorClass: "hl-s1", opts: [
+          { text: "缺點之一是會令員工收入變得不穩定而欠缺安全感，並削弱公司吸引和留住人才的能力；此外，花紅在年終才發放會出現滯後，且極度取決於員工考績制度是否公平有效，而公司會計利潤亦受員工無法控制的外在因素影響（或可被操控）。", score: 1, status: "best", comment: "【滿分示範】全面且精準地指出凍結底薪改發年終利潤考績花紅的核心缺點（缺乏安全感、取決於考績公平性、年終滯後、利潤受外在因素影響或被操控）。" },
+          { text: "缺點之一是凍結底薪改發年終花紅會令物流公司每個月的固定基本薪金開支立即暴增兩倍，對公司構成極沉重的固定底薪負擔。", score: 0, status: "wrong", comment: "【概念錯誤】建議是「凍結底薪」並改發不作保證的一次性花紅，並不會令每月的固定底薪開支暴增。" },
+          { text: "財務經理建議凍結員工底薪並改發與公司利潤和考績掛鈎的花紅，這個新薪酬制度對新風物流公司的員工來說有一些缺點。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體缺點標題】純粹重複題目背景，未有明確指出「令員工收入不穩定欠缺安全感」、「取決於考績制度是否有效」或「年終發放出現滯後」等具體缺點。" }
+        ]},
+        { label: "第 2 步：針對「新風跨境物流公司的員工」設定具體情境說明（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如在通脹持續下，物流工人的每月固定底薪被凍結，基本生活保障受削弱；而且花紅與公司周年會計利潤掛鈎，即使工人全年辛勤搬運包裹、考績良好，但若公司因跨境燃油費飆升或經濟衰退導致利潤下跌，或要等到財政年度結束才發放，員工獲發的花紅便會大減甚至落空。", score: 1, status: "best", comment: "【滿分示範】緊扣跨境物流工人情境，具體說明底薪凍結削弱穩定保障，以及即使個人勤奮但公司利潤受燃油費或經濟拖累令年終花紅落空的情況。" },
+          { text: "例如新風物流公司的搬運工人發現底薪被凍結之後，擔心年底未必拿到花紅，覺得收入沒有以前那麼穩定。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】闡述過於簡略，應具體解釋為何年底未必拿到花紅——因為花紅同時與「公司周年會計利潤」及「考績結果」掛鈎，即使員工努力工作，若公司利潤受外在因素拖累或考績不公，花紅便會減少。" },
+          { text: "例如新風物流公司在工場安裝德國進口的機械臂協助搬運笨重包裹，計算出該機械臂項目的淨現值為負十萬元。", score: 0, status: "wrong", comment: "【審題失誤】安裝機械臂的淨現值屬於個案後半部分的「資本投資評估」問題，並非解釋薪酬制度改變的缺點。" }
+        ]},
+        { label: "第 3 步：深化論述至打擊員工士氣與安全感、導致員工反對甚至辭職流失的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "當員工發現固定底薪無法追上通脹，且辛勤工作亦要相隔一段長時間（滯後）甚至未必能換取合理花紅回報時，便會因欠缺安全感及覺得制度不公而反對改變，最終不但無法激勵員工，反而會打擊士氣並令員工流失率上升。", score: 1, status: "best", comment: "【滿分示範】清楚推演出欠缺安全感、滯後與努力未必有回報，如何導致員工反對、打擊士氣並推高員工流失率。" },
+          { text: "這項薪酬制度改變會令新風物流公司自動轉型為香港交易所的上市銀行，所有搬運工人即時成為銀行大股東。", score: 0, status: "wrong", comment: "【概念錯誤】推論完全不合邏輯。" },
+          { text: "因此，財務經理莊力所建議的這個薪酬制度改變有很多缺點，新風公司的員工未必會支持這個改變。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目尾句，未有深化說明「員工因收入不穩欠缺安全感及覺得努力無回報，從而打擊工作士氣並令員工流失率上升」的後果。" }
+        ]}
+      ]
+    }
+  ];
+
+  let curBuilderCat = 'short';
+  let curQIdx = 0;
+  let userSelections = {};
+  let isSubmitted = false;
+
+  function switchBuilderCat(cat, btn) {
+    curBuilderCat = cat;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('builderCatLabel').textContent = cat === 'short' ? '選擇短答題（每題滿分 2 分）：' : '選擇進階論述題（每題滿分 3 分）：';
+    curQIdx = cat === 'short' ? 0 : 4;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function renderQuestionChips() {
+    document.getElementById('questionChips').innerHTML = workshopQuestions
+      .map((q, i) => ({ q, i }))
+      .filter(x => x.q.cat === curBuilderCat)
+      .map(x => `<button class="chip ${x.i===curQIdx?'active':''}" onclick="selectWorkshopQ(${x.i})">${x.q.title}</button>`)
+      .join('');
+  }
+
+  function selectWorkshopQ(idx) {
+    curQIdx = idx;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function pickStepOption(sIdx, oIdx) {
+    userSelections[sIdx] = oIdx;
+    isSubmitted = false;
+    renderWorkshop();
+  }
+
+  function submitConstructedAnswer() {
+    const q = workshopQuestions[curQIdx];
+    if (Object.keys(userSelections).length < q.steps.length) {
+      alert(`請先完成全部 ${q.steps.length} 個步驟的選擇，再點擊批改。`);
+      return;
+    }
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function fillBestChoices() {
+    const q = workshopQuestions[curQIdx];
+    q.steps.forEach((st, sIdx) => {
+      userSelections[sIdx] = st.opts.findIndex(o => o.status === 'best');
+    });
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function renderWorkshop() {
+    const q = workshopQuestions[curQIdx];
+    const letters = ['A', 'B', 'C'];
+
+    let totalScore = 0;
+    q.steps.forEach((st, sIdx) => {
+      if (userSelections[sIdx] !== undefined) {
+        totalScore += st.opts[userSelections[sIdx]].score;
+      }
+    });
+
+    const previewParts = q.steps.map((st, sIdx) => {
+      const selIdx = userSelections[sIdx];
+      if (selIdx === undefined) {
+        return `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［未選擇第 ${sIdx + 1} 步］</span>`;
+      }
+      return `<span class="${st.colorClass}">${st.opts[selIdx].text}</span>`;
+    });
+
+    document.getElementById('builderWorkspace').innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div>
+            <span class="badge b-blue">${q.typeBadge}</span>
+            <span class="badge b-teal">${q.topic}</span>
+          </div>
+          <b style="color:var(--primary);font-size:16px">本段滿分：${q.maxMarks} 分</b>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink)">${q.question}</div>
+      </div>
+
+      ${q.steps.map((st, sIdx) => {
+        const selIdx = userSelections[sIdx];
+        return `
+          <div class="builder-stage">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <h4 style="font-size:16.5px"><span class="${st.colorClass}">${st.label}</span></h4>
+              <span style="font-size:14px;font-weight:600;color:var(--mute)">${selIdx !== undefined ? '已選 ' + letters[selIdx] : '請點選一項'}</span>
+            </div>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = selIdx === oIdx;
+              let gradeCls = '';
+              if (isSubmitted && isSel) {
+                gradeCls = o.status === 'best' ? 'graded-best' : o.status === 'partial' ? 'graded-partial' : 'graded-wrong';
+              }
+              return `
+                <button class="opt-card ${isSel ? 'selected' : ''} ${gradeCls}" onclick="pickStepOption(${sIdx}, ${oIdx})">
+                  <span class="opt-letter">${letters[oIdx]}</span>
+                  <span style="flex:1">${o.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('')}
+
+      <div class="card" style="border:2px solid var(--primary);margin-bottom:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <h3 style="color:var(--primary);font-size:19px">建構段落預覽</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitConstructedAnswer()">批改答案</button>
+            <button class="btn btn-outline" onclick="fillBestChoices()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="font-size:17px;line-height:1.85;background:var(--surface);padding:18px 22px;border-radius:12px;border:1px solid var(--line)">
+          ${previewParts.join(' ')}
+        </div>
+
+        ${isSubmitted ? `
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${totalScore === q.maxMarks ? 'b-green' : totalScore >= 1 ? 'b-amber' : 'b-red'}" style="font-size:15px;padding:6px 14px">
+                得分：${totalScore} / ${q.maxMarks} 分
+              </span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const chosen = st.opts[userSelections[sIdx]];
+              const cCls = chosen.status === 'best' ? 'c-best' : chosen.status === 'partial' ? 'c-partial' : 'c-wrong';
+              return `
+                <div class="critique-item ${cCls}">
+                  <b>第 ${sIdx + 1} 步（選項 ${letters[userSelections[sIdx]]} · ${chosen.score} 分）：</b>${chosen.comment}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  renderQuestionChips();
+  renderWorkshop();
+</script>
+</body>
+</html>

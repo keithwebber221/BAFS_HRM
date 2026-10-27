@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 人力規劃和員工編制</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 14px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .main-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .main-tabs button {
+      border: 0;
+      background: none;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tabs button:hover { color: var(--ink); }
+    .main-tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Main Container & Views */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 28px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Section Header Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 25px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 680px; }
+
+    /* Sub-navigation Switcher */
+    .sub-nav {
+      display: inline-flex;
+      background: #efecf8;
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sub-nav button {
+      border: 0;
+      background: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--mute);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-nav button:hover { color: var(--ink); }
+    .sub-nav button.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.25);
+    }
+    .sub-view { display: none; }
+    .sub-view.active { display: block; animation: fadeIn 0.2s ease; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .sidebar-layout { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    /* Interactive Selector Lists */
+    .nav-list { display: flex; flex-direction: column; gap: 10px; }
+    .nav-item {
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .nav-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary) 0%, #9333ea 100%);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 16px rgba(109, 40, 217, 0.24);
+    }
+    .nav-item.active span.sub-txt { color: #ede9fe; }
+    .sub-txt { font-size: 13px; color: var(--mute); font-weight: 500; flex-shrink: 0; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #ffffff;
+      font: 700 16px 'Noto Sans TC', sans-serif;
+      padding: 11px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    .note-box {
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+    .case-box {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-light);
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-top: 14px;
+      font-size: 16.5px;
+      color: var(--ink);
+    }
+
+    /* Mathematical Formula Display */
+    .math-card {
+      background: var(--primary-light);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .m-frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      text-align: center;
+      margin: 0 4px;
+      line-height: 1.25;
+    }
+    .m-num { border-bottom: 2px solid currentColor; padding: 0 8px 3px; display: block; }
+    .m-den { padding: 3px 8px 0; display: block; }
+
+    /* Flow Chain */
+    .flow-chain {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+      padding: 16px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .flow-node {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .flow-arrow { font-size: 18px; font-weight: 900; color: var(--amber); }
+
+    /* Comparison Table */
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 16px; }
+    table.comp-table th, table.comp-table td { padding: 12px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+    table.comp-table tr.highlight-row { background: var(--primary-light); }
+
+    /* Calculator Inputs & Ad Lines */
+    .calc-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+    .calc-field { display: flex; flex-direction: column; gap: 4px; font-size: 14.5px; }
+    .calc-field label { font-weight: 700; color: var(--ink-sec); }
+    .calc-field input[type="number"], select.sim-select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      font: 700 15.5px 'Inter', 'Noto Sans TC', sans-serif;
+      color: var(--primary);
+      background: var(--card);
+      width: 100%;
+    }
+    .ad-box { background: var(--card); border: 1.5px solid var(--primary-border); border-radius: 14px; padding: 16px; }
+    .ad-line {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 15.5px;
+      transition: all 0.15s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .ad-line:hover { border-color: var(--primary); background: var(--primary-light); }
+
+    /* Builder Specific */
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 18px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.correct, .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.wrong, .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #ffffff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    details.guide-Collapsible {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    details.guide-Collapsible summary {
+      font-weight: 700;
+      font-size: 16.5px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .sidebar-layout, .calc-input-grid { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+      .main-tabs { width: 100%; justify-content: center; margin-top: 8px; }
+      .sec-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 12px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速切換課室／測驗...</option>
+    <option value="人力資源管理_目錄.html">單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質工作團隊.html">第 5 課：發展優質工作團隊</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+  <div class="brand">
+    <span>人力資源管理</span>
+    <span class="brand-tag">第 1 課：人力規劃和員工編制</span>
+  </div>
+  <nav class="main-tabs" id="mainTabs">
+    <button class="on" data-tab="sec-mp">1. 人力規劃重要性與四步過程</button>
+    <button data-tab="sec-ja">2. 工作分析：工作說明 vs 工作要求</button>
+    <button data-tab="sec-staff">3. 員工編制：內部招聘 vs 外部招聘</button>
+    <button data-tab="sec-channels">4. 發布職位空缺方法（招聘途徑）</button>
+    <button data-tab="sec-builder">5. 論點建構工作坊</button>
+  </nav>
+</header>
+
+<!-- ==================== 1. 人力規劃重要性與四步過程 ==================== -->
+<section class="view on" id="sec-mp">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元一：人力資源管理六大功能、人力規劃的重要性與過程</span>
+      <h1>人力規劃的四大重要性、四個規劃步驟與內外部人力供應</h1>
+      <p>人力資源管理的最終目標是為企業建立優質的工作團隊（包含六大功能：人力規劃、員工編制、員工考績、報酬管理、培訓和發展、促進僱員關係）。當中人力規劃是企業決定要填補哪些職位空缺及如何填補的規劃過程，旨在預測企業需要多少僱員（數量）和哪類僱員（質素）以達成目標。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('mp', 0, this)">四大重要性與四步規劃過程</button>
+      <button onclick="switchSub('mp', 1, this)">流失率計算機與診斷練習</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 1A：四大重要性與四步規劃過程 -->
+  <div class="sub-view active" id="mp-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="mpNavList"></div>
+      <div class="card" id="mpDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 1B：員工流失率計算機、退休政策模擬器與診斷挑戰 -->
+  <div class="sub-view" id="mp-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">評估內部人力供應</span>
+        <h3 style="font-size:20.5px;margin:8px 0 6px">員工流失率計算機 ＆ 退休政策模擬器</h3>
+        <p style="font-size:15px;color:var(--ink-sec);margin:0 0 8px">企業可透過評估員工流失率和退休政策，預測內部人選的供應情況。員工流失是指員工因死亡、辭職、解僱或退休而離職：</p>
+        <div class="math-card" style="font-size:15px;padding:12px 14px">
+          <span>員工流失率 ＝</span>
+          <span class="m-frac">
+            <span class="m-num">某個時期內離職的員工人數</span>
+            <span class="m-den">某個時期內的員工平均總數</span>
+          </span>
+          <span>× 100%</span>
+        </div>
+        <div class="calc-input-grid" style="margin-top:10px">
+          <div class="calc-field"><label>期內離職的員工人數 (人)</label><input type="number" id="inLeave" value="45" step="5" oninput="calcTurnover()"></div>
+          <div class="calc-field"><label>期內員工平均總數 (人)</label><input type="number" id="inAvgStaff" value="250" step="10" oninput="calcTurnover()"></div>
+        </div>
+        <div style="margin-top:10px">
+          <label style="font-size:14.5px;font-weight:700;color:var(--ink-sec)">模擬調整公司退休政策：</label>
+          <select class="sim-select" id="retirePolSel" onchange="calcTurnover()" style="margin-top:4px">
+            <option value="delay">延遲退休年齡（例如從 60 歲延遲至 65 歲）</option>
+            <option value="lower">降低退休年齡（例如從 65 歲降低至 60 歲）</option>
+          </select>
+        </div>
+        <div id="turnoverOutput" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">人力規劃概念與步驟挑戰</span>
+        <h3 style="font-size:20.5px;margin:8px 0 10px">辨識人力規劃的重要性、步驟與人力供應影響（共 8 題）</h3>
+        <p id="mpQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="mpQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="mpQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="mpQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. 工作分析：工作說明 vs 工作要求 ==================== -->
+<section class="view" id="sec-ja">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元二：工作分析 (Job Analysis)</span>
+      <h1>工作說明 vs 工作要求、對四大 HR 活動的幫助 ＆ 技能檔案</h1>
+      <p>工作分析是確定 (1) 某份工作的任務和技能要求，以及 (2) 擔任這份工作的人員應具備的特徵的過程。企業可透過工作分析得出「工作說明（着重工作性質）」和「工作要求（着重個人質素／條件）」，為執行各項人力資源管理功能提供重要資料。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('ja', 0, this)">工作分析用途與互動招聘廣告拆解</button>
+      <button onclick="switchSub('ja', 1, this)">概念辨析挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 2A：工作分析用途與互動招聘廣告拆解 -->
+  <div class="sub-view active" id="ja-sub-0">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">工作說明 vs 工作要求</span>
+        <h3 style="font-size:20.5px;margin:8px 0 6px">點擊招聘廣告中的各個條款，檢驗它來自「工作說明」還是「工作要求」</h3>
+        <p style="font-size:15px;color:var(--ink-sec);margin:0 0 10px">
+          • <b>工作說明 (Job Description)</b>：列明某份工作的<b>任務、職責、匯報關係和工作條件</b>（着重工作性質）。<br>
+          • <b>工作要求 (Job Specification)</b>：列明妥善擔任某份工作所需的<b>知識、能力和技能</b>（着重個人條件／質素）。
+        </p>
+        <div class="ad-box" id="jobAdItems"></div>
+        <div id="jobAdFeedback" class="note-box" style="margin-top:12px;font-size:15.5px">請點擊上方招聘廣告中的任一條款查看分類解析。</div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">工作分析的應用與比較</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">工作分析如何協助執行四大 HR 活動 ＆ 與「技能檔案」的分別</h3>
+        <div class="chips" id="jaUseChips">
+          <button class="chip active" onclick="renderJaUse(0)">1. 招聘和甄選</button>
+          <button class="chip" onclick="renderJaUse(1)">2. 員工考績</button>
+          <button class="chip" onclick="renderJaUse(2)">3. 報酬管理</button>
+          <button class="chip" onclick="renderJaUse(3)">4. 培訓和發展</button>
+          <button class="chip" onclick="renderJaUse(4)">5. 比較：技能檔案</button>
+        </div>
+        <div id="jaUseBox" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 子分頁 2B：工作分析概念挑戰 -->
+  <div class="sub-view" id="ja-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">工作分析、工作說明、工作要求與技能檔案概念挑戰</span>
+        <span id="jaQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="jaQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="jaQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="jaQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. 員工編制：內部招聘 vs 外部招聘 ==================== -->
+<section class="view" id="sec-staff">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元三：員工編制 (Staffing) 與決定人力資源的來源</span>
+      <h1>員工編制的三個主要階段 ＆ 內部招聘與外部招聘的優缺點比較</h1>
+      <p>員工編制是指企業獲取足夠的合資格僱員，以填補所規劃的職位空缺，包括三個主要階段：(1) 招聘、(2) 甄選 和 (3) 受僱。當中招聘是指識別和吸引合適人選申請職位空缺，包括兩個步驟：決定人力資源的來源（內部招聘 vs 外部招聘）及決定發布職位空缺的方法。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('stf', 0, this)">三階段流程與內外部招聘優缺點</button>
+      <button onclick="switchSub('stf', 1, this)">招聘來源判斷練習</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 3A：員工編制三階段與內外部招聘優缺點 -->
+  <div class="sub-view active" id="stf-sub-0">
+    <div class="card">
+      <span class="badge b-blue">員工編制的三個主要階段</span>
+      <h3 style="font-size:20.5px;margin:8px 0 8px">點擊各階段方塊，掌握「招聘」、「甄選」與「受僱」的定義與先後次序</h3>
+      <div class="flow-chain">
+        <div class="flow-node" style="cursor:pointer" onclick="renderStaffStage(0)">第 1 階段：招聘 (Recruitment)<br><small>識別和吸引合適求職者（含 2 個步驟）</small></div>
+        <span class="flow-arrow">➔</span>
+        <div class="flow-node" style="cursor:pointer;background:var(--teal-light);color:var(--teal);border-color:var(--teal)" onclick="renderStaffStage(1)">第 2 階段：甄選 (Selection)<br><small>評估和評核所有求職者以找出最佳人選</small></div>
+        <span class="flow-arrow">➔</span>
+        <div class="flow-node" style="cursor:pointer;background:var(--amber-light);color:var(--amber);border-color:var(--amber)" onclick="renderStaffStage(2)">第 3 階段：受僱 (Employment)<br><small>決定聘用的人選和訂立聘用條款</small></div>
+      </div>
+      <div id="staffStageBox" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:0">
+      <span class="badge b-teal">招聘第 1 步：決定人力資源的來源</span>
+      <h3 style="font-size:20.5px;margin:8px 0 8px">內部招聘（升職或調職）vs 外部招聘的優缺點全方位對照</h3>
+      <div class="chips" id="recSourceChips">
+        <button class="chip active" onclick="renderRecSource(0)">1. 內部招聘（4 項優點 vs 4 項缺點）</button>
+        <button class="chip" onclick="renderRecSource(1)">2. 外部招聘（3 項優點 vs 3 項缺點）</button>
+        <button class="chip" onclick="renderRecSource(2)">3. 兩者五大維度直接對照</button>
+      </div>
+      <div id="recSourceBox" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 3B：內部招聘 vs 外部招聘練習 -->
+  <div class="sub-view" id="stf-sub-1">
+    <div class="card" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="badge b-teal">內部招聘 vs 外部招聘概念與情境挑戰</span>
+        <span id="recQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute)"></span>
+      </div>
+      <div id="recQuizQ" style="font-size:17.5px;font-weight:700;margin-bottom:14px"></div>
+      <div id="recQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="recQuizFb" style="margin-top:14px;font-size:16px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. 發布職位空缺方法（招聘途徑） ==================== -->
+<section class="view" id="sec-channels">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">單元四：決定發布職位空缺的方法（招聘途徑／招聘渠道）</span>
+      <h1>針對內部人選（內聯網・電郵）與針對外部人選的五大類招聘途徑比較</h1>
+      <p>發布職位空缺是企業告知人們有關職位空缺的過程。針對內部人選可採用內聯網及電郵；針對外部人選則可採用 (a) 招聘廣告、(b) 現職員工推薦、(c) 招聘機構（商業招聘機構／獵頭公司 vs 勞工處）、(d) 招聘會（就業博覽會）及 (e) 專業學會或工會。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchSub('chn', 0, this)">七種招聘途徑運作與好壞處百科</button>
+      <button onclick="switchSub('chn', 1, this)">智能配對顧問室與挑戰</button>
+    </div>
+  </div>
+
+  <!-- 子分頁 4A：七種招聘途徑百科 -->
+  <div class="sub-view active" id="chn-sub-0">
+    <div class="sidebar-layout">
+      <div class="nav-list" id="chanNavList"></div>
+      <div class="card" id="chanDetailCard" style="margin-bottom:0"></div>
+    </div>
+  </div>
+
+  <!-- 子分頁 4B：智能配對顧問室與挑戰 -->
+  <div class="sub-view" id="chn-sub-1">
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-blue">企業招聘途徑配對顧問室</span>
+        <h3 style="font-size:20.5px;margin:8px 0 8px">點選 6 家不同背景的企業需求，查看最合適的發布職位空缺方法及原因</h3>
+        <div class="chips" id="advChanChips">
+          <button class="chip active" onclick="renderAdvChan(0)">1. 資金有限小店請易適應店員</button>
+          <button class="chip" onclick="renderAdvChan(1)">2. 餐廳欲用免費服務省成本</button>
+          <button class="chip" onclick="renderAdvChan(2)">3. 科研實驗室全球招募專才</button>
+          <button class="chip" onclick="renderAdvChan(3)">4. 物管公司欲即場會面篩選</button>
+          <button class="chip" onclick="renderAdvChan(4)">5. 工程商欲聘現職持牌技工</button>
+          <button class="chip" onclick="renderAdvChan(5)">6. 上市藥廠聘總監需專業意見</button>
+        </div>
+        <div id="advChanBox" style="margin-top:10px"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <span class="badge b-teal">招聘途徑好壞處實戰挑戰</span>
+        <h3 style="font-size:20.5px;margin:8px 0 10px">選出正確的招聘途徑或辨別其好處與壞處（共 7 題）</h3>
+        <p id="chanQuizProg" style="font-size:14.5px;font-weight:600;color:var(--mute);margin:0 0 10px"></p>
+        <div id="chanQuizQ" style="font-size:16.5px;font-weight:700;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--line);margin-bottom:12px"></div>
+        <div id="chanQuizBtns" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div id="chanQuizFb" style="margin-top:12px;font-size:15.5px;min-height:48px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. 論點建構問答工作坊 (12題) ==================== -->
+<section class="view" id="sec-builder">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-amber">實戰寫作與教學示範訓練</span>
+      <h1>「一段一個獨立重點」論點建構工作坊</h1>
+      <p>收錄 4 道短答題（2 步建構 · 2 分）及 8 道進階論述題（3 步建構 · 3 分）。每個步驟除了提供「滿分建構選項（綠燈）」及「概念錯誤選項（紅燈）」外，特別保留一個能力較弱學生常犯的<b>「解說不足／用詞含糊／同義反覆選項（琥珀黃燈）」</b>，方便課堂進行正反對比教學示範。</p>
+    </div>
+    <div class="sub-nav">
+      <button class="active" onclick="switchBuilderCat('short', this)">短答題訓練 (4題)</button>
+      <button onclick="switchBuilderCat('essay', this)">進階論述題訓練 (8題)</button>
+    </div>
+  </div>
+
+  <details class="guide-Collapsible">
+    <summary>查看「一段一個重點」建構結構與三種選項教學示範指南（點擊展開 / 收起）</summary>
+    <div class="grid2" style="margin-top:14px;font-size:16px">
+      <div style="background:var(--primary-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--primary)">短答題／個案題模式（每段滿分 2 分 — 2 步建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 準確指出單一縮減人手方法、外判、工作分析用途或人力供應因素名稱<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 結合題目企業情況說明如何執行或為何產生該影響
+      </div>
+      <div style="background:var(--teal-light);padding:14px 18px;border-radius:10px">
+        <b style="color:var(--teal)">進階論述題模式（每段滿分 3 分 — 3 步深度建構）</b><br>
+        <span class="hl-s1">第 1 步 (1分)</span> 指出單一規劃步驟、重要性或招聘好壞處名稱並界定其核心含義<br>
+        <span class="hl-s2">第 2 步 (1分)</span> 針對題目企業（如健身中心、連鎖書店、地產代理、工程顧問、物流集團）設定具體例子<br>
+        <span class="hl-s3">第 3 步 (1分)</span> 深化推論該步驟、因素或途徑如何影響企業的人才質素、招聘效率、成本控制或長遠目標
+      </div>
+    </div>
+  </details>
+
+  <div class="card" style="padding:18px 22px;margin-bottom:18px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px" id="builderCatLabel">選擇短答題（每題滿分 2 分）：</div>
+    <div class="chips" id="questionChips" style="margin:0"></div>
+  </div>
+
+  <div id="builderWorkspace"></div>
+</section>
+
+<script>
+  // Main Tab Switching
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // Sub-view Switching
+  function switchSub(prefix, idx, btn) {
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll(`[id^="${prefix}-sub-"]`).forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+  }
+
+  // ====== 1. 人力規劃重要性與四步過程 ======
+  const mpCatalog = [
+    {
+      title: "重要性 1：確定和預測未來的人力需求",
+      badge: "人力規劃的重要性",
+      def: "適當的人力規劃有助確保企業擁有足夠（數量）和合乎資格（質素）的僱員為企業達成目標。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>退休平穩交接例子</b>：人力規劃可讓企業根據主要行政人員或部門主管的退休時間，及早物色適合的繼位人，確保出任重要職位的新舊員工能平穩交接。</p>
+        <p style="margin:0">• <b>擴充業務例子</b>：某零售商計劃來年在全球增設 50 家零售店，假設每家分店需要至少 5 名員工，人力規劃可讓企業預先確定和預測須增聘最少 250 名員工，以滿足未來的人力需求。</p>
+      `
+    },
+    {
+      title: "重要性 2：因應環境轉變調整人力需求",
+      badge: "人力規劃的重要性",
+      def: "企業在進行人力規劃時，須評估可能出現的環境轉變（例如競爭形勢、經濟盛衰、顧客口味和科技的變化），並因應這些變化調整其人力需求。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>科技進步例子</b>：一家超級市場發現隨着科技進步，自助付款機日漸普及，相應減少所需的收銀員人數。</p>
+        <p style="margin:0">• <b>顧客習慣與媒體變化例子</b>：某報社發現越來越多市民習慣在網上閱讀文章，不少企業也樂意在電子媒體刊登廣告，因而決定聘請更多資訊科技部員工來開發手機應用程式和設計網站。</p>
+      `
+    },
+    {
+      title: "重要性 3：作為其他 HR 功能的基礎",
+      badge: "人力規劃的重要性",
+      def: "許多人力資源管理功能都是相關的。人力規劃是策劃和執行其他人力資源管理功能（包括員工編制、報酬管理及培訓和發展等）的基礎。如果其中一項功能未能充分發揮作用，其他功能也會受到不良影響。",
+      detail: `
+        <p style="margin:0"><b>商業例子（某酒店透過人力規劃決定聘請 50 名前線員工來提升顧客服務水平）：</b><br>
+        • 指導<b>員工編制</b>：刊登招聘廣告聘請前線員工，並甄選 50 名合適的求職者。<br>
+        • 指導<b>報酬管理</b>：為前線員工制定薪酬待遇，例如薪金和福利。<br>
+        • 指導<b>培訓和發展</b>：為新入職的前線員工提供有關顧客服務的培訓。</p>
+      `
+    },
+    {
+      title: "重要性 4：遵守政府的僱傭法例規定",
+      badge: "人力規劃的重要性",
+      def: "人力規劃能確保企業遵守政府的僱傭法例，這有助企業避免觸犯法例或損害名聲。",
+      detail: `
+        <p style="margin:0 0 10px">• <b>法定最低工資例子</b>：連鎖快餐店在訂定新僱員的工資時，須考慮法定最低工資水平；假如政府上調法定最低工資水平，快餐店或會在人力規劃中決定聘請較少但具備較豐富經驗的員工，藉此控制人工成本，提高成本效益。</p>
+        <p style="margin:0">• <b>裁員遣散費例子</b>：生產商在縮減規模裁員時，須依照勞工法例計算並預留向合資格被解僱僱員支付的遣散費。</p>
+      `
+    },
+    {
+      title: "過程第 1 步：預測人力需求",
+      badge: "人力規劃的過程",
+      def: "企業應先根據其「組織目標（即企業未來的計劃）」，預測兩方面事項：(i) 所需員工的數量（即企業需要或不需要的員工人數）；及 (ii) 所需員工的質素（即企業需要或不需要的員工類型）。",
+      detail: `
+        <div class="grid2" style="gap:12px">
+          <div style="background:var(--surface);padding:12px 14px;border-radius:10px;border-left:4px solid var(--green)">
+            <b style="color:var(--green)">組織目標 A：增加分店數目（擴充規模）</b><br>
+            須考慮：(i) 需要多少名新員工？(ii) 需要甚麼類型的員工（如售貨員、倉務員）？
+          </div>
+          <div style="background:var(--surface);padding:12px 14px;border-radius:10px;border-left:4px solid var(--red)">
+            <b style="color:var(--red)">組織目標 B：結束部分分店（縮減規模）</b><br>
+            須考慮：(i) 須要裁減多少名員工？(ii) 須要裁減甚麼類型的員工（如解僱結業分店的所有員工，還是只解僱表現較差的員工）？
+          </div>
+        </div>
+      `
+    },
+    {
+      title: "過程第 2 步：評估人力供應（內部與外部）",
+      badge: "人力規劃的過程",
+      def: "企業要評估是否有足夠的人力供應來滿足未來的人力需求，須同時估計企業「內部」和「外部」的人力供應：",
+      detail: `
+        <p style="margin:0 0 8px">• <b>(a) 內部人選的供應</b>：透過評估<b>員工流失率</b>和<b>退休政策</b>，以及查閱<b>技能檔案（僱員紀錄）</b>，預測內部人力的供應情況。</p>
+        <p style="margin:0 0 6px">• <b>(b) 影響「外部人選供應（目前不在企業任職的人）」的六個因素：</b></p>
+        <table class="comp-table" style="font-size:14.5px;margin-top:4px">
+          <thead><tr><th style="width:26%">影響外部供應的因素</th><th>該因素如何影響外部人選的供應</th></tr></thead>
+          <tbody>
+            <tr><td><b>1. 政府政策和法規</b></td><td>直接影響勞動人口規模和結構（例如政府批准輸入海外勞工或放寬海外專才移居香港，勞動力供應便會大幅增加）。</td></tr>
+            <tr><td><b>2. 失業率</b></td><td>失業率上升會增加勞動力供應；失業率下降則會減少勞動力供應。</td></tr>
+            <tr><td><b>3. 具備所需技能的勞工人數</b></td><td>若就業市場有大批勞工掌握某行業所需技能，企業便較易請人；反之若欠缺具備所需技能的人才而出現<b>技能短缺 (Skill Shortage)</b>，外部人選供應便會減少。</td></tr>
+            <tr><td><b>4. 工作人口的平均年齡</b></td><td>工作人口老化代表未來的勞動力供應會減少。</td></tr>
+            <tr><td><b>5. 教育和培訓</b></td><td>• <b>長期而言</b>：人民有較多機會接受教育和培訓，可提升勞動力質素並<b>增加</b>合適外部人選的供應。<br>• <b>短期而言</b>：人們可能因為進修而延遲進入就業市場，這會令短期的勞動力供應<b>減少</b>。</td></tr>
+            <tr><td><b>6. 企業所處地區</b></td><td>• <b>位處偏遠地區</b>：求職者因通勤時間較長、交通費較高而不願應徵，外部供應較少。<br>• <b>同區有很多大型競爭對手</b>：大型對手通常能提供較優厚的薪酬待遇吸引求職者，令企業的外部供應較少。</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    {
+      title: "過程第 3 步：比較人力需求和供應",
+      badge: "人力規劃的過程",
+      def: "企業應比較人力需求（從第 1 步得知）和人力供應（從第 2 步得知），從而識別以下三種情況：",
+      detail: `
+        <ul style="margin:0;padding-left:20px;line-height:1.8">
+          <li><b>(i) 人力短缺 (Shortage)</b>：即 <b>人力供應 ＜ 人力需求</b>。</li>
+          <li><b>(ii) 人力過剩 (Surplus)</b>：即 <b>人力供應 ＞ 人力需求</b>。</li>
+          <li><b>(iii) 缺乏技能 (Lack of Skills)</b>：即企業缺少擁有特定技能的人力。</li>
+        </ul>
+      `
+    },
+    {
+      title: "過程第 4 步：制定行動計劃和跟進",
+      badge: "人力規劃的過程",
+      def: "最後，企業應根據第 3 步的比較結果制定行動計劃：",
+      detail: `
+        <p style="margin:0 0 6px"><b>(a) 出現「人力短缺」或「缺乏技能」➔ 獲取所需人力的行動計劃（永久性僱用、暫時僱用、外判）：</b></p>
+        <table class="comp-table" style="font-size:14px;margin-top:4px;margin-bottom:10px">
+          <thead><tr><th style="width:18%">方式</th><th style="width:41%">主要優點</th><th style="width:41%">主要缺點／注意事項</th></tr></thead>
+          <tbody>
+            <tr><td><b>永久性僱用</b><br>(長工)</td><td>• 員工期望能在企業晉升，通常會<b>較投入工作</b>。<br>• 工作較穩定、福利較優厚、能與同事建立長期關係，一般有<b>較大的工作動力</b>。</td><td>• 招聘員工和提供員工福利（如醫療保險）的<b>成本可能較高</b>。<br>• <b>人力規劃的靈活性較低</b>（如在非旺季可能會出現人力過剩）。</td></tr>
+            <tr><td><b>暫時僱用</b><br>(臨時僱用)</td><td>• 提供的員工福利較少，<b>較符合成本效益</b>。<br>• <b>人力規劃的靈活性較高</b>（可只在旺季聘用臨時員工）。<br>• 可聘用具備特定技能的員工滿足短期需要，並可在永久僱用前<b>先測試員工是否合適</b>。</td><td>• 福利較少，因此一般<b>要求較高工資</b>。<br>• 只在企業逗留短時間，<b>對工作的投入度通常較低</b>。<br>• 工作不穩定、福利較少，較難建立歸屬感，<b>工作動力一般較小</b>。</td></tr>
+            <tr><td><b>外判</b><br>(Outsourcing)</td><td>• 支付承判費把生產工序轉由承判商執行，企業把非核心工作外判後可<b>專注於核心業務</b>。<br>• 承判費通常低於自行聘請員工生產的成本，有助<b>節省成本</b>。</td><td>• <span style="color:var(--red)">注意：將工作外判不會增加企業聘用的僱員數目。</span><br>• 若決定永久或暫時僱用，須同時籌劃：(i) 招聘和甄選活動、(ii) 新僱員的薪酬待遇、(iii) 新僱員的培訓和發展活動、(iv) 內部溝通方式。</td></tr>
+          </tbody>
+        </table>
+        <p style="margin:0"><b>(b) 出現「人力過剩」➔ 縮減僱員人數的行動計劃（三種方法）：</b><br>
+        • <b>(i) 自然流失 (Natural Attrition)</b>：透過員工退休、辭職或死亡，自然和逐漸地減少僱員人數。<br>
+        • <b>(ii) 裁員 (Layoffs)</b>：進行重組或縮減人手時，終止與僱員的僱傭關係。<br>
+        • <b>(iii) 鼓勵僱員提早退休或自願離職</b>：利用財務獎勵吸引現職僱員提早退休或辭職。<br>
+        <span style="font-size:14.5px;color:var(--mute)">（若決定裁員或鼓勵提早退休／自願離職，制定計劃時須考慮：(i) 如何向被解僱僱員提供補償如遣散費金額；(ii) 提供甚麼財務獎勵；(iii) 如何將行動計劃告知僱員。）</span></p>
+      `
+    }
+  ];
+
+  function renderMp(idx) {
+    document.getElementById('mpNavList').innerHTML = mpCatalog.map((m, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderMp(${i})">
+        <span>${m.title}</span>
+      </button>
+    `).join('');
+    const m = mpCatalog[idx];
+    document.getElementById('mpDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${m.title}</h3>
+        <span class="badge ${idx<4?'b-blue':'b-teal'}">${m.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${m.def}</p>
+      <div class="case-box">${m.detail}</div>
+    `;
+  }
+  renderMp(0);
+
+  function calcTurnover() {
+    const leave = Math.max(0, +document.getElementById('inLeave').value || 0);
+    const avg = Math.max(1, +document.getElementById('inAvgStaff').value || 1);
+    const pol = document.getElementById('retirePolSel').value;
+    const rate = ((leave / avg) * 100).toFixed(2);
+    const isHigh = rate >= 15;
+    document.getElementById('turnoverOutput').innerHTML = `
+      <div style="background:var(--surface);padding:14px 16px;border-radius:12px;border:1.5px solid ${isHigh?'var(--red)':'var(--green)'};font-size:15px">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+          <span><b>員工流失率：</b>(${leave} ÷ ${avg}) × 100% ＝ <b style="font-size:19px;color:${isHigh?'var(--red)':'var(--green)'}">${rate}%</b></span>
+          <span class="badge ${isHigh?'b-red':'b-green'}" style="margin:0">${isHigh?'流失率偏高（內部供應減少 ↓）':'流失率穩定'}</span>
+        </div>
+        <div style="margin-top:8px;line-height:1.7">
+          • <b>員工流失率影響：</b>當員工流失率<b>上升</b>時，企業的<b>內部人力供應會減少 ↓</b>，聘請新員工的需要便會<b>增加 ↑</b>（反之流失率下降則內部供應增加）。<br>
+          • <b>所選退休政策影響：</b>${pol === 'delay' ? '<span style="color:var(--green);font-weight:700">延遲退休年齡（如從 60 歲延遲至 65 歲）➔ 內部人力供應會增加 ↑，聘請新員工的需要減少 ↓。</span>' : '<span style="color:var(--red);font-weight:700">降低退休年齡（如從 65 歲降低至 60 歲）➔ 內部人力供應會減少 ↓，聘請新員工的需要增加 ↑。</span>'}
+        </div>
+      </div>`;
+  }
+  calcTurnover();
+
+  // 對稱深度設計的 8 道人力規劃概念挑戰題
+  const mpQuizItems = [
+    {
+      q: "1. 指出以下四個商業情況分別展示「人力規劃的哪項重要性」：<br>(a) 鑑於近期經濟衰退，某餐廳決定不再跟部分臨時僱員續約 ｜ (b) 某生產商在裁員時，依照勞工法例計算僱員的遣散費 ｜ (c) 某銀行計劃在來年開設數家分行，估計須要聘請更多出納員 ｜ (d) 某貿易公司根據人力規劃所預測的人力需求，刊登招聘廣告和甄選符合條件的求職者",
+      opts: [
+        "A. (a) 確定和預測未來的人力需求 ｜ (b) 作為策劃和執行其他人力資源管理功能的基礎 ｜ (c) 因應環境轉變調整人力需求 ｜ (d) 遵守政府的僱傭法例規定",
+        "B. (a) 因應環境轉變調整人力需求 ｜ (b) 遵守政府的僱傭法例規定 ｜ (c) 確定和預測未來的人力需求 ｜ (d) 作為策劃和執行其他人力資源管理功能的基礎",
+        "C. (a) 因應環境轉變調整人力需求 ｜ (b) 確定和預測未來的人力需求 ｜ (c) 作為策劃和執行其他人力資源管理功能的基礎 ｜ (d) 遵守政府的僱傭法例規定"
+      ],
+      ans: 1,
+      exp: "正確。(a) 經濟衰退不續約屬因應外在環境轉變調整需求；(b) 依法計算遣散費屬遵守政府僱傭法例規定；(c) 估計新分行所需人數屬確定和預測未來人力需求；(d) 指導招聘與甄選屬作為其他 HR 功能的基礎。"
+    },
+    {
+      q: "2. 樂思是一家銀行的人力資源經理，指出以下四項工作分別屬於人力規劃過程的哪個步驟：<br>(i) 她估計隨着部分分行結業，銀行所需的僱員人數會減少 ｜ (ii) 她審視銀行的員工流失率，並預計這個數字會在來年維持平穩 ｜ (iii) 她在評估人力供應後，發現銀行的人力供過於求 ｜ (iv) 她制定一份裁員計劃，並決定將會支付的遣散費金額",
+      opts: [
+        "A. (i) 第 2 步：評估人力供應 ｜ (ii) 第 1 步：預測人力需求 ｜ (iii) 第 3 步：比較人力需求和供應 ｜ (iv) 第 4 步：制定行動計劃和跟進",
+        "B. (i) 第 1 步：預測人力需求 ｜ (ii) 第 3 步：比較人力需求和供應 ｜ (iii) 第 2 步：評估人力供應 ｜ (iv) 第 4 步：制定行動計劃和跟進",
+        "C. (i) 第 1 步：預測人力需求 ｜ (ii) 第 2 步：評估人力供應 ｜ (iii) 第 3 步：比較人力需求和供應 ｜ (iv) 第 4 步：制定行動計劃和跟進"
+      ],
+      ans: 2,
+      exp: "正確。先按分行結業的組織目標預測人力需求（第 1 步），再審視員工流失率以評估內部人力供應（第 2 步），然後比較需求與供應發現供過於求（第 3 步），最後制定裁員及遣散費行動計劃（第 4 步）。"
+    },
+    {
+      q: "3. 當一家企業「推出彈性退休計劃，容許現職員工延遲退休年齡」時，這項措施對該企業的人力供應及招聘需要會有甚麼影響？",
+      opts: [
+        "A. 外部人選的供應會增加，因為延遲退休政策能吸引勞動市場上更多待業的年輕求職者投身該企業，從而擴大外部人才庫並減少招聘需要",
+        "B. 內部人選的供應會增加，因為容許現職員工延遲退休能讓具備經驗的員工留在企業工作更長時間，從而減少企業向外聘請新員工的需要",
+        "C. 內部人選的供應會減少，因為年長員工留任會阻礙基層員工向上流動，直接導致企業內部可供調配的現職人員總數下降並增加招聘需要"
+      ],
+      ans: 1,
+      exp: "正確。調整企業退休政策屬於影響「內部人力供應」的因素；延遲退休年齡可留住現職員工，令內部人選供應增加，並減少聘請新員工的需要。"
+    },
+    {
+      q: "4. 當勞動市場出現「整體失業率下降」以及「工作人口老化」兩個現象時，這對企業的人力供應會造成甚麼影響？",
+      opts: [
+        "A. 兩者均會令外部人選的供應減少，因為失業率下降代表市場上待業求職者減少，而工作人口老化則代表越來越多人步入退休，令整體勞動力供應萎縮",
+        "B. 兩者均會令內部人選的供應減少，因為失業率下降及人口老化屬於企業內部的員工流失指標，只會影響現職員工的留任比例而不影響外部市場",
+        "C. 前者會令外部人選的供應減少，後者則會令外部人選的供應增加，因為工作人口老化代表市場上有更多資深退休人士可供企業隨時聘用"
+      ],
+      ans: 0,
+      exp: "正確。失業率和工作人口平均年齡均屬影響「外部人選供應」的因素；失業率下降與工作人口老化都會令外部勞動力供應減少。"
+    },
+    {
+      q: "5. 當「政府實施新的移民及人才入境政策，讓海外專業人士更容易移居香港工作」時，這對本地企業的人力供應有何影響？",
+      opts: [
+        "A. 內部人選的供應會增加，因為海外專業人士移居香港後會自動計入企業現職的技能檔案之中，無須經過外部招聘程序即可直接晉升",
+        "B. 外部人選的供應會減少，因為引入海外專業人士會加劇本地就業市場的競爭，令本地具備相關技能的求職者選擇退出勞動市場",
+        "C. 外部人選的供應會增加，因為政府政策和法規會直接影響勞動人口的規模和結構，放寬海外專才入境能擴大市場上合資格外部人選的數量"
+      ],
+      ans: 2,
+      exp: "正確。政府政策和法規會直接影響勞動人口的規模和結構；放寬海外專業人士移居香港會令外部人選的供應增加。"
+    },
+    {
+      q: "6. 若某地區的人民有較多機會接受高等教育和專業培訓，這項因素對企業「外部人選供應」在長期及短期分別會帶來甚麼影響？",
+      opts: [
+        "A. 長期而言可提升勞動力質素並增加合適外部人選的供應；但短期而言，由於人們可能因為持續進修而延遲進入就業市場，會令短期的勞動力供應減少",
+        "B. 短期而言會大幅增加外部勞動力供應，因為學生在進修期間可擔任全職工作；但長期而言則會減少合適外部人選供應，因為高學歷人士要求的薪酬過高",
+        "C. 無論在短期還是長期，增加教育和培訓機會都只會提升企業現職僱員的內部人力供應，對就業市場上的外部勞動力供應並無任何直接影響"
+      ],
+      ans: 0,
+      exp: "正確。教育和培訓在長期能提升勞動力質素並增加合適外部人選供應；但在短期卻因人們進修延遲進入就業市場，令短期的勞動力供應減少。"
+    },
+    {
+      q: "7. 某大型會展策劃公司只在每年夏季書展及動漫節兩個月旺季需要大量攤位搭建及人流管制人員，非旺季時並不需要這批人手。該公司應採用哪種方式獲取這批人力？",
+      opts: [
+        "A. 應採用永久性僱用，因為永久性僱員的工作較穩定且福利較優厚，能確保在非旺季期間公司仍保有大批全職攤位搭建人員隨時待命",
+        "B. 應採用暫時僱用，因為臨時員工對工作的投入度及歸屬感通常高於長工，而且他們因福利較少而要求的時薪工資亦必定遠低於永久性僱員",
+        "C. 應採用暫時僱用，因為人力規劃的靈活性較高，公司可只在夏季旺季聘用臨時員工以避免非旺季出現人力過剩，且提供的員工福利較少，較符合成本效益"
+      ],
+      ans: 2,
+      exp: "正確。暫時僱用的人力規劃靈活性較高（可只在旺季聘用），且提供的員工福利較少，較符合成本效益（注意 B 錯誤：臨時工因福利較少，一般要求較高工資，且投入度與工作動力較低）。"
+    },
+    {
+      q: "8. 安安百貨發現旗下「送貨員」的流失率特別高，儘管已全年不斷聘請長期和臨時員工，仍無法解決人力短缺問題。除了直接聘請員工外，百貨公司還可採用甚麼方法獲取所需人力提供送貨服務？",
+      opts: [
+        "A. 應採用外判，透過支付承判費把送貨工序轉由承判商執行，這不但能讓公司專注於核心零售業務及節省成本，更能大幅增加公司自己聘用的正式僱員數目",
+        "B. 應採用外判，透過支付承判費把送貨工序轉由第三方物流承判商執行，讓公司把非核心工作外判後可專注於核心零售業務，且承判費通常低於自行聘請員工的成本",
+        "C. 應採用自然流失，在現職送貨員辭職或退休後不再填補任何職位空缺，藉此自然和逐漸地減少送貨部門的僱員人數以解決人手短缺問題"
+      ],
+      ans: 1,
+      exp: "正確。外判可讓企業專注於核心業務並節省成本（注意 A 錯誤：將工作外判並不會增加企業自己聘用的僱員數目；C 錯誤：自然流失是處理人力過剩而非人力短缺的方法）。"
+    }
+  ];
+  let curMPQ = 0;
+  function renderMpQuiz() {
+    const it = mpQuizItems[curMPQ];
+    document.getElementById('mpQuizProg').textContent = `題目 ${curMPQ + 1} / ${mpQuizItems.length}`;
+    document.getElementById('mpQuizQ').innerHTML = it.q;
+    document.getElementById('mpQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkMpQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('mpQuizFb').innerHTML = '';
+  }
+  function checkMpQuiz(idx) {
+    const it = mpQuizItems[curMPQ];
+    const fb = document.getElementById('mpQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curMPQ=(curMPQ+1)%mpQuizItems.length;renderMpQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderMpQuiz();
+
+  // ====== 2. 工作分析：工作說明 vs 工作要求 ======
+  const adLinesData = [
+    { txt: "1. 負責統籌動物醫院日常預約分流、醫療物資採購及處理寵物主人查詢", type: "工作說明", exp: "描述該職位日常須執行的具體<b>任務與職責</b>，屬於由<b>「工作說明 (Job Description)」</b>得出的資料。" },
+    { txt: "2. 直接向醫院首席獸醫總監匯報工作，並督導六名獸醫助護及接待員", type: "工作說明", exp: "列明該職位在組織架構中的<b>匯報關係（向誰匯報及督導誰）</b>，屬於由<b>「工作說明」</b>得出的資料。" },
+    { txt: "3. 每週工作五天（需按輪班表於週末或公眾假期當值），於九龍總院工作", type: "工作說明", exp: "列明該職位的<b>工作時間與工作條件／環境</b>，屬於由<b>「工作說明」</b>得出的資料。" },
+    { txt: "4. 持有工商管理、醫療行政或獸醫護理相關學科的大學學位或以上學歷", type: "工作要求", exp: "列明擔任該職位所需的<b>學歷與專業知識（個人條件）</b>，屬於由<b>「工作要求 (Job Specification)」</b>得出的資料。" },
+    { txt: "5. 具備最少四年任職動物診所或私家醫療機構的行政管理工作經驗", type: "工作要求", exp: "列明任職者須具備的<b>工作經驗與資歷（個人條件）</b>，屬於由<b>「工作要求」</b>得出的資料。" },
+    { txt: "6. 積極主動、具高度同理心與抗壓能力，並精通中英文口語和書面溝通", type: "工作要求", exp: "列明妥善擔任該工作所需的<b>個人能力、性格特質與語言技能</b>，屬於由<b>「工作要求」</b>得出的資料。" }
+  ];
+  function checkAdLine(idx) {
+    const it = adLinesData[idx];
+    const isDesc = it.type === '工作說明';
+    document.getElementById('jobAdFeedback').innerHTML = `
+      <b style="color:${isDesc?'var(--primary)':'var(--teal)'};font-size:16.5px">條款 ${idx+1} 屬於：【${it.type}】得出的資料</b><br>
+      <span>${it.exp}</span>`;
+  }
+  document.getElementById('jobAdItems').innerHTML = `
+    <div style="background:var(--primary);color:#fff;padding:10px 14px;border-radius:10px;font-weight:800;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+      <span>仁愛專科動物醫院 — 診所營運主任（招聘廣告）</span>
+      <small style="font-weight:500">點擊各行查看屬性</small>
+    </div>
+    ${adLinesData.map((l, i) => `
+      <div class="ad-line" onclick="checkAdLine(${i})">
+        <span>${l.txt}</span>
+        <span class="badge ${l.type==='工作說明'?'b-blue':'b-teal'}" style="margin:0;flex-shrink:0">點擊檢視</span>
+      </div>
+    `).join('')}`;
+
+  const jaUseData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">1. 協助「招聘和甄選（員工編制）」：</b><br>
+      • 管理人員可根據工作分析得出的<b>工作說明</b>和<b>工作要求</b>，清楚決定應招聘和僱用甚麼類型的員工。<br>
+      • 在<b>招聘</b>時，可運用工作說明（職責）和工作要求（學歷經驗要求）的資料來<b>撰寫招聘廣告</b>；在<b>甄選</b>時，則可根據工作要求篩選申請人。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">2. 協助「員工考績（工作評核）」：</b><br>
+      • 工作說明與工作要求列明了該職位應完成的職責及應達到的能力標準。<br>
+      • 管理人員進行員工考績時，可根據這些資料，<b>將僱員的實際工作表現與他們的職責和表現標準作比較</b>，以評核僱員表現是否達標。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">3. 協助「報酬管理（調整薪酬待遇）」：</b><br>
+      • 透過工作分析，企業能清楚了解不同職位所承擔的職責輕重與工作條件（工作說明），以及所需的專業資格與經驗（工作要求）。<br>
+      • 管理人員可根據這些資料，合理地<b>釐定及調整不同職位僱員的薪酬待遇</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">4. 協助「培訓和發展（識別培訓需要）」：</b><br>
+      • 管理人員可根據工作要求所列明的知識和技能標準，<b>評估僱員是否擁有完成某項工作所需的技能</b>。<br>
+      • 若發現僱員現有能力與工作要求之間存在差距（例如欠缺良好的溝通技巧），便可<b>識別僱員的培訓需要</b>，從而規劃合適的培訓和發展活動。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--teal);font-size:16px;line-height:1.8">
+      <b style="color:var(--teal);font-size:17.5px">5. 概念重要區分：「工作分析」vs「技能檔案 (Skills Inventory)」</b><br>
+      • <span style="color:var(--red)"><b>注意：</b>「工作分析」分析的是<b>「職位／工作本身」</b>（得出工作說明和工作要求），並<b>不會</b>提供現職僱員個人的姓名、過往薪金紀錄或個人調職意向。</span><br>
+      • <b>技能檔案（又稱技能分析目錄）</b>：才是其中一種<b>僱員紀錄</b>，整合所有與僱員<b>升職和調職決定</b>相關的資料，包括：(1) 個人資料、(2) 技能、(3) 薪金和就業紀錄、(4) 僱員在現職企業的詳細資料、(5) 僱員的能力，以及 (6) 僱員的意向。企業可根據技能檔案把僱員的技能與人力需求作配對。
+    </div>`
+  ];
+  function renderJaUse(idx) {
+    document.querySelectorAll('#jaUseChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('jaUseBox').innerHTML = jaUseData[idx];
+  }
+  renderJaUse(0);
+
+  // 對稱深度設計的 6 道工作分析概念挑戰題
+  const jaQuizItems = [
+    {
+      q: "1. 辨別以下陳述是否正確：「工作分析是確定某份工作的任務和技能要求，以及擔任這份工作的人員應具備的特徵的過程。」",
+      opts: [
+        "A. 正確 — 企業透過工作分析可確定職位的任務職責及任職者須具備的個人條件，從而得出工作說明和工作要求兩份文件",
+        "B. 不正確 — 確定工作任務與任職者特徵的過程稱為員工考績，而工作分析則是計算企業每年離職員工佔總人數百分比的過程",
+        "C. 不正確 — 工作分析只會記錄現職僱員的個人姓名、薪金紀錄與調職意向，並不會分析某份工作的任務或任職人員應具備的特徵"
+      ],
+      ans: 0,
+      exp: "正確。工作分析是確定 (1) 某份工作的任務和技能要求（得出工作說明），以及 (2) 擔任這份工作的人員應具備的特徵（得出工作要求）的過程。"
+    },
+    {
+      q: "2. 辨別以下陳述是否正確：「工作說明 (Job Description) 着重個人質素，而工作要求 (Job Specification) 則着重工作性質。」",
+      opts: [
+        "A. 正確 — 工作說明旨在列明任職者須具備的學歷、經驗與語言能力等個人條件，而工作要求則列明該職位的日常任務與匯報關係",
+        "B. 不正確 — 工作說明列明某份工作的任務、職責、匯報關係和工作條件（着重工作性質）；工作要求則列明妥善擔任該工作所需的知識、能力和技能（着重個人質素）",
+        "C. 不正確 — 工作說明和工作要求兩者均只列明職位的薪酬福利與假期安排，並不涉及工作性質或任職者的個人條件與質素"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。工作說明着重工作性質（列明任務、職責、匯報關係和工作條件），而工作要求則着重個人條件與質素（列明所需的知識、能力和技能）。"
+    },
+    {
+      q: "3. 辨別以下陳述是否正確：「工作分析為企業提供現職僱員的個人資料、工作經驗、薪金紀錄和調職意向等資訊。」",
+      opts: [
+        "A. 正確 — 工作分析屬於現職僱員的個人人事檔案，專門記錄每位現職員工過往的就業紀錄、薪金變化及申請內部調職的個人意願",
+        "B. 不正確 — 提供現職僱員個人資料、薪金和就業紀錄以及個人意向的是『技能檔案（僱員紀錄）』，而『工作分析』是針對職位本身確定任務與任職條件",
+        "C. 不正確 — 無論是工作分析還是技能檔案，都只會記錄外部勞動市場的失業率與人口老化數據，不會包含任何職位要求或僱員個人資料"
+      ],
+      ans: 1,
+      exp: "正確（陳述不正確）。工作分析是針對「職位」確定任務與任職要求；整合現職僱員個人資料、薪金紀錄、能力與調職意向以作升職和調職配對的是「技能檔案 (Skills Inventory)」。"
+    },
+    {
+      q: "4. 新成立的食品公司「珍餚」計劃增設「市場營銷經理」一職，創辦人未有進行工作分析，便要求求職者「須擁有大學學位和 15 年工作經驗」，並毫無根據地「將薪金設定為初級員工平均薪金的兩倍」，結果在勞工處發布空缺多時仍未收到任何申請。珍餚在人力規劃和員工編制過程中出現了甚麼問題？",
+      opts: [
+        "A. 珍餚設定的 15 年工作經驗要求過低，而且勞工處向僱主收取了過於高昂的轉介服務費，導致公司沒有足夠預算刊登招聘廣告",
+        "B. 珍餚沒有進行『工作分析』以致設定了過高的職位要求（15年經驗）及缺乏參考資料合理釐定薪金；同時選用了不常用於招聘管理人員的『勞工處』發布空缺",
+        "C. 珍餚不應該為新開設的職位訂立任何學歷或經驗要求，而且應該只透過公司內聯網向外部就業市場的求職者發布市場營銷經理空缺"
+      ],
+      ans: 1,
+      exp: "正確。珍餚出現的問題包括：(1) 沒有進行工作分析，導致對經驗的要求過高且缺乏客觀資料釐定合適薪酬；(2) 選用了勞工處招聘管理人員（經驗豐富的管理人員很少透過勞工處找工作）。"
+    },
+    {
+      q: "5. 醫療集團的人力資源經理對照某護理職位的「工作要求」後，發現新入職的診所助護在急救儀器操作技能上未達標準，於是安排她報讀急救證書課程。這展示了工作分析如何協助哪項人力資源活動？",
+      opts: [
+        "A. 協助執行『報酬管理』，管理人員可根據工作分析提供的資料，直接削減未達標僱員的基本薪金與法定假日福利",
+        "B. 協助執行『員工編制中的外部招聘』，管理人員可根據資料在報章刊登招聘廣告，吸引外地醫療專才申請職位空缺",
+        "C. 協助執行『培訓和發展』，管理人員可根據工作要求的資料評估僱員是否擁有完成某項工作所需的技能，從而識別僱員的培訓需要"
+      ],
+      ans: 2,
+      exp: "正確。管理人員可根據工作分析得出的工作要求，評估僱員是否擁有完成某項工作所需的技能，從而識別僱員的培訓需要。"
+    },
+    {
+      q: "6. 部門主管在年底根據「工作說明」上列明的職責及「工作要求」的標準，評估下屬在過去一年的實際工作表現是否達標。這展示了工作分析如何協助哪項人力資源活動？",
+      opts: [
+        "A. 協助執行『員工考績（工作評核）』，管理人員可根據工作分析提供的資料，將僱員的實際工作表現與他們的職責和表現標準作比較",
+        "B. 協助執行『人力規劃中的縮減人手』，管理人員可根據資料計算全公司的員工流失率，並決定透過自然流失減少僱員人數",
+        "C. 協助執行『工作外判』，管理人員可根據工作說明的資料，將公司所有核心管理職務交由外部商業招聘機構全權承包"
+      ],
+      ans: 0,
+      exp: "正確。將僱員的實際工作表現與工作說明及工作要求所列的職責和表現標準作比較，屬於協助執行「員工考績」。"
+    }
+  ];
+  let curJAQ = 0;
+  function renderJaQuiz() {
+    const it = jaQuizItems[curJAQ];
+    document.getElementById('jaQuizProg').textContent = `題目 ${curJAQ + 1} / ${jaQuizItems.length}`;
+    document.getElementById('jaQuizQ').innerHTML = it.q;
+    document.getElementById('jaQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkJaQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('jaQuizFb').innerHTML = '';
+  }
+  function checkJaQuiz(idx) {
+    const it = jaQuizItems[curJAQ];
+    const fb = document.getElementById('jaQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curJAQ=(curJAQ+1)%jaQuizItems.length;renderJaQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderJaQuiz();
+
+  // ====== 3. 員工編制：內部招聘 vs 外部招聘 ======
+  const staffStages = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--primary);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">第 1 階段：招聘 (Recruitment) — 識別和吸引合適人選申請企業的職位空缺</b><br>
+      企業可根據工作分析所得的資料確定所需的僱員類型。<b>招聘的過程包括兩個步驟：</b><br>
+      • <b>第 1 步：決定人力資源的來源</b> — 決定聘用內部人選（<b>內部招聘</b>：透過升職或調職）還是外部人選（<b>外部招聘</b>）來填補職位空缺。<br>
+      • <b>第 2 步：決定發布職位空缺的方法（招聘途徑）</b> — 針對內部人選可用內聯網或電郵；針對外部人選可用招聘廣告、現職員工推薦、招聘機構、招聘會、專業學會或工會。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--teal);font-size:16px;line-height:1.8">
+      <b style="color:var(--teal);font-size:17.5px">第 2 階段：甄選 (Selection) — 評估和評核求職者</b><br>
+      • 當企業完成招聘階段、收到求職者的申請後，便會進入<b>甄選階段</b>。<br>
+      • <b>甄選定義</b>：指企業<b>評估和評核所有求職者，以找出最適合某工作職位的人選</b>的過程。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1.5px solid var(--amber);font-size:16px;line-height:1.8">
+      <b style="color:var(--amber);font-size:17.5px">第 3 階段：受僱 (Employment) — 決定聘用的人選和訂立聘用條款</b><br>
+      • 在甄選出最合適的人選後，企業會<b>決定聘用的人選和訂立聘用條款</b>（即受僱階段）。
+    </div>`
+  ];
+  function renderStaffStage(idx) {
+    document.getElementById('staffStageBox').innerHTML = staffStages[idx];
+  }
+  renderStaffStage(0);
+
+  const recSourceData = [
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:17px">1. 內部招聘 (Internal Recruitment) — 透過「升職」或「調職」以現職員工填補職位空缺：</b>
+      <table class="comp-table" style="font-size:15px;margin-top:8px">
+        <thead><tr><th style="width:50%">內部招聘的 4 項優點</th><th style="width:50%">內部招聘的 4 項缺點</th></tr></thead>
+        <tbody>
+          <tr><td><b>(i) 提高現職員工的士氣和積極性</b>：現職員工或會更努力工作爭取升職和調職的機會；獲晉升的員工也可能有較高的士氣（有助留住員工）。</td><td><b>(i) 打擊落選員工的士氣</b>：未獲挑選升職或調職的員工或會因而士氣低落；若認為沒有得到公平對待，更可能會辭職。</td></tr>
+          <tr><td><b>(ii) 節省時間和成本</b>：由於企業早已擁有僱員的資料（如技能檔案），因此可簡化招聘的程序；此外，內部招聘所需的篩選工作和職前輔導也較少。</td><td><b>(ii) 造成惡性競爭</b>：渴望晉升的現職員工之間或會出現惡性競爭，導致員工之間發生衝突。</td></tr>
+          <tr><td><b>(iii) 獲升職或調職的員工更容易適應新崗位</b>：現職員工較熟悉企業的文化和工作環境，所以更容易適應新的工作崗位。</td><td><b>(iii) 新思維和技能有限</b>：現職員工可能已養成既定的工作模式，未能帶來新思維和技能，限制企業的發展。</td></tr>
+          <tr><td><b>(iv) 對人選更為了解</b>：企業對現職員工的背景、能力、強項和弱項等，都有較深入的了解。</td><td><b>(iv) 人選有限</b>：內部人選未必能完全符合新崗位的要求（可能並不具備新崗位所需的技能或知識）。</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--teal);font-size:17px">2. 外部招聘 (External Recruitment) — 聘用外部人選填補職位空缺：</b>
+      <table class="comp-table" style="font-size:15px;margin-top:8px">
+        <thead><tr><th style="width:50%">外部招聘的 3 項優點</th><th style="width:50%">外部招聘的 3 項缺點</th></tr></thead>
+        <tbody>
+          <tr><td><b>(i) 新思維和技能</b>：新員工可為企業帶來新思維和技能，促進企業的發展。</td><td><b>(i) 較難適應新崗位</b>：新員工可能難以適應企業的運作、文化和工作環境。</td></tr>
+          <tr><td><b>(ii) 節省培訓成本</b>：如果企業聘請具備所需技能的外部人選出任新崗位，便無須提供額外的培訓。</td><td><b>(ii) 打擊現職員工的士氣和積極性</b>：如果現職員工發現自己的晉升機會渺茫，或會受到打擊而士氣低落，工作動力也會減少，可能令員工流失率上升。</td></tr>
+          <tr><td><b>(iii) 人選較多</b>：企業可通過外部招聘，接觸大量背景不同的求職者，因此有較大機會成功聘請所需數量和類型的僱員。</td><td><b>(iii) 員工編制過程所需的時間較長、成本較高</b>：外部招聘的招聘和甄選程序一般較為繁複和需時較長（如須刊登招聘廣告和篩選履歷）；部分發布職位空缺的方法也涉及高昂的成本。</td></tr>
+        </tbody>
+      </table>
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16px;line-height:1.8">
+      <b style="color:var(--primary);font-size:17.5px">3. 內部招聘 vs 外部招聘 五大維度對照：</b><br>
+      內部招聘的優點往往正是外部招聘的缺點，反之亦然：<br>
+      • <b>(1) 適應度與了解程度</b>：內部員工熟悉文化易適應、公司對其強弱項了解深 <b>vs</b> 外部新員工較難適應新崗位。<br>
+      • <b>(2) 創新思維與技能</b>：內部員工養成既定模式、新思維和技能有限 <b>vs</b> 外部員工能帶來新思維和技能（且若已具備所需技能可節省培訓成本）。<br>
+      • <b>(3) 人選數量</b>：內部人選有限（未必符合新崗位要求） <b>vs</b> 外部接觸大量求職者、人選較多。<br>
+      • <b>(4) 對現職員工士氣的影響</b>：內部晉升能提高現職員工士氣和積極性（但會打擊落選者及造成惡性競爭） <b>vs</b> 外部招聘令現職員工覺得晉升機會渺茫而士氣低落、流失率上升。<br>
+      • <b>(5) 招聘時間與成本</b>：內部招聘程序簡化、節省時間和成本 <b>vs</b> 外部員工編制過程所需時間較長、成本較高。
+    </div>`
+  ];
+  function renderRecSource(idx) {
+    document.querySelectorAll('#recSourceChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('recSourceBox').innerHTML = recSourceData[idx];
+  }
+  renderRecSource(0);
+
+  // 對稱深度設計的 6 道內部 vs 外部招聘挑戰題
+  const recQuizItems = [
+    {
+      q: "1. 指出以下五項描述分別是和「內部招聘」還是「外部招聘」相關：<br>(a) 可以激勵現職員工更努力工作 ｜ (b) 能為企業帶來新思維和技能 ｜ (c) 員工或難以適應新崗位 ｜ (d) 企業能從較多求職者中進行甄選 ｜ (e) 有機會造成惡性競爭",
+      opts: [
+        "A. (a) 外部招聘 ｜ (b) 內部招聘 ｜ (c) 內部招聘 ｜ (d) 外部招聘 ｜ (e) 外部招聘",
+        "B. (a) 內部招聘 ｜ (b) 外部招聘 ｜ (c) 外部招聘 ｜ (d) 外部招聘 ｜ (e) 內部招聘",
+        "C. (a) 內部招聘 ｜ (b) 內部招聘 ｜ (c) 外部招聘 ｜ (d) 內部招聘 ｜ (e) 外部招聘"
+      ],
+      ans: 1,
+      exp: "正確。(a) 激勵現職員工爭取晉升（內部優點）；(b) 帶來新思維和技能（外部優點）；(c) 難以適應企業文化和環境（外部缺點）；(d) 人選較多（外部優點）；(e) 渴望晉升的同事間造成惡性競爭（內部缺點）。"
+    },
+    {
+      q: "2. 鳳凰航空在香港營運數十年，由於架構龐大和管理模式官僚化，營運缺乏靈活性並出現巨額虧損。新任行政總裁決定增設「策略總監」一職，協助公司制定創新策略重奪市場佔有率。為何他應該透過「外部招聘」來聘請策略總監？",
+      opts: [
+        "A. 因為外部招聘的員工編制過程所需時間最短且成本最低，而且外聘的策略總監在入職首天便已完全熟悉鳳凰航空的內部文化和運作流程",
+        "B. 因為外部人選可為官僚化的公司帶來『新思維和技能』以制定創新策略，且外部市場『人選較多』（若聘請已具備所需技能的人選更可『節省培訓成本』）",
+        "C. 因為透過外部招聘空降高級管理人員，最能提高現職管理人員認為自己晉升有望的士氣和積極性，從而大幅降低公司的員工流失率"
+      ],
+      ans: 1,
+      exp: "正確。外部招聘的三大優點為：帶來新思維和技能、人選較多、以及若聘請已具備所需技能的人選可節省培訓成本（注意 A 和 C 均把內部招聘的優點誤當作外部招聘）。"
+    },
+    {
+      q: "3. 某連鎖運動用品店決定透過「內部晉升」委任一名現職分店店長出任新設的「大數據分析經理」一職。採用內部晉升可能會面對甚麼缺點？",
+      opts: [
+        "A. 獲晉升的現職店長完全不認識公司的企業文化和日常工作環境，因此需要花費比外聘人員更長的時間和更多的職前輔導才能適應新崗位",
+        "B. 公司對現職店長過往的工作能力、強項和弱項完全缺乏了解，而且必須向商業招聘機構支付高昂的服務費用才能完成內部晉升程序",
+        "C. 內部『人選有限』，現職店長未必具備新崗位所需的大數據技能；且現職員工已養成既定工作模式，『新思維和技能有限』，同時可能『打擊落選店長的士氣』及『造成惡性競爭』"
+      ],
+      ans: 2,
+      exp: "正確。內部招聘的四大缺點為：人選有限（未必符合新崗位要求）、新思維和技能有限、打擊落選員工士氣，以及造成惡性競爭。"
+    },
+    {
+      q: "4. 在決定人力資源來源時，為何採用「內部招聘」能幫助企業節省時間和成本？",
+      opts: [
+        "A. 因為企業早已擁有現職僱員的資料（如技能檔案與考績紀錄），可簡化招聘的程序，而且內部招聘所需的篩選工作和職前輔導也較少",
+        "B. 因為透過內部晉升或調職填補空缺的現職員工，在法律上無須與企業訂立新的聘用條款，亦無須支取新職位應有的基本薪金和福利",
+        "C. 因為內部招聘是由政府勞工處免費代為篩選全港求職者履歷，企業完全無須由內部人力資源部查閱任何僱員紀錄或進行甄選"
+      ],
+      ans: 0,
+      exp: "正確。由於企業早已擁有現職僱員的資料，因此可簡化招聘程序，加上所需的篩選工作和職前輔導較少，故能節省時間和成本。"
+    },
+    {
+      q: "5. 關於「內部招聘」與「外部招聘」對企業成本的影響，下列哪項描述最為準確？",
+      opts: [
+        "A. 外部招聘的『員工編制（招聘和甄選）成本』較低，但因為外來員工完全不具備任何專業技能，所以企業必定要承擔極高昂的『技能培訓成本』",
+        "B. 外部招聘的『員工編制（招聘和甄選）過程所需時間較長、成本較高』；但若企業直接聘請已具備所需技能的外部人選出任新崗位，則可『節省額外的培訓成本』",
+        "C. 內部招聘的『員工編制（招聘和甄選）成本』遠高於外部招聘，因為企業必須在國際招聘網站刊登廣告並聘用獵頭公司才能通知現職員工申請調職"
+      ],
+      ans: 1,
+      exp: "正確。必須分清兩種成本：外部招聘的「員工編制（招聘和甄選）成本」較高，但若聘請已具備所需技能的外部人選，便無須提供額外技能培訓，可「節省培訓成本」。"
+    },
+    {
+      q: "6. 某香港公司剛在內地設立首家子公司，需要委任一名「子公司總經理」，但審視技能檔案後發現現職員工都沒有相關內地市場經驗。公司應如何決定人力資源的來源？",
+      opts: [
+        "A. 應採用內部招聘，因為現職員工即使完全沒有內地市場知識，仍能為新設立的內地子公司帶來最豐富的外來新思維和全新專業技能",
+        "B. 應採用外部招聘，因為內部人選有限且並不具備新崗位所需的內地市場經驗與知識，透過外部招聘可接觸大量求職者以聘請合適人選",
+        "C. 應採用自然流失，等待香港總部所有現職員工退休後，子公司總經理的職位空缺便會自動消失而無須進行任何招聘"
+      ],
+      ans: 1,
+      exp: "正確。這展示了內部招聘「人選有限（內部人選可能並不具備新崗位所需的技能或知識）」的缺點；當企業內部沒有足夠或合適的人選時，便須進行外部招聘。"
+    }
+  ];
+  let curRCQ = 0;
+  function renderRecQuiz() {
+    const it = recQuizItems[curRCQ];
+    document.getElementById('recQuizProg').textContent = `題目 ${curRCQ + 1} / ${recQuizItems.length}`;
+    document.getElementById('recQuizQ').innerHTML = it.q;
+    document.getElementById('recQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:12px 16px" onclick="checkRecQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('recQuizFb').innerHTML = '';
+  }
+  function checkRecQuiz(idx) {
+    const it = recQuizItems[curRCQ];
+    const fb = document.getElementById('recQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14.5px" onclick="curRCQ=(curRCQ+1)%recQuizItems.length;renderRecQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderRecQuiz();
+
+  // ====== 4. 發布職位空缺方法（招聘途徑） ======
+  const chanCatalog = [
+    {
+      title: "內部途徑：1. 內聯網 vs 2. 電郵",
+      badge: "針對內部人選",
+      def: "內聯網（只限於指定群體如公司僱員進入的私人電腦網絡）和電郵是企業用來邀請現職員工申請職位空缺的常見途徑：",
+      detail: `
+        <table class="comp-table" style="font-size:14.5px;margin-top:6px">
+          <thead><tr><th style="width:16%">內部途徑</th><th style="width:28%">描述</th><th style="width:30%">優點</th><th style="width:26%">缺點</th></tr></thead>
+          <tbody>
+            <tr><td><b>1. 內聯網<br>(Intranet)</b></td><td>在企業的內聯網發布職位空缺。</td><td>• (i) <b>費用便宜</b><br>• (ii) <b>所有員工均可得悉</b>有關職位空缺的資料</td><td>部分員工<b>可能會漏看</b>某項職位空缺的資料。</td></tr>
+            <tr><td><b>2. 電郵<br>(Email)</b></td><td>向員工發送電郵，告知有關職位空缺的資料。</td><td>• (i) <b>費用便宜</b><br>• (ii) <b>快捷省時</b><br>• (iii) <b>方便</b>：讓員工空閒時才閱讀</td><td>如員工收到大量電郵，<b>便可能會漏看</b>有關職位空缺的電郵。</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    {
+      title: "外部途徑 (a)：招聘廣告",
+      badge: "針對外部人選",
+      def: "企業可在大眾傳媒（例如報章）或網站（招聘網站、社交網站或企業網站）發布職位空缺。刊登網上招聘廣告對吸引其他國家或地區的人才尤其有效。",
+      detail: `
+        <p style="margin:0 0 10px"><b>好處：</b><br>
+        • <b>(i) 覆蓋面廣</b>：企業能接觸大量身處不同地方的求職者；網上招聘廣告更可覆蓋全球。<br>
+        • <b>(ii) 合乎成本效益</b>：招聘廣告（尤其是網上招聘廣告）讓企業可以相對較低的成本接觸大量求職者。</p>
+        <p style="margin:0"><b>壞處：</b><br>
+        • <b>費時</b>：這種方法可能令企業收到大量不合適的求職申請，企業或須花費大量時間和人力篩選求職者。</p>
+      `
+    },
+    {
+      title: "外部途徑 (b)：現職員工推薦",
+      badge: "針對外部人選",
+      def: "企業可以邀請現職員工推薦親友申請企業的職位空缺（很多企業會向成功推薦親友入職的員工發放現金獎勵）。",
+      detail: `
+        <p style="margin:0 0 10px"><b>好處：</b><br>
+        • <b>(i) 較能保證找到合適的人選</b>：現職員工較清楚親友是否適合該職位，企業可以省卻一些篩選工作。<br>
+        • <b>(ii) 新員工較容易適應</b>：推薦新員工入職的現職員工可以協助他們適應企業的工作環境。<br>
+        • <b>(iii) 節省成本</b>：比刊登招聘廣告和使用商業招聘機構便宜，<b>尤其適合資源有限的小型企業</b>。</p>
+        <p style="margin:0"><b>壞處：</b><br>
+        • <b>(i) 造成潛在的不公平性</b>：員工或會認為這種方法有利於那些由「掌權者」（如高級行政人員）推薦的求職者，覺得招聘過程欠缺公允，亦可能違反平等就業機會的原則。<br>
+        • <b>(ii) 影響員工士氣</b>：如現職員工推薦的人選未獲聘用，這些員工可能會感到不滿，因而士氣低落。</p>
+      `
+    },
+    {
+      title: "外部途徑 (c)(i)：商業招聘機構（獵頭公司）",
+      badge: "針對外部人選",
+      def: "招聘機構（又稱職業介紹所）是專門把求職者與職位空缺進行配對的組織。當中「商業招聘機構（又稱獵頭公司 Headhunter）」會按每宗成功的工作轉介收取費用，特別適合人力資源部沒有足夠能力或資源進行招聘甄選的企業，或在聘請白領僱員和管理人員方面擁有豐富經驗。",
+      detail: `
+        <div class="flow-chain" style="margin:8px 0;padding:10px">
+          <div class="flow-node">第1步：收到企業提供的工作說明和工作要求</div><span class="flow-arrow">➔</span>
+          <div class="flow-node">第2步：從有聯繫的求職者中篩選合適人選</div><span class="flow-arrow">➔</span>
+          <div class="flow-node">第3步：向企業推薦合適人選供進一步考慮</div>
+        </div>
+        <p style="margin:0 0 8px"><b>好處：</b>(i) <b>獲得專業的招聘服務和意見</b>（擁有豐富經驗和專業知識，較易推薦合適人選）；(ii) <b>招聘網絡較多</b>（擁有眾多招聘網絡和大量有聯繫的求職者，能迅速有效率地尋人）；(iii) <b>節省時間和人力</b>（協助節省篩選求職者的時間和人力）。</p>
+        <p style="margin:0"><b>壞處：</b>(i) <b>成本較高</b>（須向商業招聘機構支付服務費用）；(ii) <b>不能保證求職者的質素</b>（求職者的質素視乎商業招聘機構的能力和名聲而定）。</p>
+      `
+    },
+    {
+      title: "外部途徑 (c)(ii)：勞工處（含展能就業科）",
+      badge: "針對外部人選",
+      def: "勞工處為僱主和求職者提供免費的招聘和就業服務（如使用勞工處互動就業服務網站刊登職位空缺）。轄下的「展能就業科」更專門為殘疾人士和僱主提供免費的工作選配和引薦服務。",
+      detail: `
+        <p style="margin:0 0 10px"><b>好處：</b><br>
+        • <b>(i) 免費服務</b>：企業可以節省發布職位空缺的成本。<br>
+        • <b>(ii) 覆蓋面廣</b>：勞工處會廣泛宣傳職位空缺。<br>
+        • <b>(iii) 有助聘請弱勢社群</b>：勞工處（展能就業科）可協助企業接觸和聘請來自弱勢社群的求職者，例如殘疾人士。</p>
+        <p style="margin:0"><b>壞處：</b><br>
+        • <b>(i) 用途有限</b>：經驗豐富的管理人員很少透過勞工處尋找工作，因此<b>不常用於招聘管理人員</b>。<br>
+        • <b>(ii) 費時</b>：可能令企業收到大量不合適的求職申請，須花費大量時間和人力篩選求職者。</p>
+      `
+    },
+    {
+      title: "外部途徑 (d)：招聘會（就業博覽會）",
+      badge: "針對外部人選",
+      def: "招聘會（又稱就業博覽會 Job Fair）是僱主和招聘機構設置攤位發放就業資訊和面見潛在僱員的活動，常用於招聘初級職位（零售業和金融服務業等服務業公司經常採用）。",
+      detail: `
+        <p style="margin:0 0 10px"><b>好處：</b><br>
+        • <b>(i) 符合成本效益和節省時間</b>：有助企業節省刊登招聘廣告和安排面試等工作的時間和成本。<br>
+        • <b>(ii) 招聘過程更有效率</b>：企業可以<b>即場篩選申請表，並與求職者進行面試</b>。<br>
+        • <b>(iii) 能快捷地吸引大量求職者</b>：可在一天或數天內聚集大量求職者，有較大機會找到合適人選。</p>
+        <p style="margin:0"><b>壞處：</b><br>
+        • <b>(i) 不適用於高級職位空缺</b>：招聘高級職位的僱員須經過較全面的評估，不適合採用招聘會。<br>
+        • <b>(ii) 競爭激烈</b>：如大型企業也在招聘會設置攤位，小型企業便會處於劣勢。</p>
+      `
+    },
+    {
+      title: "外部途徑 (e)：專業學會或工會",
+      badge: "針對外部人選",
+      def: "企業可透過相關的專業學會或工會發布職位空缺。這些組織會透過其網站、通訊 (Newsletter) 或電郵，向會員發布有關職位空缺的消息。",
+      detail: `
+        <p style="margin:0 0 10px"><b>好處：</b><br>
+        • <b>能吸引從事特定專業的合適人選</b>。</p>
+        <p style="margin:0"><b>壞處：</b><br>
+        • <b>招聘資料通常只向會員公布</b>。</p>
+      `
+    }
+  ];
+
+  function renderChan(idx) {
+    document.getElementById('chanNavList').innerHTML = chanCatalog.map((c, i) => `
+      <button class="nav-item ${i===idx?'active':''}" onclick="renderChan(${i})">
+        <span>${c.title}</span>
+      </button>
+    `).join('');
+    const c = chanCatalog[idx];
+    document.getElementById('chanDetailCard').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <h3 style="color:var(--primary);font-size:21px">${c.title}</h3>
+        <span class="badge ${idx===0?'b-blue':'b-teal'}">${c.badge}</span>
+      </div>
+      <p style="margin:0 0 12px;font-weight:600;font-size:17px">${c.def}</p>
+      <div class="case-box">${c.detail}</div>
+    `;
+  }
+  renderChan(0);
+
+  const advChanCases = [
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 1：某「資源有限的小型時裝店」打算聘請一名「能快速適應工作環境」的售貨員。</b><br>
+      • <b>建議方法：現職員工推薦 (Current Employee Referrals)</b><br>
+      • <b>原因</b>：現職員工推薦比刊登招聘廣告和使用商業招聘機構便宜，有助<b>節省成本（適合資源有限的小型企業）</b>；而且推薦新員工入職的現職員工可以協助他們適應工作環境，令<b>新員工較容易適應</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 2：某餐廳打算採用「免費的招聘服務」，以節省發布職位空缺的成本。</b><br>
+      • <b>建議方法：勞工處 (Labour Department)</b><br>
+      • <b>原因</b>：勞工處為僱主和求職者提供<b>免費的招聘和就業服務</b>，企業可以節省發布職位空缺的成本，且覆蓋面廣。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 3：某跨國銀行希望能「從世界各地」招聘有才能的員工。</b><br>
+      • <b>建議方法：刊登網上招聘廣告（於招聘網站、社交網站或企業網站）</b><br>
+      • <b>原因</b>：網上招聘廣告<b>覆蓋面廣，更可覆蓋全球</b>，對吸引其他國家或地區的人才尤其有效。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 4：某保安公司打算「在篩選求職者的申請表前，先與他們會面」。</b><br>
+      • <b>建議方法：招聘會／就業博覽會 (Job Fair)</b><br>
+      • <b>原因</b>：在招聘會設置攤位，企業可以<b>即場篩選申請表，並即時與求職者會面及進行面試</b>，使招聘過程更有效率。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 5：某印刷公司希望能接觸「現正在印刷業工作」的求職者。</b><br>
+      • <b>建議方法：透過相關的「專業學會或工會」發布職位空缺</b><br>
+      • <b>原因</b>：印刷業工會或專業學會會透過網站、通訊或電郵向現職會員發布空缺消息，<b>能直接吸引從事該特定專業的合適人選</b>。
+    </div>`,
+    `<div style="background:var(--surface);padding:16px 18px;border-radius:12px;border:1px solid var(--line);font-size:15.5px;line-height:1.75">
+      <b style="color:var(--primary);font-size:16.5px">個案 6：某地產發展商計劃聘請一名「高級經理」，並希望在招聘過程中「獲取專業的意見」。</b><br>
+      • <b>建議方法：商業招聘機構／獵頭公司 (Commercial Recruitment Agency / Headhunter)</b><br>
+      • <b>原因</b>：商業招聘機構在聘請白領僱員和管理人員方面擁有豐富經驗和專業知識，能讓企業<b>獲得專業的招聘服務和意見</b>，並從眾多招聘網絡中推薦合適的高級管理人選。
+    </div>`
+  ];
+  function renderAdvChan(idx) {
+    document.querySelectorAll('#advChanChips .chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+    document.getElementById('advChanBox').innerHTML = advChanCases[idx];
+  }
+  renderAdvChan(0);
+
+  // 對稱深度設計的 7 道發布職位空缺方法（招聘途徑）挑戰題
+  const chanQuizItems = [
+    {
+      q: "1. 企業向內部現職員工發布職位空缺時，常採用「內聯網」和「電郵」。這兩種內部招聘途徑有甚麼共同的缺點？",
+      opts: [
+        "A. 兩者的發布費用均極為高昂，每次在內聯網或透過內部電郵發布職位空缺都必須向政府繳付龐大的牌照費用",
+        "B. 員工可能會『漏看』有關職位空缺的資料或電郵（例如部分員工少登入內聯網，或每天收到大量工作電郵而忽略了空缺訊息）",
+        "C. 兩者都會把企業的機密內部職位空缺資料公開給全球外部求職者瀏覽，導致人力資源部收到數以萬計的外部申請表"
+      ],
+      ans: 1,
+      exp: "正確。內聯網和電郵雖然費用便宜，但兩者的主要缺點都是部分員工可能會漏看有關職位空缺的資料或電郵。"
+    },
+    {
+      q: "2. 某貿易公司透過「商業招聘機構（獵頭公司）」招聘一名市場營銷經理。採用這種外部招聘途徑有哪兩項壞處？",
+      opts: [
+        "A. (1) 成本較高，企業須向商業招聘機構支付服務費用；(2) 不能保證求職者的質素，求職者的質素視乎商業招聘機構的能力和名聲而定",
+        "B. (1) 用途有限，商業招聘機構從不協助企業招聘管理人員或白領僱員；(2) 企業必須派員在招聘會攤位自行即場篩選所有求職者",
+        "C. (1) 造成潛在的不公平性，員工會認為偏袒高層親戚；(2) 招聘資料只會向該行業工會的註冊會員公布，接觸面極為狹窄"
+      ],
+      ans: 0,
+      exp: "正確。商業招聘機構的好處是獲得專業招聘意見、招聘網絡較多及節省篩選時間人力；但壞處是成本較高（須付服務費），以及不能保證求職者的質素（視乎機構的能力和名聲而定）。"
+    },
+    {
+      q: "3. 某化妝品公司在招聘網站刊登「網上招聘廣告」以招募新分店店員。採用這種發布職位空缺方法有甚麼好處和壞處？",
+      opts: [
+        "A. 好處是可獲得獵頭顧問的專業篩選意見並省卻所有篩選人力；壞處是須按每宗成功轉介支付極高昂的佣金費用",
+        "B. 好處是只向相關專業學會的註冊會員公布，確保所有申請人均具備專業資格；壞處是無法接觸非會員的求職者",
+        "C. 好處是覆蓋面廣（更可覆蓋全球）且合乎成本效益；壞處是費時，可能令企業收到大量不合適的求職申請，須花費大量時間和人力篩選"
+      ],
+      ans: 2,
+      exp: "正確。招聘廣告（尤其是網上招聘廣告）的好處是覆蓋面廣及合乎成本效益；壞處則是費時（可能收到大量不合適的申請，須花大量時間和人力篩選）。"
+    },
+    {
+      q: "4. 一家小型保安公司在大型「招聘會（就業博覽會）」設置攤位招聘保安員。描述該小型保安公司在招聘會招聘時可能面對的壞處：",
+      opts: [
+        "A. 招聘會只適用於招聘行政總裁等高級管理職位，完全不適合用來招聘保安員等初級前線職位，且無法在現場與求職者會面",
+        "B. 同場競爭激烈，如果知名大型企業也在同一招聘會設置攤位，資源與知名度較遜的小型保安公司便會處於劣勢，較難吸引求職者",
+        "C. 招聘會的所有攤位資訊只限企業內部的現職員工憑密碼登入瀏覽，外部就業市場上的待業求職者完全無法入場申請"
+      ],
+      ans: 1,
+      exp: "正確。招聘會的兩項壞處是：(i) 不適用於高級職位空缺（常用於招聘初級職位）；及 (ii) 競爭激烈（如大型企業也在招聘會設置攤位，小型企業便會處於劣勢）。"
+    },
+    {
+      q: "5. 某企業希望聘請來自弱勢社群（如殘疾人士）的求職者，同時希望節省發布職位空缺的成本。該企業應採用哪種招聘途徑？",
+      opts: [
+        "A. 應採用政府勞工處（特別是轄下的『展能就業科』），因為勞工處為殘疾人士和僱主提供免費的就業選配及引薦服務，且覆蓋面廣",
+        "B. 應採用商業招聘機構（獵頭公司），因為獵頭公司會向僱主提供完全免費的弱勢社群招聘配對服務，不會收取任何服務費用",
+        "C. 應採用公司內聯網，因為在私人內聯網發布職位空缺能直接接觸全港所有尚未在該公司任職的殘疾求職者，且費用便宜"
+      ],
+      ans: 0,
+      exp: "正確。勞工處的好處包括：(i) 免費服務（節省發布空缺成本）、(ii) 覆蓋面廣、以及 (iii) 有助聘請弱勢社群（轄下展能就業科為殘疾人士和僱主提供免費工作選配和引薦服務）。"
+    },
+    {
+      q: "6. 某跨國銀行計劃先透過「現職員工推薦」來招聘 100 名出納員。採用這種外部招聘途徑有哪兩項壞處？",
+      opts: [
+        "A. (1) 發布職位空缺的廣告費用在所有外部途徑中最為昂貴；(2) 獲推薦入職的新員工因沒有熟人指導，最難適應銀行的工作環境",
+        "B. (1) 造成潛在的不公平性，員工或認為有利於由掌權者推薦的求職者而覺得欠公允（可能違反平等就業機會原則）；(2) 若推薦的人選未獲聘用，會影響現職員工士氣",
+        "C. (1) 現職員工完全不清楚親友是否適合該職位，令銀行篩選工作倍增；(2) 這種方法只適用於跨國招聘海外首席執行官等最高級職位"
+      ],
+      ans: 1,
+      exp: "正確。現職員工推薦的好處是較能保證找到合適人選、新員工較易適應及節省成本；但兩項壞處是造成潛在的不公平性，以及當推薦人選未獲聘用時會影響現職員工士氣。"
+    },
+    {
+      q: "7. 某工程公司透過「機電工程業工會」的網站及通訊發布技工職位空缺。這種發布職位空缺方法的好處和壞處分別是甚麼？",
+      opts: [
+        "A. 好處是能吸引從事特定專業的合適人選；壞處是招聘資料通常只向該專業學會或工會的會員公布，非會員無法得悉有關空缺",
+        "B. 好處是全球所有不同行業的公眾人士都能免費查閱；壞處是工會會按每宗成功轉介向僱主收取極高昂的獵頭佣金費用",
+        "C. 好處是僱主可在工會網站即時與全球求職者進行面對面視像面試；壞處是完全無法吸引具備相關行業技能的從業員申請"
+      ],
+      ans: 0,
+      exp: "正確。透過專業學會或工會發布職位空缺，好處是「能吸引從事特定專業的合適人選」，壞處則是「招聘資料通常只向會員公布」。"
+    }
+  ];
+  let curCHQ = 0;
+  function renderChanQuiz() {
+    const it = chanQuizItems[curCHQ];
+    document.getElementById('chanQuizProg').textContent = `題目 ${curCHQ + 1} / ${chanQuizItems.length}`;
+    document.getElementById('chanQuizQ').innerHTML = it.q;
+    document.getElementById('chanQuizBtns').innerHTML = it.opts.map((o, i) => `<button class="opt-card" style="margin:0;padding:11px 15px" onclick="checkChanQuiz(${i})">${o}</button>`).join('');
+    document.getElementById('chanQuizFb').innerHTML = '';
+  }
+  function checkChanQuiz(idx) {
+    const it = chanQuizItems[curCHQ];
+    const fb = document.getElementById('chanQuizFb');
+    if (idx === it.ans) {
+      fb.innerHTML = `<span style="color:var(--green);font-weight:700">${it.exp}</span> <button class="btn btn-outline" style="margin-left:8px;padding:6px 14px;font-size:14px" onclick="curCHQ=(curCHQ+1)%chanQuizItems.length;renderChanQuiz()">下一題</button>`;
+    } else {
+      fb.innerHTML = `<span style="color:var(--red);font-weight:700">答案不正確。${it.exp.replace('正確。','')}</span>`;
+    }
+  }
+  renderChanQuiz();
+
+  // ====== 5. 論點建構問答工作坊 (保留一個能力較弱學生常犯的「解說不足」選項作教學示範) ======
+  const workshopQuestions = [
+    {
+      id: "s1", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 1：星光連鎖戲院院線（出現人力過剩時縮減僱員人數的方法）", topic: "人力規劃第 4 步：縮減僱員人數的三種方法", maxMarks: 2,
+      scenario: "「星光連鎖戲院」在進行年度人力規劃時，發現隨着手機購票及自動入場驗票閘機全面普及，加上平日早場觀眾減少，戲院將出現售票員及帶位員「人力過剩」的情況，因而計劃縮減僱員人數。",
+      question: "試以其中一種縮減僱員人數的方法為例，為該連鎖戲院建議如何縮減僱員人數。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出縮減僱員人數的單一方法名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "戲院可採用暫時僱用或外判的方法，透過與外部承判商簽訂服務合約或改聘短期合約員工，藉此應對售票員與帶位員供過於求的人力過剩情況。", score: 0, status: "wrong", comment: "【概念錯誤】暫時僱用與外判屬於企業在面對「人力短缺」時獲取所需人力的行動計劃，並非在出現「人力過剩」時縮減現職僱員人數的方法。" },
+          { text: "戲院可採用自然流失的方法，透過現職售票員與帶位員因退休、辭職或死亡而離職的過程，自然和逐漸地減少戲院的整體僱員人數。", score: 1, status: "best", comment: "【滿分示範】準確指出企業在面對人力過剩時，可用來縮減僱員人數的「自然流失」方法（其他可行方法包括裁員，以及鼓勵僱員提早退休或自願離職）。" },
+          { text: "戲院可透過減少各分院現職售票員及帶位員的數目，讓戲院的整體人手回落至合適水平，從而解決人力過剩的問題。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體方法名稱】只重複了題目「減少僱員人數」的字眼，未能明確指出課本的三種標準縮減人手方法名稱（即「自然流失」、「裁員」或「鼓勵僱員提早退休或自願離職」）。" }
+        ]},
+        { label: "第 2 步：扣連「星光連鎖戲院」說明該縮減人手方法的具體做法（1分）", colorClass: "hl-s2", opts: [
+          { text: "當戲院現職的售票員或帶位員達到退休年齡或自行尋得新工作辭職時，戲院立即在求職網站刊登招聘廣告，按一比一的比例重新聘請全職售票員填補空缺。", score: 0, status: "wrong", comment: "【概念錯誤】做法與自然流失相反。若在員工退休或辭職後立即重新聘請新人填補空缺，戲院的總僱員人數便不會減少，無法解決人力過剩問題。" },
+          { text: "戲院管理層可等待現職售票員與帶位員因退休或辭職而離開戲院，讓員工的總人數隨着時間過去而慢慢減少。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了點出自然流失最關鍵的執行機制——即當現職員工因退休、辭職或死亡而離職時，戲院決定「不再招聘新人填補該批空缺」。" },
+          { text: "當戲院現職的售票員或帶位員因達到退休年齡、自行辭職或離世而離開戲院時，戲院決定不再招聘新人填補該批空缺，配合驗票閘機普及自然地縮減人手。", score: 1, status: "best", comment: "【滿分示範】緊扣戲院驗票閘機普及與售票員過剩的情境，清楚說明在現職員工退休、辭職或離世後不再填補空缺，以自然和逐漸地減少總僱員人數。" }
+        ]}
+      ]
+    },
+    {
+      id: "s2", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 2：仁心連鎖牙科診所（診所主管內部人選供應減少的原因）", topic: "人力規劃第 2 步：影響內部人選供應的兩個因素", maxMarks: 2,
+      scenario: "「仁心連鎖牙科診所」的人力資源經理在進行人力規劃評估人力供應時，預測來年「診所主管」職位的內部人選供應將會減少。",
+      question: "試以其中一個影響內部人力供應的因素為例，解釋為何該連鎖牙科診所的「內部人選供應」將會減少。（2 分）",
+      steps: [
+        { label: "第 1 步：準確指出令「內部人選供應減少」的單一內部因素（1分）", colorClass: "hl-s1", opts: [
+          { text: "因為本港整體失業率持續下降，加上新開設的牙科診所位處交通不便的偏遠地區，而且市場上具備牙科護理技能的求職者出現技能短缺。", score: 0, status: "wrong", comment: "【審題失誤】失業率下降、企業所處地區偏遠及市場技能短缺，全部屬於影響「外部人選供應」的因素，而非題目指定要求的「內部人選供應」。" },
+          { text: "因為牙科診所內部出現了人事變動，令診所入面可以升職做診所主管的現職員工比以前少了。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊／未指出具體內部因素】「出現人事變動」過於籠統，必須明確指出影響內部人力供應的兩個標準因素之一：即「員工流失率上升」或「調整退休政策（降低退休年齡）」。" },
+          { text: "因為牙科診所現職高級牙科助護及副主管的員工流失率上升，又或者診所修改了內部退休政策，降低了現職員工的退休年齡。", score: 1, status: "best", comment: "【滿分示範】準確從影響內部人力供應的兩大因素切入，指出現職員工流失率上升或降低退休年齡會令內部人選供應減少。" }
+        ]},
+        { label: "第 2 步：扣連「連鎖牙科診所主管人選」作具體解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "由於診所預約工作繁重或被同業挖角，越來越多原本具備經驗與潛質晉升為診所主管的現職資深助護主任辭職離任，導致可供內部升職或調職的合資格現職員工人數減少。", score: 1, status: "best", comment: "【滿分示範】緊扣牙科診所的內部晉升梯隊，清楚說明現職資深助護辭職令流失率上升，如何導致可供內部晉升填補診所主管空缺的人選減少。" },
+          { text: "由於外部就業市場上剛畢業的牙科助護系學生選擇繼續升學進修而延遲投身職場，導致牙科診所難以從各大院校招聘足夠的新人入職。", score: 0, status: "wrong", comment: "【概念錯誤】應屆畢業生因進修而延遲進入就業市場，影響的是短期「外部勞動力供應」，並非診所現職人員的「內部人選供應」。" },
+          { text: "由於診所近期有很多員工離職，所以人力資源經理預測來年診所主管的內部人選供應將會減少。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有扣連「診所主管」職位說明是因為具備晉升潛質的「現職資深助護或副主管辭職（或提早退休）」，導致合資格透過內部升職或調職填補主管空缺的人選減少。" }
+        ]}
+      ]
+    },
+    {
+      id: "s3", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 3：尚品大型傢俬連鎖店（外判上門安裝服務的方法與優點）", topic: "人力規劃第 4 步：透過「外判」獲取所需人力及其優點", maxMarks: 2,
+      scenario: "「尚品傢俬連鎖店」發現旗下「上門傢俬安裝技工」的流失率特別高，儘管已全年不斷以永久性僱用和暫時僱用方式聘請安裝技工，仍無法解決人力短缺問題。營運總監建議改用其他方法來獲取所需人力以提供上門安裝服務。",
+      question: "(i) 除了聘請長工和臨時工外，指出尚品傢俬還可採用甚麼方法來獲取所需人力提供上門安裝服務並加以說明（1分）；(ii) 解釋採用這個方法的一項優點（1分）。（2 分）",
+      steps: [
+        { label: "第 1 步：指出並說明「外判」方法（1分）", colorClass: "hl-s1", opts: [
+          { text: "尚品傢俬可採用外判方法：即透過支付承判費，把原本在內部進行的上門傢俬組裝及安裝工序，轉由外部的第三方專業安裝承判商執行。", score: 1, status: "best", comment: "【滿分示範】準確指出除永久性僱用及暫時僱用外的第三種獲取人力方式——外判，並清楚界定支付承判費把工序轉由承判商執行的運作。" },
+          { text: "尚品傢俬可採用內部調職方法：即透過查閱公司內部的技能檔案，強制將所有現職的會計文員及收銀員調派到顧客家中負責安裝大型衣櫃。", score: 0, status: "wrong", comment: "【概念錯誤】會計文員與收銀員並不具備安裝大型傢俬的專業技能，而且內部調職仍屬於運用內部現有僱員，並未解決技工流失的短缺問題。" },
+          { text: "尚品傢俬可找外面的裝修或運輸公司幫忙，將顧客買完傢俬之後的上門安裝工作交給他們負責。", score: 0, status: "partial", comment: "【常見失分示範：欠缺專業術語與完整定義】用詞過於口語化，未有明確寫出「外判 (Outsourcing)」這一標準術語，亦漏了說明「透過支付承判費，把內部工序轉由承判商執行」的定義。" }
+        ]},
+        { label: "第 2 步：解釋尚品傢俬採用「外判」的一項優點（1分）", colorClass: "hl-s2", opts: [
+          { text: "優點是把安裝工序外判後，承判商旗下的所有技工都會自動成為尚品傢俬的正式全職僱員，能立即大幅增加尚品傢俬自己聘用的僱員總人數。", score: 0, status: "wrong", comment: "【概念錯誤】企業將工作外判給承判商執行，承判商的工人並非該企業的員工，因此不會增加企業自己聘用的僱員數目。" },
+          { text: "優點是尚品傢俬把非核心的上門安裝工作外判後，管理層便可專注於傢俬設計、採購及展廳銷售等核心業務，且承判費通常低於自行聘請員工的成本，有助節省成本。", score: 1, status: "best", comment: "【滿分示範】清楚闡述外判非核心安裝工序如何讓傢俬店專注於設計與銷售核心業務，並透過低於自養團隊的承判費節省成本。" },
+          { text: "優點是尚品傢俬無須再自己招聘和管理安裝技工，可以把上門安裝傢俬的麻煩工作交給承判商處理，令日常運作更加方便。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】「令運作更方便」流於表面，必須明確點出課本的兩項標準優點之一：「把非核心工作外判後可專注於核心業務」或「承判費通常低於自行聘請員工生產的成本，有助節省成本」。" }
+        ]}
+      ]
+    },
+    {
+      id: "s4", cat: "short", typeBadge: "短答題（2 分 · 2 步建構）",
+      title: "短答 4：綠源智能環保科技公司（工作分析的定義與對其他 HR 活動的幫助）", topic: "工作分析的定義及其對員工考績、報酬管理與培訓的幫助", maxMarks: 2,
+      scenario: "「綠源科技」是一家新成立的太陽能及環保設備研發商，計劃增設「企業傳訊及公關經理」一職。創辦人決定先為該新職位進行「工作分析」，認為這樣做除了有助招聘和甄選外，還可以幫助公司執行其他人力資源活動。",
+      question: "(i) 簡述甚麼是「工作分析」（1分）；(ii) 除了招聘和甄選外，解釋工作分析提供的資料可如何協助綠源科技執行另外一項人力資源活動（1分）。（2 分）",
+      steps: [
+        { label: "第 1 步：準確簡述「工作分析」的定義（1分）", colorClass: "hl-s1", opts: [
+          { text: "工作分析是整合公司所有現職僱員的個人資料、過往薪金和就業紀錄、工作能力以及個人升職與調職意向的資料庫更新過程。", score: 0, status: "wrong", comment: "【概念錯誤】整合現職僱員個人資料、薪金紀錄與調職意向的僱員紀錄稱為「技能檔案 (Skills Inventory)」，而非針對職位本身的「工作分析」。" },
+          { text: "工作分析是人力資源部對公司內部的不同工作職位進行深入研究和收集資料，以便管理層了解各個職位日常運作情況的過程。", score: 0, status: "partial", comment: "【常見失分示範：定義要素不完整】未能明確指出工作分析必須確定的兩大核心要素——即「(1) 某份工作的任務和技能要求（工作說明）」以及「(2) 擔任這份工作的人員應具備的特徵（工作要求）」。" },
+          { text: "工作分析是確定某份工作的任務和技能要求以得出工作說明，以及確定擔任這份工作的人員應具備的特徵和個人條件以得出工作要求的過程。", score: 1, status: "best", comment: "【滿分示範】準確界定工作分析為確定某份工作的任務和技能要求（工作說明），以及擔任該工作的人員應具備的特徵（工作要求）的過程。" }
+        ]},
+        { label: "第 2 步：除招聘和甄選外，解釋工作分析如何協助另一項人力資源活動（1分）", colorClass: "hl-s2", opts: [
+          { text: "管理人員可根據工作分析得出的職責與資歷要求，撰寫準確的企業傳訊經理招聘廣告，並在收到求職申請後以此作為篩選申請人履歷的準則。", score: 0, status: "wrong", comment: "【審題失誤】撰寫招聘廣告及篩選申請人履歷屬於「招聘和甄選」，而題目已明確規定「除了招聘和甄選外」，因此不獲給分。" },
+          { text: "工作分析提供的資料可協助進行報酬管理，管理層可根據職責輕重與資歷要求合理調整該經理的薪酬待遇；亦可協助進行員工考績，將經理入職後的實際工作表現與其職責和表現標準作比較。", score: 1, status: "best", comment: "【滿分示範】清楚說明工作分析得出的職責與要求資料如何協助調整薪酬待遇、比較表現進行考績，或評估技能差距以識別培訓需要。" },
+          { text: "工作分析提供的資料可協助綠源科技進行員工考績、報酬管理或者培訓工作，對人力資源部管理新入職的企業傳訊經理很有幫助。", score: 0, status: "partial", comment: "【常見失分示範：有標題無解說】只列出了人力資源活動的名稱（考績、報酬、培訓），但完全沒有解釋工作分析得出的資料「如何」協助執行該項活動（如：將實際表現與職責標準比較／按職責調整薪酬／評估技能差距以識別培訓需要）。" }
+        ]}
+      ]
+    },
+    {
+      id: "e1", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 1：活力 24 小時連鎖健身中心（擴充開設四間新分館的人力規劃過程）", topic: "人力規劃的四個步驟：結合連鎖健身中心擴充業務", maxMarks: 3,
+      scenario: "「活力 24 小時連鎖健身中心」在評估擴充計劃後，決定在今年內於新界區增設四間智能健身分館。試描述該連鎖健身中心在擴充業務時，須進行的人力規劃過程。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以人力規劃過程的「第 1 步：預測人力需求」為核心，結合健身中心開設四間新分館的情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出人力規劃步驟名稱與核心工作（1分）", colorClass: "hl-s1", opts: [
+          { text: "健身中心首先須執行第 1 步預測人力需求：根據公司擴充業務開設四間新健身分館的組織目標，預測達成該目標所需員工的數量，即人數，以及所需員工的質素，即員工類型與技能要求。", score: 1, status: "best", comment: "【滿分示範】準確指出人力規劃第 1 步「預測人力需求」，並清楚點出根據組織目標預測所需員工的「數量」和「質素」兩大核心要素。" },
+          { text: "健身中心首先須執行第 1 步預測人力需求：主要工作是檢視公司過去一年的員工流失率及現有退休政策，並評估本港勞動市場的失業率與人口老化對外部勞動力供應的影響。", score: 0, status: "wrong", comment: "【概念錯誤】檢視員工流失率、退休政策及外在失業率屬於人力規劃的「第 2 步：評估人力供應」，而非「第 1 步：預測人力需求」。" },
+          { text: "健身中心首先須執行第 1 步預測人力需求，因為公司今年打算在新界區增設四間智能健身分館，所以要預先估計需要請幾多名新員工。", score: 0, status: "partial", comment: "【常見失分示範：概念要素不完整】只提及預測所需員工的「數量（人數）」，漏了說明還須根據組織目標預測所需員工的「質素（即需要甚麼類型的員工與技能要求）」。" }
+        ]},
+        { label: "第 2 步：針對「健身中心開設四間新分館」設定具體的數量與質素預測例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如健身中心人力資源部統計現有舊分館過去一年共有 15 名私人教練辭職，計算出員工流失率為 12%，並查閱技能檔案看看有多少名現職初級教練具備資格晉升。", score: 0, status: "wrong", comment: "【概念錯誤】統計離職人數計算流失率及查閱技能檔案，屬於「評估內部人力供應（第 2 步）」的例子，並非預測四間新分館的人力需求。" },
+          { text: "例如健身中心人力資源部估算四間新分館合共需要增聘 40 名新員工，以應付新界區四間新分館開業後的日常運作需要。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子只涵蓋了員工的「數量（40 名）」，未有具體舉例說明新分館所需的員工「質素（如需要場館經理、持牌私人健身教練及會籍顧問等不同員工類型與專業資格）」。" },
+          { text: "例如健身中心人力資源部估算每間新分館需要 1 名場館經理、6 名持牌私人健身教練及 3 名會籍顧問，四間新分館合共需要 40 名員工的數量，並確定各崗位所需的運動科學證書、急救資格與銷售技能等質素要求。", score: 1, status: "best", comment: "【滿分示範】緊扣開設四間新健身分館的情境，具體展示如何同時預測合共 40 名員工的「數量」，以及經理、教練與顧問各自的專業證書與技能「質素」。" }
+        ]},
+        { label: "第 3 步：深化論述至為後續評估供應、比較缺口與制定招聘計劃奠定基礎的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "透過準確預測這四間新分館所需的人手數量與專業質素，健身中心便無須再執行評估人力供應或比較供求的步驟，可以直接向所有現職員工發放遣散費以完成擴充計劃。", score: 0, status: "wrong", comment: "【概念錯誤】預測人力需求後必須繼續執行第 2 至 4 步，而且擴充業務需要增聘人手而非向現職員工發放遣散費裁員。" },
+          { text: "準確預測這四間新分館所需的人手數量與專業質素，能讓健身中心在後續步驟中對照內外部人力供應以識別人力短缺缺口，從而及早制定招聘與培訓行動計劃，確保新分館擁有足夠且合資格的僱員如期開業。", score: 1, status: "best", comment: "【滿分示範】清楚推演出準確預測需求如何銜接後續的供應評估與缺口比較，協助及早制定招聘培訓行動計劃以確保新分館順利開業。" },
+          { text: "這樣健身中心的人力資源部便順利完成了人力規劃過程的第一個步驟，清楚知道四間新分館未來需要多少名員工和甚麼類型的員工。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】僅重複了第 1 步的定義，未有深化說明這對後續對照人力供應、識別短缺缺口及確保新分館擁有足夠且合資格僱員達成目標的影響。" }
+        ]}
+      ]
+    },
+    {
+      id: "e2", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 2：博學連鎖書店（關閉部分實體門市下人力規劃餘下三個步驟）", topic: "人力規劃第 2、3、4 步：結合連鎖書店縮減實體門市規模", maxMarks: 3,
+      scenario: "「博學連鎖書店」在香港設有 18 間實體門市。由於目前超過七成圖書銷售額來自網上書城及電子書平台，行政總裁決定關閉其中 6 間實體門市，將資源轉投網上業務。人力資源總監已完成人力規劃的第 1 步，預測公司對實體門市售貨員的需求會大幅下降。試描述人力資源總監在人力規劃過程中餘下的三個步驟。",
+      question: "請遵循「一段一個獨立重點」原則，清晰描述在預測門市售貨員需求下降後，「第 2 步：評估人力供應、第 3 步：比較人力需求和供應，以及第 4 步：制定行動計劃和跟進」如何扣連書店關店情境執行（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：描述「第 2 步：評估人力供應」在連鎖書店情境下的執行（1分）", colorClass: "hl-s1", opts: [
+          { text: "在第 2 步評估人力供應中，人力資源總監須估計書店現時內部人選的供應情況，例如檢視現職門市售貨員的總人數、近期員工流失率和退休政策，並查閱技能檔案了解有多少現職店員具備轉任網上書城部門的技能。", score: 1, status: "best", comment: "【滿分示範】準確描述第 2 步「評估人力供應」，具體結合檢視現職店員流失率、退休政策及查閱技能檔案評估內部人選供應。" },
+          { text: "在第 2 步評估人力供應中，人力資源總監應立即終止該 6 間結業門市所有售貨員的僱傭合約，並依照勞工法例計算須向被解僱店員支付的遣散費金額。", score: 0, status: "wrong", comment: "【概念錯誤】步驟次序錯置。終止僱傭合約裁員及計算遣散費屬於最後「第 4 步：制定行動計劃和跟進」的工作，而非第 2 步評估人力供應。" },
+          { text: "在第 2 步評估人力供應中，人力資源總監需要看看博學連鎖書店現時一共有幾多名實體門市售貨員在店內工作。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只看現有人數並不足夠，評估內部人力供應時必須同時檢視「員工流失率」、「退休政策」以及查閱「技能檔案（僱員紀錄）」以評估現時和潛在人力資源的規模和質素。" }
+        ]},
+        { label: "第 2 步：描述「第 3 步：比較人力需求和供應」並識別人力過剩（1分）", colorClass: "hl-s2", opts: [
+          { text: "在第 3 步比較人力需求和供應中，總監將第 1 步預測的售貨員需求與第 2 步評估的供應作比較，識別出實體門市售貨員出現人力供應少於人力需求的嚴重人力短缺情況。", score: 0, status: "wrong", comment: "【概念錯誤】供求判斷完全相反。由於關閉了 6 間實體門市令售貨員需求大幅減少，現有店員供應大於需求，出現的是「人力過剩（供過於求）」而非「人力短缺」。" },
+          { text: "在第 3 步比較人力需求和供應中，總監將第 1 步關閉 6 間門市後大幅減少的售貨員需求，與第 2 步評估的現有內部售貨員供應作比較，從而識別出實體門市售貨員將出現人力供應大於人力需求的人力過剩情況。", score: 1, status: "best", comment: "【滿分示範】準確描述第 3 步「比較人力需求和供應」，清楚說明對比關店後的需求與現有供應以識別出門市售貨員「人力過剩」的情況。" },
+          { text: "在第 3 步比較人力需求和供應中，總監將書店的售貨員需求和售貨員供應放在一起作比較，看看兩者之間有沒有出現問題。", score: 0, status: "partial", comment: "【常見失分示範：未指出比較結果】只寫出「比較需求和供應」，卻漏了結合關閉 6 間門市的背景，明確指出比較後識別出「人力過剩（即人力供應大於人力需求）」這一關鍵結果。" }
+        ]},
+        { label: "第 3 步：描述「第 4 步：制定行動計劃和跟進」以處理書店的過剩人手（1分）", colorClass: "hl-s3", opts: [
+          { text: "在第 4 步制定行動計劃和跟進中，總監應針對門市售貨員的人力過剩，透過永久性僱用、暫時僱用以及把圖書銷售工序外判給承判商這三種方式來獲取更多人力。", score: 0, status: "wrong", comment: "【概念錯誤】永久性僱用、暫時僱用及外判是用於解決「人力短缺」的行動計劃；面對門市售貨員「人力過剩」，應制定縮減僱員人數或內部調職的行動計劃。" },
+          { text: "在第 4 步制定行動計劃和跟進中，總監應針對門市售貨員過多的情況制定計劃，減少書店的售貨員人數，並跟進計劃的執行情況。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體說明可透過哪三種方法縮減僱員人數（即「自然流失」、「裁員並計算遣散費」或「提供財務獎勵鼓勵提早退休或自願離職」，以及內部調職至網上書城部）。" },
+          { text: "在第 4 步制定行動計劃和跟進中，總監應針對門市售貨員人力過剩制定縮減人數的行動計劃，例如透過自然流失、提供財務獎勵鼓勵提早退休或自願離職、進行裁員並依法計算遣散費，或將合適店員培訓調職至網上書城部，並持續跟進。", score: 1, status: "best", comment: "【滿分示範】完整闡述第 4 步「制定行動計劃和跟進」，具體提出自然流失、自願離職、依法支付遣散費裁員及內部調職等處理過剩人手的方案。" }
+        ]}
+      ]
+    },
+    {
+      id: "e3", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 3：安居地產代理集團（除招聘機構外的外部招聘途徑一：招聘會）", topic: "外部招聘途徑：舉辦／參與招聘會的好處", maxMarks: 3,
+      scenario: "「安居地產代理集團」為把握樓市回暖機遇，計劃大幅擴充各區分行團隊，招聘更多前線物業顧問和分行經理。除了使用招聘機構外，試為該地產代理集團建議其他可採用的外部招聘途徑，並解釋採用這些途徑的好處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「參與或舉辦招聘會」這項外部招聘途徑及其好處為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出除招聘機構外的單一外部招聘途徑名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "地產代理集團可採用公司內聯網及內部電郵這兩種途徑，向全港外部就業市場上有意入行的求職者發布前線物業顧問的職位空缺資訊。", score: 0, status: "wrong", comment: "【概念錯誤】內聯網及內部電郵只限公司現職僱員查閱，屬於針對「內部人選」的發布途徑，無法接觸外部求職者。" },
+          { text: "地產代理集團可透過參加大型招聘會來請人，因為很多服務業公司都會去招聘會設置攤位招募前線營業員。", score: 0, status: "partial", comment: "【常見失分示範：未點出途徑的核心定位】只提及去招聘會設攤位，宜同時點出招聘會（就業博覽會）是「向求職者發放就業資訊和即場面見潛在僱員的外部招聘活動」。" },
+          { text: "地產代理集團可採用招聘會，又稱就業博覽會這項外部招聘途徑，透過在會場設置攤位向公眾發放就業資訊和即場面見潛在僱員。", score: 1, status: "best", comment: "【滿分示範】準確指出除招聘機構外的「招聘會」外部招聘途徑，切合服務業招募大批前線營業人員的需要。" }
+        ]},
+        { label: "第 2 步：針對「安居地產招募物業顧問」設定具體運作與好處解釋（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如安居地產可在會展或大型商場舉辦的招聘會設置攤位，在一天或數天內快捷地吸引大批有意投身地產代理業的求職者到場，區域營業主管更可在攤位即場篩選申請表，並即時與求職者進行面試。", score: 1, status: "best", comment: "【滿分示範】緊扣地產代理集團在招聘會設攤位的情境，具體說明如何在短期內聚集大批求職者，並即場篩選申請表及進行面試。" },
+          { text: "例如安居地產可在招聘會攤位對每位應徵高級區域董事的求職者進行長達數星期的背景審查、多輪深入小組討論及全面的心理測驗評估。", score: 0, status: "wrong", comment: "【概念錯誤】招聘會常用於招聘初級職位以進行即場初步面試；招聘高級職位須經過較全面的評估，並不適合採用招聘會。" },
+          { text: "例如安居地產可在招聘會設置攤位派發傳單，吸引想做物業顧問的市民前來遞交職位申請表。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只提及派傳單收表，漏了招聘會最核心的運作優勢——即「在一天或數天內快捷聚集大量求職者」以及「即場篩選申請表並即時與求職者進行面試」。" }
+        ]},
+        { label: "第 3 步：深化論述至提升招聘效率、即場評估銷售溝通技巧與節省時間成本的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於地產物業顧問極重視面對面的談吐與溝通技巧，透過招聘會即場面試能讓主管直接觀察求職者表現，使招聘過程更有效率，同時節省分批刊登廣告和預約安排面試的時間和成本，有較大機會找到合適人選。", score: 1, status: "best", comment: "【滿分示範】清楚推演出即場篩選與面試如何提高招聘效率、符合成本效益並節省安排面試的時間和成本。" },
+          { text: "透過在招聘會設置攤位，安居地產能確保全場所有求職者只會應徵安居地產而不會申請同場其他大型地產發展商的職位，完全消除同業爭奪人才的競爭。", score: 0, status: "wrong", comment: "【概念錯誤】求職者在招聘會可於同一日出席多家企業的面試，同場競爭相當激烈（這正是招聘會的壞處之一）。" },
+          { text: "這樣安居地產代理集團便能夠透過參加招聘會認識很多求職者，順利請到需要的物業顧問填補分行空缺。", score: 0, status: "partial", comment: "【常見失分示範：未深化好處】結論流於表面，未有明確點出招聘會的三大核心好處：「使招聘過程更有效率」、「符合成本效益和節省安排面試的時間和成本」以及「快捷吸引大量求職者」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e4", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 4：安居地產代理集團（外部招聘途徑二：刊登招聘廣告或現職員工推薦）", topic: "外部招聘途徑：刊登招聘廣告或現職員工推薦的好處", maxMarks: 3,
+      scenario: "承上題，「安居地產代理集團」計劃透過不同途徑向外招聘更多物業顧問和分行經理。除了招聘機構和招聘會外，試以「刊登招聘廣告」為例，解釋安居地產採用該外部招聘途徑的好處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以「刊登招聘廣告」的好處為核心，結合地產代理團隊情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出單一外部招聘途徑名稱與核心好處（1分）", colorClass: "hl-s1", opts: [
+          { text: "安居地產可採用刊登招聘廣告途徑，例如在求職招聘網站、社交網站或報章發布空缺：其核心好處是覆蓋面廣，能接觸大量身處不同地方的求職者，而且合乎成本效益，可以相對較低的成本接觸大量求職者。", score: 1, status: "best", comment: "【滿分示範】準確指出「刊登招聘廣告」途徑，並清楚點出覆蓋面廣與合乎成本效益兩大核心好處。" },
+          { text: "安居地產可採用刊登招聘廣告途徑：其最大好處是能精準過濾所有不合資格的申請人，確保人力資源部收到的每一份求職申請表均百分百符合職位要求，完全無須花時間篩選。", score: 0, status: "wrong", comment: "【概念錯誤】由於招聘廣告覆蓋面廣，可能令企業收到大量不合適的求職申請，須花費大量時間和人力篩選（這是其壞處而非好處）。" },
+          { text: "安居地產可採用刊登招聘廣告途徑，在求職網站或報章登廣告請人，因為這樣做既方便又有很多人睇到。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且欠專業術語】「多人睇到、方便」過於口語化，必須明確寫出刊登招聘廣告的兩項課本標準好處標題：「覆蓋面廣」與「合乎成本效益」。" }
+        ]},
+        { label: "第 2 步：針對「安居地產招募物業顧問與分行經理」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如安居地產只須將物業顧問與分行經理的招聘啟事張貼在總部辦公室內的員工休息室布告板上，便能讓全港各區以至海外的外部求職者隨時入內查閱。", score: 0, status: "wrong", comment: "【概念錯誤】張貼在公司內部員工休息室的告示只有現職員工看到，外部求職者無法得知，不屬於對外刊登招聘廣告。" },
+          { text: "例如安居地產可在大型求職網站、社交媒體平台及集團官方網站刊登物業顧問與分行經理的網上招聘廣告，不受地域限制地向全港各區有意轉職的營業人才以至熟悉跨境物業買賣的專才傳達空缺資訊。", score: 1, status: "best", comment: "【滿分示範】具體結合在求職網站、社交平台與公司網站刊登網上招聘廣告，說明如何廣泛接觸全港各區及跨境物業銷售人才。" },
+          { text: "例如安居地產在網上刊登一則招聘廣告，寫明公司現正招聘物業顧問和分行經理，歡迎市民寄履歷表來申請。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子流於表面，未有具體說明如何透過「招聘網站、社交網站或企業網站」跨越地域限制，向全港各區以至其他地區的大量求職者廣泛傳達空缺資訊。" }
+        ]},
+        { label: "第 3 步：深化論述至低成本擴大求職者人才庫、增加成功聘請合適人員機會的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "由於網上招聘廣告已由求職網站的專家團隊代為完成了所有面試與能力評核，安居地產無須進行任何甄選程序，便可直接與所有遞交申請表的求職者簽署僱傭合約。", score: 0, status: "wrong", comment: "【概念錯誤】招聘網站只提供發布職位空缺廣告的平台，並不會代企業進行面試甄選；企業收到申請後仍須自行進入甄選階段評核求職者。" },
+          { text: "透過覆蓋面極廣的網上招聘廣告，安居地產能以相對低廉的宣傳成本，在短時間內接觸大批背景多元的求職者，大幅擴大候選人才庫，讓集團有更大機會從中甄選出符合各區分行需要的物業顧問與分行經理。", score: 1, status: "best", comment: "【滿分示範】清楚推演出以相對較低成本廣泛接觸大量求職者如何擴大候選人才庫，增加成功聘請所需數量與類型僱員的機會。" },
+          { text: "這樣安居地產代理集團便能夠透過刊登招聘廣告吸引外面的求職者申請，為公司找到需要的人手。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「以相對較低的成本接觸大量求職者（合乎成本效益），從而擴大候選人才庫、增加成功聘請合適人員的機會」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e5", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 5：精算工程顧問公司（令外部人選供應龐大的原因分析）", topic: "人力規劃第 2 步：影響外部人選供應的六個因素", maxMarks: 3,
+      scenario: "「精算工程顧問公司」在進行年度人力規劃時，預測來年市場上將會有龐大的土木及結構工程職位「外部人選供應」。試根據影響外部人選供應的因素，舉出可能令該工程顧問公司有龐大外部人選供應的原因。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以影響外部人選供應的其中一項因素，如「政府政策和法規」或「教育和培訓令具備所需技能的勞工人數增加」為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出影響外部人選供應的單一核心因素名稱與方向（1分）", colorClass: "hl-s1", opts: [
+          { text: "原因之一是精算工程顧問公司內部的員工流失率持續下降，而且公司剛把現職工程師的退休年齡由 60 歲延遲至 65 歲，令大批資深工程師得以留任。", score: 0, status: "wrong", comment: "【審題失誤】員工流失率下降及延遲公司退休年齡，影響的是公司現職的「內部人選供應」，而非題目要求解釋的就業市場「外部人選供應」。" },
+          { text: "原因之一是政府政策和法規的推動：政府政策和法規會直接影響勞動人口的規模和結構，當政府放寬輸入外地專才或移民政策時，外部勞動力供應便會大幅增加（或長期教育和培訓普及，提升了勞動力質素並增加具備所需技能的勞工人數）。", score: 1, status: "best", comment: "【滿分示範】準確指出影響外部人選供應的「政府政策和法規」及「教育和培訓令具備所需技能的勞工人數增加」，並清楚說明其擴大外部勞動力供應的機制。" },
+          { text: "原因之一是受到政府政策、教育和培訓以及具備所需技能的勞工人數等因素影響，令市場上的工程師供應增加。", score: 0, status: "partial", comment: "【常見失分示範：未說明因素的變化方向】只列出因素名稱，未有清楚界定政府政策是「放寬輸入海外專才／勞工」，或教育和培訓在「長期提升了勞動力質素並增加具備所需技能的人數」。" }
+        ]},
+        { label: "第 2 步：針對「香港工程顧問行業就業市場」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如政府近年推行輸入海外及內地專業人才計劃，放寬非本地工程系畢業生留港就業安排，加上本地多所大學長期提供土木及結構工程學位課程，每年培育大批具備認可工程知識與技能的畢業生投身就業市場。", score: 1, status: "best", comment: "【滿分示範】緊扣香港工程界背景，具體結合政府輸入海外專才政策及大學培育大批工程系畢業生，說明為何市場上有大批合資格的外部人選。" },
+          { text: "例如本港全部現職青年工程師都在今年決定辭去全職工作，轉為入讀為期四年的全日制深造課程而暫時離開就業市場，令今年的短期工程人力供應立即暴增。", score: 0, status: "wrong", comment: "【概念錯誤】長短期影響顛倒。當人們因進修而暫時離開或延遲進入就業市場時，會令「短期」的外部勞動力供應減少而非暴增。" },
+          { text: "例如政府推出了一些有利工程界的新政策，加上大學有很多學生畢業，所以市場上做工程的人就變多了。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於籠統，未有具體說明政府如何「批准輸入海外專才或放寬非本地畢業生留港」，以及大學如何「培育具備土木及結構工程專業技能的畢業生」。" }
+        ]},
+        { label: "第 3 步：深化論述至擴大外部人才庫、讓公司更容易聘請合適工程師的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這直接擴大了香港工程界勞動人口的規模並提升了勞動力質素，令精算工程顧問公司面對的外部人選供應十分龐大；當外部勞動力供應增加時，公司在需要對外招聘時便會較容易聘請優質且合適的工程師。", score: 1, status: "best", comment: "【滿分示範】清楚推演出擴大工程界勞動人口規模如何形成龐大外部供應，使公司在對外招聘時更容易聘請優質工程師。" },
+          { text: "當市場上具備工程技能的外部勞動力供應大幅增加時，精算工程顧問公司便會面對嚴重的技能短缺問題，必須大幅調高薪酬待遇才能勉強吸引一名初級工程師應徵。", score: 0, status: "wrong", comment: "【概念錯誤】當外部勞動力供應缺乏時才須提高薪酬搶人；當外部勞動力供應充裕龐大時，企業會更容易聘請合適僱員。" },
+          { text: "因此，精算工程顧問公司在進行年度人力規劃時，便預測來年市場上將會有龐大的外部人選供應。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】完全照抄題目句子，未有深化說明「擴大工程界勞動人口規模並消除技能短缺，令企業在對外招聘時更容易聘請優質且合適的工程師」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e6", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 6：精算工程顧問公司（透過內部招聘填補高級管理人員空缺的好處）", topic: "內部招聘的好處：結合工程顧問公司晉升管理人員", maxMarks: 3,
+      scenario: "承上題，儘管「精算工程顧問公司」預測來年市場上有龐大的外部人選供應，但董事局最終仍決定透過「內部招聘」來填補「高級工程項目總監」的管理人員職位空缺。試描述該工程顧問公司透過內部招聘來填補管理人員職位空缺的好處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以內部招聘的其中一項好處，如「對人選更為了解及更容易適應新崗位」為核心，建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出內部招聘的單一核心好處標題與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "好處之一是公司對人選更為了解，而且獲升職的員工更容易適應新崗位：企業對現職員工的背景、能力、強項和弱項都有較深入的了解，同時現職員工亦較熟悉企業的文化和工作環境。", score: 1, status: "best", comment: "【滿分示範】準確指出內部招聘「對人選更為了解」及「獲升職員工更容易適應新崗位」的核心好處。" },
+          { text: "好處之一是能為工程顧問公司帶來全新的管理思維和外部創新技能，徹底打破公司既有的工作模式，而且可從就業市場上成千上萬名不同背景的求職者中進行挑選。", score: 0, status: "wrong", comment: "【概念錯誤】帶來新思維和技能以及可從大量不同背景求職者中挑選（人選較多），屬於「外部招聘」的好處而非內部招聘。" },
+          { text: "好處之一是透過內部晉升現職員工來擔任高級工程項目總監，比從外面請一個陌生人入來做更加穩陣和方便。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且欠標準標題】「更加穩陣和方便」過於口語化，必須明確寫出內部招聘的標準好處標題：「對人選更為了解（清楚其能力與強弱項）」或「獲升職員工更容易適應新崗位（熟悉企業文化和環境）」。" }
+        ]},
+        { label: "第 2 步：針對「工程顧問公司晉升高級工程項目總監」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如董事局委託外部獵頭公司，從競爭對手挖角一名從未在精算工程顧問公司工作過的項目總監，該名外來總監無須認識公司的工程審批流程便可立即改變公司的企業文化。", score: 0, status: "wrong", comment: "【概念錯誤】委託獵頭公司從競爭對手挖角屬於「外部招聘」，並非題目要求說明的「內部招聘（內部晉升）」。" },
+          { text: "例如高級工程項目總監須統籌大型基建工程及管理跨專業團隊；董事局透過查閱內部技能檔案與過往數年的考績紀錄，早已清楚哪位現職結構工程經理具備卓越領導能力，且該名經理本身已非常熟悉公司的工程審批文化與現有客戶要求。", score: 1, status: "best", comment: "【滿分示範】緊扣晉升高級工程項目總監的情境，具體說明董事局如何透過過往考績與技能檔案了解現職經理的強弱項，以及該經理對公司工程文化與客戶的熟悉度。" },
+          { text: "例如董事局決定從公司現職的工程師當中挑選一位工作表現不錯的員工，將他晉升為高級工程項目總監。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有結合「高級工程項目總監」職位，具體說明董事局如何透過過往共事與考績紀錄「深入了解該現職經理的領導強弱項」，以及該經理如何「熟悉公司的工程審批文化與客戶要求」。" }
+        ]},
+        { label: "第 3 步：深化論述至減低重要管理崗位用人失誤風險及確保工程項目無縫交接的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這能確保公司內所有未能獲得晉升的其他現職工程經理都感到十分滿意，完全不會打擊任何落選員工的士氣，亦絕對不會在同事之間引致任何爭奪升職的惡性競爭。", score: 0, status: "wrong", comment: "【概念錯誤】打擊落選員工士氣及造成渴望晉升同事之間的惡性競爭，正是內部招聘無法避免的潛在缺點。" },
+          { text: "這能大幅減低在重要管理崗位上選錯人的風險，並讓獲晉升的高級工程項目總監更容易適應新工作崗位，省卻漫長的職前輔導與磨合期，確保公司的基建顧問項目能平穩無縫地推進。", score: 1, status: "best", comment: "【滿分示範】清楚推演出深入了解人選強弱項與熟悉企業文化，如何減低重要管理崗位用人失誤風險並縮短適應磨合期。" },
+          { text: "這樣獲晉升的高級工程項目總監便能很快上手，幫助精算工程顧問公司填補管理人員的職位空缺。", score: 0, status: "partial", comment: "【常見失分示範：未深化管理效益】「很快上手」過於簡略，應深化推論至「大幅減低在重要管理崗位上選錯人的風險，省卻漫長的職前輔導與磨合期，確保基建項目平穩推進」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e7", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 7：環球雲端物流集團（人力規劃對物流集團的重要性）", topic: "人力規劃的四項重要性：結合跨國雲端物流集團業務", maxMarks: 3,
+      scenario: "一家在香港設有多個自動化貨運中心的「環球雲端物流集團」每年都會定期進行人力規劃，今年更計劃為青衣全新智能冷鏈貨櫃中心聘請 80 名倉務調度員及擴充無人機配送研發團隊。試舉例說明人力規劃對該物流集團的重要性。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以人力規劃四項重要性中的「因應環境轉變調整人力需求」為核心，結合雲端物流集團業務建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出人力規劃的單一重要性標題與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "人力規劃的重要性之一是幫助集團徹底消除所有外在市場競爭與科技變化的投機風險，保證物流集團無須調整任何現有職位或人手結構亦能每年賺取固定利潤。", score: 0, status: "wrong", comment: "【概念錯誤】外在科技與市場環境不斷轉變，人力規劃並不能消除外在環境變化，而是協助企業評估這些變化並相應「調整其人力需求」。" },
+          { text: "人力規劃的重要性之一是幫助物流集團留意市場環境的變化，看看今年需不需要請多些員工。", score: 0, status: "partial", comment: "【常見失分示範：未寫出準確重要性標題】表述過於口語化，必須明確寫出「因應環境轉變調整人力需求」的標準標題，並說明企業須評估「競爭形勢、顧客口味和科技變化」等環境轉變以調整人力需求。" },
+          { text: "人力規劃的重要性之一是幫助集團因應環境轉變調整人力需求：企業在進行人力規劃時，會評估可能出現的競爭形勢、顧客口味和科技變化等環境轉變，並因應這些變化調整其人力需求。", score: 1, status: "best", comment: "【滿分示範】準確指出「因應環境轉變調整人力需求」這項重要性，並清楚說明評估競爭、顧客習慣與科技變化以調整人力需求的機制。" }
+        ]},
+        { label: "第 2 步：針對「物流集團面對智能物流科技與生鮮網購需求轉變」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如隨着自動分揀機械人及無人機配送科技日漸普及，加上越來越多市民習慣在網上購買急凍生鮮食品，物流集團在進行年度人力規劃時，便因應這些科技與顧客習慣的轉變，決定減少傳統人手搬運工的需求，改為為青衣新冷鏈中心聘請 80 名懂得監控溫控系統的倉務調度員及增聘無人機研發人員。", score: 1, status: "best", comment: "【滿分示範】緊扣物流集團面對自動分揀科技與生鮮冷鏈網購普及的環境轉變，具體說明如何減少傳統搬運工並增聘冷鏈調度員與無人機人員。" },
+          { text: "例如物流集團為青衣貨櫃中心的貨車車隊購買汽車綜合保險及公眾責任保險，並在倉庫內安裝自動灑水系統，以轉移及減少貨倉發生意外火災的純風險。", score: 0, status: "wrong", comment: "【概念錯誤】購買商業保險與安裝自動灑水系統屬於財務管理中的「風險管理」措施，並非因應環境轉變調整人手結構的人力規劃例子。" },
+          { text: "例如環球雲端物流集團見到現在物流科技進步了，便在進行人力規劃時決定為青衣貨櫃中心請 80 名倉務調度員。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只抄錄了題目請 80 名調度員的文字，未有具體說明「自動分揀及無人機科技普及、市民生鮮網購習慣改變」如何令集團「減少傳統人手搬運工需求，並轉為增聘溫控調度員與無人機人員」。" }
+        ]},
+        { label: "第 3 步：深化論述至避免人手錯配、保持物流服務競爭力與達成目標的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "透過前瞻性地配合科技與市場轉變調整各部門的人手結構，物流集團既能避免在傳統搬運工序出現人力過剩或在新興冷鏈與無人機業務出現技能短缺，又能確保新貨櫃中心擁有足夠且合乎資格的僱員為集團達成擴展目標。", score: 1, status: "best", comment: "【滿分示範】清楚推演出配合環境轉變調整人手結構，如何避免人力過剩或技能短缺，並確保擁有足夠且合資格的僱員達成企業目標。" },
+          { text: "透過因應科技轉變調整人力需求，物流集團便無須再遵守政府的法定最低工資或《僱傭條例》規定，亦無須為新入職的 80 名倉務調度員提供任何薪酬福利。", score: 0, status: "wrong", comment: "【概念錯誤】無論如何調整人力需求，企業都必須遵守政府的僱傭法例規定，並為新聘僱員制定合理的薪酬待遇。" },
+          { text: "這樣環球雲端物流集團便能夠因應外在環境的轉變去調整自己的人力需求，對集團的發展很有幫助。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明配合科技與市場轉變調整人手結構，如何「避免傳統工序出現人力過剩或新興冷鏈業務出現技能短缺，確保擁有足夠且合資格的僱員達成企業目標」。" }
+        ]}
+      ]
+    },
+    {
+      id: "e8", cat: "essay", typeBadge: "進階論述題（3 分 · 3 步深度建構）",
+      title: "論述 8：環球雲端物流集團（透過現職員工推薦招聘調度員的壞處分析）", topic: "外部招聘途徑：現職員工推薦的壞處", maxMarks: 3,
+      scenario: "承上題，該「環球雲端物流集團」計劃今年為青衣智能貨櫃中心聘請 80 名倉務調度員，並決定先透過「現職員工推薦」來招聘這批調度員。雖然這種方法有助找到合適人選及協助新人適應，但也存在缺點。試描述物流集團透過現職員工推薦來招聘調度員的壞處。",
+      question: "請遵循「一段一個獨立重點」原則，單獨以現職員工推薦的壞處「造成潛在的不公平性及影響員工士氣」為核心，結合物流集團招聘調度員情境建構一個 3 分深度論述段落（每步 1 分）：",
+      steps: [
+        { label: "第 1 步：指出「現職員工推薦」的單一核心壞處標題與概念（1分）", colorClass: "hl-s1", opts: [
+          { text: "壞處之一是發布職位空缺的服務費用在所有外部途徑中最為昂貴，而且透過現職員工推薦入職的新調度員由於完全沒有熟人協助，最難適應貨櫃中心的工作環境。", score: 0, status: "wrong", comment: "【概念錯誤】現職員工推薦比刊登招聘廣告和使用商業招聘機構便宜（節省成本），且推薦人可協助親友適應環境（新員工較容易適應），這兩點均是其好處而非壞處。" },
+          { text: "壞處之一是會造成潛在的不公平性：員工或會認為這種方法有利於那些由企業高級行政人員等掌權者推薦的求職者，因而覺得招聘過程欠缺公允；此外，如現職員工推薦的人選未獲聘用，亦會影響員工士氣。", score: 1, status: "best", comment: "【滿分示範】準確指出現職員工推薦「造成潛在的不公平性」及「影響員工士氣」兩大核心壞處。" },
+          { text: "壞處之一是透過現職員工推薦親友入職，可能會令貨櫃中心入面的其他員工覺得這樣做不太好，心入面感到不舒服。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊且欠標準標題】「覺得不太好、心入面不舒服」過於口語含糊，必須明確寫出「造成潛在的不公平性（認為有利於由掌權者推薦的求職者，覺得過程欠缺公允）」或「影響員工士氣（推薦人選落選時感到不滿）」。" }
+        ]},
+        { label: "第 2 步：針對「物流集團招聘 80 名倉務調度員」設定具體情境例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如在招聘這 80 名倉務調度員時，若多名由貨櫃中心高級經理或部門主管推薦的親友順利獲聘，而由普通基層倉務員推薦的親友卻未獲聘用，基層員工便會認為招聘偏袒由掌權者推薦的人選，且那些推薦親友落選的現職員工亦會感到不滿。", score: 1, status: "best", comment: "【滿分示範】緊扣貨櫃中心招聘 80 名調度員的情境，具體對比高層推薦親友獲聘與基層推薦親友落選，清楚呈現欠缺公允與員工不滿的情況。" },
+          { text: "例如物流集團在國際求職網站刊登這 80 名倉務調度員的公開招聘廣告後，收到了超過五萬份來自世界各地不合資格求職者的申請表，令部門需花費數月篩選。", score: 0, status: "wrong", comment: "【概念錯誤】在求職網站公開刊登廣告收到大量不合適申請表，屬於「刊登招聘廣告」費時的壞處，而非「現職員工推薦」的壞處。" },
+          { text: "例如物流集團邀請現職的貨櫃中心員工介紹自己的親戚朋友來應徵這 80 個倉務調度員職位，結果有些員工介紹的親友獲聘，有些員工介紹的親友則落選。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只陳述了有人獲聘、有人落選的表面現象，未有說明為何這會引致「員工認為偏袒由高級經理等掌權者推薦的求職者而覺得欠缺公允」或「因親友落選而感到不滿」。" }
+        ]},
+        { label: "第 3 步：深化論述至違反平等就業機會原則、打擊員工士氣與損害團隊和諧的影響（1分）", colorClass: "hl-s3", opts: [
+          { text: "這種做法會令所有獲推薦入職的新調度員完全無法掌握溫控系統的操作技能，迫使物流集團必須將青衣智能冷鏈貨櫃中心的全部業務永久關閉。", score: 0, status: "wrong", comment: "【概念錯誤】現職員工較清楚親友是否適合該職位，較能保證找到合適人選，不會因此導致貨櫃中心永久關閉。" },
+          { text: "這種做法不僅有可能違反平等就業機會的原則、損害跨國物流集團的公平形象，更會令推薦親友未獲聘用的現職調度員因感到不滿而士氣低落，不利於為貨櫃中心建立團結和諧的優質工作團隊。", score: 1, status: "best", comment: "【滿分示範】清楚推演出違反平等就業機會原則及令推薦落選的現職員工士氣低落，對團隊和諧與企業形象造成的負面影響。" },
+          { text: "因此，透過現職員工推薦來招聘倉務調度員是不公平的，會對青衣智能貨櫃中心的日常運作帶來壞處。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化推論至「可能違反平等就業機會的原則，以及令推薦親友落選的現職員工士氣低落，損害團隊和諧與工作動力」。" }
+        ]}
+      ]
+    }
+  ];
+
+  let curBuilderCat = 'short';
+  let curQIdx = 0;
+  let userSelections = {};
+  let isSubmitted = false;
+
+  function switchBuilderCat(cat, btn) {
+    curBuilderCat = cat;
+    btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('builderCatLabel').textContent = cat === 'short' ? '選擇短答題（每題滿分 2 分）：' : '選擇進階論述題（每題滿分 3 分）：';
+    curQIdx = cat === 'short' ? 0 : 4;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function renderQuestionChips() {
+    document.getElementById('questionChips').innerHTML = workshopQuestions
+      .map((q, i) => ({ q, i }))
+      .filter(x => x.q.cat === curBuilderCat)
+      .map(x => `<button class="chip ${x.i===curQIdx?'active':''}" onclick="selectWorkshopQ(${x.i})">${x.q.title}</button>`)
+      .join('');
+  }
+
+  function selectWorkshopQ(idx) {
+    curQIdx = idx;
+    userSelections = {};
+    isSubmitted = false;
+    renderQuestionChips();
+    renderWorkshop();
+  }
+
+  function pickStepOption(sIdx, oIdx) {
+    userSelections[sIdx] = oIdx;
+    isSubmitted = false;
+    renderWorkshop();
+  }
+
+  function submitConstructedAnswer() {
+    const q = workshopQuestions[curQIdx];
+    if (Object.keys(userSelections).length < q.steps.length) {
+      alert(`請先完成全部 ${q.steps.length} 個步驟的選擇，再點擊批改。`);
+      return;
+    }
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function fillBestChoices() {
+    const q = workshopQuestions[curQIdx];
+    q.steps.forEach((st, sIdx) => {
+      userSelections[sIdx] = st.opts.findIndex(o => o.status === 'best');
+    });
+    isSubmitted = true;
+    renderWorkshop();
+  }
+
+  function renderWorkshop() {
+    const q = workshopQuestions[curQIdx];
+    const letters = ['A', 'B', 'C'];
+
+    let totalScore = 0;
+    q.steps.forEach((st, sIdx) => {
+      if (userSelections[sIdx] !== undefined) {
+        totalScore += st.opts[userSelections[sIdx]].score;
+      }
+    });
+
+    const previewParts = q.steps.map((st, sIdx) => {
+      const selIdx = userSelections[sIdx];
+      if (selIdx === undefined) {
+        return `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［未選擇第 ${sIdx + 1} 步］</span>`;
+      }
+      return `<span class="${st.colorClass}">${st.opts[selIdx].text}</span>`;
+    });
+
+    document.getElementById('builderWorkspace').innerHTML = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div>
+            <span class="badge b-blue">${q.typeBadge}</span>
+            <span class="badge b-teal">${q.topic}</span>
+          </div>
+          <b style="color:var(--primary);font-size:16px">本段滿分：${q.maxMarks} 分</b>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--ink)">${q.question}</div>
+      </div>
+
+      ${q.steps.map((st, sIdx) => {
+        const selIdx = userSelections[sIdx];
+        return `
+          <div class="builder-stage">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <h4 style="font-size:16.5px"><span class="${st.colorClass}">${st.label}</span></h4>
+              <span style="font-size:14px;font-weight:600;color:var(--mute)">${selIdx !== undefined ? '已選 ' + letters[selIdx] : '請點選一項'}</span>
+            </div>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = selIdx === oIdx;
+              let gradeCls = '';
+              if (isSubmitted && isSel) {
+                gradeCls = o.status === 'best' ? 'graded-best' : o.status === 'partial' ? 'graded-partial' : 'graded-wrong';
+              }
+              return `
+                <button class="opt-card ${isSel ? 'selected' : ''} ${gradeCls}" onclick="pickStepOption(${sIdx}, ${oIdx})">
+                  <span class="opt-letter">${letters[oIdx]}</span>
+                  <span style="flex:1">${o.text}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }).join('')}
+
+      <div class="card" style="border:2px solid var(--primary);margin-bottom:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px">
+          <h3 style="color:var(--primary);font-size:19px">建構段落預覽</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitConstructedAnswer()">批改答案</button>
+            <button class="btn btn-outline" onclick="fillBestChoices()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="font-size:17px;line-height:1.85;background:var(--surface);padding:18px 22px;border-radius:12px;border:1px solid var(--line)">
+          ${previewParts.join(' ')}
+        </div>
+
+        ${isSubmitted ? `
+          <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${totalScore === q.maxMarks ? 'b-green' : totalScore >= 1 ? 'b-amber' : 'b-red'}" style="font-size:15px;padding:6px 14px">
+                得分：${totalScore} / ${q.maxMarks} 分
+              </span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const chosen = st.opts[userSelections[sIdx]];
+              const cCls = chosen.status === 'best' ? 'c-best' : chosen.status === 'partial' ? 'c-partial' : 'c-wrong';
+              return `
+                <div class="critique-item ${cCls}">
+                  <b>第 ${sIdx + 1} 步（選項 ${letters[userSelections[sIdx]]} · ${chosen.score} 分）：</b>${chosen.comment}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  renderQuestionChips();
+  renderWorkshop();
+</script>
+</body>
+</html>

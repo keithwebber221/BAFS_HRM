@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HKDSE 企會財 (商業管理) — 人力資源管理單元總目錄</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Top Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 32px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 19px; font-weight: 800; color: var(--primary-dark); }
+    .brand-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 13.5px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 28px 24px; }
+
+    /* Hero Banner */
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 26px 30px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 26px; margin: 8px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16.5px; max-width: 720px; }
+    .hero-kpis { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-kpi {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 112px;
+    }
+    .hero-kpi b { display: block; font-size: 21px; color: var(--primary); }
+    .hero-kpi span { font-size: 13px; color: var(--mute); font-weight: 600; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 6px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+
+    /* Search & Progress Toolbar */
+    .toolbar {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .search-input {
+      flex: 1;
+      min-width: 260px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--line);
+      font: 500 15.5px 'Noto Sans TC', sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { outline: none; border-color: var(--primary); background: var(--card); }
+    .prog-wrap { display: flex; align-items: center; gap: 12px; min-width: 270px; }
+    .prog-bg { flex: 1; height: 13px; background: #e9e5f5; border-radius: 999px; overflow: hidden; min-width: 120px; }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--teal) 100%); border-radius: 999px; transition: width 0.35s ease; }
+
+    /* Mock Exam Banner */
+    .mock-banner {
+      background: linear-gradient(135deg, #f5f3ff 0%, #fdf2f8 100%);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .score-box {
+      background: var(--card);
+      border: 1.5px solid var(--primary-border);
+      padding: 16px 20px;
+      border-radius: 14px;
+      min-width: 310px;
+      box-shadow: 0 2px 10px rgba(109, 40, 217, 0.05);
+    }
+    .score-box input {
+      width: 62px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1.5px solid var(--primary);
+      font: 800 15px 'Inter', sans-serif;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /* Lesson Cards Grid */
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .lesson-card {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.22s;
+      box-shadow: var(--shadow);
+    }
+    .lesson-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -4px rgba(109, 40, 217, 0.12);
+      border-color: var(--primary);
+    }
+    .lesson-card.done-card {
+      background: #f8fdf9;
+      border-color: #86efac;
+    }
+    .done-btn {
+      border: 1.5px solid var(--line);
+      background: var(--surface);
+      color: var(--mute);
+      font: 700 13px 'Noto Sans TC', sans-serif;
+      padding: 5px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .done-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .done-btn.is-done { background: var(--green); color: #fff; border-color: var(--green); }
+
+    .c-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0 18px; }
+    .c-tag {
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--ink-sec);
+      border: 1px solid var(--line);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      padding: 11px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+
+    /* Summary Table */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-top: 24px;
+      box-shadow: var(--shadow);
+    }
+    table.comp-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px; }
+    table.comp-table th, table.comp-table td { padding: 12px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    table.comp-table th { background: var(--surface); font-weight: 800; color: var(--ink); }
+
+    @media (max-width: 920px) {
+      .grid3 { grid-template-columns: 1fr; }
+      header { padding: 12px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <a href="index.html" class="home-link">返回總目錄</a>
+    <div class="brand">
+      <span>人力資源管理 (Human Resources Management)</span>
+      <span class="brand-tag">共 5 課 ＋ Paper 2B 單元模擬試卷</span>
+    </div>
+  </div>
+  <select onchange="if(this.value) location.href=this.value" style="padding:7px 14px;border-radius:10px;border:1px solid var(--primary-border);background:var(--primary-light);color:var(--primary);font:700 14.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速跳轉至各課室／試卷...</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質人力資源.html">第 5 課：發展優質人力資源</option>
+    <option value="人力資源管理_單元綜合測驗.html">單元綜合模擬試卷 (72分)</option>
+  </select>
+</header>
+
+<div class="container">
+  <!-- 頂部單元橫幅 -->
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">HKDSE 企會財（商業管理選修單元）</span>
+      <span class="badge b-teal">對稱深度概念辨析 ＋ 三層次論點建構教學示範</span>
+      <h1>《人力資源管理》互動溫習總目錄</h1>
+      <p>全面涵蓋第 1 課《人力規劃和員工編制》、第 2 課《員工考績》、第 3 課《報酬管理》、第 4 課《培訓和發展》及第 5 課《發展優質人力資源》。完成各課溫習後，可挑戰下方 72 分 DSE Paper 2B 標準格式模擬試卷。</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><b>5 課</b><span>核心互動課室</span></div>
+      <div class="hero-kpi"><b>60 題</b><span>三步論點建構題</span></div>
+      <div class="hero-kpi"><b id="doneKpi">0 / 5</b><span>已完成課數</span></div>
+    </div>
+  </div>
+
+  <!-- 搜尋與進度列 -->
+  <div class="toolbar">
+    <input type="text" id="kwInput" class="search-input" placeholder="搜尋本單元概念（如：工作說明、工作要求、技能檔案、內部招聘、獵頭公司、圖表打分法、績效薪酬、認股權、程式學習、保健因子、職前輔導...）" oninput="renderUnit()">
+    <div class="prog-wrap">
+      <span style="font-size:14.5px;font-weight:800;color:var(--primary)" id="progTxt">溫習進度：0% (0/5課)</span>
+      <div class="prog-bg"><div class="prog-fill" id="progBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- 本單元 DSE Paper 2B 綜合模擬試卷專區 -->
+  <div class="mock-banner">
+    <div style="max-width:700px">
+      <span class="badge b-teal" style="margin-bottom:6px">DSE Paper 2B 標準格式單元評估（滿分 72 分）</span>
+      <h2 style="font-size:22px;color:var(--primary-dark);margin:4px 0 8px">《人力資源管理》單元綜合模擬試卷（甲部短答 24分 ＋ 乙部單一個案 24分 ＋ 丙部論述 24分）</h2>
+      <p style="font-size:15px;color:var(--ink-sec);margin:0">內置自訂時限計時器、單一整合商業個案《綠馳純電動專線小巴有限公司》、一鍵切換「紙筆寫作練習模式（隱藏選項）」與「互動建構模式」，以及 DSE 商管組雙軌等級換算表（Level 1 至 Level 5**）。</p>
+    </div>
+    <div class="score-box">
+      <div style="font-size:14.5px;font-weight:800;color:var(--ink);margin-bottom:8px">
+        記錄模擬試卷得分：
+        <input type="number" id="mockScoreIn" min="0" max="72" placeholder="--" onchange="saveMock(this.value)"> / 72 分
+      </div>
+      <div style="font-size:13.5px;color:var(--mute);margin-bottom:12px" id="gradePreview">預計 DSE 等級：未記錄</div>
+      <a href="人力資源管理_單元綜合測驗.html" class="btn btn-teal" style="width:100%">進入《人力資源管理》模擬試卷</a>
+    </div>
+  </div>
+
+  <!-- 五課卡片網格 -->
+  <div class="grid3" id="lessonGrid"></div>
+
+  <!-- 六大人力資源管理功能跨課題總覽表 -->
+  <div class="card">
+    <span class="badge b-blue">跨課題綜合論述題必備架構</span>
+    <h3 style="font-size:20.5px;margin:8px 0 6px">「六大人力資源管理功能」與各課知識點對應速查表</h3>
+    <p style="font-size:15px;color:var(--ink-sec);margin:0">當 DSE 論述題要求「根據人力資源管理功能，為某企業建議方法解決特定問題（如員工流失率高、人手短缺或支援弱勢社群僱員）」時，請先列出以下六大功能名稱，再結合對應課數的具體措施作答：</p>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="width:20%">六大 HR 功能名稱</th>
+          <th style="width:20%">對應課數</th>
+          <th style="width:60%">核心概念與常用解決措施</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>(i) 人力規劃</b><br><small>Manpower Planning</small></td>
+          <td><span class="badge b-blue">第 1 課</span></td>
+          <td>• 四大重要性與四步過程（預測需求 ➔ 評估供應 ➔ 比較供求 ➔ 制定行動計劃）<br>• 評估內部供應（員工流失率、退休政策、技能檔案）與外部供應六大因素<br>• 處理人力短缺（永久性僱用、暫時僱用、外判）與人力過剩（自然流失、裁員、鼓勵提早退休或自願離職）<br>• 工作分析（得出「工作說明」與「工作要求」）</td>
+        </tr>
+        <tr>
+          <td><b>(ii) 員工編制</b><br><small>Staffing</small></td>
+          <td><span class="badge b-blue">第 1 課</span></td>
+          <td>• 三個主要階段：第 1 階段「招聘」 ➔ 第 2 階段「甄選」 ➔ 第 3 階段「受僱」<br>• 決定人力資源來源：內部招聘（升職或調職，4優4缺）vs 外部招聘（3優3缺）<br>• 決定發布職位空缺方法：內部途徑（內聯網、電郵）vs 外部途徑（招聘廣告、現職員工推薦、商業招聘機構／獵頭公司、勞工處及展能就業科、招聘會、專業學會或工會）</td>
+        </tr>
+        <tr>
+          <td><b>(iii) 員工考績</b><br><small>Performance Appraisal</small></td>
+          <td><span class="badge b-teal">第 2 課</span></td>
+          <td>• 表現管理 vs 員工考績（工作評核）：找出與工作相關的強項和弱項並提供回饋<br>• 員工考績三大目的：協助作出 HR 決策、識別培訓需要以提升表現、確保員工與企業目標一致<br>• 四個基本步驟：訂立清晰具體可量度的表現標準並溝通 ➔ 量度實際表現（觀察、公司記錄、向不同人士收集意見）並比較 ➔ 進行考績面談提供回饋 ➔ 作出培訓、人力規劃與薪酬決策<br>• 四種常用評核方法：圖表打分法、簡單排序法、清單法、關鍵事件法</td>
+        </tr>
+        <tr>
+          <td><b>(iv) 報酬管理</b><br><small>Reward Management</small></td>
+          <td><span class="badge b-amber">第 3 課</span></td>
+          <td>• 金錢報酬：按時計算報酬（底薪）vs 按表現計算報酬（件薪、佣金、花紅、績效薪酬、利潤分享、認股權）的優缺點比較<br>• 非金錢報酬四種方式：(1) 僱員福利（有薪休假、保險、退休福利、工作上的彈性、折扣與設施）、(2) 培訓和發展機會、(3) 認同和表揚、(4) 工作自主權和責任<br>• 提供僱員福利五大目的：符合法例要求、建立良好僱主形象、滿足安全和社交需要、提高忠誠度、作為金錢報酬的補充</td>
+        </tr>
+        <tr>
+          <td><b>(v) 培訓和發展</b><br><small>Training & Development</small></td>
+          <td><span class="badge b-green">第 4 課</span></td>
+          <td>• 培訓（掌握目前工作技能，短期改善現職表現）vs 發展（長遠事業發展，為日後更高職位作準備）<br>• 六大目的：保障健康和安全、提高產品或服務質素、提高效率和生產力、激勵僱員提升士氣、增加歸屬感促進僱員關係、滿足企業目前和未來的需要<br>• 在職培訓（學徒訓練、指導、工作輪調）vs 職外培訓（講課、程式學習、模擬訓練、角色扮演、個案研究）的運作與優缺點比較</td>
+        </tr>
+        <tr>
+          <td><b>(vi) 促進僱員關係</b><br><small>Enhancing Employee Relations</small></td>
+          <td><span class="badge b-blue">第 5 課</span></td>
+          <td>• 激勵的重要性（減低缺勤率和員工流失率、提升生產力）<br>• 三大激勵理論：(1) 馬斯洛的需要階梯理論（生理、安全、社交、自我、自我實現需要）、(2) 赫茨伯格的兩因子理論（保健因子防止不滿 vs 激勵因子帶來滿意與激勵）、(3) 麥格雷戈的 X 理論及 Y 理論<br>• 內部溝通的重要性與五種常見方式：職前輔導計劃（入職引導計劃）、指導計劃（導師計劃）、社交聚會、定期員工會議、員工意見調查</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const mockKey = 'mock_u2';
+  const lessons = [
+    {
+      id: "u2_l1",
+      num: "第 1 課",
+      title: "人力規劃和員工編制",
+      file: "人力規劃和員工編制.html",
+      toolBadge: "流失率計算機 ＋ 互動招聘廣告拆解器",
+      desc: "掌握人力資源管理六大功能、人力規劃的四大重要性與四個步驟（預測需求、評估內外部供應、比較供求、制定行動計劃）、工作分析（工作說明 vs 工作要求）與技能檔案，以及內外部招聘與七種發布職位空缺方法的好壞處比較。",
+      tags: ["人力規劃四步驟", "員工流失率與退休政策", "外部人選供應六因素", "永久僱用・暫時僱用・外判", "自然流失・裁員・自願離職", "工作說明 vs 工作要求", "技能檔案", "內部招聘 vs 外部招聘", "七種發布職位空缺方法"]
+    },
+    {
+      id: "u2_l2",
+      num: "第 2 課",
+      title: "員工考績",
+      file: "員工考績.html",
+      toolBadge: "四步考績動態模擬器 ＋ 圖表打分與清單體驗室",
+      desc: "區分表現管理與員工考績（工作評核），掌握員工考績的三大目的、四個基本步驟（訂立表現標準並溝通、量度實際表現並比較、進行考績面談提供回饋、作出三類 HR 決策）、三大設定量度途徑、四種評核方法及為弱勢社群員工調整考績制度。",
+      tags: ["表現管理 vs 員工考績", "員工考績三大目的", "員工考績四個步驟", "觀察・公司記錄・收集意見", "圖表打分法・簡單排序法", "清單法・關鍵事件法", "考績面談四項工作", "培訓・人力規劃・薪酬決策"]
+    },
+    {
+      id: "u2_l3",
+      num: "第 3 課",
+      title: "報酬管理",
+      file: "報酬管理.html",
+      toolBadge: "員工認股權股價模擬器 ＋ 招聘待遇分類器",
+      desc: "剖析按時計算報酬（底薪）與按表現計算報酬（件薪、佣金、花紅、績效薪酬、利潤分享、認股權）的定義與好壞處，掌握非金錢報酬的四種方式、提供僱員福利的五大目的，以及提供金錢與非金錢報酬的好處比較。",
+      tags: ["底薪 vs 按表現計算報酬", "件薪 vs 佣金", "花紅・績效薪酬・利潤分享", "員工認股權 (只限有限公司)", "僱員福利五大類別", "培訓發展・認同表揚・自主權", "提供僱員福利五大目的", "金錢 vs 非金錢報酬好處"]
+    },
+    {
+      id: "u2_l4",
+      num: "第 4 課",
+      title: "培訓和發展",
+      file: "培訓和發展.html",
+      toolBadge: "在職與職外培訓百科 ＋ 跨行業配對顧問室",
+      desc: "比較「培訓（短期改善現職表現）」與「發展（長遠為出任更高職位作準備）」，掌握培訓和發展的六大目的、在職培訓三種方法（學徒訓練、指導、工作輪調）與職外培訓五種方法（講課、程式學習、模擬訓練、角色扮演、個案研究）的優缺點。",
+      tags: ["培訓 vs 發展", "培訓和發展六大目的", "學徒訓練・指導・工作輪調", "講課・程式學習三步自學", "設備模擬 vs 電腦模擬", "角色扮演・個案研究", "在職培訓 vs 職外培訓優缺點"]
+    },
+    {
+      id: "u2_l5",
+      num: "第 5 課",
+      title: "發展優質人力資源",
+      file: "發展優質人力資源.html",
+      toolBadge: "馬斯洛遞進解鎖器 ＋ 赫茨伯格雙刻度溫度計 ＋ 三大理論貫通儀",
+      desc: "深入掌握激勵的重要性與三大經典激勵理論：馬斯洛的需要階梯理論（五層需要與兩大含義）、赫茨伯格的兩因子理論（保健因子防止不滿 vs 激勵因子帶來滿意）及麥格雷戈的 X 理論與 Y 理論，並運用五種內部溝通方式與六大 HR 功能解決企業難題。",
+      tags: ["馬斯洛五個層次的需要", "較低層次 vs 較高層次需要", "赫茨伯格兩因子理論", "保健因子 vs 激勵因子", "麥格雷戈 X 理論 vs Y 理論", "職前輔導・指導計劃・社交聚會", "定期員工會議・員工意見調查"]
+    }
+  ];
+
+  let doneMap = JSON.parse(localStorage.getItem('bafs_done_lessons') || '{}');
+  let mockMap = JSON.parse(localStorage.getItem('bafs_mock_scores') || '{}');
+
+  function toggleDone(id) {
+    doneMap[id] = !doneMap[id];
+    localStorage.setItem('bafs_done_lessons', JSON.stringify(doneMap));
+    renderUnit();
+  }
+
+  function saveMock(val) {
+    const n = parseInt(val, 10);
+    if (isNaN(n) || val === '') delete mockMap[mockKey];
+    else mockMap[mockKey] = Math.max(0, Math.min(72, n));
+    localStorage.setItem('bafs_mock_scores', JSON.stringify(mockMap));
+    updateMockUI();
+  }
+
+  function getDualGrade(sc) {
+    if (sc === undefined || isNaN(sc)) return '預計 DSE 等級：未記錄';
+    const p = sc >= 61 ? '5**' : sc >= 56 ? '5*' : sc >= 50 ? '5' : sc >= 40 ? '4' : sc >= 30 ? '3' : sc >= 22 ? '2' : sc >= 13 ? '1' : 'U';
+    const b = sc >= 63 ? '5**' : sc >= 58 ? '5*' : sc >= 52 ? '5' : sc >= 43 ? '4' : sc >= 35 ? '3' : sc >= 25 ? '2' : sc >= 16 ? '1' : 'U';
+    return `紙筆標準：<b style="color:var(--green)">Level ${p}</b> ｜ 互動標準：<b style="color:var(--primary)">Level ${b}</b>`;
+  }
+
+  function updateMockUI() {
+    const sc = mockMap[mockKey];
+    document.getElementById('mockScoreIn').value = sc !== undefined ? sc : '';
+    document.getElementById('gradePreview').innerHTML = getDualGrade(sc);
+  }
+
+  function renderUnit() {
+    const kw = document.getElementById('kwInput').value.trim().toLowerCase();
+    const doneCnt = lessons.filter(l => doneMap[l.id]).length;
+    const pct = Math.round((doneCnt / lessons.length) * 100);
+    document.getElementById('doneKpi').textContent = `${doneCnt} / ${lessons.length}`;
+    document.getElementById('progTxt').textContent = `溫習進度：${pct}% (${doneCnt}/${lessons.length}課)`;
+    document.getElementById('progBar').style.width = `${pct}%`;
+    updateMockUI();
+
+    const list = lessons.filter(l =>
+      !kw ||
+      l.title.toLowerCase().includes(kw) ||
+      l.desc.toLowerCase().includes(kw) ||
+      l.tags.some(t => t.toLowerCase().includes(kw))
+    );
+
+    document.getElementById('lessonGrid').innerHTML = list.map(l => {
+      const isD = !!doneMap[l.id];
+      return `
+        <div class="lesson-card ${isD ? 'done-card' : ''}">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span class="badge b-blue" style="margin:0">${l.num}</span>
+              <button class="done-btn ${isD ? 'is-done' : ''}" onclick="toggleDone('${l.id}')">
+                ${isD ? '✓ 已完成溫習' : '○ 標記完成'}
+              </button>
+            </div>
+            <h3 style="font-size:20px;margin-bottom:6px;color:var(--ink)">${l.title}</h3>
+            <div style="margin-bottom:8px">
+              <span class="badge b-teal" style="font-size:12px;padding:3px 9px;margin:0">${l.toolBadge}</span>
+            </div>
+            <p style="font-size:14.5px;color:var(--ink-sec);margin:0;line-height:1.65">${l.desc}</p>
+            <div class="c-tags">${l.tags.map(t => `<span class="c-tag">${t}</span>`).join('')}</div>
+          </div>
+          <a href="${l.file}" class="btn" style="width:100%">進入互動課室與 12 題工作坊</a>
+        </div>`;
+    }).join('');
+  }
+  renderUnit();
+</script>
+</body>
+</html>

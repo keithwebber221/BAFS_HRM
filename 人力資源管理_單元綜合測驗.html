@@ -1,0 +1,1764 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>人力資源管理 — 單元綜合模擬試卷 (DSE Paper 2B 標準格式)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 人力資源管理單元專屬配色：皇家紫韻 (Royal Violet) × 暖調玫瑰 (Warm Rose) × 琥珀金 (Amber Gold) */
+      --bg: #f6f5fa;
+      --card: #ffffff;
+      --surface: #faf9fd;
+      --ink: #1e1b2e;
+      --ink-sec: #3b3554;
+      --mute: #6e6888;
+      --line: #e4e0f0;
+      --primary: #6d28d9;
+      --primary-dark: #5b21b6;
+      --primary-light: #f5f3ff;
+      --primary-border: #ddd6fe;
+      --teal: #be185d;
+      --teal-light: #fdf2f8;
+      --teal-border: #fbcfe8;
+      --purple: #4338ca;
+      --purple-light: #eef2ff;
+      --purple-border: #c7d2fe;
+      --amber: #b45309;
+      --amber-light: #fffbeb;
+      --green: #15803d;
+      --green-light: #f0fdf4;
+      --red: #be123c;
+      --red-light: #fff1f2;
+      --radius: 16px;
+      --shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06), 0 2px 6px -1px rgba(109, 40, 217, 0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      padding-bottom: 60px;
+      font-size: 17.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { margin: 0; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; line-height: 1.35; }
+
+    /* Header & Exam Controls */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      flex-wrap: wrap;
+    }
+    .home-link {
+      text-decoration: none;
+      color: var(--ink-sec);
+      font-weight: 600;
+      font-size: 14.5px;
+      padding: 7px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: all 0.2s;
+    }
+    .home-link:hover { color: var(--primary); border-color: var(--primary-border); background: var(--primary-light); }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 18.5px; font-weight: 800; color: var(--primary-dark); }
+    .brand-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 13px;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+
+    .exam-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      flex-wrap: wrap;
+    }
+    .timer-input {
+      width: 56px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      border: 1.5px solid var(--primary);
+      font: 800 14px 'Inter', sans-serif;
+      color: var(--primary);
+      text-align: center;
+      background: var(--card);
+    }
+    .timer-txt { font-family: 'Inter', monospace; font-size: 16px; font-weight: 800; color: var(--primary); min-width: 54px; text-align: center; }
+    .timer-btn {
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .timer-btn:hover { opacity: 0.9; }
+
+    .mode-switch-btn {
+      border: 1.5px solid var(--teal);
+      background: var(--teal-light);
+      color: var(--teal);
+      font: 700 14px 'Noto Sans TC', sans-serif;
+      padding: 7px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-switch-btn.paper-on { background: var(--teal); color: #fff; }
+
+    .tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 5px;
+      background: #e9e5f5;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+    .tabs button {
+      border: 0;
+      background: none;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font: 700 14.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tabs button:hover { color: var(--ink); }
+    .tabs button.on {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(91, 33, 182, 0.12);
+    }
+
+    /* Views & Banners */
+    .view { display: none; max-width: 1160px; margin: 0 auto; padding: 26px 24px; animation: fadeIn 0.25s ease; }
+    .view.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .sec-banner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
+    }
+    .sec-banner h1 { font-size: 24px; margin: 6px 0 8px; }
+    .sec-banner p { margin: 0; color: var(--ink-sec); font-size: 16px; max-width: 700px; }
+    .hero-kpis { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-kpi {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .hero-kpi b { display: block; font-size: 20px; color: var(--primary); }
+    .hero-kpi span { font-size: 13px; color: var(--mute); font-weight: 600; }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+    /* Badges & Chips */
+    .badge {
+      display: inline-block;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-right: 8px;
+    }
+    .b-blue { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .b-teal { background: var(--teal-light); color: var(--teal); border: 1px solid var(--teal-border); }
+    .b-purple { background: var(--purple-light); color: var(--purple); border: 1px solid var(--purple-border); }
+    .b-amber { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
+    .b-green { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
+    .b-red { background: var(--red-light); color: var(--red); border: 1px solid #fecdd3; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+    .chip {
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      padding: 9px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: 700 15px 'Noto Sans TC', sans-serif;
+      color: var(--ink-sec);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      font: 700 15.5px 'Noto Sans TC', sans-serif;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #166534; }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #9d174d; }
+    .btn-purple { background: var(--purple); }
+    .btn-purple:hover { background: #3730a3; }
+    .btn-amber { background: var(--amber); }
+    .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary-light); }
+
+    /* Builder Options & Stages */
+    .opt-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      margin: 9px 0;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font: 500 16.5px 'Noto Sans TC', sans-serif;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1.65;
+    }
+    .opt-card:hover { border-color: var(--primary); background: var(--surface); }
+    .opt-card.selected { border-color: var(--primary); background: var(--primary-light); font-weight: 600; }
+    .opt-card.graded-best { border-color: var(--green); background: var(--green-light); color: #064e3b; }
+    .opt-card.graded-partial { border-color: var(--amber); background: var(--amber-light); color: #78350f; }
+    .opt-card.graded-wrong { border-color: var(--red); background: var(--red-light); color: #881337; }
+    .opt-letter {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #efecf8;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14.5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opt-card.selected .opt-letter { background: var(--primary); color: #fff; }
+
+    .builder-stage {
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      background: var(--card);
+    }
+    .point-group-box {
+      background: var(--surface);
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+    .assembled-box {
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-top: 18px;
+      box-shadow: var(--shadow);
+    }
+    .paper-box {
+      background: var(--surface);
+      border: 2px dashed var(--teal);
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-top: 16px;
+    }
+    .ms-box {
+      background: var(--green-light);
+      border: 1.5px solid var(--green);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 16px;
+    }
+    .score-pill {
+      border: 1.5px solid var(--teal);
+      background: var(--card);
+      color: var(--teal);
+      font: 700 14.5px 'Noto Sans TC', sans-serif;
+      padding: 7px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .score-pill:hover { background: var(--teal-light); }
+    .score-pill.picked { background: var(--teal); color: #fff; }
+
+    .hl-s1 { background: #ede9fe; color: #5b21b6; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s2 { background: #fef3c7; color: #92400e; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .hl-s3 { background: #fce7f3; color: #9d174d; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+    .critique-item {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border-left: 5px solid var(--line);
+      background: var(--card);
+    }
+    .critique-item.c-best { border-left-color: var(--green); background: var(--green-light); }
+    .critique-item.c-partial { border-left-color: var(--amber); background: var(--amber-light); }
+    .critique-item.c-wrong { border-left-color: var(--red); background: var(--red-light); }
+
+    /* Report Progress Meters & Tables */
+    .meter-wrap { margin-bottom: 14px; }
+    .meter-label { display: flex; justify-content: space-between; font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+    .meter-bg { height: 14px; background: #e9e5f5; border-radius: 999px; overflow: hidden; }
+    .meter-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+
+    table.cutoff-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px; }
+    table.cutoff-table th, table.cutoff-table td { padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: center; }
+    table.cutoff-table th { background: var(--surface); font-weight: 800; }
+    table.cutoff-table tr.active-grade-row { background: var(--green-light); font-weight: 800; border: 2px solid var(--green); }
+
+    @media (max-width: 860px) {
+      .grid2, .grid3, .grid5 { grid-template-columns: 1fr; }
+      header { padding: 12px 16px; }
+      .tabs { width: 100%; margin-top: 8px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="人力資源管理_目錄.html" class="home-link">返回單元目錄</a>
+  <div class="brand">
+    <span>人力資源管理模擬試卷</span>
+    <span class="brand-badge">DSE Paper 2B 標準格式 (72分)</span>
+  </div>
+  <select onchange="if(this.value) location.href=this.value" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--primary-border);background:var(--primary-light);color:var(--primary-dark);font:700 13.5px 'Noto Sans TC',sans-serif;cursor:pointer">
+    <option value="">快速跳轉至各課室...</option>
+    <option value="人力資源管理_目錄.html">返回單元總目錄</option>
+    <option value="人力規劃和員工編制.html">第 1 課：人力規劃和員工編制</option>
+    <option value="員工考績.html">第 2 課：員工考績</option>
+    <option value="報酬管理.html">第 3 課：報酬管理</option>
+    <option value="培訓和發展.html">第 4 課：培訓和發展</option>
+    <option value="發展優質人力資源.html">第 5 課：發展優質人力資源</option>
+  </select>
+
+  <!-- 自由設定時限計時器 -->
+  <div class="exam-bar">
+    <span>時限(分)：</span>
+    <input type="number" id="customMinInput" class="timer-input" value="60" min="1" max="180" onchange="applyCustomTime()">
+    <button class="timer-btn" style="background:var(--teal)" onclick="applyCustomTime()">套用</button>
+    <span class="timer-txt" id="timerDisplay">60:00</span>
+    <button class="timer-btn" id="timerBtn" onclick="toggleTimer()">開始</button>
+    <button class="timer-btn" style="background:var(--mute)" onclick="resetTimer()">重置</button>
+    <span style="margin-left:4px;padding-left:10px;border-left:1.5px solid var(--line);color:var(--green)" id="liveTotalBadge">總分：0 / 72</span>
+  </div>
+
+  <!-- 全局切換：互動建構模式 vs 紙筆練習模式（隱藏組合選項） -->
+  <button class="mode-switch-btn" id="globalModeBtn" onclick="togglePaperMode()">
+    切換為：隱藏選項（紙筆寫作練習模式）
+  </button>
+
+  <nav class="tabs" id="mainTabs">
+    <button class="on" data-tab="sec-sa">甲部：短答題 (24分)</button>
+    <button data-tab="sec-case">乙部：商業個案分析題 (24分)</button>
+    <button data-tab="sec-essay">丙部：進階論述題 (24分)</button>
+    <button data-tab="sec-report" onclick="renderReport()">丁部：成績單與診斷</button>
+  </nav>
+</header>
+
+<!-- ==================== 甲部：短答題 (Section A · 6題 · 24分) ==================== -->
+<section class="view on" id="sec-sa">
+  <div class="sec-banner">
+    <div>
+      <span class="badge b-blue">甲部 · 短答題（Section A：共 6 題，每題 4 分，合共 24 分）</span>
+      <h1>DSE「2 分一論點」標準結構：1 分指出單一重點 ＋ 1 分連結情境解說</h1>
+      <p>本部共設 6 道必答短答題（嚴格按照第 1 至 5 課內容編寫，全面涵蓋人力規劃和員工編制、員工考績、報酬管理、培訓和發展，以及發展優質人力資源），每題滿分 4 分（包含 2 個獨立的 2 分論點）。</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><b id="saScoreHero">0 / 24</b><span>甲部目前得分</span></div>
+      <div class="hero-kpi"><b>2 分一論點</b><span>1分重點 ＋ 1分解說</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:18px 22px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px">點選甲部短答題（共 6 題，每題 4 分）：</div>
+    <div class="chips" id="saNavChips" style="margin:0"></div>
+  </div>
+
+  <div id="saWorkspace"></div>
+</section>
+
+<!-- ==================== 乙部：商業個案分析題 (Section B · 單一整合個案 · 24分) ==================== -->
+<section class="view" id="sec-case">
+  <div class="sec-banner" style="border-left-color:var(--teal)">
+    <div>
+      <span class="badge b-teal">乙部 · 商業個案分析題（Section B：單一整合個案，共 4 道分題，合共 24 分）</span>
+      <h1>商業個案分析：「綠馳純電動專線小巴有限公司 (GreenMinibus)」</h1>
+      <p>請細閱下方單一整合商業個案資料，然後回答 (a) 至 (d) 四道分題（每題 6 分，合共 24 分）。每個論點嚴格遵循「1 分指出單一概念／方法 ＋ 1 分扣連個案事實解說 ＝ 2 分」的評分模式。</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><b id="caseScoreHero" style="color:var(--teal)">0 / 24</b><span>乙部目前得分</span></div>
+      <div class="hero-kpi"><b style="color:var(--teal)">單一整合個案</b><span>4 道分題 × 6 分</span></div>
+    </div>
+  </div>
+
+  <!-- 單一整合商業個案閱讀卡 -->
+  <div class="card" style="border:1.5px solid var(--teal);background:var(--surface)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+      <span class="badge b-teal">乙部單一商業個案資料</span>
+      <span style="font-size:14px;color:var(--mute);font-weight:600">請細閱以下個案，並回答分題 (a) 至 (d)</span>
+    </div>
+    <h3 style="color:var(--teal);font-size:20.5px;margin-bottom:10px">個案：「綠馳純電動專線小巴有限公司 (GreenMinibus)」的人力資源改革</h3>
+    <div style="font-size:16.5px;line-height:1.85;color:var(--ink)">
+      <p style="margin:0">
+        「綠馳純電動專線小巴有限公司」在香港經營 40 條綠色專線小巴路線。面對小巴司機老齡化及政府推動綠色運輸政策，行政總裁林先生今年斥資引入 80 輛最新一代「配備智能防撞預警及自動充電系統的純電動低地台小巴」，並成功投得兩條連接新界新發展區的新小巴路線。然而，公司在業務轉型期間面對多重人力資源挑戰：首先，為填補新路線所需的 <b>30 個新電動小巴車長空缺</b>，人力資源部決定透過<b>「外部招聘」</b>廣納人才，並正選擇合適的<b>「發布職位空缺方法（外部招聘途徑）」</b>來吸引持牌司機應徵。其次，不少現職老車長因不熟習新電動小巴的電子觸控儀表板及高壓充電樁操作而頻頻出錯；人事部遂安排由經驗豐富的資深車長擔任導師，在日常行車及充電時對現職車長進行一對一的<b>「在職指導 (Coaching)」</b>。此外，過往公司所有車長不論服務態度及行車安全表現如何，一律只領取固定日薪（底薪）；林總裁發現部分車長對乘客態度冷淡、甚至為趕時間而急煞車，導致乘客投訴增加及車長流失率偏高。為此，林總裁決定首次引入每半年一次的<b>「員工考績 (Performance Appraisal)」</b>制度以評核車長表現，並全面改革公司的<b>「報酬管理制度（結合按表現計算的金錢報酬、非金錢報酬與法定以外的僱員福利）」</b>，務求提升車長的行車安全意識與服務質素。
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="padding:18px 22px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:8px">點選乙部個案分析分題（共 4 題，每題 6 分）：</div>
+    <div class="chips" id="caseNavChips" style="margin:0"></div>
+  </div>
+
+  <div id="caseWorkspace"></div>
+</section>
+
+<!-- ==================== 丙部：進階論述題 (Section C · 2大題 · 24分) ==================== -->
+<section class="view" id="sec-essay">
+  <div class="sec-banner" style="border-left-color:var(--purple)">
+    <div>
+      <span class="badge b-purple">丙部 · 進階論述題（Section C：共 2 道大題，每題 12 分，合共 24 分）</span>
+      <h1>12 分長問答實戰：4 個獨立重點段落 × 3 步深度建構</h1>
+      <p>每道 12 分論述題均要求建構 4 個獨立重點段落（每段滿分 3 分：第 1 步指出單一激勵因子／需要層次名稱與概念［1分］➔ 第 2 步設定具體商業例子解說［1分］➔ 第 3 步深化至員工態度與企業層面影響［1分］）。</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><b id="essayScoreHero" style="color:var(--purple)">0 / 24</b><span>丙部目前得分</span></div>
+      <div class="hero-kpi"><b style="color:var(--purple)">3 分一段落</b><span>1分概念＋1分例子＋1分影響</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:18px 22px">
+    <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:6px">1. 先選擇丙部論述大題（共 2 道大題，每題 12 分）：</div>
+    <div class="chips" id="essayTopicChips" style="margin:0 0 14px"></div>
+    <div style="border-top:1px solid var(--line);padding-top:12px">
+      <div style="font-size:15px;color:var(--mute);font-weight:700;margin-bottom:6px">2. 點選該題的 4 個獨立重點段落（每段 3 分，4 段合共 12 分）：</div>
+      <div class="chips" id="essayParaChips" style="margin:0"></div>
+    </div>
+  </div>
+
+  <div id="essayWorkspace"></div>
+</section>
+
+<!-- ==================== 丁部：成績單與弱項診斷 ==================== -->
+<section class="view" id="sec-report">
+  <div class="sec-banner" style="border-left-color:var(--green)">
+    <div>
+      <span class="badge b-green">丁部 · DSE Paper 2B 雙軌等級換算與五課強弱項診斷</span>
+      <h1>《人力資源管理》選修單元模擬試卷成績單</h1>
+      <p>系統已自動匯總你在甲部（短答題 24 分）、乙部（商業個案分析題 24 分）及丙部（進階論述題 24 分）的得分，並根據你的作答模式套用 DSE 商管組雙軌等級換算標準（細分 Level 1 至 Level 5**）。</p>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><b id="repTotalScore" style="color:var(--green)">0 / 72</b><span>試卷總得分</span></div>
+      <div class="hero-kpi"><b id="repPct" style="color:var(--green)">0%</b><span>總得分率</span></div>
+      <div class="hero-kpi"><b id="repGrade" style="color:var(--green)">待完成</b><span>預計 DSE 等級</span></div>
+    </div>
+  </div>
+
+  <div id="reportContent"></div>
+</section>
+
+<script>
+  // ====== 頂部 Tab 切換 ======
+  document.querySelectorAll('#mainTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mainTabs button').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById(btn.dataset.tab).classList.add('on');
+    });
+  });
+
+  // ====== 1. 學生自由設定時限計時器 ======
+  let customMinutes = 60;
+  let timeLeft = customMinutes * 60;
+  let timerId = null;
+
+  function updateTimerUI() {
+    const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+    const s = String(timeLeft % 60).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+  }
+
+  function applyCustomTime() {
+    const val = parseInt(document.getElementById('customMinInput').value, 10);
+    customMinutes = (isNaN(val) || val < 1) ? 60 : Math.min(180, val);
+    document.getElementById('customMinInput').value = customMinutes;
+    if (timerId) { clearInterval(timerId); timerId = null; }
+    timeLeft = customMinutes * 60;
+    document.getElementById('timerBtn').textContent = '開始';
+    updateTimerUI();
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('timerBtn');
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+      btn.textContent = '繼續';
+    } else {
+      btn.textContent = '暫停';
+      timerId = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerUI();
+        } else {
+          clearInterval(timerId);
+          timerId = null;
+          btn.textContent = '開始';
+          alert('自訂練習時間到！請核對評卷參考並前往「丁部：成績單與診斷」查看你的表現。');
+        }
+      }, 1000);
+    }
+  }
+
+  function resetTimer() { applyCustomTime(); }
+
+  // ====== 2. 全局與單題「紙筆練習模式（隱藏組合選項）」及雙軌換算控制 ======
+  let paperMode = false;
+  let gradingTrack = 'auto';
+  let revealedMS = {};
+  let selfScores = {};
+
+  function togglePaperMode() {
+    paperMode = !paperMode;
+    const btn = document.getElementById('globalModeBtn');
+    if (paperMode) {
+      btn.classList.add('paper-on');
+      btn.textContent = '切換為：互動建構模式（顯示組合選項）';
+    } else {
+      btn.classList.remove('paper-on');
+      btn.textContent = '切換為：隱藏選項（紙筆寫作練習模式）';
+    }
+    renderSaWorkspace();
+    renderCaseWorkspace();
+    renderEssayWorkspace();
+  }
+
+  function setGradingTrack(track) {
+    gradingTrack = track;
+    renderReport();
+  }
+
+  function toggleRevealMS(itemId, rerenderFn) {
+    revealedMS[itemId] = !revealedMS[itemId];
+    rerenderFn();
+  }
+
+  function setSelfScore(itemId, score, rerenderNavFn, rerenderWsFn) {
+    selfScores[itemId] = score;
+    rerenderNavFn();
+    rerenderWsFn();
+    updateLiveTotal();
+  }
+
+  // ====== 甲部：短答題數據（100% 對齊教科書第 1 至 5 課用詞，含三層次教學示範回饋） ======
+  const saQuestions = [
+    {
+      id: "sa1", ch: 1, chName: "第 1 課：人力規劃和員工編制", maxMarks: 4,
+      title: "甲部 Q1：出現「人力過剩」時縮減僱員人數的兩種非裁員方法 (4分)",
+      scenario: "「智匯數碼印刷廠」在進行年度人力規劃時，發現引入全自動排版及裝訂系統後，廠房出現了 15 名全職印刷技工「人力過剩」的情況。然而，廠長不希望採用直接裁員的方式縮減人手，以免嚴重打擊全廠員工士氣。",
+      question: "除了裁員外，試向廠長建議並解釋兩種可縮減上述過剩僱員人數的方法。（4 分）",
+      steps: [
+        { ptTitle: "論點一（滿分 2 分：1 分方法名稱 ＋ 1 分情境解說）", label: "論點一 · 第 1 步：指出除裁員外縮減僱員人數的第一種方法名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "第一種方法是採用暫時僱用或外判，在市場上聘請更多兼職印刷技工。", score: 0, status: "wrong", comment: "【概念錯誤】暫時僱用與外判是應對「人力短缺」時獲取所需人力的方法，並非在出現「人力過剩」時縮減僱員人數的方法。" },
+          { text: "第一種方法是採用自然流失。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 1.2B 節處理人力過剩時縮減僱員人數的「自然流失」方法。" },
+          { text: "第一種方法是讓印刷廠入面的技工人數自己慢慢減少。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準方法名稱】用詞過於口語化，必須明確寫出課本的標準專業術語：「自然流失 (Natural Attrition)」。" }
+        ]},
+        { label: "論點一 · 第 2 步：連結「智匯數碼印刷廠」情境說明具體做法（1分）", colorClass: "hl-s2", opts: [
+          { text: "當印刷廠內有現職印刷技工因達到退休年齡、自行辭職或死亡而離職時，廠方決定不再招聘新人填補該批空缺，從而自然和逐漸地減少技工的總人數。", score: 1, status: "best", comment: "【滿分示範】清楚說明當現職技工因退休、辭職或死亡而離職時不再填補空缺，以自然和逐漸地減少僱員人數。" },
+          { text: "當有現職印刷技工退休或辭職時，印刷廠立即在招聘網站刊登廣告聘請新技工填補空缺。", score: 0, status: "wrong", comment: "【概念錯誤】若在員工離職後立即重新聘請新人填補空缺，廠房的總僱員人數便不會減少，無法縮減過剩人手。" },
+          { text: "印刷廠只需要等待現職的印刷技工自己辭職或者退休離開公司便可以了。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了點出自然流失最關鍵的執行機制——即當現職員工因退休、辭職或死亡而離職後，企業決定「不再招聘新人填補空缺」。" }
+        ]},
+        { ptTitle: "論點二（滿分 2 分：1 分方法名稱 ＋ 1 分情境解說）", label: "論點二 · 第 1 步：指出除裁員外縮減僱員人數的第二種方法名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "第二種方法是鼓勵僱員提早退休或自願離職。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 1.2B 節除自然流失及裁員外的第三種縮減僱員人數方法：「鼓勵僱員提早退休或自願離職」。" },
+          { text: "第二種方法是將員工的法定退休年齡由 60 歲延遲至 65 歲。", score: 0, status: "wrong", comment: "【概念錯誤】延遲退休年齡會令現職員工留在企業更長時間，使內部人力供應增加，加劇人力過剩問題。" },
+          { text: "第二種方法是勸說部分老技工自己提早離開印刷廠。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊】應準確寫出課本的標準名稱：「鼓勵僱員提早退休或自願離職」。" }
+        ]},
+        { label: "論點二 · 第 2 步：連結「智匯數碼印刷廠」情境說明具體做法（1分）", colorClass: "hl-s2", opts: [
+          { text: "印刷廠可向現職印刷技工提供一筆具吸引力的財務獎勵（如特惠補償金），吸引年長或有意轉行的現職技工自願申請提早退休或辭職，在不損害留任員工士氣下縮減過剩人數。", score: 1, status: "best", comment: "【滿分示範】清楚點出「利用財務獎勵吸引現職僱員提早退休或自願辭職」的核心做法。" },
+          { text: "印刷廠跟年長的技工傾談，希望他們體諒公司人手過多而無償自願辭職。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了課本定義中最關鍵的誘因機制——即企業必須「利用財務獎勵（特惠補償金）吸引現職僱員提早退休或辭職」。" },
+          { text: "印刷廠無故扣減所有技工一半的底薪，迫使他們因無法維持生計而憤然辭職。", score: 0, status: "wrong", comment: "【概念錯誤】無故單方面扣薪違反《僱傭條例》並會引發嚴重勞資糾紛，並非正當的自願離職計劃。" }
+        ]}
+      ]
+    },
+    {
+      id: "sa2", ch: 1, chName: "第 1 課：人力規劃和員工編制", maxMarks: 4,
+      title: "甲部 Q2：工作分析得出的「工作說明」與「工作要求」區分及應用 (4分)",
+      scenario: "「康健私家牙科中心」準備招聘多名全職「牙科手術助護」。人力資源經理正在進行工作分析 (Job Analysis)，編寫該職位的「工作說明 (Job Description)」及「工作要求 (Job Specification)」。",
+      question: "試以招聘上述「牙科手術助護」為例，分別指出並解釋 (a)「工作說明」（2分）及 (b)「工作要求」（2分）的定義與應包含的一項具體內容。（4 分）",
+      steps: [
+        { ptTitle: "論點一：(a) 工作說明 Job Description（滿分 2 分：1 分定義 ＋ 1 分情境內容例子）", label: "論點一 · 第 1 步：準確界定何謂「工作說明 (Job Description)」（1分）", colorClass: "hl-s1", opts: [
+          { text: "工作說明是一份列明妥善擔任某份工作所需的個人知識、學歷、能力和技能的文件。", score: 0, status: "wrong", comment: "【概念錯誤】混淆了兩者。列明擔任工作所需的知識、能力和技能（個人條件）的是「工作要求」，而非「工作說明」。" },
+          { text: "工作說明是一份列明某份工作的任務、職責、匯報關係和工作條件的文件，着重於描述工作本身的性質。", score: 1, status: "best", comment: "【滿分示範】準確界定課文第 1.2C 節「工作說明（列明某份工作的任務、職責、匯報關係和工作條件）」的定義。" },
+          { text: "工作說明是一份向求職者簡單介紹牙科手術助護這份工作的文件。", score: 0, status: "partial", comment: "【常見失分示範：定義要素不完整】必須明確寫出工作說明列明的具體要素：「工作的任務、職責、匯報關係和工作條件」。" }
+        ]},
+        { label: "論點一 · 第 2 步：連結「牙科手術助護」舉出工作說明應包含的一項具體內容（1分）", colorClass: "hl-s2", opts: [
+          { text: "在牙科手術助護的工作說明中，應列明其日常職責與匯報關係，例如負責在治療期間協助牙醫遞送器械、進行醫療儀器消毒、預約病人分流，以及直接向主診牙醫匯報工作。", score: 1, status: "best", comment: "【滿分示範】緊扣牙科助護的日常任務、職責（遞送器械、消毒儀器）與匯報關係（向牙醫匯報）作具體舉例。" },
+          { text: "在牙科手術助護的工作說明中，應列明應徵者必須持有認可牙科手術助理員證書及中英文良好。", score: 0, status: "wrong", comment: "【概念錯誤】持有專業證書及語言能力屬於對任職者的個人條件要求，應列於「工作要求」而非「工作說明」中。" },
+          { text: "在牙科手術助護的工作說明中，應寫明助護每天返工在牙科診所入面要做的工作。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有舉出任何與牙科助護相關的具體任務或職責例子（如協助牙醫遞送器械、消毒醫療工具或向主診牙醫匯報）。" }
+        ]},
+        { ptTitle: "論點二：(b) 工作要求 Job Specification（滿分 2 分：1 分定義 ＋ 1 分情境內容例子）", label: "論點二 · 第 1 步：準確界定何謂「工作要求 (Job Specification)」（1分）", colorClass: "hl-s1", opts: [
+          { text: "工作要求是一份列明妥善擔任某份工作所需的知識、能力和技能的文件，即擔任該工作所需的個人條件與質素列表。", score: 1, status: "best", comment: "【滿分示範】準確界定課文第 1.2C 節「工作要求（列明妥善擔任某份工作所需的知識、能力和技能，着重個人質素）」的定義。" },
+          { text: "工作要求是一份整合現職僱員個人姓名、過往薪金紀錄和調職意向的技能檔案。", score: 0, status: "wrong", comment: "【概念錯誤】整合現職僱員個人資料與薪金紀錄的是「技能檔案」，而工作要求是針對職位列明任職者應具備的知識、能力和技能。" },
+          { text: "工作要求是一份寫明牙科中心對新請回來的牙科手術助護有甚麼要求的文件。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未能點出工作要求是列明妥善擔任該工作所需的「知識、能力和技能（個人條件與質素）」。" }
+        ]},
+        { label: "論點二 · 第 2 步：連結「牙科手術助護」舉出工作要求應包含的一項具體內容（1分）", colorClass: "hl-s2", opts: [
+          { text: "在牙科手術助護的工作要求中，應列明任職者須具備的個人條件，例如持有認可牙科手術助理員證書、具備最少兩年牙科診所相關工作經驗、處事細心有耐性及具備良好中英文溝通能力。", score: 1, status: "best", comment: "【滿分示範】緊扣擔任牙科助護所需的專業證書、工作經驗、性格特質與語言技能作具體舉例。" },
+          { text: "在牙科手術助護的工作要求中，應列明每周工作五天並須於九龍總診所當值。", score: 0, status: "wrong", comment: "【概念錯誤】工作時間與工作地點屬於「工作條件（工作說明的內容）」，而非任職者的個人知識與技能要求（工作要求）。" },
+          { text: "在牙科手術助護的工作要求中，應寫明應徵者必須符合牙科中心所訂立的入職資格。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】沒有舉出任何具體的個人資格條件例子（如持有牙科助護證書、相關診所工作經驗或溝通技能）。" }
+        ]}
+      ]
+    },
+    {
+      id: "sa3", ch: 2, chName: "第 2 課：員工考績", maxMarks: 4,
+      title: "甲部 Q3：推行「員工考績 (Performance Appraisal)」的兩項目的 (4分)",
+      scenario: "「尚雅精品連鎖咖啡店」的東主以往只憑店員的入職年資決定晉升及加薪，亦不清楚店員在沖調手藝上的不足。今年東主決定引入正式的「員工考績（工作評核）」制度，每年評核旗下咖啡師的工作表現。",
+      question: "試結合上述咖啡店情境，指出並解釋推行「員工考績」的兩項目的。（4 分）",
+      steps: [
+        { ptTitle: "論點一（滿分 2 分：1 分目的標題 ＋ 1 分情境解說）", label: "論點一 · 第 1 步：指出員工考績的第一項單一目的標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第一項目的是幫助東主深入了解每位咖啡師私下的個人個性和假日業餘興趣。", score: 0, status: "wrong", comment: "【概念錯誤】員工考績的主要目的是找出員工「與工作相關」的強項和弱項，而非了解與工作無關的個人個性和業餘興趣。" },
+          { text: "第一項目的是協助管理人員作出人力資源管理決策，包括晉升、調職、終止僱傭合約以及調整薪金等。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 2.3 節員工考績的第一項核心目的：「協助管理人員作出人力資源管理決策」。" },
+          { text: "第一項目的是透過員工考績看看哪位咖啡師表現好、哪位表現不好。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準目的標題】只描述了識別優劣的過程，未有明確點出「協助管理人員作出晉升、調職、續約或調整薪金等人力資源管理決策」的目的。" }
+        ]},
+        { label: "論點一 · 第 2 步：連結「尚雅精品連鎖咖啡店」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "咖啡店東主可根據特定的表現標準（如出品速度、顧客服務評分）公平地評核每位咖啡師的表現；這些客觀評核結果可作為重要參考資料，讓東主公平地決定晉升哪位表現卓越的咖啡師為店舖主管及調整加薪幅度，改變以往單憑年資升遷的不公做法。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「改變單憑年資決定晉升及加薪」的背景，清楚說明如何以客觀考績結果作為晉升與調薪決策的依據。" },
+          { text: "這樣咖啡店東主在決定升職和加人工的時候就會比較方便。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體說明考績如何「根據特定表現標準公平地評核咖啡師表現，提供客觀參考資料以決定晉升店長人選與加薪幅度」。" },
+          { text: "這能讓咖啡店東主直接解僱所有分店經理，完全無須再聘請任何管理人員。", score: 0, status: "wrong", comment: "【概念錯誤】員工考績是由管理人員執行的評核工具，並不能取代或免除企業對管理人員的需要。" }
+        ]},
+        { ptTitle: "論點二（滿分 2 分：1 分目的標題 ＋ 1 分情境解說）", label: "論點二 · 第 1 步：指出員工考績的第二項單一目的標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第二項目的是識別員工的培訓需要，以提升員工表現（或選：確保員工與企業的目標一致）。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 2.3 節員工考績的其餘兩項標準目的：「識別員工的培訓需要，以提升員工表現」或「確保員工與企業的目標一致」。" },
+          { text: "第二項目的是計算咖啡店每年的咖啡豆經濟訂貨量與再訂購水平。", score: 0, status: "wrong", comment: "【概念錯誤】計算經濟訂貨量屬於財務管理中的存貨管理，與員工考績目的無關。" },
+          { text: "第二項目的是幫咖啡店的店員改善他們平時沖咖啡的表現。", score: 0, status: "partial", comment: "【常見失分示範：未點出關鍵機制標題】必須明確寫出「識別員工的培訓需要，並為他們安排適當的培訓以提升表現」（或「根據企業目標制定表現標準，確保員工與企業的目標一致」）。" }
+        ]},
+        { label: "論點二 · 第 2 步：連結「咖啡師沖調手藝與待客表現」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "東主可將咖啡師的實際工作表現與表現標準作比較，藉此了解他們與工作相關的強項和弱項（例如發現部分新店員手沖咖啡萃取技巧不穩或拉花未達標），從而識別其培訓需要並安排針對性的咖啡沖調培訓課程，協助他們改善技能及提升工作表現。", score: 1, status: "best", comment: "【滿分示範】清楚推演出「比較表現標準找出弱項 ➔ 識別培訓需要並安排適當培訓 ➔ 改善技能並提升表現」的完整邏輯。" },
+          { text: "東主做完考績之後就會知道店員沖咖啡有甚麼問題，然後叫他們自己去改善。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】漏了「將實際表現與表現標準比較以找出弱項，並據此為咖啡師安排適當的培訓課程以改善技能」的核心步驟。" },
+          { text: "這會令咖啡豆供應商免費贈送所有咖啡機給咖啡店。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+        ]}
+      ]
+    },
+    {
+      id: "sa4", ch: 3, chName: "第 3 課：報酬管理", maxMarks: 4,
+      title: "甲部 Q4：向廠房工人支付「件薪 (Piece Rate)」的一項好處與一項壞處 (4分)",
+      scenario: "「巧手皮革工坊」聘有十名皮革工匠縫製真皮銀包。工坊東主正考慮將工匠的金錢報酬方式，由按時計算的「底薪（固定月薪）」，改為按表現計算的「件薪 (Piece Rate)」。",
+      question: "試結合上述皮革工坊情境，分別指出並解釋向工匠支付「件薪」的 (a) 一項好處（2分）及 (b) 一項壞處（2分）。（4 分）",
+      steps: [
+        { ptTitle: "論點一：(a) 支付件薪的一項好處（滿分 2 分：1 分好處標題 ＋ 1 分情境解說）", label: "論點一 · 第 1 步：指出向工匠支付「件薪」的單一核心好處標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "好處是採用件薪能夠直接提高皮革工坊零售專門店的銀包銷售額。", score: 0, status: "wrong", comment: "【概念錯誤】課本第 3.3B 節特別提示：採用件薪有助提升企業的「生產力」，但不能直接提高「銷售額」（提高銷售額的是向銷售員支付的佣金）。" },
+          { text: "好處是件薪與表現直接掛鈎（多勞多得，計算簡單且公平），有助鼓勵工匠提高工作效率，繼而提升工坊的生產力。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.3B 節件薪的三大標準好處：計算簡單、公平、以及有助提升生產力。" },
+          { text: "好處是給工匠件薪可以令他們在工坊入面做得更加開心。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準好處標題】必須明確寫出「有助提升生產力（鼓勵提高工作效率）」、「公平（與表現直接掛鈎）」或「計算方法簡單易明」。" }
+        ]},
+        { label: "論點一 · 第 2 步：連結「巧手皮革工坊工匠縫製銀包」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "在件薪制度下，工匠每完成縫製一個真皮銀包便可獲發指定金額的報酬，縫製越多收入越高；這能提供直接誘因推動工匠加快縫製效率，從而提升皮革工坊的整體銀包產量與生產力。", score: 1, status: "best", comment: "【滿分示範】緊扣按每件完成的真皮銀包支薪、多勞多得推動工匠加快工作效率以提升工坊生產力。" },
+          { text: "因為工匠想賺多一點錢，所以他們就會更加努力車銀包。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體說明「報酬按每件完成的銀包數量計算（多勞多得），能鼓勵工匠提高工作效率，繼而提升工坊的整體生產力」。" },
+          { text: "因為無論工匠整幾多個銀包，每個月都可以拿到完全一樣的固定收入。", score: 0, status: "wrong", comment: "【概念錯誤】固定收入是「底薪」的特點；件薪的收入隨生產件數而變動。" }
+        ]},
+        { ptTitle: "論點二：(b) 支付件薪的一項壞處（滿分 2 分：1 分壞處標題 ＋ 1 分情境解說）", label: "論點二 · 第 1 步：指出向工匠支付「件薪」的單一核心壞處標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "壞處是工匠往往只着重生產量而忽略產品的品質，導致次貨增加（或選：工匠不願轉換工作崗位／可能抗拒學習和使用新科技）。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.3B 節件薪的三大標準壞處之一：忽略品質、不願轉換崗位、或可能抗拒新科技。" },
+          { text: "壞處是必須等到財政年度結束結算全年利潤後才能向工匠發放件薪，出現嚴重滯後。", score: 0, status: "wrong", comment: "【概念錯誤】在財政年度結束時才發放而出現滯後的是「花紅」和「利潤分享」，而非按件計算的件薪。" },
+          { text: "壞處是改用件薪之後可能會對皮革工坊帶來一些不好的問題。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體壞處標題】必須明確寫出「忽略產品質量（導致次貨增加）」、「僱員不願轉換崗位」或「僱員可能抗拒新科技」。" }
+        ]},
+        { label: "論點二 · 第 2 步：連結「手工真皮銀包品質（或引入新縫紉技術）」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "由於件薪只按縫製完成的銀包數量計算，工匠為求賺取更多收入往往只着重加快縫製速度衝高產量，而忽略了皮革縫線與打磨的質量，導致大量製成品成為次貨，損害皮革工坊的商譽（若選抗拒新科技，則解說：熟習新皮革切割科技需時，期間產量及收入或會減少，故工匠會抗拒使用新科技）。", score: 1, status: "best", comment: "【滿分示範】緊扣工匠為衝高銀包產量賺取更多件薪而忽略縫線打磨質量、導致次貨增加作清晰解釋。" },
+          { text: "因為工匠車銀包車得太快，所以整出來的銀包無咁靚。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】用詞過於口語，應完整說明「工匠為賺取更多件薪收入而只着重生產數量，忽略了銀包縫製質量，導致瑕疵品（次貨）增加並損害工坊聲譽」。" },
+          { text: "因為工匠在行使件薪後會自動成為皮革工坊的控股股東。", score: 0, status: "wrong", comment: "【概念錯誤】行使後成為公司股東的是「認股權」，而非件薪。" }
+        ]}
+      ]
+    },
+    {
+      id: "sa5", ch: 4, chName: "第 4 課：培訓和發展", maxMarks: 4,
+      title: "甲部 Q5：採用職外「模擬訓練 (Simulation Training)」的兩項優點 (4分)",
+      scenario: "「天際航空公司」在培訓新入職的客機機師應對惡劣天氣及引擎故障時，決定不讓他們直接駕駛載客的真實客機進行在職培訓，而是安排他們在複製真實駕駛室特點的模擬駕駛艙進行職外「模擬訓練 (Simulation Training)」。",
+      question: "試結合上述航空公司情境，指出並解釋採用「模擬訓練」培訓機師的兩項優點。（4 分）",
+      steps: [
+        { ptTitle: "論點一（滿分 2 分：1 分優點標題 ＋ 1 分情境解說）", label: "論點一 · 第 1 步：指出「模擬訓練」的第一項單一優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第一項優點是模擬訓練的開發和設備保養成本在所有職外培訓方法中最低廉。", score: 0, status: "wrong", comment: "【概念錯誤】模擬訓練涉及高昂的設備開發和保養成本，與其他培訓方法相比「成本高昂」（這是其缺點而非優點）。" },
+          { text: "第一項優點是風險比在職培訓低，當採用在職培訓訓練僱員的風險太高時，模擬訓練有助企業避免嚴重損失。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3B 節模擬訓練的第一項核心優點：「風險比在職培訓低，有助企業避免損失」。" },
+          { text: "第一項優點是用模擬駕駛艙來訓練新機師會比較好和比較安全。", score: 0, status: "partial", comment: "【常見失分示範：未寫出完整比較概念】應明確指出「風險比在職培訓低，有助航空公司避免因受訓機師操作失誤而引致的嚴重意外與財務損失」。" }
+        ]},
+        { label: "論點一 · 第 2 步：連結「天際航空公司訓練新機師」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "若讓缺乏經驗的新機師直接駕駛昂貴的真實客機在惡劣天氣下進行在職培訓，一旦操作失誤極易釀成空難傷亡及損毀客機，風險極高；在模擬駕駛艙內訓練則完全不會危及人命或損壞真實飛機，有助航空公司避免巨額損失。", score: 1, status: "best", comment: "【滿分示範】緊扣真實客機在職訓練的高空難風險與巨額損失，清楚說明模擬駕駛艙如何實現低風險安全訓練。" },
+          { text: "因為揸真飛機好危險，在模擬駕駛艙入面練就唔會有事。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】表述過於口語簡略，應說明「直接駕駛真實客機訓練若出錯會導致嚴重人命傷亡與昂貴飛機損毀，使用模擬駕駛艙則可完全避免這些損失」。" },
+          { text: "這能令新機師無須考取任何民航機師牌照即可駕駛真實客機。", score: 0, status: "wrong", comment: "【概念錯誤】模擬訓練是協助機師掌握飛行技術以通過考核，並不能免除法定牌照要求。" }
+        ]},
+        { ptTitle: "論點二（滿分 2 分：1 分優點標題 ＋ 1 分情境解說）", label: "論點二 · 第 1 步：指出「模擬訓練」的第二項單一優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第二項優點是熟能生巧，受訓僱員可在模擬工作環境中反覆練習，並從所犯錯誤中汲取經驗，因此能迅速地學會專門的技巧。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3B 節模擬訓練的第二項核心優點：「熟能生巧（反覆練習並從錯誤中汲取經驗，迅速學會專門技巧）」。" },
+          { text: "第二項優點是模擬環境與實際環境存在很大差異，所學技巧無須應用於實際工作。", score: 0, status: "wrong", comment: "【概念錯誤】模擬環境或與實際環境不同以致所學未必能應用，是模擬訓練的「缺點」而非優點。" },
+          { text: "第二項優點是新機師可以在模擬駕駛艙入面多練習幾次。", score: 0, status: "partial", comment: "【常見失分示範：未點出關鍵效果】除提及多練習外，必須點出「從所犯錯誤中汲取經驗，熟能生巧地迅速學會專門技巧」（或職外培訓「不干擾日常實際航班運作、學習壓力較小」）。" }
+        ]},
+        { label: "論點二 · 第 2 步：連結「機師反覆演練引擎故障與惡劣天氣應變」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "新機師可在模擬駕駛艙內設定各種罕見的強風雷暴及引擎故障情景進行反覆演練，即使操作出錯亦可即時重來並從錯誤中汲取經驗，且在沒有真實飛行壓力的環境下學習，能幫助他們迅速熟練掌握高難度的緊急飛行應變技巧。", score: 1, status: "best", comment: "【滿分示範】清楚說明如何在模擬艙反覆演練緊急故障情景、從錯誤中汲取經驗並迅速掌握專門飛行技巧。" },
+          { text: "因為機師在模擬駕駛艙練習多幾次之後，就會識得怎樣揸飛機。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體結合「反覆演練惡劣天氣與引擎故障等緊急情景，並從所犯錯誤中汲取經驗以迅速掌握專門技巧」。" },
+          { text: "這會令全球機場永遠不會再出現惡劣天氣。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+        ]}
+      ]
+    },
+    {
+      id: "sa6", ch: 5, chName: "第 5 課：發展優質人力資源", maxMarks: 4,
+      title: "甲部 Q6：麥格雷戈「X 理論」與「Y 理論」的管理假設及激勵方法比較 (4分)",
+      scenario: "根據麥格雷戈 (McGregor) 的「X 理論及 Y 理論」，「極速物流倉務部」的王經理奉行「X 理論」，而「創新科技研發部」的張經理則奉行「Y 理論」。",
+      question: "試分別指出 (a) 王經理（奉行 X 理論）（2分）及 (b) 張經理（奉行 Y 理論）（2分）對下屬所持的一項假設，以及各自常用來激勵下屬的一種方法。（4 分）",
+      steps: [
+        { ptTitle: "論點一：(a) 奉行 X 理論的王經理（滿分 2 分：1 分 X 理論假設 ＋ 1 分 X 理論激勵方法）", label: "論點一 · 第 1 步：指出「X 理論」管理人員對僱員所持的一項假設（1分）", colorClass: "hl-s1", opts: [
+          { text: "王經理假設下屬視工作為生命的一部分，且會自我激勵和主動承擔更多責任。", score: 0, status: "wrong", comment: "【概念錯誤】這是「Y 理論」的積極假設，與王經理奉行的「X 理論」完全相反。" },
+          { text: "王經理奉行 X 理論，假設下屬本質上都是不喜歡工作的（懶惰的），總是盡量避免工作；而且傾向逃避責任、沒有抱負，主要只關注金錢和工作是否有保障。", score: 1, status: "best", comment: "【滿分示範】完整且準確地指出課文第 5.3C 節 X 理論對僱員所持的核心假設。" },
+          { text: "王經理奉行 X 理論，覺得倉務部的下屬平時返工的表現不太好。", score: 0, status: "partial", comment: "【常見失分示範：未寫出 X 理論的標準人性假設】必須明確寫出 X 理論對人類本質的假設：「假設僱員本質上不喜歡工作（懶惰）、傾向逃避責任需正式指引，或沒有抱負只關注金錢和工作保障」。" }
+        ]},
+        { label: "論點一 · 第 2 步：指出奉行「X 理論」的王經理常用來激勵下屬的一種方法（1分）", colorClass: "hl-s2", opts: [
+          { text: "基於 X 理論，王經理主要透過滿足下屬較低層次的生理及安全需要來激勵他們，例如向按時完成搬貨指標的倉務員提供優厚的金錢報酬（如超時工資和花紅）或滿足安全需要的保險與房屋津貼，同時密切監控並以扣薪懲罰方式促使他們工作。", score: 1, status: "best", comment: "【滿分示範】準確結合課文第 5.3C 節 X 理論的含義與激勵方法：提供優厚金錢報酬及安全需要福利（滿足較低層次需要），並配合密切監控與高壓懲罰。" },
+          { text: "基於 X 理論，王經理會完全放手讓倉務員自行決定倉庫的所有運作策略，從不監控他們。", score: 0, status: "wrong", comment: "【概念錯誤】授權參與決策及不作嚴密監控屬於「Y 理論」的做法，X 理論管理人員主張密切監控及高壓懲罰。" },
+          { text: "王經理會用很嚴厲的方法去管理倉務員，逼他們在貨倉入面努力搬貨。", score: 0, status: "partial", comment: "【常見失分示範：漏答具體激勵方法】題目要求指出「用來激勵下屬的一種方法」，除了提及密切監控與懲罰外，必須明確點出「提供優厚的金錢報酬（如薪金和花紅）或滿足安全需要的福利（以滿足較低層次需要）」。" }
+        ]},
+        { ptTitle: "論點二：(b) 奉行 Y 理論的張經理（滿分 2 分：1 分 Y 理論假設 ＋ 1 分 Y 理論激勵方法）", label: "論點二 · 第 1 步：指出「Y 理論」管理人員對僱員所持的一項假設（1分）", colorClass: "hl-s1", opts: [
+          { text: "張經理奉行 Y 理論，假設下屬視工作為生命的一部分、認同企業目標時會自我激勵和控制，而且大多數僱員都能主動承擔更多責任及有能力作出決策。", score: 1, status: "best", comment: "【滿分示範】完整且準確地指出課文第 5.3C 節 Y 理論對僱員所持的四項積極假設。" },
+          { text: "張經理奉行 Y 理論，假設研發人員如果不被扣減薪金就一定會逃避研發責任。", score: 0, status: "wrong", comment: "【概念錯誤】假設員工逃避責任並需靠扣薪懲罰逼迫，屬於「X 理論」而非 Y 理論。" },
+          { text: "張經理奉行 Y 理論，認為研發部的下屬全部都是好員工，同 X 理論的睇法相反。", score: 0, status: "partial", comment: "【常見失分示範：用詞含糊】「全部都是好員工」並非理論術語，必須明確寫出「假設僱員視工作為生命一部分、會自我激勵和控制、主動承擔責任或有能力作出決策」。" }
+        ]},
+        { label: "論點二 · 第 2 步：指出奉行「Y 理論」的張經理常用來激勵下屬的一種方法（1分）", colorClass: "hl-s2", opts: [
+          { text: "基於 Y 理論，張經理主要透過滿足下屬較高層次的社交、自我及自我實現需要來激勵他們，例如邀請研發人員參與項目決策、給予更具挑戰性的研發工作、頒發獎項認同其貢獻，或提供培訓和發展機會促進個人成長。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 71 頁表格所列 Y 理論用來激勵僱員的四大常見方法（邀請參與決策、給予具挑戰性工作、頒獎認同貢獻、提供培訓和發展機會）。" },
+          { text: "張經理會給研發部員工多一點自由，對他們好一點來激勵他們努力研發新產品。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應明確寫出 Y 理論滿足較高層次需要的具體激勵措施，如「邀請僱員參與決策」、「給予更具挑戰性的工作」、「頒發獎項認同貢獻」或「提供培訓和發展機會」。" },
+          { text: "基於 Y 理論，張經理只會向研發人員提供最基本的法定最低工資，並禁止他們參與任何決策。", score: 0, status: "wrong", comment: "【概念錯誤】禁止參與決策完全違背 Y 理論「大多數僱員都有能力作出決策，應邀請參與決策」的核心原則。" }
+        ]}
+      ]
+    }
+  ];
+
+  // ====== 乙部：商業個案分析題數據（100% 對齊教科書第 1 至 4 課用詞，含三層次教學示範回饋） ======
+  const caseSubQuestions = [
+    {
+      id: "c1", ch: 1, chName: "第 1 課：人力規劃和員工編制", maxMarks: 6,
+      title: "分題 (a)：外部招聘的兩項優點 (4分) 及外部發布職位空缺方法建議 (2分)",
+      question: "(i) 結合個案，指出並解釋綠馳小巴公司採用「外部招聘」填補 30 個新電動小巴車長空缺的兩項優點（4分）；(ii) 向綠馳公司建議一種合適的「發布職位空缺方法（外部招聘途徑）」來招募這 30 名車長，並解釋一項好處（2分）。（6 分）",
+      steps: [
+        { ptTitle: "(a)(i) 外部招聘優點一（滿分 2 分：1 分優點標題 ＋ 1 分個案解說）", label: "第 1 步：指出採用「外部招聘」的第一項單一優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第一項優點是新聘請的外部車長在入職首天便已完全熟悉綠馳公司的文化、工作環境和運作模式。", score: 0, status: "wrong", comment: "【概念錯誤】熟悉企業文化和工作環境是「內部招聘」的優點；外部招聘的新員工較難適應新崗位。" },
+          { text: "第一項優點是外部招聘的人選較多，企業可接觸大量背景不同的求職者，有較大機會成功聘請所需數量和類型的僱員。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 1.3A 節外部招聘的核心優點：「人選較多，有較大機會成功聘請所需數量和類型的僱員」。" },
+          { text: "第一項優點是透過外部招聘請人，可以幫綠馳小巴公司請到需要的新車長。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】必須明確點出「外部市場人選較多，可接觸大量不同背景的求職者」這一標準優點標題。" }
+        ]},
+        { label: "第 2 步：結合個案中「投得兩條新路線急需 30 名新電動小巴車長」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "個案中綠馳公司現職司機老齡化且流失率偏高，內部根本沒有足夠人手調配至兩條新界新路線；透過外部招聘接觸全港就業市場上大量持有小巴牌照的求職者，才有較大機會迅速聘請足夠 30 名合資格車長開辦新路線。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「現職司機老化無多餘人手、新路線急需 30 名車長」的事實，說明外部人選較多如何助其達標。" },
+          { text: "因為綠馳公司今次要一口氣請 30 個新車長咁多，所以在外面請人會比較好。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】只重抄了 30 個車長的數字，未有對比「公司內部司機老化及流失率高導致內部人選不足，必須靠外部龐大求職者市場才能聘請足夠數量車長」。" },
+          { text: "這會令政府免除所有新入職小巴車長的駕駛執照考試要求。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合常理。" }
+        ]},
+        { ptTitle: "(a)(i) 外部招聘優點二（滿分 2 分：1 分優點標題 ＋ 1 分個案解說）", label: "第 3 步：指出採用「外部招聘」的第二項單一優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第二項優點是新員工可為企業帶來新思維和技能，而且若直接聘請已具備所需技能的外部人選，更可節省額外的培訓成本。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 1.3A 節外部招聘的另外兩項標準優點：「帶來新思維和技能」及「節省培訓成本」。" },
+          { text: "第二項優點是外部招聘的員工編制過程所需時間最短、成本最低。", score: 0, status: "wrong", comment: "【概念錯誤】外部招聘的招聘和甄選程序較繁複，所需時間較長、成本較高（這是其缺點）；省時省成本的是內部招聘。" },
+          { text: "第二項優點是外面請回來的新車長會比舊車長更加聽話和勤力。", score: 0, status: "partial", comment: "【常見失分示範：用詞主觀且欠專業術語】「更加聽話」並非課本論點，應明確寫出「帶來新思維和技能」或「若聘請已具備所需技能的人選可節省培訓成本」。" }
+        ]},
+        { label: "第 4 步：結合個案中「引入新電動小巴及部分現職車長態度冷淡」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "個案中現職老車長不熟習新電動小巴科技且部分人待客態度冷淡；若從外部直接聘請已具備駕駛電動商用車經驗及良好待客習慣的新車長，既能為車隊注入重視安全禮貌的新風氣，又能節省從頭教授基本電動車操作的培訓成本。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「新電動小巴科技」與「改善冷淡待客態度」，清楚說明引入新技能風氣及節省培訓成本的好處。" },
+          { text: "因為外面請回來的新車長可能以前揸過電動車，對綠馳小巴公司會有幫助。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應明確說明直接聘請已具電動車駕駛技能的外部人選如何「為車隊注入新技能與良好待客風氣，並節省額外的基礎培訓成本」。" },
+          { text: "這會令綠馳公司現職的所有老車長自動年輕二十歲。", score: 0, status: "wrong", comment: "【概念錯誤】推論荒謬。" }
+        ]},
+        { ptTitle: "(a)(ii) 建議外部發布職位空缺方法（滿分 2 分：1 分途徑名稱 ＋ 1 分好處解說）", label: "第 5 步：建議一種合適的外部「發布職位空缺方法（招聘途徑）」（1分）", colorClass: "hl-s1", opts: [
+          { text: "綠馳公司可在公司的私人內聯網發布這 30 個外部車長職位空缺。", score: 0, status: "wrong", comment: "【概念錯誤】內聯網只限公司現職內部僱員進入，屬於「針對內部人選」的途徑，外部求職者無法查閱。" },
+          { text: "綠馳公司可採用招聘會（就業博覽會）、刊登招聘廣告、透過勞工處，或透過汽車交通運輸業工會來發布這 30 個車長職位空缺。", score: 1, status: "best", comment: "【滿分示範】準確提出課文第 1.3B 節適用於招募大批前線持牌司機的外部發布職位空缺方法。" },
+          { text: "綠馳公司可以用一些公開的方法將請 30 個小巴車長的消息傳出去。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體途徑名稱】必須明確寫出如「招聘會」、「招聘廣告」、「勞工處」、「現職員工推薦」或「工會」等標準途徑名稱。" }
+        ]},
+        { label: "第 6 步：結合「招募 30 名電動小巴車長」解釋該途徑的一項好處（1分）", colorClass: "hl-s2", opts: [
+          { text: "若採用招聘會，公司可在攤位一天內快捷吸引大量求職司機，並即場篩選申請表及進行面試，使招聘過程更有效率並節省安排面試的時間成本（若選勞工處則提供免費服務且覆蓋面廣；若選交通運輸工會則能精準吸引從事駕駛專業的合適持牌司機）。", score: 1, status: "best", comment: "【滿分示範】清楚闡述招聘會（快捷吸引大量求職者、即場篩選面試高效率）、勞工處（免費、覆蓋廣）或工會（吸引特定專業人選）的好處。" },
+          { text: "因為用這個方法可以幫綠馳公司好快請到 30 個合適的新電動小巴車長。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有具體說明該途徑的獨有好處（如招聘會可「即場篩選申請表並進行面試、節省時間成本」；勞工處「提供免費服務且覆蓋面廣」；工會「能吸引從事特定專業的合適人選」）。" },
+          { text: "因為透過勞工處招聘高級管理人員需要向政府支付數十萬元的獵頭佣金。", score: 0, status: "wrong", comment: "【概念錯誤】勞工處提供完全免費的招聘服務，且車長屬前線司機而非高級管理人員。" }
+        ]}
+      ]
+    },
+    {
+      id: "c2", ch: 2, chName: "第 2 課：員工考績", maxMarks: 6,
+      title: "分題 (b)：為車長訂立表現標準與量度方法 (4分) 及考績後的 HR 決策 (2分)",
+      question: "(i) 結合個案，為綠馳公司的電動小巴車長建議兩項具體的「表現標準」，並配對說明「量度」車長實際表現的兩種方法（4分）；(ii) 除薪酬決策外，指出並結合個案解釋林總裁可根據車長考績結果作出的一項「人力資源管理決策」（2分）。（6 分）",
+      steps: [
+        { ptTitle: "(b)(i) 車長表現標準（滿分 2 分：1 分安全標準 ＋ 1 分服務標準）", label: "第 1 步：根據課本第 2.4 節，為小巴車長訂立兩項清晰可量度的「表現標準」（1分）", colorClass: "hl-s1", opts: [
+          { text: "可訂立車長在工廠每小時生產的玩具數量及每月招攬的新保險客戶數量作為表現標準。", score: 0, status: "wrong", comment: "【概念錯誤】每小時生產貨品數量屬生產工人標準，招攬新客戶數量屬銷售人員標準，均不適用於小巴車長。" },
+          { text: "可根據車長的工作說明及公司安全服務目標，訂立「違反交通規例或觸發防撞急煞車警報的次數」以及「接獲的乘客投訴數量（或班次準點率）」作為清晰可量度的表現標準。", score: 1, status: "best", comment: "【滿分示範】完全貼合課文第 43 頁巴士司機的標準表現指標（違反交通規例的次數、接獲的顧客投訴數量）並扣連個案的防撞急煞車問題。" },
+          { text: "可訂立要求所有小巴車長平時揸車要安全一點、對乘客態度要好一點作為表現標準。", score: 0, status: "partial", comment: "【常見失分示範：標準不夠具體可量度】課本強調表現標準應該是「清晰、具體和可量度的」；應寫出可量化的指標，如「違反交通規例或急煞車次數」及「接獲的乘客投訴數量」。" }
+        ]},
+        { label: "第 2 步：配對說明「量度」車長上述實際表現的兩種方法（1分）", colorClass: "hl-s2", opts: [
+          { text: "綠馳公司可透過：(1)「從公司記錄獲取數據」，從新電動小巴的智能防撞系統及行車電腦記錄擷取車長急煞車、超速及違反交通規例的次數數據；及 (2)「向不同人士（乘客）收集意見」，透過車廂二維碼問卷或熱線統計乘客對車長的服務評分與投訴紀錄（亦可派督察隨車進行「觀察」）。", score: 1, status: "best", comment: "【滿分示範】準確運用課文第 2.4 節的量度方法（從公司記錄獲取數據、向不同人士收集意見、觀察）並緊扣電動小巴情境。" },
+          { text: "綠馳公司可以由人事部經理自己估計一下哪位車長揸車比較安全。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準量度途徑名稱】必須明確寫出課本的三大標準量度方法：「從公司記錄獲取數據」、「向不同人士（乘客）收集意見」或「觀察」。" },
+          { text: "綠馳公司只需查閱公司去年的資產負債表流動比率，便可量度每位車長的駕駛表現。", score: 0, status: "wrong", comment: "【概念錯誤】流動比率屬於企業整體的財務變現能力比率，無法量度個別車長的駕駛及待客表現。" }
+        ]},
+        { ptTitle: "(b)(ii) 除薪酬外的 HR 決策（滿分 2 分：1 分決策類別 ＋ 1 分個案例子）", label: "第 3 步：指出除薪酬決策外，考績第 4 步可作出的單一「人力資源管理決策」類別（1分）", colorClass: "hl-s1", opts: [
+          { text: "林總裁可根據考績結果作出「培訓決策」或「人力規劃決策（如晉升、調職或終止僱傭合約）」。", score: 1, status: "best", comment: "【滿分示範】準確避開題目已排除的薪酬決策，指出課文第 2.4 節第 4 步的「培訓決策」或「人力規劃決策」。" },
+          { text: "林總裁可根據考績結果作出「薪酬決策」，提高優秀車長的加薪幅度和給予較多花紅。", score: 0, status: "wrong", comment: "【審題失誤】題目已明確規定「除薪酬決策外」，回答加薪或派發花紅不會獲得分數。" },
+          { text: "林總裁可根據考績結果對車長作出一些其他的管理決定。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體決策類別名稱】必須明確寫出「培訓決策」或「人力規劃決策（晉升／調職／解僱）」。" }
+        ]},
+        { label: "第 4 步：結合「綠馳小巴車長考績結果」舉出具體決策例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如在培訓決策方面，針對考績中顯示經常急煞車、未熟習高壓充電或常遭乘客投訴態度冷淡的未達標車長，安排他們接受額外的電動車平穩駕駛及顧客服務培訓；而在人力規劃決策方面，則可將考績表現卓越的資深車長晉升為「車長導師」或站長。", score: 1, status: "best", comment: "【滿分示範】緊扣個案中的急煞車、充電出錯與態度冷淡問題，具體說明如何作出針對性培訓決策及晉升車長導師的人力規劃決策。" },
+          { text: "例如如果車長考績不合格就叫他去上堂，如果合格就升他職。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】例子過於簡略，應扣連個案具體說明「為經常急煞車或遭乘客投訴的車長提供針對性駕駛與待客服務培訓，或將表現優秀車長晉升為車長導師」。" },
+          { text: "例如林總裁決定向銀行借入長期貸款再買多五十輛電動小巴。", score: 0, status: "wrong", comment: "【概念錯誤】借貸購車屬於財務與資本投資決策，並非針對車長考績結果的人力資源管理決策。" }
+        ]},
+        { ptTitle: "(b)(iii) 考績面談的作用（滿分 2 分：1 分面談工作 ＋ 1 分對車長影響）", label: "第 5 步：指出在作出上述決策前，於「考績面談（第 3 步）」中應執行的工作（1分）", colorClass: "hl-s1", opts: [
+          { text: "車隊主管應與車長進行考績面談，向他們提供表現回饋、表揚優秀表現、找出影響表現的障礙並提供改善建議，以及聆聽車長對駕駛新電動小巴的憂慮和意見。", score: 1, status: "best", comment: "【滿分示範】完整涵蓋課文第 2.4 節第 3 步考績面談的核心工作（提供回饋、表揚、找出障礙提建議、聆聽憂慮和意見）。" },
+          { text: "車隊主管應將考績結果鎖在機密檔案櫃內，絕不與車長進行任何溝通或面談。", score: 0, status: "wrong", comment: "【概念錯誤】若不進行考績面談向員工提供回饋，員工便無法知道自己的強弱項及如何改善表現。" },
+          { text: "車隊主管在決定之前應該先同車長傾下偈，講下他的考績分數。", score: 0, status: "partial", comment: "【常見失分示範：用詞口語且要素不全】應明確寫出在「考績面談」中「向車長提供回饋、找出影響表現的障礙並提供建議，以及聆聽車長的憂慮和意見」。" }
+        ]},
+        { label: "第 6 步：解釋考績面談與回饋如何協助車長改善駕駛及服務表現（1分）", colorClass: "hl-s2", opts: [
+          { text: "這能確保車長清楚了解如何達到公司的安全與服務標準，並協助車長制定個人改善計劃以克服操作新電動小巴的弱點和鞏固強項，鼓勵他們在下半年度改善駕駛及待客表現。", score: 1, status: "best", comment: "【滿分示範】清楚說明考績面談如何確保員工了解達標方法，並協助制定計劃以改善弱點和鞏固強項。" },
+          { text: "這樣車長聽完主管講之後，下次揸車就會做得好一點。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】未有點出課本關鍵字：「確保員工了解如何達到表現標準，並協助員工制定計劃，藉此改善弱點和鞏固強項」。" },
+          { text: "這會令小巴的電池續航力自動增加一倍。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+        ]}
+      ]
+    },
+    {
+      id: "c3", ch: 3, chName: "第 3 課：報酬管理", maxMarks: 6,
+      title: "分題 (c)：改革車長報酬組合（按表現金錢報酬・非金錢報酬・僱員福利） (6分)",
+      question: "為解決固定日薪下車長態度冷淡、急煞車及流失率偏高的問題，試向林總裁分別建議並結合個案解釋：(i) 一項按表現計算的「金錢報酬」（2分）；(ii) 一項僱員福利以外的「非金錢報酬」（2分）；及 (iii) 一項法定以外的「僱員福利（附帶福利）」及其目的（2分）。（6 分）",
+      steps: [
+        { ptTitle: "(c)(i) 按表現計算的金錢報酬（滿分 2 分：1 分方式名稱 ＋ 1 分個案解說）", label: "第 1 步：建議一項適用於車長的「按表現計算金錢報酬」方式名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "建議在固定日薪（底薪）以外，增設與車長考績表現掛鈎的「花紅 (Bonus)」或「績效薪酬 (Merit Pay)」。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.3B 節適合與安全服務考績掛鈎的「花紅」或「績效薪酬」。" },
+          { text: "建議取消所有固定日薪，改為純粹按車長每天在馬路上衝紅燈超速搶客的人數計算件薪。", score: 0, status: "wrong", comment: "【概念錯誤】純按搶客數量計薪會誘使小巴車長超速亡命飛車及急煞車，嚴重危及乘客安全並違背公司提升安全意識的目標。" },
+          { text: "建議給表現好的小巴車長多一點錢作為獎勵。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準金錢報酬名稱】必須明確寫出課本的標準名稱：「花紅 (Bonus)」或「績效薪酬 (Merit Pay)」。" }
+        ]},
+        { label: "第 2 步：結合個案中「改善車長急煞車及對乘客態度冷淡」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "將花紅或績效薪酬與車長的半年考績結果（如零急煞車警報、零交通意外及零乘客投訴）直接掛鈎；由於車長必須有良好的安全駕駛及待客表現才能獲發花紅或加薪，其激勵效果顯著，能有效推動車長戒除急煞車習慣並禮貌待客。", score: 1, status: "best", comment: "【滿分示範】清楚說明將花紅或績效薪酬與零急煞車及零投訴考績掛鈎，如何克服固定日薪激勵效果弱的缺點。" },
+          { text: "因為有花紅拿，車長就會努力工作，不會再對乘客態度冷淡。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體扣連個案說明「將花紅與車長的行車安全（不急煞車）及乘客服務考績掛鈎，車長必須表現良好才獲發花紅，從而提供強大誘因改善駕駛與待客態度」。" },
+          { text: "這能確保綠馳公司即使在嚴重虧損的年份，亦必須保證向所有違規車長派發雙倍花紅。", score: 0, status: "wrong", comment: "【概念錯誤】企業通常不會保證派發花紅；若業績不理想或車長表現不達標，企業有權發放較少甚至不發放花紅。" }
+        ]},
+        { ptTitle: "(c)(ii) 僱員福利以外的非金錢報酬（滿分 2 分：1 分方式名稱 ＋ 1 分個案解說）", label: "第 3 步：建議一項「僱員福利以外」的非金錢報酬方式名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "建議向車長提供「認同和表揚 (Recognition and Praise)」，例如口頭讚賞或設立最佳車長獎項（或選：「培訓和發展機會」）。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 3.4A 節僱員福利以外的非金錢報酬方式：「認同和表揚」（或「培訓和發展機會」）。" },
+          { text: "建議向車長提供有薪年假、醫療保險及強積金供款。", score: 0, status: "wrong", comment: "【審題失誤】有薪年假、醫療保險與強積金全部屬於「僱員福利」，而本分題明確要求「僱員福利以外」的非金錢報酬（且第 iii 部分才問僱員福利）。" },
+          { text: "建議給表現好的車長一些不用錢的獎勵，讓他們覺得有面子。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準非金錢報酬名稱】必須明確寫出課本的標準名稱：「認同和表揚（口頭讚賞或設立獎項）」或「培訓和發展機會」。" }
+        ]},
+        { label: "第 4 步：結合個案中「提升車長對安全及優質服務的投入度」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "林總裁可在公司通訊上公開口頭讚賞獲乘客寫信表揚的車長，並設立「每季最佳安全禮貌車長獎」頒發獎座；這能肯定車長對安全駕駛的努力與貢獻，滿足他們對得到認同和尊重的需要，提升士氣與對公司的忠誠度，且成本極低。", score: 1, status: "best", comment: "【滿分示範】緊扣設立「最佳安全禮貌車長獎」與公開讚賞，說明如何肯定貢獻、滿足受認同需要並提高忠誠度。" },
+          { text: "當林總裁讚賞完車長之後，車長就會覺得很開心，對乘客的態度也會變好。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體舉出「設立最佳安全車長獎項或公開口頭讚賞」，並說明這如何「肯定車長對企業的貢獻，滿足其對得到認同的需要，從而提高忠誠度」。" },
+          { text: "車長可以直接拿最佳車長獎座去街市購買日常食物養活家人。", score: 0, status: "wrong", comment: "【概念錯誤】獎座屬於非金錢報酬，不能直接用來購買物品維持生活水平。" }
+        ]},
+        { ptTitle: "(c)(iii) 法定以外的僱員福利及其目的（滿分 2 分：1 分福利名稱 ＋ 1 分目的解說）", label: "第 5 步：建議一項香港「法定以外」的僱員福利（附帶福利）名稱（1分）", colorClass: "hl-s1", opts: [
+          { text: "建議向車長提供「法定假期、休息日及強制性公積金（強積金）計劃」。", score: 0, status: "wrong", comment: "【審題失誤】法定假期、休息日及強積金計劃全部屬於香港法例強制規定的「法定福利」（課本第 17 頁），而題目明確要求「法定以外」的僱員福利。" },
+          { text: "建議向車長提供「醫療保險及免費年度身體檢查服務」、「在總站設立有冷氣的員工休息室及員工飯堂」或「公司旅行等康樂活動」。", score: 1, status: "best", comment: "【滿分示範】準確避開法定福利陷阱，提出醫療保險、免費體檢、員工休息室／飯堂或康樂活動等額外僱員福利。" },
+          { text: "建議給小巴車長多一點額外的公司福利。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體福利名稱】必須明確寫出如「醫療保險／免費身體檢查」、「員工飯堂／休息室設施」、「康樂活動」或「有薪生日假」等具體福利名稱。" }
+        ]},
+        { label: "第 6 步：結合個案中「車長老齡化及流失率偏高」解釋提供該福利的目的（1分）", colorClass: "hl-s2", opts: [
+          { text: "鑑於小巴車長普遍老齡化且長時間駕駛易患職業病，提供醫療保險、免費身體檢查及舒適的總站休息室，能保障車長的身心健康並滿足他們的「安全需要和社交需要」；同時表達公司對車長的關心，有助建立良好僱主形象、提高車長的歸屬感和忠誠度，從而減低車長流失率。", score: 1, status: "best", comment: "【滿分示範】緊扣課文第 3.4B 節提供僱員福利的目的（保障身心健康、滿足安全與社交需要、建立良好僱主形象、提高歸屬感和忠誠度）並結合老齡化車長背景。" },
+          { text: "提供這些福利可以令小巴車長覺得公司對他們很好，就不會那麼容易辭職。", score: 0, status: "partial", comment: "【常見失分示範：未扣連課本福利目的術語】應明確運用課本第 3.4B 節的目的術語：「保障車長的身心健康、滿足安全和社交需要」、「建立良好僱主的形象以吸引人才」及「表達關心以提高車長的歸屬感和忠誠度」。" },
+          { text: "提供醫療保險和休息室可在短期內立即為綠馳公司節省一半的人工成本。", score: 0, status: "wrong", comment: "【概念錯誤】增設醫療保險與員工休息室需要額外財務開支，並不會在短期內節省人工成本。" }
+        ]}
+      ]
+    },
+    {
+      id: "c4", ch: 4, chName: "第 4 課：培訓和發展", maxMarks: 6,
+      title: "分題 (d)：在職「指導 (Coaching)」的優點 (2分) 與提供培訓的兩項目的 (4分)",
+      question: "(i) 指出並結合個案解釋綠馳公司採用在職「指導 (Coaching)」培訓現職老車長的一項優點（2分）；(ii) 結合個案，指出並解釋綠馳公司為車長提供新電動小巴操作培訓的兩項目的（4分）。（6 分）",
+      steps: [
+        { ptTitle: "(d)(i) 在職指導 (Coaching) 的優點（滿分 2 分：1 分優點標題 ＋ 1 分個案解說）", label: "第 1 步：指出採用在職「指導 (Coaching)」的單一核心優點標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "優點是受訓車長可迅速發展所需技能，因為導師可根據受訓車長的需要和能力設計培訓內容並親身示範，同時受訓車長可即時獲得導師的支持和回饋（且在職培訓成本較低、所學較實用切合工作需要）。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.3A 節「指導」的核心優點：按需要能力設計並親身示範以迅速發展技能、獲得即時支持和回饋（以及成本較低、所學實用）。" },
+          { text: "優點是完全不會佔用資深車長導師任何時間，而且所有不同導師教出來的成效必定百分百相同。", score: 0, status: "wrong", comment: "【概念錯誤】對導師而言非常費時（或影響自身生產力）以及取決於導師能力與投入度導致成效不一，正是在職指導的「缺點」而非優點。" },
+          { text: "優點是派一個資深車長去教老車長揸新電動小巴，老車長會學得比較好。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準優點標題】必須明確寫出「導師可根據受訓車長的需要和能力設計內容並親身示範，助其迅速發展所需技能」或「受訓車長可就實際表現即時獲得支持和回饋」。" }
+        ]},
+        { label: "第 2 步：結合個案中「資深車長一對一指導老車長操作電子儀表板與充電樁」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "資深車長導師可在真實的新電動小巴車廂及充電站內，針對每位老車長對電子觸控儀表板的不熟習之處親身示範操作步驟，並在老車長練習插拔高壓充電槍時從旁觀察，一旦有誤即場提供回饋和糾正，讓老車長把學到的實用技能直接應用到日常行車上。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「不熟習電子觸控儀表板及高壓充電樁」的事實，具體說明親身示範、即時回饋糾正及直接應用於日常行車的過程。" },
+          { text: "因為資深車長識得怎樣用新電動小巴，由他來教老車長就可以令老車長識得怎樣用。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體說明導師如何在真實電動小巴及充電樁旁「親身示範操作，並就老車長的實際表現提供即時回饋與糾正，使所學技能直接應用到工作上」。" },
+          { text: "這能令老車長在電腦模擬遊戲中學習如何作出跨國金融投資決策。", score: 0, status: "wrong", comment: "【概念錯誤】那是培訓管理人員的職外「電腦模擬」，與在職指導小巴車長無關。" }
+        ]},
+        { ptTitle: "(d)(ii) 提供培訓的目的一（滿分 2 分：1 分目的標題 ＋ 1 分個案解說）", label: "第 3 步：根據課本第 4.2B 節，指出提供培訓的第一項單一目的標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第一項目的是保障僱員（及乘客）的健康和安全，同時提高企業的服務質素、效率和生產力。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.2B 節培訓和發展的核心目的：「保障僱員的健康和安全」及「提高企業的服務質素、效率和生產力」。" },
+          { text: "第一項目的是透過培訓將所有專線小巴轉化為公司的非流動負債。", score: 0, status: "wrong", comment: "【概念錯誤】完全無關的會計概念。" },
+          { text: "第一項目的是教識老車長怎樣使用新買回來的 80 架純電動小巴。", score: 0, status: "partial", comment: "【常見失分示範：未提升至課本目的層次】「教識用新車」只是具體動作，必須寫出課本第 4.2B 節的標準目的標題，如「保障僱員的健康和安全」或「提高企業的服務質素／提高效率和生產力」。" }
+        ]},
+        { label: "第 4 步：結合個案中「老車長操作電子儀表板與高壓充電樁頻頻出錯」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "個案中老車長因不熟習新電動小巴的智能防撞系統及高壓充電樁操作而頻頻出錯；提供適當培訓有助車長掌握正確操作技能及安全意識，避免在充電時發生觸電意外或在行車時發生車禍（保障健康和安全），並減少操作出錯以提供更平穩準時的載客服務（提升服務質素與效率）。", score: 1, status: "best", comment: "【滿分示範】緊扣高壓充電與防撞系統操作，清楚說明如何避免觸電與車禍意外（保障安全）並減少出錯（提升服務質素與效率）。" },
+          { text: "因為老車長學會了之後就不會再出錯，揸車也會安全一點。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體扣連個案中「操作智能防撞預警系統與高壓充電樁，避免行車及充電意外以保障車長與乘客安全，並提升載客服務質素」。" },
+          { text: "這會令新電動小巴的電池永遠無須充電。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合常理。" }
+        ]},
+        { ptTitle: "(d)(ii) 提供培訓的目的二（滿分 2 分：1 分目的標題 ＋ 1 分個案解說）", label: "第 5 步：根據課本第 4.2B 節，指出提供培訓的第二項單一目的標題（1分）", colorClass: "hl-s1", opts: [
+          { text: "第二項目的是滿足企業目前和未來的需要（確保僱員具備所需技能支持企業發展及應對轉變），同時可激勵僱員、提升士氣及增加歸屬感以降低員工流失率。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 4.2B 節的其餘標準目的：「滿足企業目前和未來的需要」、「激勵僱員，提升士氣」及「增加歸屬感，促進僱員關係（降低流失率）」。" },
+          { text: "第二項目的是為了增加車長對公司的不滿，促使老車長盡快辭職。", score: 0, status: "wrong", comment: "【概念錯誤】提供培訓和發展會令員工感受到公司對其重視，從而減少不滿並降低流失率，而非促使員工辭職。" },
+          { text: "第二項目的是對綠馳小巴公司的業務發展很有幫助。", score: 0, status: "partial", comment: "【常見失分示範：用詞空泛】必須明確寫出「滿足企業目前和未來的需要（支持業務轉型發展）」或「增加僱員歸屬感並提升士氣，從而降低員工流失率」。" }
+        ]},
+        { label: "第 6 步：結合個案中「配合政府綠色運輸轉型、開拓新路線及車長流失率偏高」作解說（1分）", colorClass: "hl-s2", opts: [
+          { text: "面對政府推動綠色運輸政策及公司引入 80 輛純電動小巴開拓新路線的轉型需要，培訓能確保現職車長具備所需的電動車操作技能以支持公司的新業務發展；同時培訓能改善車長表現以增加工作滿足感，並讓老車長感受到公司沒有淘汰他們而是重視其成長，從而提升士氣與歸屬感，減低車長流失率。", score: 1, status: "best", comment: "【滿分示範】完整結合支持電動化綠色運輸轉型（滿足企業需要）及消除老車長被淘汰憂慮以增加歸屬感、減低流失率。" },
+          { text: "這樣老車長就會識得揸新車，幫助公司應付未來的需要。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應具體扣連個案中「配合政府綠色運輸政策與 80 輛新電動小巴轉型發展，並增加老車長的工作滿足感與歸屬感以減低高企的流失率」。" },
+          { text: "這會令香港所有市民改為步行而不乘搭任何交通工具。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+        ]}
+      ]
+    }
+  ];
+
+  // ====== 丙部：進階論述題數據（100% 對齊教科書第 5 課用詞，含三層次教學示範回饋） ======
+  const essayTopics = [
+    {
+      topicId: "es1", ch: 5, chName: "第 5 課：發展優質人力資源（赫茨伯格的兩因子理論 · 12分論述題）",
+      topicTitle: "丙部論述題 Q1：幻影遊戲軟件開發公司（運用「赫茨伯格的兩因子理論」防止不滿並激勵員工 · 12分）",
+      scenario: "「幻影遊戲開發公司」近月有多名軟件工程師及美術設計師辭職，留任員工亦抱怨工作環境擠迫、電腦經常死機、加班政策刻薄無補償，而且日常工作只是在刻板指令下重複修改微細程式漏洞，毫無自主權與成就感。管理層希望運用「赫茨伯格的兩因子理論 (Herzberg's Two-Factor Theory)」，同時從「保健因子 (Hygiene Factors)」與「激勵因子 (Motivators)」入手解決問題。試舉例闡釋管理層可如何運用兩項保健因子及兩項激勵因子，以防止員工感到不滿意並激勵他們提升工作效率。（12 分 — 請分別建構 4 個獨立重點段落，每段 3 分）",
+      paragraphs: [
+        {
+          id: "es1_p1", ch: 5, maxMarks: 3, title: "第 1 段：保健因子一 —— 改善工作環境與設備條件 (3分)",
+          steps: [
+            { label: "第 1 步：指出「保健因子 (Hygiene Factors) —— 工作環境」的概念與作用（1分）", colorClass: "hl-s1", opts: [
+              { text: "首先，根據赫茨伯格的兩因子理論，保健因子是可防止僱員對工作感到不滿意的因素，本質上是外在的，主要關乎工作環境的各個方面；如果保健因子消失，僱員便會對工作感到不滿意，因此管理層首先須改善「工作環境」這項保健因子。", score: 1, status: "best", comment: "【滿分示範】準確界定課文第 5.3B 節「保健因子（外在關乎工作環境、可防止僱員對工作感到不滿意的因素）」的概念與作用。" },
+              { text: "首先，根據赫茨伯格的兩因子理論，工作環境屬於內在的激勵因子，只要改善辦公室環境便能直接令工程師獲得最大的成就感與內在激勵。", score: 0, status: "wrong", comment: "【概念錯誤】工作環境屬於外在的「保健因子」而非激勵因子；保健因子的存在只能防止僱員感到不滿意，不能直接激勵他們。" },
+              { text: "首先，幻影遊戲開發公司的管理層應該改善一下公司的保健因子，例如改善辦公室的工作環境。", score: 0, status: "partial", comment: "【常見失分示範：未解釋保健因子的理論作用】必須明確指出保健因子是「關乎工作環境的外在因素，其作用是防止僱員對工作感到不滿意（若消失便會令僱員感到不滿意）」。" }
+            ]},
+            { label: "第 2 步：針對「幻影遊戲公司員工抱怨環境擠迫及電腦死機」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如針對工程師及設計師抱怨工作環境擠迫及電腦經常死機的問題，管理層應擴充辦公室空間以提供寬敞舒適的座位、更換高規格且運作穩定的繪圖電腦設備，並增設空氣清新機與員工休息室。", score: 1, status: "best", comment: "【滿分示範】緊扣個案中「環境擠迫及電腦經常死機」的事實，具體提出擴充空間與升級高規格電腦設備的例子。" },
+              { text: "例如管理層向工程師頒發年度最佳遊戲設計獎座，並授權他們自行決定新遊戲的主題。", score: 0, status: "wrong", comment: "【概念錯誤】頒發獎座（認同）與授權決策（自主權與責任）屬於「激勵因子」，並非改善工作環境的「保健因子」。" },
+              { text: "例如管理層幫工程師執拾一下辦公室，整返好部電腦，讓他們返工的時候環境好一點。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】用詞過於口語簡略，應具體結合個案說明「擴充擠迫的辦公空間並升級經常死機的電腦硬件設備，以提供良好的工作環境」。" }
+            ]},
+            { label: "第 3 步：深化論述至確保保健因子存在、防止工程師對工作環境感到不滿意的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "當良好的工作環境與穩定電腦設備這項保健因子存在時，能有效消除工程師因硬件落後和空間擠迫而產生的怨氣，防止他們對工作感到不滿意，從而減少因環境惡劣而觸發的辭職流失。", score: 1, status: "best", comment: "【滿分示範】清楚推演出當保健因子存在時，如何防止僱員對工作感到不滿意並穩定團隊。" },
+              { text: "這能令工程師無須再獲得任何晉升機會或工作自主權，單憑新電腦便能永久保持百分之兩百的創作激情。", score: 0, status: "wrong", comment: "【概念錯誤】課本明確指出，保健因子的存在只能讓僱員不再感到不滿意，不能讓僱員對工作感到滿意，也不能激勵他們。" },
+              { text: "這樣幻影遊戲開發公司的員工就不會再抱怨公司的環境差了。", score: 0, status: "partial", comment: "【常見失分示範：未扣連理論術語作結】應使用兩因子理論的標準表述作結：「當這項保健因子存在時，便能防止工程師對工作感到不滿意，為留住人才奠定基礎」。" }
+            ]}
+          ]
+        },
+        {
+          id: "es1_p2", ch: 5, maxMarks: 3, title: "第 2 段：保健因子二 —— 改善薪金待遇與公司加班政策 (3分)",
+          steps: [
+            { label: "第 1 步：指出第二項「保健因子 —— 薪金與公司政策和行政」的概念（1分）", colorClass: "hl-s1", opts: [
+              { text: "其次，管理層應改善「薪金」以及「公司政策和行政」這兩項保健因子：在兩因子理論中，薪金待遇以及公司政策是否清晰公平同樣屬於外在的保健因子；若薪金偏低或加班政策苛刻不公（保健因子缺失），僱員便會對工作感到強烈不滿意。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 67 頁表格所列的「薪金」及「公司政策和行政」兩項保健因子，並說明其缺失會引致不滿。" },
+              { text: "其次，管理層應改善薪金這項激勵因子，因為在赫茨伯格理論中，基本工資是唯一的內在激勵因子。", score: 0, status: "wrong", comment: "【概念錯誤】在赫茨伯格的兩因子理論中，薪金（工資）明確歸類為外在的「保健因子」而非內在的激勵因子。" },
+              { text: "其次，管理層還應該處理一下員工抱怨加班沒有補償的問題，改一改公司的規矩。", score: 0, status: "partial", comment: "【常見失分示範：未點出保健因子標準名稱】必須明確寫出這屬於兩因子理論中的「薪金」及「公司政策和行政」保健因子。" }
+            ]},
+            { label: "第 2 步：針對「員工抱怨加班無補償及辭職潮」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如針對員工抱怨加班無補償的問題，管理層應制定清晰公平的公司政策，向工程師及設計師提供具市場競爭力的薪金，並明文規定凡因趕製遊戲而超時工作，均可獲發合理的超時工作工資或有薪補假，以及提供穩定的職業保障。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「加班無補償」的痛點，具體提出制定公平加班補償政策（超時工資或補假）及具競爭力薪金。" },
+              { text: "例如管理層規定以後凡是抱怨加班無補償的工程師，一律即時扣減一半月薪。", score: 0, status: "wrong", comment: "【概念錯誤】苛刻扣薪會令保健因子進一步惡化，加劇員工的不滿與辭職潮。" },
+              { text: "例如管理層決定以後如果員工加班，公司就會給他們一些補償，不會讓他們白做。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應更具體說明「修訂公司行政政策，提供具競爭力的薪金及清晰的超時工作工資或有薪補假制度」。" }
+            ]},
+            { label: "第 3 步：深化論述至消除對待遇與政策的不滿、但點出仍須配合激勵因子的邏輯（1分）", colorClass: "hl-s3", opts: [
+              { text: "這能確保薪金與公司政策這項保健因子存在，使工程師不再因覺得被無償剝削而對公司產生不滿意感；然而，由於保健因子的存在只能防止不滿而不能激勵員工，管理層還必須配合下述的激勵因子才能真正激發其工作動力。", score: 1, status: "best", comment: "【滿分示範】不但清楚說明如何防止對公司政策與薪金的不滿，更完美點出「保健因子只能防止不滿而不能激勵員工，故須配合激勵因子」的核心理論精髓。" },
+              { text: "這樣員工對公司的薪金和政策便不會再感到不滿意了。", score: 0, status: "partial", comment: "【常見失分示範：未深化理論銜接】若能同時補充「但保健因子的存在只能讓僱員不再感到不滿意，不能令他們感到滿意或受到激勵，故須進一步引入激勵因子」，論述會更深入完整。" },
+              { text: "這會令幻影遊戲開發公司的所有競爭對手自動倒閉。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        },
+        {
+          id: "es1_p3", ch: 5, maxMarks: 3, title: "第 3 段：激勵因子一 —— 改善工作本身的性質、賦予自主權與責任 (3分)",
+          steps: [
+            { label: "第 1 步：指出「激勵因子 (Motivators) —— 工作本身的性質、自主權與責任」的概念與作用（1分）", colorClass: "hl-s1", opts: [
+              { text: "第三，企業應透過「激勵因子」來激勵僱員，讓他們對工作感到滿意：激勵因子主要與個人的工作內容有關，本質上是內在的，包括「工作本身的性質（如有意義、有趣和具挑戰性的工作）」、「自主權」及「責任（如作出決策）」。", score: 1, status: "best", comment: "【滿分示範】準確界定課文第 5.3B 節「激勵因子（與工作內容有關的內在因素，令僱員對工作感到滿意並受到激勵）」及具體例子。" },
+              { text: "第三，管理層應運用與主管和同事的關係這項內在激勵因子，定期舉辦周末遠足活動。", score: 0, status: "wrong", comment: "【概念錯誤】與主管和同事的關係屬於外在的「保健因子」（課本第 67 頁表格），並非與工作內容有關的「激勵因子」。" },
+              { text: "第三，管理層應該用激勵因子來激勵工程師，讓他們返工的時候更加有心機做野。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體激勵因子名稱與定義】必須明確寫出激勵因子是「與個人工作內容有關的內在因素（如工作本身的性質、自主權和責任），能令僱員對工作感到滿意並受到激勵」。" }
+            ]},
+            { label: "第 2 步：針對「員工抱怨在刻板指令下重複修改微細漏洞、毫無自主權與成就感」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如針對員工抱怨在刻板指令下重複做沉悶工作，管理層可改變工作本身的性質，委派工程師和設計師負責具挑戰性且有意義的新遊戲關卡與核心玩法研發工作，並給予他們更多「工作自主權」和「責任」，容許他們自行作出遊戲設計決策而非死板聽從指令。", score: 1, status: "best", comment: "【滿分示範】緊扣個案「在刻板指令下重複修漏洞、無自主權」的抱怨，具體提出委派具挑戰性新關卡研發、給予自主權及決策責任。" },
+              { text: "例如管理層規定工程師每天必須在嚴密監視下多修改兩倍數量的微細程式漏洞，不得發表任何意見。", score: 0, status: "wrong", comment: "【概念錯誤】增加重複刻板的工作量並剝奪自主權，會令激勵因子完全消失，使員工不再對工作感到滿意。" },
+              { text: "例如管理層給工程師一些比較好玩的工作，讓他們自己決定怎樣做。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應使用課本專業詞彙說明：「給予他們有意義、有趣和具挑戰性的新遊戲研發工作（改善工作本身的性質），並賦予更多工作自主權和作出決策的責任」。" }
+            ]},
+            { label: "第 3 步：深化論述至提供內在獎勵、令員工對工作感到滿意並提升工作效率的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "這些激勵因子的存在能為工程師和設計師提供內在的獎勵，讓他們從研發創新遊戲中獲得強烈的「成就感」，從而令他們對工作感到滿意並受到激勵，主動提升研發工作效率與遊戲作品質素。", score: 1, status: "best", comment: "【滿分示範】完美結合課文第 5.3B 節理論含義：「激勵因子可為僱員提供內在的獎勵，令他們對工作感到滿意並受到激勵，促使他們改善工作表現和提升工作效率」。" },
+              { text: "這樣工程師和設計師便會對工作感到滿意了。", score: 0, status: "partial", comment: "【常見失分示範：未深化至內在獎勵與工作效率】應補充說明激勵因子如何「帶來成就感與內在獎勵，激勵員工提升研發工作效率並減低流失率」。" },
+              { text: "這會令遊戲開發公司的伺服器電費自動減免。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        },
+        {
+          id: "es1_p4", ch: 5, maxMarks: 3, title: "第 4 段：激勵因子二 —— 提供認同表揚、晉升與個人成長機會 (3分)",
+          steps: [
+            { label: "第 1 步：指出第二項「激勵因子 —— 認同、晉升與個人成長」的概念（1分）", colorClass: "hl-s1", opts: [
+              { text: "最後，管理層應運用「認同」、「晉升」以及「個人成長（例如培訓和發展）」這些內在的激勵因子，藉此令僱員對工作感到滿意並激發長遠工作動力。", score: 1, status: "best", comment: "【滿分示範】準確指出課文第 67 頁表格所列的其餘核心激勵因子：「認同」、「晉升」及「個人成長（培訓和發展）」。" },
+              { text: "最後，管理層應運用提供免費午餐和洗手間清潔這兩項內在激勵因子。", score: 0, status: "wrong", comment: "【概念錯誤】免費午餐和洗手間清潔屬於外在的保健因子（工作環境與福利），並非內在激勵因子。" },
+              { text: "最後，管理層還可以用其他的激勵因子來令員工開心。", score: 0, status: "partial", comment: "【常見失分示範：未寫出具體激勵因子名稱】必須明確寫出「認同（表揚）」、「晉升」及「個人成長（培訓和發展）」等標準激勵因子名稱。" }
+            ]},
+            { label: "第 2 步：針對「肯定研發成果及提供培訓與晉升階梯」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+          { text: "例如管理層可在新遊戲成功推出後，公開口頭讚賞研發人員並設立「年度最佳遊戲研發獎」以示「認同」；同時為他們提供最新的 3D 人工智能繪圖「培訓和發展（個人成長）」課程，並設立清晰的內部「晉升」階梯（如由初級工程師晉升為首席遊戲總監）。", score: 1, status: "best", comment: "【滿分示範】具體將「認同（公開讚賞與頒獎）」、「個人成長（3D AI 培訓）」及「晉升（升任首席遊戲總監）」應用於遊戲公司情境。" },
+              { text: "例如管理層在工程師完成遊戲後從不給予任何讚賞，並規定所有初級工程師十年內不准升職。", score: 0, status: "wrong", comment: "【概念錯誤】當認同與晉升等激勵因子消失時，僱員便不會再對工作感到滿意，也不再受到激勵（如課本圖 5.6 所示）。" },
+              { text: "例如管理層多些讚賞做得好的工程師，並給他們升職和上堂的機會。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應結合遊戲開發公司的業務背景，具體說明「設立最佳遊戲研發獎公開表揚（認同）、提供最新遊戲引擎技術培訓（個人成長）及晉升為項目總監的機會（晉升）」。" }
+            ]},
+            { label: "第 3 步：深化論述至保健與激勵因子雙管齊下、消除不滿並激發高昂士氣留住人才的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "透過獲得公開認同以及看見清晰的個人成長與晉升前景，員工能獲得持續的內在激勵；總括而言，當幻影公司先以兩項保健因子防止員工感到不滿意，再配合兩項激勵因子令員工對工作感到滿意並受到激勵時，便能有效挽留軟件及美術人才，大幅提升團隊的創作生產力。", score: 1, status: "best", comment: "【滿分示範】完美總結赫茨伯格兩因子理論圖 5.7 的雙階段精髓：保健因子存在（沒有感到不滿意）＋ 激勵因子存在（對工作感到滿意並受到激勵）。" },
+              { text: "這樣幻影遊戲開發公司的員工就會受到激勵，不會再辭職了。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有總結「保健因子防止不滿、激勵因子帶來工作滿意與內在激勵」的雙重協同效果。" },
+              { text: "這會令全球所有電腦永不死機。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        }
+      ]
+    },
+    {
+      topicId: "es2", ch: 5, chName: "第 5 課：發展優質人力資源（馬斯洛的需要階梯理論 · 12分論述題）",
+      topicTitle: "丙部論述題 Q2：皇庭五星級渡假酒店（運用「馬斯洛的需要階梯理論」激勵酒店員工 · 12分）",
+      scenario: "「皇庭五星級渡假酒店」聘用了基層房務清潔員、前線禮賓接待員、餐飲部廚師及各部門主管。人力資源總監計劃運用「馬斯洛的需要階梯理論 (Maslow's Hierarchy of Needs Theory)」，針對員工不同層次的需要制定全面的激勵方案。試從馬斯洛需要階梯理論中選取四個不同層次的需要，舉例闡釋酒店管理層可如何滿足員工這些需要以激勵他們提升工作表現。（12 分 — 請分別建構 4 個獨立重點段落，每段 3 分）",
+      paragraphs: [
+        {
+          id: "es2_p1", ch: 5, maxMarks: 3, title: "第 1 段：生理需要 (Physiological Needs · 3分)",
+          steps: [
+            { label: "第 1 步：指出第一層「生理需要（生存需要）」的定義與層次分類（1分）", colorClass: "hl-s1", opts: [
+              { text: "首先，馬斯洛需要階梯理論中第一類和最基本的需要是「生理需要（又稱生存需要）」：人們須要滿足這種需要才能生存，基本必需品如食物、水和空氣都是滿足這類較低層次需要不可或缺的項目。", score: 1, status: "best", comment: "【滿分示範】100% 準確引用課文第 5.3A 節「生理需要（生存需要）」的定義與基本必需品例子。" },
+              { text: "首先，生理需要是馬斯洛理論中最高層次的需要，指人類渴望發揮全部潛能和展現獨特才華。", score: 0, status: "wrong", comment: "【概念錯誤】顛倒了層次高低。生理需要是最底層、最基本的較低層次需要；渴望發揮全部潛能是最高層次的「自我實現需要」。" },
+              { text: "首先，皇庭渡假酒店的管理層可以滿足員工的第一層需要，即是生理需要。", score: 0, status: "partial", comment: "【常見失分示範：有標題無定義】只寫出「生理需要」四個字，未有界定其為「人類最基本的生存需要（對食物、水和空氣等基本必需品的需要）」。" }
+            ]},
+            { label: "第 2 步：針對「皇庭渡假酒店員工」設定滿足生理需要的具體措施例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如酒店管理層可向房務員、侍應及廚師提供優厚的薪金和其他金錢報酬（例如花紅），讓他們有足夠金錢購買食物和生活必需品；同時設立員工飯堂免費提供營養膳食，並向員工提供充足的休息、用餐和如廁時間。", score: 1, status: "best", comment: "【滿分示範】完全緊扣課文第 63 頁表格所列的兩大標準措施：(1) 提供優厚的薪金和其他金錢報酬（如花紅）；(2) 提供充足的休息、用餐和如廁時間。" },
+              { text: "例如酒店管理層委派大廚負責策劃具挑戰性的國際美食節項目，並擢升他為行政總廚。", score: 0, status: "wrong", comment: "【概念錯誤】委派具挑戰性工作與擢升員工滿足的是最高層次的「自我實現需要」，而非最基本的「生理需要」。" },
+              { text: "例如酒店每個月準時出糧給員工，讓他們有錢去買野食。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】除提及提供優厚薪金和花紅外，宜同時補充課本列明的「向員工提供充足的休息、用餐和如廁時間（及免費員工膳食）」，使例子更充實完整。" }
+            ]},
+            { label: "第 3 步：深化論述至解決基本生存後顧之憂、並為追求更高層次需要奠定基礎的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "滿足這項最基本的生理需要，能讓酒店員工無須為日常溫飽生計憂慮，並保持充沛體力應付酒店輪班工作；而且根據馬斯洛理論，員工在滿足了最基本的生理需要後，便會有動機去追求更高層次的需要，為酒店進一步激勵他們奠定基礎。", score: 1, status: "best", comment: "【滿分示範】清楚推演出解決溫飽生計、保持充沛體力，並結合馬斯洛「滿足最基本需要後才有動機追求下一層需要」的遞進原則。" },
+              { text: "這樣皇庭渡假酒店入面的所有員工便能夠滿足他們的生理需要了。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有說明滿足生理需要如何「保障員工基本生活與充沛體力，並讓他們有動機追求更高層次的需要以提升工作表現」。" },
+              { text: "這會令渡假酒店的房間入住率在第二天自動達到百分之一百。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        },
+        {
+          id: "es2_p2", ch: 5, maxMarks: 3, title: "第 2 段：安全需要 (Safety Needs · 3分)",
+          steps: [
+            { label: "第 1 步：指出第二層「安全需要（安全感需要）」的定義（1分）", colorClass: "hl-s1", opts: [
+              { text: "其次，第二層的較低層次需要是「安全需要（又稱安全感需要）」：指保障自身安全，維持秩序和穩定，以及控制個人生活和環境的需要。", score: 1, status: "best", comment: "【滿分示範】100% 準確引用課文第 5.3A 節「安全需要（保障自身安全，維持秩序和穩定，以及控制個人生活和環境的需要）」的定義。" },
+              { text: "其次，安全需要是指與他人互動、結交朋友和獲得社會接納的需要。", score: 0, status: "wrong", comment: "【概念錯誤】與他人互動和結交朋友屬於第三層的「社交需要」，而非第二層的「安全需要」。" },
+              { text: "其次，當滿足了生理需要之後，酒店管理層便應該滿足員工的第二層需要，即是安全需要。", score: 0, status: "partial", comment: "【常見失分示範：有標題無定義】漏了界定安全需要的核心含義——即「保障自身安全，維持秩序和穩定，以及控制個人生活和環境的需要」。" }
+            ]},
+            { label: "第 2 步：針對「酒店員工的工作環境、保險退休福利與僱傭合約」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如酒店可為廚房及房務員工提供安全的工作環境（如防滑地墊及安全清潔設備）、為全體員工提供醫療保險、人壽保險和退休福利，以及與表現合格的員工簽訂「長期的僱傭合約（永久性僱用）」，保障其職位穩定。", score: 1, status: "best", comment: "【滿分示範】完整涵蓋課文第 63 頁表格所列滿足安全需要的三大標準例子：(1) 提供安全的工作環境；(2) 提供保險和退休福利；(3) 提供長期的僱傭合約。" },
+              { text: "例如酒店在周年晚宴上向表現出眾的禮賓員頒發最佳員工獎座，並給予口頭讚賞。", score: 0, status: "wrong", comment: "【概念錯誤】頒發獎座與口頭讚賞滿足的是第四層的「自我需要（認同與自尊）」，而非「安全需要」。" },
+              { text: "例如酒店確保員工在酒店入面返工的時候不會發生意外，讓他們覺得很安全。", score: 0, status: "partial", comment: "【常見失分示範：解說單薄】除提及安全工作環境外，應同時補充課本列明的經濟與生活穩定保障措施：「提供醫療保險和退休福利」以及「提供長期的僱傭合約（職業保障）」。" }
+            ]},
+            { label: "第 3 步：深化論述至消除工傷與失業恐懼、增強穩定感並減低流失率的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "這些措施能有效消除酒店員工對工傷意外、患病醫療開支及突然失業的恐懼與憂慮，滿足他們對生活與工作穩定的安全需要，從而令他們安心留在皇庭酒店專心服務住客，有效減低員工流失率。", score: 1, status: "best", comment: "【滿分示範】清楚推演出消除工傷、患病與失業憂慮如何滿足安全需要，促使員工安心留任並提升服務表現。" },
+              { text: "這樣酒店員工的安全需要便得到滿足，他們在酒店工作時便會很安心。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明「消除工傷與失業的後顧之憂，從而減低員工流失率並讓員工專注提升服務表現」。" },
+              { text: "這能令酒店完全無須再購買法定的僱員賠償保險。", score: 0, status: "wrong", comment: "【概念錯誤】購買僱員賠償保險是香港法例強制規定僱主必須履行的法律責任，不能免除。" }
+            ]}
+          ]
+        },
+        {
+          id: "es2_p3", ch: 5, maxMarks: 3, title: "第 3 段：社交需要 (Social Needs · 3分)",
+          steps: [
+            { label: "第 1 步：指出第三層「社交需要（社會需要）」的定義（1分）", colorClass: "hl-s1", opts: [
+              { text: "第三，當較低層次的生理和安全需要滿足後，員工會追求屬於較高層次的「社交需要（又稱社會需要）」：這是指與他人互動的需要，例子包括對朋友、感情、歸屬感和得到社會及團隊接納的需要。", score: 1, status: "best", comment: "【滿分示範】100% 準確引用課文第 5.3A 節「社交需要（與他人互動的需要，包括對朋友、感情、歸屬感和得到社會接納的需要）」的定義。" },
+              { text: "第三，社交需要是指員工渴望獲得高人一等的社會地位、名譽和個人職權。", score: 0, status: "wrong", comment: "【概念錯誤】對名譽、聲譽和地位的渴求屬於第四層的「自我需要（名望需要）」，而非第三層的「社交需要」。" },
+              { text: "第三，酒店管理層可以滿足員工的社交需要，讓員工在酒店入面多些同人溝通。", score: 0, status: "partial", comment: "【常見失分示範：定義不夠完整】應完整寫出課本定義：「與他人互動的需要，包括對朋友（友情）、感情、歸屬感和得到社會接納的需要」。" }
+            ]},
+            { label: "第 2 步：針對「促進酒店員工聯誼互動與管理層關懷」設定具體例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如酒店管理層可定期為前線接待員、房務員及廚師組織康樂活動和社交聚會（如海灘燒烤聚會、聖誕派對、公司旅行及跨部門球類比賽），並在日常管理中主動關心和體貼員工的需要（如為新入職員工推行指導計劃及職前輔導以助其建立社交網絡）。", score: 1, status: "best", comment: "【滿分示範】完全緊扣課文第 63 頁表格所列滿足社交需要的兩大標準例子：(1) 為僱員組織康樂活動和社交聚會；(2) 關心和體貼僱員。" },
+              { text: "例如酒店規定所有房務員及接待員在當值及休息期間一律不准與任何同事交談。", score: 0, status: "wrong", comment: "【概念錯誤】禁止同事交談會徹底剝奪員工與他人互動的社交需要，令員工感到孤立無援。" },
+              { text: "例如酒店可以搞多些活動給員工參加，讓不同部門的同事可以一齊玩。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應明確寫出課本的標準表述：「為僱員組織康樂活動和社交聚會（如燒烤聚會、公司旅行），以及主動關心和體貼僱員」。" }
+            ]},
+            { label: "第 3 步：深化論述至建立深厚同事友誼與團隊歸屬感、促進跨部門協作效率的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "這能促進不同部門同事之間的友誼，讓員工感受到管理層的關心與團隊接納，從而滿足他們的社交需要並大幅增加對皇庭酒店的歸屬感，使禮賓、房務與餐飲部門在日常接待住客時更願意互相支援配合，提升整體服務效率。", score: 1, status: "best", comment: "【滿分示範】清楚推演出促進同事友誼、增加歸屬感及提升跨部門協作效率的正面影響。" },
+              { text: "這樣酒店員工的社交需要便能夠得到滿足，大家在酒店入面都會相處得很融洽。", score: 0, status: "partial", comment: "【常見失分示範：未深化至企業層面影響】應進一步推論至「增加員工對酒店的歸屬感、減低流失率，並促進跨部門團隊合作以提升服務效率」。" },
+              { text: "這會令渡假酒店無須再進行任何財務預算編製工作。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        },
+        {
+          id: "es2_p4", ch: 5, maxMarks: 3, title: "第 4 段：自我需要與自我實現需要 (Ego & Self-actualisation Needs · 3分)",
+          steps: [
+            { label: "第 1 步：指出較高層次的「自我需要（自尊需要）」與「自我實現需要」的定義（1分）", colorClass: "hl-s1", opts: [
+              { text: "最後，管理層可滿足較高層次的「自我需要（又稱自尊需要或名望需要）」及最高層次的「自我實現需要」：自我需要是與成就感有關的需要，也是對名譽、地位、認同、尊重和自主權的渴求；而自我實現需要則與人類渴望發揮全部潛能和展現獨特才華有關。", score: 1, status: "best", comment: "【滿分示範】100% 準確界定課文第 5.3A 節「自我需要（自尊需要：成就感、名譽、地位、認同、尊重、自主權）」及「自我實現需要（發揮全部潛能和展現獨特才華）」的定義。" },
+              { text: "最後，自我需要是指員工只需要准時去洗手間和食午飯，完全不需要任何人的尊重或表揚。", score: 0, status: "wrong", comment: "【概念錯誤】如廁和用餐屬於第一層的「生理需要」，自我需要是對自尊、成就感、地位、認同和尊重的渴求。" },
+              { text: "最後，酒店還可以滿足部門主管和資深員工在第四層和第五層的高層次需要。", score: 0, status: "partial", comment: "【常見失分示範：未寫出標準需要名稱與定義】必須明確寫出「自我需要（對成就感、名譽、地位、認同和尊重的渴求）」或「自我實現需要（渴望發揮全部潛能和展現獨特才華）」。" }
+            ]},
+            { label: "第 2 步：針對「酒店禮賓接待員、大廚及部門主管」設定具體措施例子（1分）", colorClass: "hl-s2", opts: [
+              { text: "例如為滿足「自我需要」，酒店可在員工大會上公開表揚表現出眾的員工、頒發「每月最佳禮賓員獎」以認同其貢獻、尊重員工意見並給予更多工作自主權；而為滿足大廚及主管的「自我實現需要」，則可給予他們具挑戰性又能達成的新餐飲項目、提供進階培訓和發展機會，並擢升能力較高的僱員至管理層職位。", score: 1, status: "best", comment: "【滿分示範】完整對應課文第 63 頁表格所列滿足自我需要（表揚努力、頒發獎項認同貢獻、尊重意見、給予自主權）及自我實現需要（給予具挑戰性工作、提供培訓發展機會、擢升能力較高僱員）的全部標準例子。" },
+              { text: "例如酒店規定所有部門主管及大廚不得作出任何決策，凡事必須由基層清潔工代為決定。", score: 0, status: "wrong", comment: "【概念錯誤】剝奪主管與大廚的自主權與決策權，會嚴重打擊其自尊與自我需要。" },
+              { text: "例如酒店多些稱讚做得好的員工，並給有能力的員工升職做經理。", score: 0, status: "partial", comment: "【常見失分示範：解說不足】應更全面運用課本標準措施：「公開表揚努力、頒發獎項認同貢獻、尊重意見及給予工作自主權（滿足自我需要）」，以及「給予具挑戰性又能達成的工作、提供培訓發展機會及擢升能力較高僱員（滿足自我實現需要）」。" }
+            ]},
+            { label: "第 3 步：深化論述至激發最高層次內在潛能、全面提升酒店服務質素與業績的影響（1分）", colorClass: "hl-s3", opts: [
+              { text: "當員工獲得公開認同、自主權以及發揮全部潛能的晉升挑戰機會時，他們的高層次自我與自我實現需要便獲得滿足，從而產生最強烈持久的內在工作動力，全心全意為住客提供頂級貼心服務，全面提升皇庭渡假酒店的服務質素與生產力。", score: 1, status: "best", comment: "【滿分示範】清楚推演出滿足高層次需要如何激發持久內在動力、發揮全部潛能並提升酒店整體服務質素與生產力。" },
+              { text: "這樣皇庭五星級渡假酒店便成功用馬斯洛的需要階梯理論激勵了所有不同層級的員工。", score: 0, status: "partial", comment: "【常見失分示範：同義反覆】未有深化說明滿足自我與自我實現需要如何「令員工獲得成就感並發揮全部潛能，從而提升工作效率、服務質素與酒店整體生產力」。" },
+              { text: "這會令香港旅遊發展局將全港所有其他酒店的牌照吊銷。", score: 0, status: "wrong", comment: "【概念錯誤】推論不合邏輯。" }
+            ]}
+          ]
+        }
+      ]
+    }
+  ];
+
+  // ====== 共用渲染輔助：產生「紙筆練習模式（隱藏選項）」的 DSE 評卷參考與自評區塊 ======
+  function renderPaperPracticeBlock(item, navFnName, wsFnName) {
+    const isRev = !!revealedMS[item.id];
+    const curSelf = selfScores[item.id];
+    let scoreBtns = '';
+    for (let s = 0; s <= item.maxMarks; s++) {
+      scoreBtns += `<button class="score-pill ${curSelf === s ? 'picked' : ''}" onclick="setSelfScore('${item.id}', ${s}, ${navFnName}, ${wsFnName})">${s} 分</button>`;
+    }
+
+    const modelStepsHtml = item.steps.map(st => {
+      const bestOpt = st.opts.find(o => o.status === 'best');
+      return `
+        ${st.ptTitle ? `<div style="font-weight:800;color:var(--teal);margin:12px 0 6px;padding-top:8px;border-top:1px dashed var(--line)">${st.ptTitle}</div>` : ''}
+        <div style="margin-bottom:8px"><span class="${st.colorClass}">${st.label}</span><br><span style="font-weight:700">${bestOpt.text}</span> <span class="badge b-green" style="margin-left:6px">[1分]</span></div>`;
+    }).join('');
+
+    return `
+      <div class="paper-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div>
+            <span class="badge b-teal">紙筆寫作練習模式（已隱藏組合答案選項）</span>
+            <h4 style="margin-top:8px;color:var(--teal);font-size:17.5px">請在實體答題紙上作答（本題滿分：${item.maxMarks} 分；請遵循「一段一重點、1分概念＋1分情境解說＝2分一論點」原則）。</h4>
+          </div>
+          <button class="btn btn-teal" onclick="toggleRevealMS('${item.id}', ${wsFnName})">
+            ${isRev ? '隱藏評卷參考 (Marking Scheme)' : '完成紙筆作答後：顯示 DSE 評卷參考並自評得分'}
+          </button>
+        </div>
+
+        ${isRev ? `
+          <div class="ms-box">
+            <h4 style="color:var(--green);margin-bottom:10px;font-size:17.5px">DSE 評卷參考 (Marking Scheme) 逐分採分點拆解：</h4>
+            <div style="font-size:16px;line-height:1.8;background:var(--card);padding:16px 20px;border-radius:10px;border:1px solid var(--line)">
+              ${modelStepsHtml}
+            </div>
+            <div style="margin-top:16px;padding-top:14px;border-top:1.5px dashed var(--green);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+              <b style="color:var(--ink);font-size:15.5px">請對照上述 [1分] 採分點，為你在答題紙上的作答自評得分：</b>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">${scoreBtns}</div>
+            </div>
+          </div>
+        ` : ''}
+      </div>`;
+  }
+
+  function getItemScore(item, userAnsMap, submittedMap) {
+    if (selfScores[item.id] !== undefined) return selfScores[item.id];
+    if (submittedMap[item.id] && userAnsMap[item.id]) {
+      let sc = 0;
+      item.steps.forEach((st, sIdx) => {
+        const oIdx = userAnsMap[item.id][sIdx];
+        if (oIdx !== undefined) sc += st.opts[oIdx].score;
+      });
+      return sc;
+    }
+    return 0;
+  }
+
+  function isItemCompleted(item, submittedMap) {
+    return selfScores[item.id] !== undefined || !!submittedMap[item.id];
+  }
+
+  // ====== 甲部狀態與渲染 ======
+  let curSaIdx = 0;
+  let saUserAns = {};
+  let saSubmitted = {};
+
+  function selectSa(idx) { curSaIdx = idx; renderSaNav(); renderSaWorkspace(); }
+  function pickSaOpt(sIdx, oIdx) {
+    const q = saQuestions[curSaIdx];
+    if (!saUserAns[q.id]) saUserAns[q.id] = {};
+    saUserAns[q.id][sIdx] = oIdx;
+    saSubmitted[q.id] = false;
+    delete selfScores[q.id];
+    renderSaWorkspace();
+  }
+  function submitSa() {
+    const q = saQuestions[curSaIdx];
+    const ans = saUserAns[q.id] || {};
+    if (Object.keys(ans).length < q.steps.length) { alert(`請先完成本題全部 ${q.steps.length} 個步驟（共 2 個論點）的選擇，再點擊批改。`); return; }
+    saSubmitted[q.id] = true;
+    delete selfScores[q.id];
+    renderSaNav(); renderSaWorkspace(); updateLiveTotal();
+  }
+  function fillBestSa() {
+    const q = saQuestions[curSaIdx];
+    saUserAns[q.id] = {};
+    q.steps.forEach((st, sIdx) => { saUserAns[q.id][sIdx] = st.opts.findIndex(o => o.status === 'best'); });
+    saSubmitted[q.id] = true;
+    delete selfScores[q.id];
+    renderSaNav(); renderSaWorkspace(); updateLiveTotal();
+  }
+  function calcSaScore() {
+    return saQuestions.reduce((sum, q) => sum + getItemScore(q, saUserAns, saSubmitted), 0);
+  }
+  function renderSaNav() {
+    document.getElementById('saScoreHero').textContent = `${calcSaScore()} / 24`;
+    document.getElementById('saNavChips').innerHTML = saQuestions.map((q, i) => {
+      const done = isItemCompleted(q, saSubmitted);
+      return `<button class="chip ${i===curSaIdx?'active':''}" onclick="selectSa(${i})">${done?'[已完成] ':''}${q.title}</button>`;
+    }).join('');
+  }
+  function renderSaWorkspace() {
+    const q = saQuestions[curSaIdx];
+    const ans = saUserAns[q.id] || {};
+    const isSub = !!saSubmitted[q.id];
+    const letters = ['A', 'B', 'C'];
+    const qScore = getItemScore(q, saUserAns, saSubmitted);
+
+    const headerCard = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div><span class="badge b-blue">${q.chName}</span><b style="color:var(--primary);font-size:16px">本題滿分：4 分（2 個獨立論點 × 每個論點 2 分［1分重點＋1分解說］）</b></div>
+          <button class="btn btn-outline" style="padding:6px 14px;font-size:14px" onclick="togglePaperMode()">
+            ${paperMode ? '顯示組合選項' : '隱藏選項（紙筆練習）'}
+          </button>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--primary);font-size:16.5px;margin-bottom:14px"><b>背景情境：</b>${q.scenario}</div>
+        <div style="font-size:18px;font-weight:800">${q.question}</div>
+      </div>`;
+
+    if (paperMode) {
+      document.getElementById('saWorkspace').innerHTML = headerCard + renderPaperPracticeBlock(q, 'renderSaNav', 'renderSaWorkspace');
+      return;
+    }
+
+    let pointsHtml = '';
+    for (let p = 0; p < q.steps.length; p += 2) {
+      const st1 = q.steps[p], st2 = q.steps[p+1];
+      pointsHtml += `
+        <div class="point-group-box">
+          <div style="font-weight:800;color:var(--primary);font-size:17px;margin-bottom:12px">${st1.ptTitle || ('論點 ' + (p/2 + 1) + '（2分）')}</div>
+          ${[st1, st2].map((st, offset) => {
+            const sIdx = p + offset;
+            const sel = ans[sIdx];
+            return `
+              <div class="builder-stage" style="margin-bottom:${offset===0?'12px':'0'}">
+                <h4 style="margin-bottom:8px;font-size:16px"><span class="${st.colorClass}">${st.label}</span></h4>
+                ${st.opts.map((o, oIdx) => {
+                  const isSel = sel === oIdx;
+                  const gCls = (isSub && isSel) ? (o.status==='best'?'graded-best':o.status==='partial'?'graded-partial':'graded-wrong') : '';
+                  return `<button class="opt-card ${isSel?'selected':''} ${gCls}" onclick="pickSaOpt(${sIdx}, ${oIdx})"><span class="opt-letter">${letters[oIdx]}</span><span style="flex:1">${o.text}</span></button>`;
+                }).join('')}
+              </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    const preview = [0, 2].map(p => {
+      const t1 = ans[p] === undefined ? `［未選第 ${p+1} 步］` : `<span class="hl-s1">${q.steps[p].opts[ans[p]].text}</span>`;
+      const t2 = ans[p+1] === undefined ? `［未選第 ${p+2} 步］` : `<span class="hl-s2">${q.steps[p+1].opts[ans[p+1]].text}</span>`;
+      return `<b>【論點 ${p/2 + 1} (2分)】</b>${t1} ${t2}`;
+    }).join('<br><br>');
+
+    document.getElementById('saWorkspace').innerHTML = headerCard + pointsHtml + `
+      <div class="assembled-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <h3 style="color:var(--primary);font-size:19px">甲部短答題答案預覽（兩段獨立論點）</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitSa()">批改本題 (4分)</button>
+            <button class="btn btn-outline" onclick="fillBestSa()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16.5px;line-height:1.85">${preview}</div>
+        ${isSub ? `
+          <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${qScore===4?'b-green':qScore>=2?'b-amber':'b-red'}" style="font-size:15px;padding:6px 14px">本題得分：${qScore} / 4 分</span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const ch = st.opts[ans[sIdx]];
+              return `<div class="critique-item ${ch.status==='best'?'c-best':ch.status==='partial'?'c-partial':'c-wrong'}"><b>${st.label.split('：')[0]}（得分：${ch.score} / 1 分）：</b>${ch.comment}</div>`;
+            }).join('')}
+          </div>` : ''}
+      </div>`;
+  }
+
+  // ====== 乙部狀態與渲染 ======
+  let curCaseIdx = 0;
+  let caseUserAns = {};
+  let caseSubmitted = {};
+
+  function selectCase(idx) { curCaseIdx = idx; renderCaseNav(); renderCaseWorkspace(); }
+  function pickCaseOpt(sIdx, oIdx) {
+    const q = caseSubQuestions[curCaseIdx];
+    if (!caseUserAns[q.id]) caseUserAns[q.id] = {};
+    caseUserAns[q.id][sIdx] = oIdx;
+    caseSubmitted[q.id] = false;
+    delete selfScores[q.id];
+    renderCaseWorkspace();
+  }
+  function submitCase() {
+    const q = caseSubQuestions[curCaseIdx];
+    const ans = caseUserAns[q.id] || {};
+    if (Object.keys(ans).length < q.steps.length) { alert(`請先完成本分題全部 ${q.steps.length} 個步驟（共 3 個 2 分論點）的選擇，再點擊批改。`); return; }
+    caseSubmitted[q.id] = true;
+    delete selfScores[q.id];
+    renderCaseNav(); renderCaseWorkspace(); updateLiveTotal();
+  }
+  function fillBestCase() {
+    const q = caseSubQuestions[curCaseIdx];
+    caseUserAns[q.id] = {};
+    q.steps.forEach((st, sIdx) => { caseUserAns[q.id][sIdx] = st.opts.findIndex(o => o.status === 'best'); });
+    caseSubmitted[q.id] = true;
+    delete selfScores[q.id];
+    renderCaseNav(); renderCaseWorkspace(); updateLiveTotal();
+  }
+  function calcCaseScore() {
+    return caseSubQuestions.reduce((sum, q) => sum + getItemScore(q, caseUserAns, caseSubmitted), 0);
+  }
+  function renderCaseNav() {
+    document.getElementById('caseScoreHero').textContent = `${calcCaseScore()} / 24`;
+    document.getElementById('caseNavChips').innerHTML = caseSubQuestions.map((q, i) => {
+      const done = isItemCompleted(q, caseSubmitted);
+      return `<button class="chip ${i===curCaseIdx?'active':''}" onclick="selectCase(${i})">${done?'[已完成] ':''}${q.title}</button>`;
+    }).join('');
+  }
+  function renderCaseWorkspace() {
+    const q = caseSubQuestions[curCaseIdx];
+    const ans = caseUserAns[q.id] || {};
+    const isSub = !!caseSubmitted[q.id];
+    const letters = ['A', 'B', 'C'];
+    const qScore = getItemScore(q, caseUserAns, caseSubmitted);
+
+    const headerCard = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div><span class="badge b-teal">${q.chName}</span><b style="color:var(--teal);font-size:16px">本分題滿分：6 分（3 個獨立論點 × 每個論點 2 分［1分概念＋1分個案解說］）</b></div>
+          <button class="btn btn-outline" style="padding:6px 14px;font-size:14px" onclick="togglePaperMode()">
+            ${paperMode ? '顯示組合選項' : '隱藏選項（紙筆練習）'}
+          </button>
+        </div>
+        <div style="font-size:18px;font-weight:800">${q.question}</div>
+      </div>`;
+
+    if (paperMode) {
+      document.getElementById('caseWorkspace').innerHTML = headerCard + renderPaperPracticeBlock(q, 'renderCaseNav', 'renderCaseWorkspace');
+      return;
+    }
+
+    let pointsHtml = '';
+    for (let p = 0; p < q.steps.length; p += 2) {
+      const st1 = q.steps[p], st2 = q.steps[p+1];
+      pointsHtml += `
+        <div class="point-group-box">
+          <div style="font-weight:800;color:var(--teal);font-size:17px;margin-bottom:12px">${st1.ptTitle}</div>
+          ${[st1, st2].map((st, offset) => {
+            const sIdx = p + offset;
+            const sel = ans[sIdx];
+            return `
+              <div class="builder-stage" style="margin-bottom:${offset===0?'12px':'0'}">
+                <h4 style="margin-bottom:8px;font-size:16px"><span class="${st.colorClass}">${st.label}</span></h4>
+                ${st.opts.map((o, oIdx) => {
+                  const isSel = sel === oIdx;
+                  const gCls = (isSub && isSel) ? (o.status==='best'?'graded-best':o.status==='partial'?'graded-partial':'graded-wrong') : '';
+                  return `<button class="opt-card ${isSel?'selected':''} ${gCls}" onclick="pickCaseOpt(${sIdx}, ${oIdx})"><span class="opt-letter">${letters[oIdx]}</span><span style="flex:1">${o.text}</span></button>`;
+                }).join('')}
+              </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    const preview = [0, 2, 4].map(p => {
+      const t1 = ans[p] === undefined ? `［未選第 ${p+1} 步］` : `<span class="hl-s1">${q.steps[p].opts[ans[p]].text}</span>`;
+      const t2 = ans[p+1] === undefined ? `［未選第 ${p+2} 步］` : `<span class="hl-s2">${q.steps[p+1].opts[ans[p+1]].text}</span>`;
+      return `<b>【${q.steps[p].ptTitle.split('（')[0]} (2分)】</b>${t1} ${t2}`;
+    }).join('<br><br>');
+
+    document.getElementById('caseWorkspace').innerHTML = headerCard + pointsHtml + `
+      <div class="assembled-box" style="border-color:var(--teal)">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <h3 style="color:var(--teal);font-size:19px">乙部個案分析分題答案預覽（三段 2 分論點）</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitCase()">批改本分題 (6分)</button>
+            <button class="btn btn-outline" onclick="fillBestCase()">示範完整建構</button>
+          </div>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16.5px;line-height:1.85">${preview}</div>
+        ${isSub ? `
+          <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">分步批改回饋</h4>
+              <span class="badge ${qScore===6?'b-green':qScore>=3?'b-amber':'b-red'}" style="font-size:15px;padding:6px 14px">本分題得分：${qScore} / 6 分</span>
+            </div>
+            ${q.steps.map((st, sIdx) => {
+              const ch = st.opts[ans[sIdx]];
+              return `<div class="critique-item ${ch.status==='best'?'c-best':ch.status==='partial'?'c-partial':'c-wrong'}"><b>${st.label.split('：')[0]}（得分：${ch.score} / 1 分）：</b>${ch.comment}</div>`;
+            }).join('')}
+          </div>` : ''}
+      </div>`;
+  }
+
+  // ====== 丙部狀態與渲染 ======
+  let curEssayTopicIdx = 0;
+  let curEssayParaIdx = 0;
+  let essayUserAns = {};
+  let essaySubmitted = {};
+
+  function selectEssayTopic(tIdx) { curEssayTopicIdx = tIdx; curEssayParaIdx = 0; renderEssayNav(); renderEssayWorkspace(); }
+  function selectEssayPara(pIdx) { curEssayParaIdx = pIdx; renderEssayNav(); renderEssayWorkspace(); }
+  function pickEssayOpt(sIdx, oIdx) {
+    const p = essayTopics[curEssayTopicIdx].paragraphs[curEssayParaIdx];
+    if (!essayUserAns[p.id]) essayUserAns[p.id] = {};
+    essayUserAns[p.id][sIdx] = oIdx;
+    essaySubmitted[p.id] = false;
+    delete selfScores[p.id];
+    renderEssayWorkspace();
+  }
+  function submitEssayPara() {
+    const p = essayTopics[curEssayTopicIdx].paragraphs[curEssayParaIdx];
+    const ans = essayUserAns[p.id] || {};
+    if (Object.keys(ans).length < p.steps.length) { alert('請先完成本段落全部 3 個步驟的選擇，再點擊批改。'); return; }
+    essaySubmitted[p.id] = true;
+    delete selfScores[p.id];
+    renderEssayNav(); renderEssayWorkspace(); updateLiveTotal();
+  }
+  function fillBestEssayPara() {
+    const p = essayTopics[curEssayTopicIdx].paragraphs[curEssayParaIdx];
+    essayUserAns[p.id] = {};
+    p.steps.forEach((st, sIdx) => { essayUserAns[p.id][sIdx] = st.opts.findIndex(o => o.status === 'best'); });
+    essaySubmitted[p.id] = true;
+    delete selfScores[p.id];
+    renderEssayNav(); renderEssayWorkspace(); updateLiveTotal();
+  }
+  function calcEssayScore() {
+    let tot = 0;
+    essayTopics.forEach(t => {
+      t.paragraphs.forEach(p => { tot += getItemScore(p, essayUserAns, essaySubmitted); });
+    });
+    return tot;
+  }
+  function renderEssayNav() {
+    document.getElementById('essayScoreHero').textContent = `${calcEssayScore()} / 24`;
+    document.getElementById('essayTopicChips').innerHTML = essayTopics.map((t, i) => {
+      const tSc = t.paragraphs.reduce((s, p) => s + getItemScore(p, essayUserAns, essaySubmitted), 0);
+      return `<button class="chip ${i===curEssayTopicIdx?'active':''}" onclick="selectEssayTopic(${i})">${t.topicTitle} ［得分：${tSc}/12］</button>`;
+    }).join('');
+
+    const curTopic = essayTopics[curEssayTopicIdx];
+    document.getElementById('essayParaChips').innerHTML = curTopic.paragraphs.map((p, i) => {
+      const done = isItemCompleted(p, essaySubmitted);
+      return `<button class="chip ${i===curEssayParaIdx?'active':''}" onclick="selectEssayPara(${i})">${done?'[已完成] ':''}${p.title}</button>`;
+    }).join('');
+  }
+  function renderEssayWorkspace() {
+    const t = essayTopics[curEssayTopicIdx];
+    const p = t.paragraphs[curEssayParaIdx];
+    const ans = essayUserAns[p.id] || {};
+    const isSub = !!essaySubmitted[p.id];
+    const letters = ['A', 'B', 'C'];
+    const pScore = getItemScore(p, essayUserAns, essaySubmitted);
+
+    const headerCard = `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <div><span class="badge b-purple">${t.chName}</span><b style="color:var(--purple);font-size:16px">當前段落：${p.title}（本段滿分 3 分 · 全題 4 段共 12 分）</b></div>
+          <button class="btn btn-outline" style="padding:6px 14px;font-size:14px" onclick="togglePaperMode()">
+            ${paperMode ? '顯示組合選項' : '隱藏選項（紙筆練習）'}
+          </button>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border-left:4px solid var(--purple);font-size:16.5px">${t.scenario}</div>
+      </div>`;
+
+    if (paperMode) {
+      document.getElementById('essayWorkspace').innerHTML = headerCard + renderPaperPracticeBlock(p, 'renderEssayNav', 'renderEssayWorkspace');
+      return;
+    }
+
+    const preview = p.steps.map((st, sIdx) => ans[sIdx] === undefined
+      ? `<span style="color:var(--mute);border-bottom:1px dashed var(--mute)">［請選擇第 ${sIdx+1} 步內容］</span>`
+      : `<span class="${st.colorClass}">${st.opts[ans[sIdx]].text}</span>`).join(' ');
+
+    const fullEssayHtml = t.paragraphs.map(para => {
+      const pAns = essayUserAns[para.id] || {};
+      if (Object.keys(pAns).length < 3) return `<div style="color:var(--mute);margin-bottom:8px"><b>【${para.title}】</b>（尚未完成建構）</div>`;
+      const txt = para.steps.map((st, sIdx) => st.opts[pAns[sIdx]].text).join(' ');
+      return `<div style="margin-bottom:10px"><b>【${para.title}】</b>${txt}</div>`;
+    }).join('');
+
+    document.getElementById('essayWorkspace').innerHTML = headerCard + `
+      ${p.steps.map((st, sIdx) => {
+        const sel = ans[sIdx];
+        return `
+          <div class="builder-stage">
+            <h4 style="margin-bottom:8px;font-size:16px"><span class="${st.colorClass}">${st.label}</span></h4>
+            ${st.opts.map((o, oIdx) => {
+              const isSel = sel === oIdx;
+              const gCls = (isSub && isSel) ? (o.status==='best'?'graded-best':o.status==='partial'?'graded-partial':'graded-wrong') : '';
+              return `<button class="opt-card ${isSel?'selected':''} ${gCls}" onclick="pickEssayOpt(${sIdx}, ${oIdx})"><span class="opt-letter">${letters[oIdx]}</span><span style="flex:1">${o.text}</span></button>`;
+            }).join('')}
+          </div>`;
+      }).join('')}
+      <div class="assembled-box" style="border-color:var(--purple)">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+          <h3 style="color:var(--purple);font-size:19px">當前段落預覽（${p.title}）</h3>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-green" onclick="submitEssayPara()">批改本段重點 (3分)</button>
+            <button class="btn btn-outline" onclick="fillBestEssayPara()">示範本段完整建構</button>
+          </div>
+        </div>
+        <div style="background:var(--surface);padding:16px 20px;border-radius:12px;border:1px solid var(--line);font-size:16.5px;line-height:1.85">${preview}</div>
+        ${isSub ? `
+          <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h4 style="font-size:17.5px">段落批改結果</h4>
+              <span class="badge ${pScore===3?'b-green':pScore>=1?'b-amber':'b-red'}" style="font-size:15px;padding:6px 14px">本段得分：${pScore} / 3 分</span>
+            </div>
+            ${p.steps.map((st, sIdx) => {
+              const ch = st.opts[ans[sIdx]];
+              return `<div class="critique-item ${ch.status==='best'?'c-best':ch.status==='partial'?'c-partial':'c-wrong'}"><b>第 ${sIdx+1} 步（得分：${ch.score} / 1 分）：</b>${ch.comment}</div>`;
+            }).join('')}
+          </div>` : ''}
+        <div style="margin-top:20px;padding-top:16px;border-top:1.5px solid var(--line)">
+          <h4 style="color:var(--ink);margin-bottom:10px;font-size:17px">全題 4 個獨立重點段落總覽（12分完整論述文）：</h4>
+          <div style="background:var(--surface);padding:16px 20px;border-radius:12px;font-size:15.5px;line-height:1.8">${fullEssayHtml}</div>
+        </div>
+      </div>`;
+  }
+
+  // ====== 總分更新與丁部「DSE 商管組雙軌等級換算」成績單診斷報告 ======
+  function updateLiveTotal() {
+    const tot = calcSaScore() + calcCaseScore() + calcEssayScore();
+    document.getElementById('liveTotalBadge').textContent = `總分：${tot} / 72`;
+  }
+
+  function renderReport() {
+    const saSc = calcSaScore();
+    const csSc = calcCaseScore();
+    const esSc = calcEssayScore();
+    const total = saSc + csSc + esSc;
+    const pct = Math.round((total / 72) * 100);
+
+    const selfCount = Object.keys(selfScores).length;
+    const usePaperTrack = gradingTrack === 'dse_paper' || (gradingTrack === 'auto' && (paperMode || selfCount >= 4));
+
+    // 雙軌等級門檻定義（滿分 72 分）
+    const paperTrackLevels = [
+      { lv: "Level 5**", minPct: 85, minMarks: 61, desc: "表現卓越（頂尖奪星水平）" },
+      { lv: "Level 5*",  minPct: 78, minMarks: 56, desc: "表現優異（穩奪星級水平）" },
+      { lv: "Level 5",   minPct: 70, minMarks: 50, desc: "根基穩固（高階應用純熟）" },
+      { lv: "Level 4",   minPct: 56, minMarks: 40, desc: "表現良好（高於平均水平）" },
+      { lv: "Level 3",   minPct: 42, minMarks: 30, desc: "基本合格（大學入學門檻）" },
+      { lv: "Level 2",   minPct: 30, minMarks: 22, desc: "基礎掌握（中學文憑及格）" },
+      { lv: "Level 1",   minPct: 18, minMarks: 13, desc: "初步掌握（需加強基礎概念）" },
+      { lv: "Unclassified (U)", minPct: 0, minMarks: 0, desc: "未達水平或尚未完成作答" }
+    ];
+
+    const bufferTrackLevels = [
+      { lv: "Level 5**", minPct: 88, minMarks: 63, desc: "表現卓越（頂尖奪星水平）" },
+      { lv: "Level 5*",  minPct: 80, minMarks: 58, desc: "表現優異（穩奪星級水平）" },
+      { lv: "Level 5",   minPct: 72, minMarks: 52, desc: "根基穩固（高階應用純熟）" },
+      { lv: "Level 4",   minPct: 60, minMarks: 43, desc: "表現良好（高於平均水平）" },
+      { lv: "Level 3",   minPct: 48, minMarks: 35, desc: "基本合格（大學入學門檻）" },
+      { lv: "Level 2",   minPct: 35, minMarks: 25, desc: "基礎掌握（中學文憑及格）" },
+      { lv: "Level 1",   minPct: 22, minMarks: 16, desc: "初步掌握（需加強基礎概念）" },
+      { lv: "Unclassified (U)", minPct: 0, minMarks: 0, desc: "未達水平或尚未完成作答" }
+    ];
+
+    const activeLevels = usePaperTrack ? paperTrackLevels : bufferTrackLevels;
+    let curLevelIdx = activeLevels.findIndex(g => total >= g.minMarks);
+    if (curLevelIdx === -1) curLevelIdx = activeLevels.length - 1;
+    const curGradeObj = activeLevels[curLevelIdx];
+
+    let nextLevelHint = '';
+    if (curLevelIdx > 0) {
+      const nextG = activeLevels[curLevelIdx - 1];
+      const diff = nextG.minMarks - total;
+      nextLevelHint = `距離升級至 <b>${nextG.lv}（需 ${nextG.minMarks} 分 / ${nextG.minPct}%）</b>尚欠 <b>${diff} 分</b>。`;
+    } else {
+      nextLevelHint = `你已達到最高級別 <b>Level 5**</b> 標準。`;
+    }
+
+    document.getElementById('repTotalScore').textContent = `${total} / 72`;
+    document.getElementById('repPct').textContent = `${pct}%`;
+    document.getElementById('repGrade').textContent = `${curGradeObj.lv}`;
+
+    // 按教科書第 1 至 5 課統計得分 (Ch1: 14M, Ch2: 10M, Ch3: 10M, Ch4: 10M, Ch5: 28M => Total 72M)
+    const chEarned = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const chMax = { 1: 14, 2: 10, 3: 10, 4: 10, 5: 28 };
+
+    saQuestions.forEach(q => { chEarned[q.ch] += getItemScore(q, saUserAns, saSubmitted); });
+    caseSubQuestions.forEach(q => { chEarned[q.ch] += getItemScore(q, caseUserAns, caseSubmitted); });
+    essayTopics.forEach(t => {
+      t.paragraphs.forEach(p => { chEarned[p.ch] += getItemScore(p, essayUserAns, essaySubmitted); });
+    });
+
+    const p1 = Math.round((chEarned[1] / chMax[1]) * 100);
+    const p2 = Math.round((chEarned[2] / chMax[2]) * 100);
+    const p3 = Math.round((chEarned[3] / chMax[3]) * 100);
+    const p4 = Math.round((chEarned[4] / chMax[4]) * 100);
+    const p5 = Math.round((chEarned[5] / chMax[5]) * 100);
+
+    const saDone = saQuestions.filter(q => isItemCompleted(q, saSubmitted)).length;
+    const csDone = caseSubQuestions.filter(q => isItemCompleted(q, caseSubmitted)).length;
+    let esDone = 0;
+    essayTopics.forEach(t => t.paragraphs.forEach(p => { if (isItemCompleted(p, essaySubmitted)) esDone++; }));
+
+    const cutoffRowsHtml = paperTrackLevels.map((pLv, idx) => {
+      const bLv = bufferTrackLevels[idx];
+      const isCurrentRow = idx === curLevelIdx;
+      return `
+        <tr class="${isCurrentRow ? 'active-grade-row' : ''}">
+          <td><b>${pLv.lv}</b> ${isCurrentRow ? '<span class="badge b-green" style="margin-left:6px">目前位置</span>' : ''}</td>
+          <td style="color:var(--teal);font-weight:700">${pLv.minPct}% 或以上（≥ ${pLv.minMarks} / 72 分）</td>
+          <td style="color:var(--purple);font-weight:700">${bLv.minPct}% 或以上（≥ ${bLv.minMarks} / 72 分）</td>
+          <td style="text-align:left;color:var(--mute)">${pLv.desc}</td>
+        </tr>`;
+    }).join('');
+
+    document.getElementById('reportContent').innerHTML = `
+      <div class="grid3">
+        <div class="card" style="text-align:center">
+          <span class="badge b-blue">甲部：短答題 (Section A)</span>
+          <h2 style="font-size:28px;color:var(--primary);margin:10px 0">${saSc} / 24 分</h2>
+          <p style="font-size:14.5px;color:var(--mute);margin:0">已完成評分 ${saDone} / 6 題</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <span class="badge b-teal">乙部：商業個案題 (Section B)</span>
+          <h2 style="font-size:28px;color:var(--teal);margin:10px 0">${csSc} / 24 分</h2>
+          <p style="font-size:14.5px;color:var(--mute);margin:0">已完成評分 ${csDone} / 4 分題</p>
+        </div>
+        <div class="card" style="text-align:center">
+          <span class="badge b-purple">丙部：進階論述題 (Section C)</span>
+          <h2 style="font-size:28px;color:var(--purple);margin:10px 0">${esSc} / 24 分</h2>
+          <p style="font-size:14.5px;color:var(--mute);margin:0">已完成評分 ${esDone} / 8 個段落</p>
+        </div>
+      </div>
+
+      <!-- 雙軌等級換算表與目前等級提示 -->
+      <div class="card" style="border:2px solid var(--green)">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+          <div>
+            <span class="badge b-green">DSE 企會財（商業管理單元 Paper 2B）雙軌等級換算表</span>
+            <h3 style="margin-top:6px;font-size:20px">目前套用軌道：<span style="color:${usePaperTrack?'var(--teal)':'var(--purple)'}">${usePaperTrack ? '軌道 A：真實 DSE 商管組紙筆默寫標準' : '軌道 B：互動建構模式標準（含選項提示安全緩衝 Buffer）'}</span></h3>
+          </div>
+          <div class="chips" style="margin:0">
+            <button class="chip ${usePaperTrack?'active':''}" onclick="setGradingTrack('dse_paper')">套用真實 DSE 紙筆標準</button>
+            <button class="chip ${!usePaperTrack?'active':''}" onclick="setGradingTrack('interactive_buffer')">套用互動建構緩衝標準</button>
+          </div>
+        </div>
+
+        <div style="background:var(--green-light);padding:14px 18px;border-radius:10px;border-left:4px solid var(--green);font-size:16px;margin-bottom:12px">
+          <b>你的預計等級為【${curGradeObj.lv} — ${curGradeObj.desc}】</b>（總分：${total} / 72 分 · 得分率：${pct}%）。${nextLevelHint}
+        </div>
+
+        <table class="cutoff-table">
+          <thead>
+            <tr>
+              <th style="width:22%">預計 DSE 等級</th>
+              <th style="width:26%">軌道 A：真實 DSE 紙筆默寫標準<br><small>(無選項提示・貼合歷屆 Paper 2B Cut-off)</small></th>
+              <th style="width:26%">軌道 B：互動建構緩衝標準<br><small>(有組合選項提示・預留 3%–6% Buffer)</small></th>
+              <th style="width:26%;text-align:left">水平描述</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cutoffRowsHtml}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <h3 style="margin-bottom:16px;font-size:20.5px">按《人力資源管理》第 1 至 5 課能力診斷與溫習導航</h3>
+        <div class="meter-wrap">
+          <div class="meter-label">
+            <span>第 1 課：《人力規劃和員工編制》（人力規劃重要性與四步過程、工作分析［工作說明 vs 工作要求］、內外部招聘與招聘途徑）</span>
+            <span style="color:var(--primary)">${chEarned[1]} / ${chMax[1]} 分 (${p1}%)</span>
+          </div>
+          <div class="meter-bg"><div class="meter-fill" style="width:${p1}%;background:var(--primary)"></div></div>
+        </div>
+        <div class="meter-wrap">
+          <div class="meter-label">
+            <span>第 2 課：《員工考績》（表現管理 vs 員工考績、考績三大目的、四個基本步驟、三大設定量度途徑與四種評核方法）</span>
+            <span style="color:var(--teal)">${chEarned[2]} / ${chMax[2]} 分 (${p2}%)</span>
+          </div>
+          <div class="meter-bg"><div class="meter-fill" style="width:${p2}%;background:var(--teal)"></div></div>
+        </div>
+        <div class="meter-wrap">
+          <div class="meter-label">
+            <span>第 3 課：《報酬管理》（按時 vs 按表現計算的金錢報酬、非金錢報酬四種方式、提供僱員福利五大目的、金錢與非金錢好處）</span>
+            <span style="color:var(--amber)">${chEarned[3]} / ${chMax[3]} 分 (${p3}%)</span>
+          </div>
+          <div class="meter-bg"><div class="meter-fill" style="width:${p3}%;background:var(--amber)"></div></div>
+        </div>
+        <div class="meter-wrap">
+          <div class="meter-label">
+            <span>第 4 課：《培訓和發展》（培訓 vs 發展、六大目的、在職培訓三種方法、職外培訓五種方法、在職與職外培訓優缺點比較）</span>
+            <span style="color:var(--green)">${chEarned[4]} / ${chMax[4]} 分 (${p4}%)</span>
+          </div>
+          <div class="meter-bg"><div class="meter-fill" style="width:${p4}%;background:var(--green)"></div></div>
+        </div>
+        <div class="meter-wrap" style="margin-bottom:20px">
+          <div class="meter-label">
+            <span>第 5 課：《發展優質人力資源》（馬斯洛需要階梯理論、赫茨伯格兩因子理論、麥格雷戈 X 與 Y 理論、五種內部溝通方式）</span>
+            <span style="color:var(--purple)">${chEarned[5]} / ${chMax[5]} 分 (${p5}%)</span>
+          </div>
+          <div class="meter-bg"><div class="meter-fill" style="width:${p5}%;background:var(--purple)"></div></div>
+        </div>
+
+        <div class="grid5" style="padding-top:16px;border-top:1px dashed var(--line)">
+          <div style="background:var(--surface);padding:14px;border-radius:12px;border:1px solid var(--line)">
+            <b style="color:var(--primary);font-size:15px">第 1 課</b>
+            <p style="font-size:13px;color:var(--mute);margin:6px 0 10px">人力規劃和員工編制</p>
+            <a href="人力規劃和員工編制.html" class="btn" style="font-size:13px;padding:7px 10px;width:100%;text-align:center">重溫第 1 課</a>
+          </div>
+          <div style="background:var(--surface);padding:14px;border-radius:12px;border:1px solid var(--line)">
+            <b style="color:var(--teal);font-size:15px">第 2 課</b>
+            <p style="font-size:13px;color:var(--mute);margin:6px 0 10px">員工考績</p>
+            <a href="員工考績.html" class="btn btn-teal" style="font-size:13px;padding:7px 10px;width:100%;text-align:center">重溫第 2 課</a>
+          </div>
+          <div style="background:var(--surface);padding:14px;border-radius:12px;border:1px solid var(--line)">
+            <b style="color:var(--amber);font-size:15px">第 3 課</b>
+            <p style="font-size:13px;color:var(--mute);margin:6px 0 10px">報酬管理</p>
+            <a href="報酬管理.html" class="btn btn-amber" style="font-size:13px;padding:7px 10px;width:100%;text-align:center">重溫第 3 課</a>
+          </div>
+          <div style="background:var(--surface);padding:14px;border-radius:12px;border:1px solid var(--line)">
+            <b style="color:var(--green);font-size:15px">第 4 課</b>
+            <p style="font-size:13px;color:var(--mute);margin:6px 0 10px">培訓和發展</p>
+            <a href="培訓和發展.html" class="btn btn-green" style="font-size:13px;padding:7px 10px;width:100%;text-align:center">重溫第 4 課</a>
+          </div>
+          <div style="background:var(--surface);padding:14px;border-radius:12px;border:1px solid var(--line)">
+            <b style="color:var(--purple);font-size:15px">第 5 課</b>
+            <p style="font-size:13px;color:var(--mute);margin:6px 0 10px">發展優質人力資源</p>
+            <a href="發展優質人力資源.html" class="btn btn-purple" style="font-size:13px;padding:7px 10px;width:100%;text-align:center">重溫第 5 課</a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // 初始化渲染
+  renderSaNav();
+  renderSaWorkspace();
+  renderCaseNav();
+  renderCaseWorkspace();
+  renderEssayNav();
+  renderEssayWorkspace();
+  renderReport();
+</script>
+</body>
+</html>
